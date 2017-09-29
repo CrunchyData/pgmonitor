@@ -1,0 +1,2 @@
+OPTIONS="-extend.query-path=/etc/ccp_monitoring/queries.yml"
+DATA_SOURCE_NAME="postgresql://monitor@localhost:5432/postgres?sslmode=disable"
