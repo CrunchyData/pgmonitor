@@ -1,0 +1,19 @@
+# Simple example reference: https://github.com/prometheus/alertmanager/blob/master/doc/examples/simple.yml
+global:
+    smtp_smarthost: 'smtp.example.com:587'
+    smtp_from: 'Alertmanager <abc@yahoo.com>'
+    smtp_auth_username: '<username>'
+    smtp_auth_password: '<password>'
+
+# templates:
+# - '/etc/alertmanager/template/*.tmpl'
+
+route:
+  receiver: 'team-X-mails'
+
+receivers:
+- name: 'team-X-mails'
+  email_configs:
+  - to: 'example@crunchydata.com'
+    send_resolved: true
+

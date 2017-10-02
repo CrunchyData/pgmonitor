@@ -1,0 +1,14 @@
+[Unit]
+Description=Postgres Exporter Server
+After=network.target
+
+[Service]
+PermissionsStartOnly=true
+User=ccp_monitoring
+EnvironmentFile=/etc/sysconfig/postgres_exporter
+ExecStart=/usr/bin/postgres_exporter ${OPTIONS}
+ExecStop=/usr/bin/kill -9 $(pidof postgres_exporter)
+
+Restart=always
+[Install]
+WantedBy=multi-user.target

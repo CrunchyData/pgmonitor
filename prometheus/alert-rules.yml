@@ -1,0 +1,126 @@
+ALERT PGExporterDown
+  IF up{} == 0
+  FOR 10s
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "Prometheus Exporter {{ $labels.job }} down",
+    description = "Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down for more than 10 seconds.",
+  }
+
+ALERT PGIdleTxnWarning
+  IF ccp_connection_stats_max_idle_in_txn_time > 300 
+  FOR 10s
+  LABELS { severity = "warning" }
+  ANNOTATIONS {
+    summary = "PGSQL Instance {{ $labels.job }} idle transactions (warning)",
+    description = "{{ $labels.job }} has at least one session idle in transaction for over 5 minutes.",
+  }
+
+ALERT PGIdleTxnCritical
+  IF ccp_connection_stats_max_idle_in_txn_time > 900
+  FOR 10s
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "PGSQL Instance {{ $labels.job }} idle transactions (critical)",
+    description = "{{ $labels.job }} has at least one session idle in transaction for over 15 minutes.",
+  }
+
+ALERT PGConnPercCritical
+    IF (ccp_connection_stats_total / ccp_connection_stats_max_connections) > .9
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} connections",
+        description = "{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)"
+    }
+
+ALERT PGConnPercWarning
+    IF (ccp_connection_stats_total / ccp_connection_stats_max_connections) > .75
+    FOR 10s
+    LABELS { severity = "warning" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} connections",
+        description = "{{ $labels.job }} is using 75% or more of available connections ({{ $value }}%)"
+    }
+
+ALERT PGDBSizeWarning
+    IF ccp_database_size > 107374182400 
+    FOR 10s
+    LABELS { severity = "warning" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} size warning",
+        description = "PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value }} bytes"
+    }
+
+ALERT PGDBSizeCritical
+    IF ccp_database_size > 268435456000 
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} size critical",
+        description = "PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value }} bytes"
+    }
+
+ALERT PGReplicationByteLagWarning
+    IF ccp_replication_status_byte_lag > 52428800 
+    FOR 10s
+    LABELS { severity = "warning" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} replica lag warning",
+        description = "PGSQL Instance {{ $labels.job }} has at least one replica lagging over 50MB behind."
+    }
+
+ALERT PGReplicationByteLagCritical
+    IF ccp_replication_status_byte_lag > 104857600
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} replica lag warning",
+        description = "PGSQL Instance {{ $labels.job }} has at least one replica lagging over 100MB behind."
+    }
+
+ALERT PGReplicationSlotsInactive
+    IF ccp_replication_slots_active == 0
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} inactive replication slot",
+        description = "PGSQL Instance {{ $labels.job }} has one or more inactive replication slots"
+    }
+
+ALERT PGXIDWraparoundCritical
+    IF ccp_transaction_wraparound_percent_towards_wraparound > 75
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} transaction id wraparound imminent",
+        description = "PGSQL Instance {{ $labels.job }} is over 75% towards transaction id wraparound."
+    }
+
+ALERT PGXIDWraparoundWarning
+    IF ccp_transaction_wraparound_percent_towards_wraparound > 50
+    FOR 10s
+    LABELS { severity = "warning" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} transaction id wraparound imminent",
+        description = "PGSQL Instance {{ $labels.job }} is over 50% towards transaction id wraparound."
+    }
+
+ALERT PGEmergencyVacuumCritical
+    IF ccp_transaction_wraparound_percent_towards_emergency_autovac > 90
+    FOR 10s
+    LABELS { severity = "critical" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} emergency vacuum imminent", 
+        description = "PGSQL Instance {{ $labels.job }} is over 90% towards emergency autovacuum processes beginning"
+    }
+
+ALERT PGEmergencyVacuumWarning
+    IF ccp_transaction_wraparound_percent_towards_emergency_autovac > 75
+    FOR 10s
+    LABELS { severity = "warning" }
+    ANNOTATIONS {
+        summary = "PGSQL Instance {{ $labels.job }} emergency vacuum imminent",
+        description = "PGSQL Instance {{ $labels.job }} is over 75% towards emergency autovacuum processes beginning"
+    }
+

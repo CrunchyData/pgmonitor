@@ -1,0 +1,4 @@
+* * * * * /usr/bin/ccp_io_queue.sh
+* * * * * /usr/bin/ccp_is_pgready.sh
+# The below script must be run as a database superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file
+# 0,30 * * * * /usr/bin/pg_bloat_check.py --quiet -c "dbname=postgres user=postgres"
