@@ -1,3 +1,4 @@
 CONFIG="-config.file=/etc/ccp_monitoring/prometheus.yml"
-STORAGE="-storage.local.path=/var/lib/ccp_monitoring"
+STORAGEPATH="-storage.local.path=/var/lib/ccp_monitoring/prometheus"
+STORAGERETENTION="-storage.local.retention=168h"
 LOG="-log.level=error"

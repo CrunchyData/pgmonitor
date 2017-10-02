@@ -6,7 +6,7 @@ After=network.target
 PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/prometheus
-ExecStart=/usr/bin/prometheus ${CONFIG} ${STORAGE} ${LOG}
+ExecStart=/usr/bin/prometheus ${CONFIG} ${STORAGEPATH} ${STORAGERETENTION} ${LOG}
 ExectStop=/usr/bin/kill -9 $(pidof prometheus)
 Restart=always
 

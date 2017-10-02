@@ -1,6 +1,6 @@
-CREATE ROLE monitor WITH LOGIN;
+CREATE ROLE ccp_monitoring WITH LOGIN;
  
-CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION monitor;
+CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
 CREATE OR REPLACE FUNCTION monitor.pg_stat_activity() RETURNS SETOF pg_catalog.pg_stat_activity
     LANGUAGE plpgsql SECURITY DEFINER
@@ -57,4 +57,4 @@ $$;
 REVOKE ALL ON FUNCTION monitor.pg_ls_wal_dir(text) FROM PUBLIC;
 
 
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO monitor;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;

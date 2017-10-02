@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 set -e
-IODIR=/var/lib/ccp_monitoring
-IOTMP=is_pgready.tmp
-IOFILE=io_pgready.prom
+PGDIR=/var/lib/ccp_monitoring
+PGTMP=is_pgready.tmp
+PGFILE=is_pgready.prom
 PGBIN=/usr/pgsql-9.6/bin
-if [ ! -d ${IODIR} ]; then
-  mkdir ${IODIR}
+if [ ! -d ${PGDIR} ]; then
+  mkdir ${PGDIR}
 fi
-rm -f ${IODIR}/${IOTMP}
-$PGBIN/pg_isready >/dev/null
+rm -f ${PGDIR}/${PGTMP}
+$PGBIN/pg_isready -d postgres >/dev/null
 EX_VAL=$?
 if [ $EX_VAL -eq  0 ]; then
-	echo "ccp_pg_ready 1" >>${IODIR}/${IOTMP}
+	echo "ccp_pg_ready 1" >>${PGDIR}/${PGTMP}
 else
-	echo "ccp_pg_ready 0" >>${IODIR}/${IOTMP}
+	echo "ccp_pg_ready 0" >>${PGDIR}/${PGTMP}
 fi
-mv ${IODIR}/${IOTMP} ${IODIR}/${IOFILE}
+mv ${PGDIR}/${PGTMP} ${PGDIR}/${PGFILE}

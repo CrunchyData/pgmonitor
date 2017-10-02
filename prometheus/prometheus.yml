@@ -3,8 +3,8 @@ global:
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-    monitor: 'codelab-monitor'
+  #external_labels:
+  #  monitor: 'codelab-monitor'
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
