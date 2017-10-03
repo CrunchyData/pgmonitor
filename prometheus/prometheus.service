@@ -7,7 +7,7 @@ PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/prometheus
 ExecStart=/usr/bin/prometheus ${CONFIG} ${STORAGEPATH} ${STORAGERETENTION} ${LOG}
-ExectStop=/usr/bin/kill -9 $(pidof prometheus)
+ExecStop=/usr/bin/kill -9 $(pidof prometheus)
 Restart=always
 
 [Install]
