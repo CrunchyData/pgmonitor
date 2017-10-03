@@ -7,7 +7,7 @@ PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/alertmanager
 ExecStart=/usr/bin/alertmanager ${CONFIG} ${STORAGE}
-ExectStop=/usr/bin/kill -9 $(pidof alertmanager)
+ExecStop=/usr/bin/kill -9 $(pidof alertmanager)
 Restart=always
 
 [Install]
