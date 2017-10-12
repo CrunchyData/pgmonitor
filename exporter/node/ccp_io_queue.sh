@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
 IODIR=/var/lib/ccp_monitoring
 IOTMP=io_queue.tmp
 IOFILE=io_queue.prom
