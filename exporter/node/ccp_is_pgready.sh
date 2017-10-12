@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
 PGDIR=/var/lib/ccp_monitoring
 PGTMP=is_pgready.tmp
 PGFILE=is_pgready.prom
