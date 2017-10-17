@@ -32,7 +32,7 @@ sudo -u ccp_monitoring crontab crontab.txt
 systemctl daemon-reload
 ```
 
-| When Packaging, service files shall go in /usr/lib/systemd/system/
+When Packaging, service files shall go in /usr/lib/systemd/system/
 
 ## Database Setup
 
@@ -73,6 +73,7 @@ psql -d postgres -c "GRANT SELECT ON bloat_indexes, bloat_stats, bloat_tables TO
 
 ## Startup services
 
+```
 systemctl enable postgres_exporter
 systemctl start postgres_exporter
 systemctl status postgres_exporter
@@ -80,3 +81,4 @@ systemctl status postgres_exporter
 systemctl enable node_exporter
 systemctl start node_exporter
 systemctl status node_exporter
+```
