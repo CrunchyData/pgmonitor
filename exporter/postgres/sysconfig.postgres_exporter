@@ -1,2 +1,4 @@
-OPTIONS="-extend.query-path=/etc/ccp_monitoring/queries.yml"
+WEB_LISTEN_ADDRESS="-web.listen-address=localhost:9187"
+QUERY_PATH="-extend.query-path=/etc/ccp_monitoring/queries.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
+

@@ -6,7 +6,7 @@ After=network.target
 PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/postgres_exporter
-ExecStart=/usr/bin/postgres_exporter ${OPTIONS}
+ExecStart=/usr/bin/postgres_exporter ${WEB_LISTEN_ADDRESS} ${QUERY_PATH}
 ExecStop=/usr/bin/kill -9 $(pidof postgres_exporter)
 
 Restart=always
