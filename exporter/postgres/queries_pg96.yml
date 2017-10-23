@@ -30,6 +30,7 @@ ccp_connection_stats:
         usage: "GAUGE"
         description: "Value of max_connections for the monitored database"
 
+
 ccp_replication_lag:
   query: "SELECT
            CASE
@@ -42,8 +43,9 @@ ccp_replication_lag:
         usage: "GAUGE"
         description: "Length of time since the last transaction was replayed on replica. Will always increase if no writes on primary."
 
+
 ccp_replication_lag_size:
-  query: "SELECT client_addr as replica, pg_xlog_location_diff( sent_location, replay_location) as bytes FROM pg_stat_replication"
+  query: "SELECT client_addr as replica, pg_xlog_location_diff( sent_location, replay_location) as bytes FROM pg_catalog.pg_stat_replication"
   metrics:
     - replica:
         usage: "LABEL"
@@ -52,12 +54,14 @@ ccp_replication_lag_size:
         usage: "GAUGE"
         description: "Replication lag in bytes"
 
+
 ccp_postmaster_runtime:
-  query: "SELECT pg_postmaster_start_time as start_time_seconds from pg_postmaster_start_time()"
+  query: "SELECT extract('epoch' from pg_postmaster_start_time) as start_time_seconds from pg_catalog.pg_postmaster_start_time()"
   metrics:
     - start_time_seconds:
         usage: "GAUGE"
         description: "Time at which postmaster started"
+
 
 ccp_replication_status:
   query: "SELECT replica_hostname, replica_addr, byte_lag FROM monitor.streaming_replica_check()"
@@ -72,8 +76,9 @@ ccp_replication_status:
         usage: "GAUGE"
         description: "Replication lag in bytes between primary and replica"
 
+
 ccp_replication_slots:
-  query: "SELECT slot_name, active::int, pg_xlog_location_diff(pg_current_xlog_insert_location(), restart_lsn) AS retained_bytes FROM pg_replication_slots"
+  query: "SELECT slot_name, active::int, pg_xlog_location_diff(pg_current_xlog_insert_location(), restart_lsn) AS retained_bytes FROM pg_catalog.pg_replication_slots"
   metrics:
     - slot_name:
         usage: "LABEL"
@@ -84,6 +89,7 @@ ccp_replication_slots:
     - retained_bytes:
         usage: "GAUGE"
         description: "The amount of WAL (in bytes) being retained for this slot"
+
 
 ccp_settings_guage:
   query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_segments') as checkpoint_segments
@@ -104,9 +110,60 @@ ccp_settings_guage:
         usage: "GAUGE"
         description: "Size of shared_buffers in bytes"
 
+
+ccp_stat_database:
+    query: "SELECT s.datname as dbname, xact_commit, xact_rollback, blks_read, blks_hit, tup_returned, tup_fetched, tup_inserted, tup_updated, tup_deleted, conflicts, temp_files, temp_bytes, deadlocks FROM pg_catalog.pg_stat_database s JOIN pg_catalog.pg_database d on d.datname = s.datname WHERE d.datistemplate = false"
+    metrics:
+        - dbname:
+            usage: "LABEL"
+            description: "Name of database"
+        - xact_commit: 
+            usage: "GAUGE"
+            description: "Number of transactions in this database that have been committed"
+        - xact_rollback: 
+            usage: "GAUGE"
+            description: "Number of transactions in this database that have been rolled back"
+        - blks_read:
+            usage: "GAUGE"
+            description: "Number of disk blocks read in this database"
+        - blks_hit:
+            usage: "GAUGE"
+            description: "Number of times disk blocks were found already in the buffer cache, so that a read was not necessary"
+        - tup_returned:
+            usage: "GAUGE"
+            description: "Number of rows returned by queries in this database"
+        - tup_fetched:
+            usage: "GAUGE"
+            description: "Number of rows fetched by queries in this database"
+        - tup_inserted:
+            usage: "GAUGE"
+            description: "Number of rows inserted by queries in this database"
+        - tup_updated:
+            usage: "GAUGE"
+            description: "Number of rows updated by queries in this database"
+        - tup_deleted:
+            usage: "GAUGE"
+            description: "Number of rows deleted by queries in this database"
+        - conflicts:
+            usage: "GAUGE"
+            description: "Number of queries canceled due to conflicts with recovery in this database"
+        - temp_files:
+            usage: "GAUGE"
+            description: "Number of rows deleted by queries in this database"
+        - temp_bytes:
+            usage: "GAUGE"
+            description: "Total amount of data written to temporary files by queries in this database"
+        - deadlocks:
+            usage: "GAUGE"
+            description: "Number of deadlocks detected in this database"
+
+
 ccp_stat_user_tables:
-  query: "SELECT schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, n_mod_since_analyze, last_vacuum, last_autovacuum, last_analyze, last_autoanalyze, vacuum_count, autovacuum_count, analyze_count, autoanalyze_count FROM pg_stat_user_tables"
+  query: "SELECT current_database() as dbname, schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, vacuum_count, autovacuum_count, analyze_count, autoanalyze_count FROM pg_catalog.pg_stat_user_tables"
   metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
     - schemaname:
         usage: "LABEL"
         description: "Name of the schema that this table is in"
@@ -143,21 +200,6 @@ ccp_stat_user_tables:
     - n_dead_tup:
         usage: "GAUGE"
         description: "Estimated number of dead rows"
-    - n_mod_since_analyze:
-        usage: "GAUGE"
-        description: "Estimated number of rows changed since last analyze"
-    - last_vacuum:
-        usage: "GAUGE"
-        description: "Last time at which this table was manually vacuumed (not counting VACUUM FULL)"
-    - last_autovacuum:
-        usage: "GAUGE"
-        description: "Last time at which this table was vacuumed by the autovacuum daemon"
-    - last_analyze:
-        usage: "GAUGE"
-        description: "Last time at which this table was manually analyzed"
-    - last_autoanalyze:
-        usage: "GAUGE"
-        description: "Last time at which this table was analyzed by the autovacuum daemon"
     - vacuum_count:
         usage: "COUNTER"
         description: "Number of times this table has been manually vacuumed (not counting VACUUM FULL)"
@@ -171,83 +213,10 @@ ccp_stat_user_tables:
         usage: "COUNTER"
         description: "Number of times this table has been analyzed by the autovacuum daemon"
 
-ccp_stat_user_indexes:
-  query: "SELECT schemaname, relname, indexrelname, idx_scan, idx_tup_read, idx_tup_fetch FROM pg_stat_user_indexes"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema this index is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of the table for this index"
-    - indexrelname:
-        usage: "LABEL"
-        description: "Name of this index"
-    - idx_scan:
-        usage: "COUNTER"
-        description: "Number of index scans initiated on this index"
-    - idx_tup_read:
-        usage: "COUNTER"
-        description: "Number of index entries returned by scans on this index"
-    - idx_tup_fetch:
-        usage: "COUNTER"
-        description: "Number of live table rows fetched by simple index scans using this index"
 
-ccp_statio_user_tables:
-  query: "SELECT schemaname,relname,heap_blks_read,heap_blks_hit,idx_blks_read,idx_blks_hit,toast_blks_read,toast_blks_hit,tidx_blks_read,tidx_blks_hit FROM pg_statio_user_tables"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema that this table is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of this table"
-    - heap_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table"
-    - heap_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table"
-    - idx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from all indexes on this table"
-    - idx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in all indexes on this table"
-    - toast_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table's TOAST table (if any)"
-    - toast_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table's TOAST table (if any)"
-    - tidx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table's TOAST table indexes (if any)"
-    - tidx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table's TOAST table indexes (if any)"
-
-ccp_statio_user_indexes:
-  query: "SELECT schemaname,relname,indexrelname,idx_blks_read,idx_blks_hit FROM pg_statio_all_indexes"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema this index is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of the table for this index"
-    - indexrelname:
-        usage: "LABEL"
-        description: "Name of this index"
-    - idx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this index"
-    - idx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this index"
 
 ccp_database_size:
-  query: "SELECT datname as dbname, pg_database_size(datname) as bytes FROM pg_database WHERE datistemplate = false"
+  query: "SELECT datname as dbname, pg_database_size(datname) as bytes FROM pg_catalog.pg_database WHERE datistemplate = false"
   metrics:
     - dbname:
         usage: "LABEL"
@@ -256,10 +225,11 @@ ccp_database_size:
         usage: "GAUGE"
         description: "Database size in bytes"
 
+
 ccp_table_size:
-  query: "SELECT current_database() as datname, n.nspname as schemaname, c.relname, pg_total_relation_size(c.oid) as size_bytes FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid WHERE NOT pg_is_other_temp_schema(n.oid) AND relkind IN ('r', 'm', 'f')"
+  query: "SELECT current_database() as dbname, n.nspname as schemaname, c.relname, pg_total_relation_size(c.oid) as size_bytes FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid WHERE NOT pg_is_other_temp_schema(n.oid) AND relkind IN ('r', 'm', 'f')"
   metrics:
-    - datname:
+    - dbname:
         usage: "LABEL"
         description: "Database name"
     - schemaname:
@@ -272,8 +242,9 @@ ccp_table_size:
         usage: "GAUGE"
         description: "Table size"
 
+
 ccp_transaction_wraparound:
-  query: "WITH max_age AS ( SELECT 2000000000 as max_old_xid, setting AS autovacuum_freeze_max_age FROM pg_settings WHERE name = 'autovacuum_freeze_max_age'), per_database_stats AS ( SELECT datname , m.max_old_xid::int , m.autovacuum_freeze_max_age::int , age(d.datfrozenxid) AS oldest_current_xid FROM pg_database d JOIN max_age m ON (true) WHERE d.datallowconn) SELECT max(oldest_current_xid) AS oldest_current_xid , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac FROM per_database_stats"
+  query: "WITH max_age AS ( SELECT 2000000000 as max_old_xid, setting AS autovacuum_freeze_max_age FROM pg_catalog.pg_settings WHERE name = 'autovacuum_freeze_max_age'), per_database_stats AS ( SELECT datname , m.max_old_xid::int , m.autovacuum_freeze_max_age::int , age(d.datfrozenxid) AS oldest_current_xid FROM pg_catalog.pg_database d JOIN max_age m ON (true) WHERE d.datallowconn) SELECT max(oldest_current_xid) AS oldest_current_xid , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac FROM per_database_stats"
   metrics:
     - oldest_current_xid:
         usage: "GAUGE"
@@ -285,32 +256,40 @@ ccp_transaction_wraparound:
         usage: "GAUGE"
         description: "Percentage towards emergency autovacuum process starting"
 
-ccp_bloat_check: 
-  query: "SELECT current_database() AS current_database
-        , schemaname
-        , objectname
-        , size_bytes
-        , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::int ))::int AS total_wasted_space_bytes
-          FROM public.bloat_stats" 
-  metrics: 
-    - current_database: 
-        usage: "LABEL" 
-        description: "Database name" 
-    - schemaname:
-        usage: "LABEL"
-        description: "Schema name"
-    - objectname:
-        usage: "LABEL"
-        description: "Table or index name"
-    - size_bytes:
-        usage: "GAUGE"
-        description: "Size of object in bytes"
-    - total_wasted_space_bytes: 
-        usage: "GAUGE" 
-        description: "Total wasted space in bytes of current database" 
+
+ccp_locks:
+    query: "SELECT pg_database.datname as dbname, tmp.mode, COALESCE(count,0) as count
+			FROM
+				(
+				  VALUES ('accesssharelock'),
+				         ('rowsharelock'),
+				         ('rowexclusivelock'),
+				         ('shareupdateexclusivelock'),
+				         ('sharelock'),
+				         ('sharerowexclusivelock'),
+				         ('exclusivelock'),
+				         ('accessexclusivelock')
+				) AS tmp(mode) CROSS JOIN pg_catalog.pg_database
+			LEFT JOIN
+			  (SELECT database, lower(mode) AS mode,count(*) AS count
+			  FROM pg_catalog.pg_locks WHERE database IS NOT NULL
+			  GROUP BY database, lower(mode)
+			) AS tmp2
+			ON tmp.mode=tmp2.mode and pg_database.oid = tmp2.database"
+    metrics:
+        - dbname:
+            usage: "LABEL"
+            description: "Database name"
+        - mode:
+            usage: "LABEL"
+            description: "Lock type"
+        - count:
+            usage: "GAUGE"
+            description: "Number of locks"
+
 
 ccp_wait_types:
-  query: "SELECT backend_xid, wait_event, wait_event_type FROM pg_stat_activity WHERE backend_xid is not null"
+  query: "SELECT backend_xid, wait_event, wait_event_type FROM monitor.pg_stat_activity() WHERE backend_xid is not null"
   metrics:
     - backend_xid:
         usage: "LABEL"
@@ -321,4 +300,42 @@ ccp_wait_types:
     - wait_event_type:
         usage: "LABEL"
         description: "The type of event for which the backend is waiting"
+
+
+ccp_stat_bgwriter:
+    query: "SELECT checkpoints_timed, checkpoints_req, checkpoint_write_time, checkpoint_sync_time, buffers_checkpoint, buffers_clean, maxwritten_clean, buffers_backend, buffers_backend_fsync, buffers_alloc, stats_reset FROM pg_catalog.pg_stat_bgwriter"
+    metrics:
+      - checkpoints_timed:
+            usage: "GAUGE"
+            description: "Number of scheduled checkpoints that have been performed"
+      - checkpoints_req:
+            usage: "GAUGE"
+            description: "Number of requested checkpoints that have been performed"
+      - checkpoint_write_time:
+            usage: "GAUGE"
+            description: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
+      - checkpoint_sync_time:
+            usage: "GAUGE"
+            description: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in milliseconds"
+      - buffers_checkpoint:
+            usage: "GAUGE"
+            description: "Number of buffers written during checkpoints"
+      - buffers_clean:
+            usage: "GAUGE"
+            description: "Number of buffers written by the background writer"
+      - maxwritten_clean:
+            usage: "GAUGE"
+            description: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
+      - buffers_backend:
+            usage: "GAUGE"
+            description: "Number of buffers written directly by a backend"
+      - buffers_backend_fsync:
+            usage: "GAUGE"
+            description: "Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)"
+      - buffers_alloc:
+            usage: "GAUGE"
+            description: "Number of buffers allocated"
+      - stats_reset:
+            usage: "GAUGE"
+            description: "Time at which these statistics were last reset"
 

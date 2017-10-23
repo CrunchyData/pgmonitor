@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_DATABASE1",
-      "label": "database1",
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "4.2.0"
+      "version": "4.5.2"
     },
     {
       "type": "panel",
@@ -80,13 +80,13 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -130,9 +130,11 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_connection_stats_active{job=\"[[jobname]]\"}/ccp_connection_stats_max_connections{job=\"[[jobname]]\"}*100",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "ccp_active_connections_count",
@@ -156,13 +158,13 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -206,9 +208,11 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_connection_stats_active{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "metric": "ccp_active_connections_count",
               "refId": "A",
@@ -231,16 +235,16 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
-            "maxValue": 100,
+            "maxValue": 1000,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
@@ -281,17 +285,19 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
-              "expr": "ccp_connection_stats_idle_in_txn{job=\"[[jobname]]\"}",
+              "expr": "ccp_connection_stats_max_idle_in_txn_time{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "metric": "",
               "refId": "A",
               "step": 60
             }
           ],
-          "thresholds": "10,30",
-          "title": "Idle Trx",
+          "thresholds": "300,900",
+          "title": "Idle Tx Time",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -306,13 +312,13 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -356,9 +362,11 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_connection_stats_idle{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "metric": "ccp_idle_connections_count",
               "refId": "A",
@@ -381,13 +389,13 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -431,9 +439,11 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
-              "expr": "ccp_replication_lag_lag{job=\"[[jobname]]\"}",
+              "expr": "ccp_replication_lag_replay_time{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "metric": "ccp_replication_lag",
               "refId": "A",
@@ -441,7 +451,7 @@
             }
           ],
           "thresholds": "",
-          "title": "Lag Time",
+          "title": "Replica Time Lag",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -456,16 +466,16 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
+            "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "decbytes",
           "gauge": {
-            "maxValue": 100,
+            "maxValue": 167772160,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
@@ -506,16 +516,18 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "max(ccp_replication_status_byte_lag{job=\"[[jobname]]\"})",
+              "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
               "step": 60
             }
           ],
-          "thresholds": "100,500,900",
-          "title": "Slave Lag",
+          "thresholds": "33554432,83886080",
+          "title": "Replica Byte Lag",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -536,7 +548,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "decimals": null,
           "format": "decbytes",
           "gauge": {
@@ -581,6 +593,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ccp_database_size_bytes{job=\"[[jobname]]\"})",
@@ -657,10 +670,12 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
-              "datasource": "${DS_DATABASE1}",
-              "expr": "sum(irate(pg_stat_database_xact_commit{job=\"[[jobname]]\"}[5m])) + sum(irate(pg_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
+              "datasource": "${DS_PROMETHEUS}",
+              "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[jobname]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "pg_stat_database_xact_rollback",
@@ -696,7 +711,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 12,
           "legend": {
@@ -717,14 +734,16 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "pg_stat_database_blks_hit{ job=\"[[jobname]]\"}  / ( pg_stat_database_blks_hit{job=\"[[jobname]]\"} + pg_stat_database_blks_read{ job=\"[[jobname]]\"} ) * 100",
+              "expr": "ccp_stat_database_blks_hit{ job=\"[[jobname]]\"}  / ( ccp_stat_database_blks_hit{job=\"[[jobname]]\"} + ccp_stat_database_blks_read{ job=\"[[jobname]]\"} ) * 100",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{datname}}",
+              "legendFormat": "{{dbname}}",
               "metric": "pg_stat_database_",
               "refId": "A",
               "step": 10
@@ -741,6 +760,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -768,7 +788,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 13,
           "legend": {
@@ -789,12 +811,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(irate(pg_stat_database_xact_commit{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Commit",
               "metric": "pg_stat_database_xact_commit",
@@ -802,7 +826,8 @@
               "step": 10
             },
             {
-              "expr": "sum(irate(pg_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Rollback",
               "refId": "B",
@@ -820,6 +845,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -859,7 +885,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 11,
           "legend": {
@@ -891,12 +919,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 4,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(irate(pg_stat_database_tup_fetched{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_tup_fetched{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Fetched",
               "metric": "pg_stat_database_tup_fetched",
@@ -904,7 +934,8 @@
               "step": 10
             },
             {
-              "expr": "sum(irate(pg_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Inserted",
               "metric": "pg_stat_database_tup_inserted",
@@ -912,7 +943,8 @@
               "step": 10
             },
             {
-              "expr": "sum(irate(pg_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Updated",
               "metric": "pg_stat_database_tup_updated",
@@ -920,7 +952,8 @@
               "step": 10
             },
             {
-              "expr": "sum(irate(pg_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Deleted",
               "metric": "pg_stat_database_tup_deleted",
@@ -928,7 +961,8 @@
               "step": 10
             },
             {
-              "expr": "sum(irate(pg_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Returned",
               "metric": "pg_stat_database_tup_returned",
@@ -947,6 +981,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -974,7 +1009,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 15,
           "legend": {
@@ -997,12 +1034,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 4,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(pg_stat_database_deadlocks{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Conflicts",
               "metric": "pg_stat_database_conflicts",
@@ -1010,7 +1049,8 @@
               "step": 10
             },
             {
-              "expr": "sum(rate(pg_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
+              "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "DeadLocks",
               "metric": "pg_stat_database_deadlocks",
@@ -1029,6 +1069,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1056,7 +1097,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 17,
           "legend": {
@@ -1079,63 +1122,72 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 4,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"accessexclusivelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accessexclusivelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "accessexclusive",
               "refId": "A",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"accesssharelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accesssharelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "accessshare",
               "refId": "B",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"exclusivelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"exclusivelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "exclusive",
               "refId": "C",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"rowexclusivelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowexclusivelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "rowexclusive",
               "refId": "D",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"rowsharelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowsharelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "rowshare",
               "refId": "E",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"sharelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "share",
               "refId": "F",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"sharerowexclusivelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharerowexclusivelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "sharerowexclusive",
               "refId": "G",
               "step": 10
             },
             {
-              "expr": "pg_locks_count{job=\"[[jobname]]\",mode=\"shareupdateexclusivelock\"}",
+              "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"shareupdateexclusivelock\"})",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{mode}}",
+              "legendFormat": "shareupdateexclusive",
               "refId": "H",
               "step": 10
             }
@@ -1151,6 +1203,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1190,7 +1243,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 14,
           "legend": {
@@ -1213,12 +1268,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(pg_stat_bgwriter_buffers_alloc{job=\"[[jobname]]\"}[5m])",
+              "expr": "irate(ccp_stat_bgwriter_buffers_alloc{job=\"[[jobname]]\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Allocated",
               "metric": "pg_stat_bgwriter_buffers_alloc",
@@ -1226,7 +1283,8 @@
               "step": 10
             },
             {
-              "expr": "irate(pg_stat_bgwriter_buffers_backend{job=\"[[jobname]]\"}[5m])",
+              "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=\"[[jobname]]\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Backend",
               "metric": "pg_stat_bgwriter_buffers_backend",
@@ -1234,7 +1292,8 @@
               "step": 10
             },
             {
-              "expr": "irate(pg_stat_bgwriter_buffers_backend_fsync{job=\"[[jobname]]\"}[5m])",
+              "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=\"[[jobname]]\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "FSync",
               "metric": "pg_stat_bgwriter_buffers_backend_fsync",
@@ -1242,7 +1301,8 @@
               "step": 10
             },
             {
-              "expr": "irate(pg_stat_bgwriter_buffers_checkpoint{job=\"[[jobname]]\"}[5m])",
+              "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=\"[[jobname]]\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "CheckPoint",
               "metric": "pg_stat_bgwriter_buffers_checkpoint",
@@ -1250,7 +1310,8 @@
               "step": 10
             },
             {
-              "expr": "irate(pg_stat_bgwriter_buffers_clean{job=\"[[jobname]]\"}[5m])",
+              "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=\"[[jobname]]\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Clean",
               "metric": "pg_stat_bgwriter_buffers_clean",
@@ -1269,6 +1330,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1296,7 +1358,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 16,
           "legend": {
@@ -1319,12 +1383,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
               "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "AutoVacuum",
               "metric": "ccp_stat_user_tables_autovacuum_count",
@@ -1333,6 +1399,7 @@
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "AutoAnalyze",
               "refId": "B",
@@ -1340,6 +1407,7 @@
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Vacuum",
               "refId": "C",
@@ -1347,6 +1415,7 @@
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "Analyze",
               "refId": "D",
@@ -1364,6 +1433,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1403,7 +1473,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 18,
           "legend": {
@@ -1426,6 +1498,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 12,
           "stack": false,
           "steppedLine": false,
@@ -1476,6 +1549,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1517,7 +1591,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 28,
           "legend": {
@@ -1540,6 +1616,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 12,
           "stack": false,
           "steppedLine": false,
@@ -1564,6 +1641,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1599,106 +1677,7 @@
     {
       "collapse": false,
       "height": 250,
-      "panels": [
-        {
-          "aliasColors": {
-            "Deletes": "#58140C",
-            "Inserts": "#B7DBAB",
-            "Updates": "#0A437C"
-          },
-          "bars": true,
-          "datasource": "${DS_DATABASE1}",
-          "fill": 1,
-          "id": 29,
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": true,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 12,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(irate(pg_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Inserts",
-              "refId": "A",
-              "step": 4
-            },
-            {
-              "expr": "sum(irate(pg_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Updates",
-              "refId": "B",
-              "step": 4
-            },
-            {
-              "expr": "sum(irate(pg_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Deletes",
-              "refId": "C",
-              "step": 4
-            },
-            {
-              "expr": "sum(irate(pg_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Selects",
-              "refId": "D",
-              "step": 4
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "DML Overview",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": "100",
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        }
-      ],
+      "panels": [],
       "repeat": null,
       "repeatIteration": null,
       "repeatRowId": null,
@@ -1719,7 +1698,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -1773,6 +1752,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
@@ -1803,7 +1783,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "decimals": null,
           "format": "percent",
           "gauge": {
@@ -1848,6 +1828,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[jobname]]\"}",
@@ -1878,7 +1859,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -1922,6 +1903,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
@@ -1958,7 +1940,9 @@
         {
           "aliasColors": {},
           "bars": true,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 19,
           "legend": {
@@ -1979,6 +1963,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 3,
           "stack": true,
           "steppedLine": false,
@@ -2002,6 +1987,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -2029,7 +2015,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 20,
           "legend": {
@@ -2050,6 +2038,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 3,
           "stack": false,
           "steppedLine": false,
@@ -2080,6 +2069,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -2107,7 +2097,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 22,
           "legend": {
@@ -2128,6 +2120,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 3,
           "stack": false,
           "steppedLine": false,
@@ -2167,6 +2160,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -2194,7 +2188,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_DATABASE1}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "id": 23,
           "legend": {
@@ -2215,6 +2211,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 3,
           "stack": false,
           "steppedLine": false,
@@ -2252,6 +2249,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -2297,7 +2295,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -2341,6 +2339,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "100*node_filesystem_free{job=\"[[jobname]]\", device=\"rootfs\"}/node_filesystem_size{job=\"[[jobname]]\", device=\"rootfs\"}",
@@ -2371,7 +2370,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -2415,6 +2414,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "100 * (node_memory_MemFree{job=\"[[jobname]]\"} + node_memory_Cached{job=\"[[jobname]]\"} + node_memory_Buffers{job=\"[[jobname]]\"}) / node_memory_MemTotal{job=\"[[jobname]]\"}",
@@ -2446,7 +2446,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -2490,6 +2490,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "100 * node_memory_SwapFree{job=\"[[jobname]]\"} / node_memory_SwapTotal{job=\"[[jobname]]\"}",
@@ -2522,7 +2523,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_DATABASE1}",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "percent",
           "gauge": {
             "maxValue": 100,
@@ -2560,6 +2561,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "100 * (1 - (irate(node_cpu{job=\"[[jobname]]\", mode='idle'}[5m])))",
@@ -2651,5 +2653,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 0
+  "version": 21
 }
