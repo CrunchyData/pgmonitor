@@ -1,1 +1,1 @@
-# POstgreSQL Metric exporter
+# PostgreSQL Metric exporter

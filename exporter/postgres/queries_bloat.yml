@@ -1,3 +1,5 @@
+
+
 ccp_bloat_check: 
   query: "SELECT current_database() AS current_database
         , schemaname
