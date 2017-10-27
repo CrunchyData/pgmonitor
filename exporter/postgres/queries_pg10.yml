@@ -1,98 +1,31 @@
-ccp_bloat_check: 
-  query: "SELECT current_database() AS current_database
-        , schemaname
-        , objectname
-        , size_bytes
-        , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::int ))::int AS total_wasted_space_bytes
-          FROM public.bloat_stats" 
-  metrics: 
-    - current_database: 
-        usage: "LABEL" 
-        description: "Database name" 
-    - schemaname:
-        usage: "LABEL"
-        description: "Schema name"
-    - objectname:
-        usage: "LABEL"
-        description: "Table or index name"
-    - size_bytes:
-        usage: "GAUGE"
-        description: "Size of object in bytes"
-    - total_wasted_space_bytes: 
-        usage: "GAUGE" 
-        description: "Total wasted space in bytes of current database" 
 
-ccp_connection_stats:
-  query: "select ((total - idle) - idle_in_txn) as active
-        , total
-        , idle
-        , idle_in_txn
-        , (select coalesce(extract(epoch from (max(now() - query_start))),0) from pg_catalog.pg_stat_activity where query = ' in transaction') as max_idle_in_txn_time
-        , max_connections
-        from (
-                select count(*) as total
-                        , coalesce(sum(case when query = '' then 1 else 0 end),0) as idle
-                        , coalesce(sum(case when query = ' in transaction' then 1 else 0 end),0) as idle_in_txn from pg_catalog.pg_stat_activity) x 
-        join (select setting::float AS max_connections FROM pg_settings WHERE name = 'max_connections') xx ON (true)"
-  metrics:
-    - active:
-        usage: "GAUGE"
-        description: "Total non-idle connections"
-    - total:
-        usage: "GAUGE"
-        description: "Total idle and non-idle connections"
-    - idle:
-        usage: "GAUGE"
-        description: "Total idle connections"
-    - idle_in_txn:
-        usage: "GAUGE"
-        description: "Total idle in transaction connections"
-    - max_idle_in_txn_time:
-        usage: "GAUGE"
-        description: "Length of time in seconds of the longest idle in transaction session"
-    - max_connections:
-        usage: "GAUGE"
-        description: "Value of max_connections for the monitored database"
 
-ccp_database_size:
-  query: "SELECT datname as dbname, pg_database_size(datname) as bytes FROM pg_database WHERE datistemplate = false"
-  metrics:
-    - dbname:
-        usage: "LABEL"
-        description: "Database name"
-    - bytes:
-        usage: "COUNTER"
-        description: "Database size in bytes"
-
-ccp_postmaster_runtime:
-  query: "SELECT pg_postmaster_start_time as start_time_seconds from pg_postmaster_start_time()"
-  metrics:
-    - start_time_seconds:
-        usage: "GAUGE"
-        description: "Time at which postmaster started"
-
-ccp_replica_lag:
-  query: "SELECT EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()))::bigint as replay_time"
+ccp_replication_lag:
+  query: "SELECT
+           CASE
+           WHEN pg_last_wal_receive_lsn() = pg_last_wal_replay_lsn() THEN 0
+           ELSE EXTRACT (EPOCH FROM now() - pg_last_xact_replay_timestamp())::INTEGER
+           END
+        AS replay_time"
   metrics:
     - replay_time:
         usage: "GAUGE"
         description: "Length of time since the last transaction was replayed on replica. Will always increase if no writes on primary."
 
-ccp_replication_status:
-  query: "SELECT replica_hostname, replica_addr, byte_lag FROM monitor.streaming_replica_check()"
+
+ccp_replication_lag_size:
+  query: "SELECT client_addr as replica, pg_wal_lsn_diff(sent_lsn, replay_lsn) as bytes FROM pg_catalog.pg_stat_replication"
   metrics:
-    - replica_hostname:
+    - replica:
         usage: "LABEL"
-        description: "Hostname of replica system (if available)"
-    - replica_addr:
-        usage: "LABEL"
-        description: "Replica IP address"
-    - byte_lag:
+        description: "Replica address"
+    - bytes:
         usage: "GAUGE"
-        description: "Replication lag in bytes between primary and replica"
+        description: "Replication lag in bytes"
+
 
 ccp_replication_slots:
-  query: "SELECT slot_name, active::int, pg_xlog_location_diff(pg_current_xlog_insert_location(), restart_lsn) AS retained_bytes FROM pg_replication_slots"
+  query: "SELECT slot_name, active::int, pg_wal_lsn_diff(pg_current_wal_insert_lsn(), restart_lsn) AS retained_bytes FROM pg_catalog.pg_replication_slots"
   metrics:
     - slot_name:
         usage: "LABEL"
@@ -103,195 +36,5 @@ ccp_replication_slots:
     - retained_bytes:
         usage: "GAUGE"
         description: "The amount of WAL (in bytes) being retained for this slot"
-
-ccp_settings_guage:
-  query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_segments') as checkpoint_segments
-            , (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_timeout') as checkpoint_timeout
-            , (select setting::float from pg_catalog.pg_settings where name = 'checkpoint_completion_target') as checkpoint_completion_target
-            , (select 8192*setting::int as bytes from pg_catalog.pg_settings where name = 'shared_buffers') as shared_buffers"
-  metrics:
-    - checkpoint_segments:
-        usage: "GAUGE"
-        description: "Number of checkpoint segments"
-    - checkpoint_timeout:
-        usage: "GAUGE"
-        description: "Checkpoint timeout in seconds"
-    - checkpoint_completion_target:
-        usage: "GAUGE"
-        description: "Checkpoint completion target, ranging from 0 to 1"
-    - shared_buffers:
-        usage: "GAUGE"
-        description: "Size of shared_buffers in bytes"
-
-ccp_stat_user_indexes:
-  query: "SELECT schemaname, relname, indexrelname, idx_scan, idx_tup_read, idx_tup_fetch FROM pg_stat_user_indexes"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema this index is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of the table for this index"
-    - indexrelname:
-        usage: "LABEL"
-        description: "Name of this index"
-    - idx_scan:
-        usage: "COUNTER"
-        description: "Number of index scans initiated on this index"
-    - idx_tup_read:
-        usage: "COUNTER"
-        description: "Number of index entries returned by scans on this index"
-    - idx_tup_fetch:
-        usage: "COUNTER"
-        description: "Number of live table rows fetched by simple index scans using this index"
-
-ccp_stat_user_tables:
-  query: "SELECT schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, n_mod_since_analyze, last_vacuum, last_autovacuum, last_analyze, last_autoanalyze, vacuum_count, autovacuum_count, analyze_count, autoanalyze_count FROM pg_stat_user_tables"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema that this table is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of this table"
-    - seq_scan:
-        usage: "COUNTER"
-        description: "Number of sequential scans initiated on this table"
-    - seq_tup_read:
-        usage: "COUNTER"
-        description: "Number of live rows fetched by sequential scans"
-    - idx_scan:
-        usage: "COUNTER"
-        description: "Number of index scans initiated on this table"
-    - idx_tup_fetch:
-        usage: "COUNTER"
-        description: "Number of live rows fetched by index scans"
-    - n_tup_ins:
-        usage: "COUNTER"
-        description: "Number of rows inserted"
-    - n_tup_upd:
-        usage: "COUNTER"
-        description: "Number of rows updated"
-    - n_tup_del:
-        usage: "COUNTER"
-        description: "Number of rows deleted"
-    - n_tup_hot_upd:
-        usage: "COUNTER"
-        description: "Number of rows HOT updated (i.e., with no separate index update required)"
-    - n_live_tup:
-        usage: "GAUGE"
-        description: "Estimated number of live rows"
-    - n_dead_tup:
-        usage: "GAUGE"
-        description: "Estimated number of dead rows"
-    - n_mod_since_analyze:
-        usage: "GAUGE"
-        description: "Estimated number of rows changed since last analyze"
-    - last_vacuum:
-        usage: "GAUGE"
-        description: "Last time at which this table was manually vacuumed (not counting VACUUM FULL)"
-    - last_autovacuum:
-        usage: "GAUGE"
-        description: "Last time at which this table was vacuumed by the autovacuum daemon"
-    - last_analyze:
-        usage: "GAUGE"
-        description: "Last time at which this table was manually analyzed"
-    - last_autoanalyze:
-        usage: "GAUGE"
-        description: "Last time at which this table was analyzed by the autovacuum daemon"
-    - vacuum_count:
-        usage: "COUNTER"
-        description: "Number of times this table has been manually vacuumed (not counting VACUUM FULL)"
-    - autovacuum_count:
-        usage: "COUNTER"
-        description: "Number of times this table has been vacuumed by the autovacuum daemon"
-    - analyze_count:
-        usage: "COUNTER"
-        description: "Number of times this table has been manually analyzed"
-    - autoanalyze_count:
-        usage: "COUNTER"
-        description: "Number of times this table has been analyzed by the autovacuum daemon"
-
-ccp_statio_user_indexes:
-  query: "SELECT schemaname,relname,indexrelname,idx_blks_read,idx_blks_hit FROM pg_statio_all_indexes"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema this index is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of the table for this index"
-    - indexrelname:
-        usage: "LABEL"
-        description: "Name of this index"
-    - idx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this index"
-    - idx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this index"
-
-ccp_statio_user_tables:
-  query: "SELECT schemaname,relname,heap_blks_read,heap_blks_hit,idx_blks_read,idx_blks_hit,toast_blks_read,toast_blks_hit,tidx_blks_read,tidx_blks_hit FROM pg_statio_user_tables"
-  metrics:
-    - schemaname:
-        usage: "LABEL"
-        description: "Name of the schema that this table is in"
-    - relname:
-        usage: "LABEL"
-        description: "Name of this table"
-    - heap_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table"
-    - heap_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table"
-    - idx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from all indexes on this table"
-    - idx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in all indexes on this table"
-    - toast_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table's TOAST table (if any)"
-    - toast_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table's TOAST table (if any)"
-    - tidx_blks_read:
-        usage: "COUNTER"
-        description: "Number of disk blocks read from this table's TOAST table indexes (if any)"
-    - tidx_blks_hit:
-        usage: "COUNTER"
-        description: "Number of buffer hits in this table's TOAST table indexes (if any)"
-
-ccp_table_size:
-  query: "SELECT current_database() as datname, n.nspname as schemaname, c.relname, pg_total_relation_size(c.oid) as size_bytes FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid WHERE NOT pg_is_other_temp_schema(n.oid) AND relkind IN ('r', 'm', 'f')"
-  metrics:
-    - datname:
-        usage: "LABEL"
-        description: "Database name"
-    - schemaname:
-        usage: "LABEL"
-        description: "Schema name"
-    - relname:
-        usage: "LABEL"
-        description: "Table name"
-    - size_bytes:
-        usage: "GAUGE"
-        description: "Table size"
-
-ccp_transaction_wraparound:
-  query: "WITH max_age AS ( SELECT 2000000000 as max_old_xid, setting AS autovacuum_freeze_max_age FROM pg_settings WHERE name = 'autovacuum_freeze_max_age'), per_database_stats AS ( SELECT datname , m.max_old_xid::int , m.autovacuum_freeze_max_age::int , age(d.datfrozenxid) AS oldest_current_xid FROM pg_database d JOIN max_age m ON (true) WHERE d.datallowconn) SELECT max(oldest_current_xid) AS oldest_current_xid , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac FROM per_database_stats"
-  metrics:
-    - oldest_current_xid:
-        usage: "GAUGE"
-        description: "Oldest current transaction ID in cluster"
-    - percent_towards_wraparound:
-        usage: "GAUGE"
-        description: "Percentage towards transaction ID wraparound"
-    - percent_towards_emergency_autovac:
-        usage: "GAUGE"
-        description: "Percentage towards emergency autovacuum process starting"
 
 

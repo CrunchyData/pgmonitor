@@ -1,0 +1,27 @@
+
+
+ccp_bloat_check: 
+  query: "SELECT current_database() AS dbname
+        , schemaname
+        , objectname
+        , size_bytes
+        , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::int ))::int AS total_wasted_space_bytes
+          FROM public.bloat_stats" 
+  metrics: 
+    - dbname: 
+        usage: "LABEL" 
+        description: "Database name" 
+    - schemaname:
+        usage: "LABEL"
+        description: "Schema name"
+    - objectname:
+        usage: "LABEL"
+        description: "Table or index name"
+    - size_bytes:
+        usage: "GAUGE"
+        description: "Size of object in bytes"
+    - total_wasted_space_bytes: 
+        usage: "GAUGE" 
+        description: "Total wasted space in bytes of current database" 
+
+

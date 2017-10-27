@@ -47,16 +47,24 @@ psql -d postgres -c "CREATE EXTENSION pg_stat_statements"
 ```
 Install functions to the specific database you will be monitoring in the cluster
 
-### For PG10
+### Monitoring Queries File
+
+The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
+
+For example, to use just the common queries for PostgreSQL 9.6 do the following:
 ```
-cp postgres/queries_pg10.yml /etc/ccp_monitoring/queries.yml
-cp postgres/functions_pg10.sql /etc/ccp_monitoring/exporter_functions.sql
+cd postgres
+cat queries_common.yml queries_pg96.yml > queries.yml
+cp queries.yml /etc/ccp_monitoring/queries.yml
+cp functions_pg96.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
 ```
-### For PG96
+To include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
-cp postgres/queries_pg96.yml /etc/ccp_monitoring/queries.yml
-cp postgres/functions_pg96.sql /etc/ccp_monitoring/exporter_functions.sql
+cd postgres
+cat queries_common.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
+cp queries.yml /etc/ccp_monitoring/queries.yml
+cp functions_pg10.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
 ```
 
