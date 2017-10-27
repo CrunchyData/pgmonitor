@@ -1,14 +1,14 @@
 
 
 ccp_bloat_check: 
-  query: "SELECT current_database() AS current_database
+  query: "SELECT current_database() AS dbname
         , schemaname
         , objectname
         , size_bytes
         , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::int ))::int AS total_wasted_space_bytes
           FROM public.bloat_stats" 
   metrics: 
-    - current_database: 
+    - dbname: 
         usage: "LABEL" 
         description: "Database name" 
     - schemaname:

@@ -139,7 +139,7 @@
               "legendFormat": "",
               "metric": "ccp_active_connections_count",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "80,90",
@@ -216,7 +216,7 @@
               "intervalFactor": 2,
               "metric": "ccp_active_connections_count",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "75,95",
@@ -293,7 +293,7 @@
               "intervalFactor": 2,
               "metric": "",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "300,900",
@@ -370,7 +370,7 @@
               "intervalFactor": 2,
               "metric": "ccp_idle_connections_count",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "60,80",
@@ -447,7 +447,7 @@
               "intervalFactor": 2,
               "metric": "ccp_replication_lag",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "",
@@ -523,7 +523,7 @@
               "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "33554432,83886080",
@@ -560,7 +560,16 @@
           },
           "id": 4,
           "interval": null,
-          "links": [],
+          "links": [
+            {
+              "dashUri": "db/tablesize_detail",
+              "dashboard": "TableSize_Detail",
+              "includeVars": true,
+              "targetBlank": true,
+              "title": "TableSize_Detail",
+              "type": "dashboard"
+            }
+          ],
           "mappingType": 1,
           "mappingTypes": [
             {
@@ -597,11 +606,12 @@
           "targets": [
             {
               "expr": "sum(ccp_database_size_bytes{job=\"[[jobname]]\"})",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "ccp_database_size_bytes",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "",
@@ -680,7 +690,7 @@
               "legendFormat": "",
               "metric": "pg_stat_database_xact_rollback",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "",
@@ -748,7 +758,7 @@
               "legendFormat": "Max",
               "metric": "",
               "refId": "A",
-              "step": 240
+              "step": 60
             },
             {
               "expr": "ccp_connection_stats_active{job=\"[[jobname]]\"}",
@@ -756,7 +766,7 @@
               "legendFormat": "Active",
               "metric": "",
               "refId": "B",
-              "step": 240
+              "step": 60
             },
             {
               "expr": "ccp_connection_stats_idle_in_txn{job=\"[[jobname]]\"}",
@@ -765,7 +775,7 @@
               "legendFormat": "IdleTrn",
               "metric": "",
               "refId": "C",
-              "step": 240
+              "step": 60
             },
             {
               "expr": "ccp_connection_stats_idle{job=\"[[jobname]]\"}",
@@ -773,7 +783,7 @@
               "legendFormat": "Idle",
               "metric": "",
               "refId": "D",
-              "step": 240
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -864,7 +874,7 @@
               "legendFormat": "{{dbname}}",
               "metric": "pg_stat_database_",
               "refId": "A",
-              "step": 240
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -941,7 +951,7 @@
               "legendFormat": "Commit",
               "metric": "pg_stat_database_xact_commit",
               "refId": "A",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "sum(irate(ccp_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
@@ -949,7 +959,7 @@
               "intervalFactor": 2,
               "legendFormat": "Rollback",
               "refId": "B",
-              "step": 240
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1049,7 +1059,7 @@
               "legendFormat": "Fetched",
               "metric": "pg_stat_database_tup_fetched",
               "refId": "A",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
@@ -1058,7 +1068,7 @@
               "legendFormat": "Inserted",
               "metric": "pg_stat_database_tup_inserted",
               "refId": "B",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
@@ -1067,7 +1077,7 @@
               "legendFormat": "Updated",
               "metric": "pg_stat_database_tup_updated",
               "refId": "C",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
@@ -1076,7 +1086,7 @@
               "legendFormat": "Deleted",
               "metric": "pg_stat_database_tup_deleted",
               "refId": "D",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
@@ -1085,7 +1095,7 @@
               "legendFormat": "Returned",
               "metric": "pg_stat_database_tup_returned",
               "refId": "E",
-              "step": 600
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1164,7 +1174,7 @@
               "legendFormat": "Conflicts",
               "metric": "pg_stat_database_conflicts",
               "refId": "A",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
@@ -1173,7 +1183,7 @@
               "legendFormat": "DeadLocks",
               "metric": "pg_stat_database_deadlocks",
               "refId": "B",
-              "step": 600
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1251,7 +1261,7 @@
               "intervalFactor": 2,
               "legendFormat": "accessexclusive",
               "refId": "A",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accesssharelock\"})",
@@ -1259,7 +1269,7 @@
               "intervalFactor": 2,
               "legendFormat": "accessshare",
               "refId": "B",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"exclusivelock\"})",
@@ -1267,7 +1277,7 @@
               "intervalFactor": 2,
               "legendFormat": "exclusive",
               "refId": "C",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowexclusivelock\"})",
@@ -1275,7 +1285,7 @@
               "intervalFactor": 2,
               "legendFormat": "rowexclusive",
               "refId": "D",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowsharelock\"})",
@@ -1283,7 +1293,7 @@
               "intervalFactor": 2,
               "legendFormat": "rowshare",
               "refId": "E",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharelock\"})",
@@ -1291,7 +1301,7 @@
               "intervalFactor": 2,
               "legendFormat": "share",
               "refId": "F",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharerowexclusivelock\"})",
@@ -1299,7 +1309,7 @@
               "intervalFactor": 2,
               "legendFormat": "sharerowexclusive",
               "refId": "G",
-              "step": 600
+              "step": 120
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"shareupdateexclusivelock\"})",
@@ -1307,7 +1317,7 @@
               "intervalFactor": 2,
               "legendFormat": "shareupdateexclusive",
               "refId": "H",
-              "step": 600
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1398,7 +1408,7 @@
               "legendFormat": "Allocated",
               "metric": "pg_stat_bgwriter_buffers_alloc",
               "refId": "A",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=\"[[jobname]]\"}[5m])",
@@ -1407,7 +1417,7 @@
               "legendFormat": "Backend",
               "metric": "pg_stat_bgwriter_buffers_backend",
               "refId": "B",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=\"[[jobname]]\"}[5m])",
@@ -1416,7 +1426,7 @@
               "legendFormat": "FSync",
               "metric": "pg_stat_bgwriter_buffers_backend_fsync",
               "refId": "C",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=\"[[jobname]]\"}[5m])",
@@ -1425,7 +1435,7 @@
               "legendFormat": "CheckPoint",
               "metric": "pg_stat_bgwriter_buffers_checkpoint",
               "refId": "D",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=\"[[jobname]]\"}[5m])",
@@ -1434,7 +1444,7 @@
               "legendFormat": "Clean",
               "metric": "pg_stat_bgwriter_buffers_clean",
               "refId": "E",
-              "step": 240
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1513,7 +1523,7 @@
               "legendFormat": "AutoVacuum",
               "metric": "ccp_stat_user_tables_autovacuum_count",
               "refId": "A",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[jobname]]\"}[5m]))",
@@ -1521,7 +1531,7 @@
               "intervalFactor": 2,
               "legendFormat": "AutoAnalyze",
               "refId": "B",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[jobname]]\"}[5m]))",
@@ -1529,7 +1539,7 @@
               "intervalFactor": 2,
               "legendFormat": "Vacuum",
               "refId": "C",
-              "step": 240
+              "step": 120
             },
             {
               "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[jobname]]\"}[5m]))",
@@ -1537,7 +1547,7 @@
               "intervalFactor": 2,
               "legendFormat": "Analyze",
               "refId": "D",
-              "step": 240
+              "step": 120
             }
           ],
           "thresholds": [],
@@ -1628,7 +1638,7 @@
               "legendFormat": "max run time",
               "metric": "ccp_stat_statements_mean_time",
               "refId": "A",
-              "step": 240
+              "step": 60
             },
             {
               "expr": "ccp_stat_statements_max_query_meantime{job=\"[[jobname]]\"}",
@@ -1636,7 +1646,7 @@
               "intervalFactor": 2,
               "legendFormat": "max mean time",
               "refId": "B",
-              "step": 240
+              "step": 60
             },
             {
               "expr": "ccp_stat_statements_max_stddev_time",
@@ -1644,7 +1654,7 @@
               "intervalFactor": 2,
               "legendFormat": "max stddev time",
               "refId": "C",
-              "step": 240
+              "step": 60
             }
           ],
           "thresholds": [],
@@ -1764,7 +1774,7 @@
               "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
               "intervalFactor": 2,
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "50,75",
@@ -1840,7 +1850,7 @@
               "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[jobname]]\"}",
               "intervalFactor": 2,
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "80,90",
@@ -1915,7 +1925,7 @@
               "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
               "intervalFactor": 2,
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "80,90",
@@ -1979,7 +1989,7 @@
               "intervalFactor": 2,
               "legendFormat": "{{mode}}",
               "refId": "E",
-              "step": 600
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -2054,14 +2064,14 @@
               "intervalFactor": 2,
               "legendFormat": "Free",
               "refId": "B",
-              "step": 600
+              "step": 240
             },
             {
               "expr": "node_filesystem_size{job=\"[[jobname]]\", device=\"rootfs\"}",
               "intervalFactor": 2,
               "legendFormat": "Total",
               "refId": "C",
-              "step": 600
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -2136,7 +2146,7 @@
               "intervalFactor": 2,
               "legendFormat": "Total",
               "refId": "A",
-              "step": 600
+              "step": 240
             },
             {
               "expr": "node_memory_MemAvailable{job=\"[[jobname]]\"}",
@@ -2144,7 +2154,7 @@
               "legendFormat": "Available",
               "metric": "node_memory_Mem",
               "refId": "B",
-              "step": 600
+              "step": 240
             },
             {
               "expr": "node_memory_MemFree{job=\"[[jobname]]\"}",
@@ -2152,7 +2162,7 @@
               "legendFormat": "Free",
               "metric": "node_memory_MemFree",
               "refId": "C",
-              "step": 600
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -2227,21 +2237,21 @@
               "intervalFactor": 2,
               "legendFormat": "Used",
               "refId": "A",
-              "step": 600
+              "step": 240
             },
             {
               "expr": "node_memory_SwapFree{job=\"[[jobname]]\"}",
               "intervalFactor": 2,
               "legendFormat": "Free",
               "refId": "B",
-              "step": 600
+              "step": 240
             },
             {
               "expr": "node_memory_SwapTotal{job=\"[[jobname]]\"}",
               "intervalFactor": 2,
               "legendFormat": "Total",
               "refId": "C",
-              "step": 600
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -2351,7 +2361,7 @@
               "expr": "100*node_filesystem_free{job=\"[[jobname]]\", device=\"rootfs\"}/node_filesystem_size{job=\"[[jobname]]\", device=\"rootfs\"}",
               "intervalFactor": 2,
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "80,95",
@@ -2427,7 +2437,7 @@
               "intervalFactor": 2,
               "legendFormat": "",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "10,20",
@@ -2504,7 +2514,7 @@
               "legendFormat": "",
               "metric": "node_memory_SwapFree",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "30,70",
@@ -2575,7 +2585,7 @@
               "legendFormat": "",
               "metric": "node_cpu",
               "refId": "A",
-              "step": 3600
+              "step": 1200
             }
           ],
           "thresholds": "90,95",
@@ -2629,7 +2639,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now/d",
     "to": "now"
   },
   "timepicker": {
@@ -2659,5 +2669,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 26
+  "version": 29
 }
