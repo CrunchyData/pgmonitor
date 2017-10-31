@@ -54,7 +54,7 @@ The queries common to all postgres versions are contained in queries_common.yml.
 For example, to use just the common queries for PostgreSQL 9.6 do the following:
 ```
 cd postgres
-cat queries_common.yml queries_pg96.yml > queries.yml
+cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
 cp queries.yml /etc/ccp_monitoring/queries.yml
 cp functions_pg96.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
@@ -62,10 +62,21 @@ psql -f /etc/ccp_monitoring/exporter_functions.sql
 To include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
 cd postgres
-cat queries_common.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
+cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
 cp queries.yml /etc/ccp_monitoring/queries.yml
 cp functions_pg10.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
+```
+Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (pg_stat_statements and bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
+```
+cd postgres
+cat queries_per_db.yml queries_pg_stat_statements.yml queries_bloat.yml > queries_mydb.yml
+cp queries_mydbname.yml /etc/ccp_monitoring/queries_mydb.yml
+```
+Modify the sysconfig environment variable accordingly (change port and query file)
+```
+WEB_LISTEN_ADDRESS="-web.listen-address=localhost:9188"
+QUERY_PATH="-extend.query-path=/etc/ccp_monitoring/queries_mydb.yml"
 ```
 
 ### Bloat setup
