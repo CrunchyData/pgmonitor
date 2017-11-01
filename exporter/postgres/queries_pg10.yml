@@ -38,3 +38,17 @@ ccp_replication_slots:
         description: "The amount of WAL (in bytes) being retained for this slot"
 
 
+ccp_wait_types:
+  query: "SELECT backend_xid, wait_event, wait_event_type FROM monitor.pg_stat_activity() WHERE backend_xid is not null"
+  metrics:
+    - backend_xid:
+        usage: "LABEL"
+        description: "Top-level transaction identifier of this backend, if any"
+    - wait_event:
+        usage: "LABEL"
+        description: "Wait event name if backend is currently waiting"
+    - wait_event_type:
+        usage: "LABEL"
+        description: "The type of event for which the backend is waiting"
+
+

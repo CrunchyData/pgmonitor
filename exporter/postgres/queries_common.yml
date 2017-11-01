@@ -198,7 +198,6 @@ ccp_stat_database:
             description: "Number of deadlocks detected in this database"
 
 
-
 ccp_transaction_wraparound:
   query: "WITH max_age AS ( SELECT 2000000000 as max_old_xid, setting AS autovacuum_freeze_max_age FROM pg_catalog.pg_settings WHERE name = 'autovacuum_freeze_max_age'), per_database_stats AS ( SELECT datname , m.max_old_xid::int , m.autovacuum_freeze_max_age::int , age(d.datfrozenxid) AS oldest_current_xid FROM pg_catalog.pg_database d JOIN max_age m ON (true) WHERE d.datallowconn) SELECT max(oldest_current_xid) AS oldest_current_xid , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac FROM per_database_stats"
   metrics:
@@ -211,19 +210,5 @@ ccp_transaction_wraparound:
     - percent_towards_emergency_autovac:
         usage: "GAUGE"
         description: "Percentage towards emergency autovacuum process starting"
-
-
-ccp_wait_types:
-  query: "SELECT backend_xid, wait_event, wait_event_type FROM monitor.pg_stat_activity() WHERE backend_xid is not null"
-  metrics:
-    - backend_xid:
-        usage: "LABEL"
-        description: "Top-level transaction identifier of this backend, if any"
-    - wait_event:
-        usage: "LABEL"
-        description: "Wait event name if backend is currently waiting"
-    - wait_event_type:
-        usage: "LABEL"
-        description: "The type of event for which the backend is waiting"
 
 

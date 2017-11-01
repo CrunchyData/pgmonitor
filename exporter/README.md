@@ -11,6 +11,7 @@ chmod +x /usr/bin/node_exporter
 ```
 * Modify node/ccp_io_queue.sh for DISK to monitoring
 * Modify node/ccp_is_pgready.sh for postgres bin path and to ensure it points to an existing database in the cluster to monitor (by default "postgres")
+* Modify crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours
 
 ## Setup
 Create the ccp_monitoring user if it does not yet exist
@@ -51,12 +52,12 @@ Install functions to the specific database you will be monitoring in the cluster
 
 The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
 
-For example, to use just the common queries for PostgreSQL 9.6 do the following:
+For example, to use just the common queries for PostgreSQL 9.5/9.6 do the following:
 ```
 cd postgres
-cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
+cat queries_common.yml queries_per_db.yml queries_pg95.yml > queries.yml
 cp queries.yml /etc/ccp_monitoring/queries.yml
-cp functions_pg96.sql /etc/ccp_monitoring/exporter_functions.sql
+cp functions_pg95.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
 ```
 To include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
