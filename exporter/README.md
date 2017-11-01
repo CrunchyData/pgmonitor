@@ -1,11 +1,17 @@
 # Setting up exporters
 
 ## Instructions
-* Download postgres_exporter and save postgres_exporter to /usr/bin/postgres_exporter
+* Download and save the latest postgres_exporter to /usr/bin/postgres_exporter
+
+https://github.com/wrouesnel/postgres_exporter/releases
+
 ```
 chmod +x /usr/bin/postgres_exporter
 ```
-* Download node_exporter and save node_exporter to /usr/bin/node_exporter
+* Download and save the latest node_exporter to /usr/bin/node_exporter
+
+https://github.com/prometheus/node_exporter/releases
+
 ```
 chmod +x /usr/bin/node_exporter
 ```
@@ -46,11 +52,10 @@ pg_stat_statements requires running the following statement in the database(s) t
 ```
 psql -d postgres -c "CREATE EXTENSION pg_stat_statements"
 ```
-Install functions to the specific database you will be monitoring in the cluster
 
 ### Monitoring Queries File
 
-The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
+Install functions to all databases you will be monitoring in the cluster. The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
 
 For example, to use just the common queries for PostgreSQL 9.5/9.6 do the following:
 ```
@@ -68,10 +73,10 @@ cp queries.yml /etc/ccp_monitoring/queries.yml
 cp functions_pg10.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
 ```
-Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (pg_stat_statements and bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
+Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
 ```
 cd postgres
-cat queries_per_db.yml queries_pg_stat_statements.yml queries_bloat.yml > queries_mydb.yml
+cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
 cp queries_mydbname.yml /etc/ccp_monitoring/queries_mydb.yml
 ```
 Modify the sysconfig environment variable accordingly (change port and query file)
@@ -82,7 +87,7 @@ QUERY_PATH="-extend.query-path=/etc/ccp_monitoring/queries_mydb.yml"
 
 ### Bloat setup
 
-Run script on the specific database you will be monitoring bloat for in the cluster
+Run script on the specific database(s) you will be monitoring bloat for in the cluster
 See special note in crontab.txt concerning a superuser requirement for using this script
 
 ```

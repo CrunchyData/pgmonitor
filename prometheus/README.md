@@ -15,6 +15,8 @@ https://prometheus.io/download/
 Create the ccp_monitoring user if it does not yet exist
 ```
 useradd ccp_monitoring -m -d /var/lib/ccp_monitoring
+```
+```
 mkdir -p /etc/ccp_monitoring/auto.d
 mkdir -p /var/lib/ccp_monitoring/prometheus
 cp alertmanager.service prometheus.service /etc/systemd/system/
