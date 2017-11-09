@@ -1,1 +1,0 @@
-# Operating System Metric exporter

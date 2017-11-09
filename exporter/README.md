@@ -15,20 +15,27 @@ https://github.com/prometheus/node_exporter/releases
 ```
 chmod +x /usr/bin/node_exporter
 ```
-* Modify node/ccp_io_queue.sh for DISK to monitoring
 * Modify node/ccp_is_pgready.sh for postgres bin path and to ensure it points to an existing database in the cluster to monitor (by default "postgres")
+* Modify node/ccp_io_queue.sh for DISK to monitoring (if using this metric)
 * Modify crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours
+* Modify sysconfig.postgres_exporter to set WEB_LISTEN_ADDRESS to the network IP assigned to the server that the exporter will run on. 
+* Modify sysconfig.postgres_exporter to set DATA_SOURCE_NAME to set which database to connect to to monitor (default is "postgres")
 
 ## Setup
 Create the ccp_monitoring user if it does not yet exist
 ```
 useradd ccp_monitoring -m -d /var/lib/ccp_monitoring
 ```
+Create directory /etc/ccp_monitoring if it does not yet exist
+```
+mkdir -p /etc/ccp_monitoring
+```
 ```
 yum install sysstat.x86_64 python-psycopg2.x86_64
 
 cp node/node_exporter.service postgres/postgres_exporter.service /etc/systemd/system/
-cp node/ccp_io_queue.sh node/ccp_is_pgready.sh pg_bloat_check.py /usr/bin/
+cp node/ccp_is_pgready.sh pg_bloat_check.py /usr/bin/
+cp node/ccp_io_queue.sh  (if using this metric)
 cp node/sysconfig.node_exporter /etc/sysconfig/node_exporter
 cp postgres/sysconfig.postgres_exporter /etc/sysconfig/postgres_exporter
 
@@ -44,13 +51,23 @@ When Packaging, service files shall go in /usr/lib/systemd/system/
 ## Database Setup
 
 ### postgresql.conf
-Install contrib modules to provide additional monitoring capabilities. This requires a restart of the database.
+Install contrib modules to provide additional monitoring capabilities. This requires a restart of the database if you would like these contrib modules installed.
 ```
 shared_preload_libraries = 'pg_stat_statements,auto_explain'
 ```
 pg_stat_statements requires running the following statement in the database(s) to be monitored
 ```
 psql -d postgres -c "CREATE EXTENSION pg_stat_statements"
+```
+
+### GRANTS
+The ccp_monitoring role must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
+```
+SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;' FROM pg_database WHERE datallowconn = true;
+```
+This should generate one or more statements similar to the following:
+```
+GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 ```
 
 ### Monitoring Queries File
@@ -65,7 +82,7 @@ cp queries.yml /etc/ccp_monitoring/queries.yml
 cp functions_pg95.sql /etc/ccp_monitoring/exporter_functions.sql
 psql -f /etc/ccp_monitoring/exporter_functions.sql
 ```
-To include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
+As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
 cd postgres
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
@@ -79,16 +96,16 @@ cd postgres
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
 cp queries_mydbname.yml /etc/ccp_monitoring/queries_mydb.yml
 ```
-Modify the sysconfig environment variable accordingly (change port and query file)
+Modify the sysconfig environment variables accordingly (change port, database name and query file)
 ```
-WEB_LISTEN_ADDRESS="-web.listen-address=localhost:9188"
+WEB_LISTEN_ADDRESS="-web.listen-address=192.168.1.101:9188"
 QUERY_PATH="-extend.query-path=/etc/ccp_monitoring/queries_mydb.yml"
+DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
 ```
 
 ### Bloat setup
 
-Run script on the specific database(s) you will be monitoring bloat for in the cluster
-See special note in crontab.txt concerning a superuser requirement for using this script
+Run script on the specific database(s) you will be monitoring bloat for in the cluster. See special note in crontab.txt concerning a superuser requirement for using this script
 
 ```
 psql -d postgres -c "CREATE EXTENSION pgstattuple;"

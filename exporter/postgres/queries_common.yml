@@ -100,7 +100,7 @@ ccp_replication_status:
 ccp_settings_guage:
   query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_timeout') as checkpoint_timeout
             , (select setting::float from pg_catalog.pg_settings where name = 'checkpoint_completion_target') as checkpoint_completion_target
-            , (select 8192*setting::int as bytes from pg_catalog.pg_settings where name = 'shared_buffers') as shared_buffers"
+            , (select 8192*setting::bigint as bytes from pg_catalog.pg_settings where name = 'shared_buffers') as shared_buffers"
   metrics:
     - checkpoint_timeout:
         usage: "GAUGE"

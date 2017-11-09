@@ -6,7 +6,7 @@ https://prometheus.io/download/
 
 * Download latest stable prometheus and save prometheus to /usr/bin/prometheus
 * Download latest stable alertmanager and save alertmanager to /usr/bin/alertmanager
-* Modify alertmanager.yml and setup alert target information (smtp, sms, etc)
+* Modify alertmanager.yml and setup alert target (smtp, sms, etc), receiver and route information
 * Modify alert-rules.yml and update rules as needed
 * Modify auto.d/*.yml.sample file(s) to point to exporter services to auto-discover. Remove .sample suffix when configuration is final.
 * Modify sysconfig.prometheus to set the storage retention period for metric data (default is 1 week) and also the storage location if necessary
