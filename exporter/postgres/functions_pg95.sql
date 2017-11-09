@@ -33,15 +33,6 @@ AS $$
 $$;
 REVOKE ALL ON FUNCTION monitor.pg_stat_statements () FROM PUBLIC;
 
-/* this shouldn't be needed, but leaving here for reference/testing 
-eREATE OR REPLACE FUNCTION monitor.replica_replay_time_lag() RETURNS TABLE (last_replay_time int) 
-    LANGUAGE SQL SECURITY DEFINER
-AS $$
-    SELECT extract(epoch from now() - pg_last_xact_replay_timestamp())::int AS last_replay_time
-    $$;
-
-REVOKE ALL ON FUNCTION monitor.replica_replay_time_lag() FROM PUBLIC;
-*/
 
 CREATE OR REPLACE FUNCTION monitor.pg_ls_wal_dir(text) RETURNS SETOF TEXT 
     LANGUAGE plpgsql SECURITY DEFINER

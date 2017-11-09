@@ -1,1 +1,0 @@
-# PostgreSQL Metric exporter

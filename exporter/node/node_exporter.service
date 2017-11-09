@@ -7,7 +7,7 @@ PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/node_exporter
 ExecStart=/usr/bin/node_exporter ${OPTIONS}
-ExecStop=/usr/bin/kill -9 $(pidof node_exporter)
+ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always
 
 [Install]

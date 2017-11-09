@@ -1,2 +1,3 @@
 CONFIG="-config.file=/etc/ccp_monitoring/alertmanager.yml"
 STORAGE="-storage.path=/var/lib/ccp_monitoring"
+LOGLEVEL="-log.level=info"
