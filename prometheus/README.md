@@ -23,7 +23,7 @@ cp alertmanager.service prometheus.service /etc/systemd/system/
 cp sysconfig.alertmanager /etc/sysconfig/alertmanager
 cp sysconfig.prometheus /etc/sysconfig/prometheus
 cp alertmanager.yml prometheus.yml alert-rules.yml /etc/ccp_monitoring/
-cp auto.d/*.yml /etc/ccp_monitoring/auto.d/
+cp auto.d/*.yml* /etc/ccp_monitoring/auto.d/
 chown -R ccp_monitoring:ccp_monitoring /etc/ccp_monitoring
 chown -R ccp_monitoring:ccp_monitoring /var/lib/ccp_monitoring
 ```

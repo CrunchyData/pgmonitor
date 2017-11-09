@@ -1059,7 +1059,7 @@
               "legendFormat": "Fetched",
               "metric": "pg_stat_database_tup_fetched",
               "refId": "A",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
@@ -1068,7 +1068,7 @@
               "legendFormat": "Inserted",
               "metric": "pg_stat_database_tup_inserted",
               "refId": "B",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
@@ -1077,7 +1077,7 @@
               "legendFormat": "Updated",
               "metric": "pg_stat_database_tup_updated",
               "refId": "C",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
@@ -1086,7 +1086,7 @@
               "legendFormat": "Deleted",
               "metric": "pg_stat_database_tup_deleted",
               "refId": "D",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
@@ -1095,7 +1095,7 @@
               "legendFormat": "Returned",
               "metric": "pg_stat_database_tup_returned",
               "refId": "E",
-              "step": 120
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -1174,7 +1174,7 @@
               "legendFormat": "Conflicts",
               "metric": "pg_stat_database_conflicts",
               "refId": "A",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
@@ -1183,7 +1183,7 @@
               "legendFormat": "DeadLocks",
               "metric": "pg_stat_database_deadlocks",
               "refId": "B",
-              "step": 120
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -1261,7 +1261,7 @@
               "intervalFactor": 2,
               "legendFormat": "accessexclusive",
               "refId": "A",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accesssharelock\"})",
@@ -1269,7 +1269,7 @@
               "intervalFactor": 2,
               "legendFormat": "accessshare",
               "refId": "B",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"exclusivelock\"})",
@@ -1277,7 +1277,7 @@
               "intervalFactor": 2,
               "legendFormat": "exclusive",
               "refId": "C",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowexclusivelock\"})",
@@ -1285,7 +1285,7 @@
               "intervalFactor": 2,
               "legendFormat": "rowexclusive",
               "refId": "D",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowsharelock\"})",
@@ -1293,7 +1293,7 @@
               "intervalFactor": 2,
               "legendFormat": "rowshare",
               "refId": "E",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharelock\"})",
@@ -1301,7 +1301,7 @@
               "intervalFactor": 2,
               "legendFormat": "share",
               "refId": "F",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharerowexclusivelock\"})",
@@ -1309,7 +1309,7 @@
               "intervalFactor": 2,
               "legendFormat": "sharerowexclusive",
               "refId": "G",
-              "step": 120
+              "step": 240
             },
             {
               "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"shareupdateexclusivelock\"})",
@@ -1317,7 +1317,7 @@
               "intervalFactor": 2,
               "legendFormat": "shareupdateexclusive",
               "refId": "H",
-              "step": 120
+              "step": 240
             }
           ],
           "thresholds": [],
@@ -1955,11 +1955,11 @@
       "panels": [
         {
           "aliasColors": {},
-          "bars": true,
+          "bars": false,
           "dashLength": 10,
           "dashes": false,
           "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
+          "fill": 6,
           "id": 19,
           "legend": {
             "avg": false,
@@ -1970,11 +1970,11 @@
             "total": false,
             "values": false
           },
-          "lines": false,
+          "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
+          "nullPointMode": "connected",
+          "percentage": true,
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1985,10 +1985,35 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(node_cpu{job=\"[[jobname]]\"}[5m])*100",
+              "expr": "sum by (mode)(irate(node_cpu{mode=\"idle\", job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "{{mode}}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "expr": "sum by (mode)(irate(node_cpu{mode=\"system\", job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{mode}}",
               "refId": "E",
+              "step": 240
+            },
+            {
+              "expr": "sum by (mode)(irate(node_cpu{mode=\"user\", job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "{{mode}}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "expr": "sum by (mode)(irate(node_cpu{mode=\"iowait\", job=\"[[jobname]]\"}[5m]))",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "{{mode}}",
+              "refId": "C",
               "step": 240
             }
           ],
@@ -2533,16 +2558,16 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
           "datasource": "${DS_PROMETHEUS}",
-          "format": "percent",
+          "format": "none",
           "gauge": {
-            "maxValue": 100,
+            "maxValue": 30,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
@@ -2575,12 +2600,13 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
-              "expr": "100 * (1 - (irate(node_cpu{job=\"[[jobname]]\", mode='idle'}[5m])))",
+              "expr": "node_load5{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "node_cpu",
@@ -2588,8 +2614,8 @@
               "step": 1200
             }
           ],
-          "thresholds": "90,95",
-          "title": "CPU",
+          "thresholds": "5,15",
+          "title": "System Load (5m)",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -2669,5 +2695,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 29
+  "version": 6
 }
