@@ -1,1 +1,1 @@
-OPTIONS="--collector.textfile.directory=/var/lib/ccp_monitoring/"
+OPTIONS="--collector.textfile.directory=/var/lib/ccp_monitoring/node_exporter"
