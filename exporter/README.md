@@ -4,14 +4,15 @@
 
 * Install latest node_exporter package from Crunchy Repository
 * Install latest postgres_exporter package from Crunchy Repository
+* Install latest crunchy-monitoring-extras-pg## for your major version of PostgreSQL
 
 ## Service Setup
 
-* Modify sysconfig.postgres_exporter to set WEB_LISTEN_ADDRESS to the network IP assigned to the server that the exporter will run on. 
+* Modify sysconfig.postgres_exporter to set WEB_LISTEN_ADDRESS to the network IP assigned to the server that the exporter will run on (Ex 192.168.1.201). 
 * Modify sysconfig.postgres_exporter to set DATA_SOURCE_NAME to set which database to connect to to monitor (default is "postgres")
-* Modify node/ccp_is_pgready.sh for postgres bin path and to ensure it points to an existing database in the cluster to monitor (by default "postgres")
+* Modify node/ccp_pg_isready##.sh to ensure it points to an existing database in the cluster to monitor (by default "postgres")
 * Modify node/ccp_io_queue.sh for DISK to monitoring (if using this metric)
-* Modify crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours
+* Modify crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
 
@@ -39,18 +40,18 @@ GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 
 Install functions to all databases you will be monitoring in the cluster. The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
 
-For example, to use just the common queries for PostgreSQL 9.5 do the following:
+For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
 ```
 cd /var/lib/ccp_monitoring/95
-cat queries_common.yml queries_per_db.yml queries_pg95.yml > queries.yml
-cp queries.yml /var/lib/ccp_monitoring/queries.yml
-psql -f /var/lib/ccp_monitoring/functions_pg95.sql
+cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
+cp queries.yml /var/lib/ccp_monitoring/96/queries.yml
+psql -f /var/lib/ccp_monitoring/functions_pg96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
 cd /var/lib/ccp_monitoring/10
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
-cp queries.yml /etc/ccp_monitoring/queries.yml
+cp queries.yml /etc/ccp_monitoring/10/queries.yml
 psql -f /var/lib/ccp_monitoring/functions_pg10.sql
 ```
 

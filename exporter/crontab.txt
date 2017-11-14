@@ -1,4 +1,5 @@
-#* * * * * /usr/bin/ccp_is_pgready.sh
+# Modify ccp_pg_isready script name to relevant major version number
+#* * * * * /usr/bin/ccp_pg_isready96.sh
 
 # The below script must be run as a database superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file
 # 0,30 * * * * /usr/bin/pg_bloat_check.py --quiet -c "dbname=postgres user=postgres"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-PGDIR=/var/lib/ccp_monitoring
-PGTMP=is_pgready.tmp
-PGFILE=is_pgready.prom
+PGDIR=/var/lib/ccp_monitoring/node_exporter
+PGTMP=is_pgready-9.6.tmp
+PGFILE=is_pgready-9.6.prom
 PGBIN=/usr/pgsql-9.6/bin
 if [ ! -d ${PGDIR} ]; then
   mkdir ${PGDIR}
