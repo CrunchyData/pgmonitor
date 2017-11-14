@@ -1,7 +1,6 @@
-[Unit]
-Description=Prometheus Server
-After=network.target
+.include /usr/lib/systemd/system/prometheus.service
 
+# Override above package service config with our own as needed
 [Service]
 PermissionsStartOnly=true
 User=ccp_monitoring
@@ -10,5 +9,3 @@ ExecStart=/usr/bin/prometheus ${CONFIG} ${STORAGEPATH} ${STORAGERETENTION} ${LOG
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always
 
-[Install]
-WantedBy=multi-user.target

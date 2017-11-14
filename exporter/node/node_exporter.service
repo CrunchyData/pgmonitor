@@ -1,7 +1,6 @@
-[Unit]
-Description=Node Exporter Server
-After=network.target
+.include /usr/lib/systemd/system/node_exporter.service
 
+# Override above package service config with our own as needed
 [Service]
 PermissionsStartOnly=true
 User=ccp_monitoring
@@ -9,6 +8,3 @@ EnvironmentFile=/etc/sysconfig/node_exporter
 ExecStart=/usr/bin/node_exporter ${OPTIONS}
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always
-
-[Install]
-WantedBy=multi-user.target

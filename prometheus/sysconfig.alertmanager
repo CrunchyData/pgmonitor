@@ -1,3 +1,3 @@
-CONFIG="-config.file=/etc/ccp_monitoring/alertmanager.yml"
-STORAGE="-storage.path=/var/lib/ccp_monitoring"
-LOGLEVEL="-log.level=info"
+CONFIG="--config.file=/etc/alertmanager/crunchy-alertmanager.yml"
+STORAGE="--storage.path=/var/lib/ccp_monitoring/alertmanager"
+LOGLEVEL="--log.level=info"
