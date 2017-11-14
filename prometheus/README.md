@@ -1,37 +1,22 @@
 # Setting up Prometheus
 
-## Instructions
+## Installation
 
-https://prometheus.io/download/
-
-* Download latest stable prometheus and save prometheus to /usr/bin/prometheus
-* Download latest stable alertmanager and save alertmanager to /usr/bin/alertmanager
-* Modify alertmanager.yml and setup alert target (smtp, sms, etc), receiver and route information
-* Modify alert-rules.yml and update rules as needed
-* Modify auto.d/*.yml.sample file(s) to point to exporter services to auto-discover. Remove .sample suffix when configuration is final.
-* Modify sysconfig.prometheus to set the storage retention period for metric data (default is 1 week) and also the storage location if necessary
+* Install latest Prometheus package from Crunchy Repository
+* Install latest Alertmanager package from Crunchy Repository
+* Install latest crunchy-monitoring-prometheus-extras package
+* Install latest crunchy-monitoring-alertmanager-extras package
 
 ## Setup
-Create the ccp_monitoring user if it does not yet exist
-```
-useradd ccp_monitoring -m -d /var/lib/ccp_monitoring
-```
-```
-mkdir -p /etc/ccp_monitoring/auto.d
-mkdir -p /var/lib/ccp_monitoring/prometheus
-cp alertmanager.service prometheus.service /etc/systemd/system/
-cp sysconfig.alertmanager /etc/sysconfig/alertmanager
-cp sysconfig.prometheus /etc/sysconfig/prometheus
-cp alertmanager.yml prometheus.yml alert-rules.yml /etc/ccp_monitoring/
-cp auto.d/*.yml* /etc/ccp_monitoring/auto.d/
-chown -R ccp_monitoring:ccp_monitoring /etc/ccp_monitoring
-chown -R ccp_monitoring:ccp_monitoring /var/lib/ccp_monitoring
-```
-Reload systemd confing
-```
-systemctl daemon-reload
-```
-Start services
+
+* Modify crunchy-prometheus.yml to set scrape interval if different from default. Activate alert rules and alertmanager by uncommenting lines when set as needed.
+* Modify crunchy-alertmanager.yml and setup alert target (smtp, sms, etc), receiver and route information
+* Modify crunchy-alert-rules.yml and update rules as needed
+* Modify auto.d/*.yml.sample file(s) to point to exporter services to auto-discover. Copy sample file to create as many additional targets as needed. Remove .sample suffix when configuration is final and Prometheus will auto-discover.
+* Modify sysconfig.prometheus to set the storage retention period for metric data (default is 1 week) and also the storage location if necessary
+
+
+## Start services
 ```
 systemctl enable prometheus
 systemctl start prometheus
@@ -41,6 +26,4 @@ systemctl enable alertmanager
 systemctl start alertmanager
 systemctl status alertmanager
 ```
-
-When Packaging service files shall go in /usr/lib/systemd/system/
 
