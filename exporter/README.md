@@ -98,3 +98,13 @@ systemctl enable node_exporter
 systemctl start node_exporter
 systemctl status node_exporter
 ```
+
+## Note for packaging
+
+The service override files must be placed in the relevant drop-in folder to override the default service files.
+
+    /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service.conf
+    /etc/systemd/system/postgres_exporter.service.d/crunchy-postgres-exporter-service.conf
+
+After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
+ 
