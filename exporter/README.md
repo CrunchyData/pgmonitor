@@ -38,20 +38,18 @@ GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 
 ### Monitoring Queries File
 
-Install functions to all databases you will be monitoring in the cluster. The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
+Install functions to all databases you will be monitoring in the cluster (if you don't have pg_stat_statements installed, you can ignore the error given). The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
 
 For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
 ```
-cd /var/lib/ccp_monitoring/95
+cd /var/lib/ccp_monitoring/96
 cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
-cp queries.yml /var/lib/ccp_monitoring/96/queries.yml
 psql -f /var/lib/ccp_monitoring/functions_pg96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
 cd /var/lib/ccp_monitoring/10
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
-cp queries.yml /etc/ccp_monitoring/10/queries.yml
 psql -f /var/lib/ccp_monitoring/functions_pg10.sql
 ```
 
