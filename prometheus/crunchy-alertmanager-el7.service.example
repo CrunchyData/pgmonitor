@@ -1,0 +1,13 @@
+# Copy, rename this file, and uncomment line(s) below to activate the crunchy specific configuration (recommend just removing .example suffix from copy)
+# Note this file must live in /etc/systemd/system/alertmanager.service.d/ to work
+#
+# Override package service config with our own as needed. ExecStart must be reset.
+
+#[Service]
+#PermissionsStartOnly=true
+#User=ccp_monitoring
+#EnvironmentFile=/etc/sysconfig/alertmanager
+#ExecStart=
+#ExecStart=/usr/bin/alertmanager ${CONFIG} ${STORAGE} ${LOGLEVEL}
+#ExecReload=/usr/bin/kill -HUP $MAINPID
+#Restart=always

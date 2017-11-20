@@ -2,6 +2,26 @@ groups:
 - name: alert-rules
   rules:
       
+########## EXPORTER RULES ##########
+  - alert: PGExporterScrapeError
+    expr: pg_exporter_last_scrape_error > 0
+    for: 10s
+    labels:
+        service: postgresql
+        severity: critical
+    annotations:
+        summary: Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )
+
+  - alert: NodeExporterScrapeError
+    expr: node_textfile_scrape_error > 0
+    for: 10s
+    labels:
+        service: system 
+        severity: critical
+    annotations:
+        summary: Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )
+
+
 ########## POSTGRESQL RULES ##########
   - alert: PGIsReady
     expr: ccp_pg_ready < 1
@@ -45,7 +65,7 @@ groups:
       summary: PGSQL Instance idle transactions
 
   - alert: PGConnPerc
-    expr: (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 0.9
+    expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90 
     for: 10s
     labels:
       service: postgresql
@@ -56,7 +76,7 @@ groups:
       summary: PGSQL Instance connections
 
   - alert: PGConnPerc
-    expr: (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 0.75
+    expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 75
     for: 10s
     labels:
       service: postgresql

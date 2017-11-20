@@ -1,1 +1,3 @@
+# Copy this file to a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/node_exporter)
+
 OPTIONS="--collector.textfile.directory=/var/lib/ccp_monitoring/node_exporter --collector.diskstats.ignored-devices="^(ram|loop|fd)\\d+$ "
