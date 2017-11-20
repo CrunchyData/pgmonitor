@@ -1,0 +1,14 @@
+# Override package service config with our own as needed. ExecStart must be reset.
+# Note this file must live in /etc/systemd/system/prometheus.service.d/ to work
+#
+# Copy, rename this file, and uncomment line(s) below to activate the crunchy specific configuration for prometheus (recommend just removing .example suffix from copy)
+
+#[Service]
+#PermissionsStartOnly=true
+#User=ccp_monitoring
+#EnvironmentFile=/etc/sysconfig/prometheus
+#ExecStart=
+#ExecStart=/usr/bin/prometheus ${CONFIG} ${STORAGEPATH} ${STORAGERETENTION} ${LOGLEVEL}
+#ExecReload=/usr/bin/kill -HUP $MAINPID
+#Restart=always
+

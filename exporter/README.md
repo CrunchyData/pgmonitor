@@ -8,11 +8,11 @@
 
 ## Service Setup
 
-* Modify sysconfig.postgres_exporter to set WEB_LISTEN_ADDRESS to the network IP assigned to the server that the exporter will run on (Ex 192.168.1.201). 
-* Modify sysconfig.postgres_exporter to set DATA_SOURCE_NAME to set which database to connect to to monitor (default is "postgres")
-* Modify node/ccp_pg_isready##.sh to ensure it points to an existing database in the cluster to monitor (by default "postgres")
-* Modify node/ccp_io_queue.sh for DISK to monitoring (if using this metric)
-* Modify crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
+* Copy/Rename & modify /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-el7.service.example to uncomment necessary lines to override default node_exporter service. See notes in example file for more details.
+* Copy/Rename & modify /etc/systemd/system/postgres_exporter.service.d/crunchy-node-exporter-el7.service.example to uncomment necessary lines to override default node_exporter service. See notes in example file for more details.
+* Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is node_exporter.
+* Copy/Rename & modify /etc/sysconfig/postgres_exporter.example as necessary. Default name expected is postgres_exporter.
+* Modify /var/lib/ccp_monitoring/crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
 
