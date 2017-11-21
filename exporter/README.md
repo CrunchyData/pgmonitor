@@ -6,10 +6,10 @@
 * Install latest postgres_exporter package from Crunchy Repository
 * Install latest crunchy-monitoring-extras-pg## for your major version of PostgreSQL
 
-## Service Setup
+## Service Setup (RHEL/CENTOS 7)
 
-* Copy/Rename & modify /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-el7.service.example to uncomment necessary lines to override default node_exporter service. See notes in example file for more details.
-* Copy/Rename & modify /etc/systemd/system/postgres_exporter.service.d/crunchy-node-exporter-el7.service.example to uncomment necessary lines to override default node_exporter service. See notes in example file for more details.
+* Copy/Rename /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf.example to override default node_exporter service. See notes in example file for more details.
+* Copy/Rename /etc/systemd/system/postgres_exporter.service.d/crunchy-postgres-exporter-service-el7.conf.example to override default node_exporter service. See notes in example file for more details.
 * Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is node_exporter.
 * Copy/Rename & modify /etc/sysconfig/postgres_exporter.example as necessary. Default name expected is postgres_exporter.
 * Modify /var/lib/ccp_monitoring/crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
@@ -86,7 +86,7 @@ psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 psql -d postgres -c "GRANT SELECT ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
 
-## Startup services
+## Startup services (RHEL/CENTOS 7)
 
 ```
 systemctl enable postgres_exporter
@@ -98,12 +98,15 @@ systemctl start node_exporter
 systemctl status node_exporter
 ```
 
-## Note for packaging
+## Note for packaging (RHEL/CENTOS 7)
 
 The service override files must be placed in the relevant drop-in folder to override the default service files.
 
-    /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service.conf
-    /etc/systemd/system/postgres_exporter.service.d/crunchy-postgres-exporter-service.conf
+    /etc/systemd/system/node_exporter.service.d/*.conf
+    /etc/systemd/system/postgres_exporter.service.d/*.conf
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
  
+
+## Setup (RHEL/CENTOS 6)
+TODO
