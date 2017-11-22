@@ -10,7 +10,7 @@ groups:
         service: postgresql
         severity: critical
     annotations:
-        summary: Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )
+        summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
 
   - alert: NodeExporterScrapeError
     expr: node_textfile_scrape_error > 0
@@ -19,7 +19,7 @@ groups:
         service: system 
         severity: critical
     annotations:
-        summary: Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )
+        summary: 'Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )'
 
 
 ########## POSTGRESQL RULES ##########
@@ -30,7 +30,7 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      summary: PGSQL Instance running on {{ $labels.job }} is down
+      summary: 'PGSQL Instance running on {{ $labels.job }} is down'
 
   # Absence alerts must be configured per named job, otherwise there's no way to know which job is down
 #  - alert: PGConnectionAbsent
@@ -49,9 +49,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: '{{ $labels.job }} has at least one session idle in transaction
-        for over 5 minutes.'
-      summary: PGSQL Instance idle transactions
+      description: '{{ $labels.job }} has at least one session idle in transaction for over 5 minutes.'
+      summary: 'PGSQL Instance idle transactions'
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 900
@@ -60,9 +59,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: '{{ $labels.job }} has at least one session idle in transaction
-        for over 15 minutes.'
-      summary: PGSQL Instance idle transactions
+      description: '{{ $labels.job }} has at least one session idle in transaction for over 15 minutes.'
+      summary: 'PGSQL Instance idle transactions'
 
   - alert: PGConnPerc
     expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90 
@@ -71,9 +69,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: '{{ $labels.job }} is using 90% or more of available connections
-        ({{ $value }}%)'
-      summary: PGSQL Instance connections
+      description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
+      summary: 'PGSQL Instance connections'
 
   - alert: PGConnPerc
     expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 75
@@ -82,9 +79,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: '{{ $labels.job }} is using 75% or more of available connections
-        ({{ $value }}%)'
-      summary: PGSQL Instance connections
+      description: '{{ $labels.job }} is using 75% or more of available connections ({{ $value }}%)'
+      summary: 'PGSQL Instance connections'
 
   - alert: PGDBSize
     expr: ccp_database_size > 1.073741824e+11
@@ -93,9 +89,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value
-        }} bytes'
-      summary: PGSQL Instance size warning
+      description: 'PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value }} bytes'
+      summary: 'PGSQL Instance size warning'
 
   - alert: PGDBSize
     expr: ccp_database_size > 2.68435456e+11
@@ -104,9 +99,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value
-        }} bytes'
-      summary: PGSQL Instance size critical
+      description: 'PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value }} bytes'
+      summary: 'PGSQL Instance size critical'
 
   - alert: PGReplicationByteLag
     expr: ccp_replication_status_byte_lag > 5.24288e+07
@@ -115,9 +109,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: PGSQL Instance {{ $labels.job }} has at least one replica lagging
-        over 50MB behind.
-      summary: PGSQL Instance replica lag warning
+      description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 50MB behind.'
+      summary: 'PGSQL Instance replica lag warning'
 
   - alert: PGReplicationByteLag
     expr: ccp_replication_status_byte_lag > 1.048576e+08
@@ -126,9 +119,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: PGSQL Instance {{ $labels.job }} has at least one replica lagging
-        over 100MB behind.
-      summary: PGSQL Instance replica lag warning
+      description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 100MB behind.'
+      summary: 'PGSQL Instance replica lag warning'
 
   - alert: PGReplicationSlotsInactive
     expr: ccp_replication_slots_active == 0
@@ -137,9 +129,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: PGSQL Instance {{ $labels.job }} has one or more inactive replication
-        slots
-      summary: PGSQL Instance inactive replication slot
+      description: 'PGSQL Instance {{ $labels.job }} has one or more inactive replication slots'
+      summary: 'PGSQL Instance inactive replication slot'
 
   - alert: PGXIDWraparound
     expr: ccp_transaction_wraparound_percent_towards_wraparound > 50
@@ -148,9 +139,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: PGSQL Instance {{ $labels.job }} is over 50% towards transaction
-        id wraparound.
-      summary: PGSQL Instance {{ $labels.job }} transaction id wraparound imminent
+      description: 'PGSQL Instance {{ $labels.job }} is over 50% towards transaction id wraparound.'
+      summary: 'PGSQL Instance {{ $labels.job }} transaction id wraparound imminent'
 
   - alert: PGXIDWraparound
     expr: ccp_transaction_wraparound_percent_towards_wraparound > 75
@@ -159,9 +149,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: PGSQL Instance {{ $labels.job }} is over 75% towards transaction
-        id wraparound.
-      summary: PGSQL Instance transaction id wraparound imminent
+      description: 'PGSQL Instance {{ $labels.job }} is over 75% towards transaction id wraparound.'
+      summary: 'PGSQL Instance transaction id wraparound imminent'
 
   - alert: PGEmergencyVacuum
     expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 75
@@ -170,9 +159,8 @@ groups:
       service: postgresql
       severity: warning
     annotations:
-      description: PGSQL Instance {{ $labels.job }} is over 75% towards emergency
-        autovacuum processes beginning
-      summary: PGSQL Instance emergency vacuum imminent
+      description: 'PGSQL Instance {{ $labels.job }} is over 75% towards emergency autovacuum processes beginning'
+      summary: 'PGSQL Instance emergency vacuum imminent'
 
   - alert: PGEmergencyVacuum
     expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 90
@@ -181,9 +169,8 @@ groups:
       service: postgresql
       severity: critical
     annotations:
-      description: PGSQL Instance {{ $labels.job }} is over 90% towards emergency
-        autovacuum processes beginning
-      summary: PGSQL Instance emergency vacuum imminent
+      description: 'PGSQL Instance {{ $labels.job }} is over 90% towards emergency autovacuum processes beginning'
+      summary: 'PGSQL Instance emergency vacuum imminent'
 
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
@@ -193,42 +180,35 @@ groups:
       service: system
       severity: critical
     annotations:
-      description: Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance
-        }} has been down for more than 10 seconds.
-      summary: Prometheus Exporter Service Down
+      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down for more than 10 seconds.'
+      summary: 'Prometheus Exporter Service Down'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}
-      / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device))
-      > 70
+    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device)) > 70
     for: 2m
     labels:
       service: system
       severity: warning
     annotations:
-      description: Disk usage on target {{ $labels.job }} at {{ value }}%
+      description: 'Disk usage on target {{ $labels.job }} at {{ value }}%'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}
-      / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device))
-      > 85
+    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device)) > 85
     for: 2m
     labels:
       service: system
       severity: critical
     annotations:
-      description: Disk usage on target {{ $labels.job }} at {{ $value }}%
+      description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
   - alert: DiskFillPredict
-    expr: predict_linear(node_filesystem_free{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}[1h],
-      4 * 3600) < 0
+    expr: predict_linear(node_filesystem_free{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}[1h], 4 * 3600) < 0
     for: 5m
     labels:
       service: system
       severity: warning
     annotations:
-      description: (EXPERIMENTAL) Disk {{ $labels.device }} on target {{ $labels.job
-        }} is predicted to fill in 4 hrs based on current usage
+      description: '(EXPERIMENTAL) Disk {{ $labels.device }} on target {{ $labels.job }} is predicted to fill in 4 hrs based on current usage'
 
   - alert: SystemLoad5m
     expr: node_load5 > 5
@@ -237,7 +217,7 @@ groups:
       service: system
       severity: warning
     annotations:
-      description: System load for target {{ $labels.job }} is high ({{ $values }})
+      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
   - alert: SystemLoad5m
     expr: node_load5 > 10
@@ -246,7 +226,7 @@ groups:
       service: system
       severity: critical
     annotations:
-      description: System load for target {{ $labels.job }} is high ({{ $values }})
+      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
   - alert: MemoryAvailable
     expr: (100 * (node_memory_Available) / node_memory_MemTotal) < 25
@@ -255,7 +235,7 @@ groups:
       service: system
       severity: warning
     annotations:
-      description: Memory available for target {{ $labels.job }} is at {{ $value }}%
+      description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
   - alert: MemoryAvailable
     expr: (100 * (node_memory_MemAvailable) / node_memory_MemTotal) < 10
@@ -264,7 +244,7 @@ groups:
       service: system
       severity: critical
     annotations:
-      description: Memory available for target {{ $labels.job }} is at {{ $value }}%
+      description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
   - alert: SwapUsage
     expr: (100 - (100 * (node_memory_SwapFree / node_memory_SwapTotal))) > 60
@@ -273,7 +253,7 @@ groups:
       service: system
       severity: warning
     annotations:
-      description: Swap usage for target {{ $labels.job }} is at {{ $value }}%
+      description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
 
   - alert: SwapUsage
     expr: (100 - (100 * (node_memory_SwapFree / node_memory_SwapTotal))) > 80
@@ -282,4 +262,4 @@ groups:
       service: system
       severity: critical
     annotations:
-      description: Swap usage for target {{ $labels.job }} is at {{ $value }}%
+      description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
