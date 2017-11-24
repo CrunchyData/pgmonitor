@@ -1,0 +1,20 @@
+# Template systemd service file to allow multiple postgres exporters to run with 
+#   a simple variable in service name to distinguish the environment file
+# Ex: systemctl enable postgres_exporter@postgres_exporter_mydb.service
+
+[Unit]
+Description=Postgres Exporter Server - Service Instance: %I
+After=network.target
+
+[Service]
+PermissionsStartOnly=true
+User=ccp_monitoring
+EnvironmentFile=/etc/sysconfig/%i
+ExecStart=/usr/bin/postgres_exporter ${WEB_LISTEN_ADDRESS} ${QUERY_PATH}
+ExecReload=/usr/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+DefaultInstance=postgres_exporter
+
