@@ -4,6 +4,6 @@
 # For STORAGE, this is the location that the alertmanager will keep files it generates
 # For LOGLEVEL, this sets how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
 
-CONFIG="--config.file=/etc/alertmanager/crunchy-alertmanager.yml"
+CONFIG="--config.file=/etc/prometheus/crunchy-alertmanager.yml"
 STORAGE="--storage.path=/var/lib/ccp_monitoring/alertmanager"
 LOGLEVEL="--log.level=info"

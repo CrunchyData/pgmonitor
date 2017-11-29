@@ -4,7 +4,7 @@
 # For QUERY_PATH, the path below is the default place we recommend putting the custom queries file
 # For DATA_SOURCE_NAME, set the database that the exporter will connect to. Default is `postgres`
 
-WEB_LISTEN_ADDRESS="-web.listen-address=localhost:9187"
-QUERY_PATH="-extend.query-path=/var/lib/ccp_monitoring/96/queries.yml"
+WEB_LISTEN_ADDRESS="--web.listen-address=localhost:9187"
+QUERY_PATH="--extend.query-path=/var/lib/ccp_monitoring/postgres_exporter/96/queries.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
 
