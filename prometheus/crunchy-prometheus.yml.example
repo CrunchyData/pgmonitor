@@ -19,13 +19,13 @@ scrape_configs:
     scrape_interval: 30s
     file_sd_configs:
     - files:
-      - /etc/ccp_monitoring/auto.d/*.yml
+      - /etc/prometheus/auto.d/*.yml
 
         
 #### Uncomment below if using alertmanager ####        
 #
 #rule_files:
-#  - /etc/ccp_monitoring/crunchy-alert-rules.yml
+#  - /etc/prometheus/crunchy-alert-rules.yml
 #
 #alerting:
 #  alertmanagers:

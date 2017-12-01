@@ -14,9 +14,9 @@
 * Copy/Rename & modify /etc/sysconfig/prometheus.example as necessary to set prometheus startup properties. See notes within the file itself for recommendations.
 * Copy/Rename & modify /etc/sysconfig/alertmanager.example as necessary to set alertmanager startup properties. See notes within the file itself for recommendations.
 * Copy/Rename & modify /etc/prometheus/crunchy-prometheus.yml.example to set scrape interval if different from default. Activate alert rules and alertmanager by uncommenting lines when set as needed. Default service expects config file to be named crunchy-prometheus.yml.
-* Copy/Rename & modify crunchy-alertmanager.yml.example and setup alert target (smtp, sms, etc), receiver and route information. Default service expects config file to be named crunchy-alertmanager.yml
+* Copy/Rename & modify /etc/prometheus/crunchy-alertmanager.yml.example and setup alert target (smtp, sms, etc), receiver and route information. Default service expects config file to be named crunchy-alertmanager.yml
 * Copy/Rename & modify /etc/prometheus/crunchy-alert-rules.yml.example and update rules as needed. Default prometheus config expects file to be named crunchy-alert-rules.yml.
-* Modify auto.d/*.yml.sample file(s) to point to exporter services to auto-discover. Copy sample file to create as many additional targets as needed. Remove .sample suffix when configuration is final and Prometheus will auto-discover.
+* Modify /etc/prometheus/auto.d/*.yml.sample file(s) to point to exporter services to auto-discover. Copy sample file to create as many additional targets as needed. Remove .sample suffix when configuration is final and Prometheus will auto-discover.
 
 ## Start services (RHEL/CENTOS 7)
 ```
