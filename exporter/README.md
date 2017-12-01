@@ -83,14 +83,14 @@ systemctl status crunchy_postgres_exporter@postgres_exporter
 ## Running multiple postgres exporters
 Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
 ```
+cd /etc/postgres_exporter/96
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
-cp queries_mydbname.yml /etc/postgres_exporter/96/queries_mydb.yml
 ```
 You'll need to create a new sysconfig environment file for the second exporter service. You can just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file 
 ```
 cp /etc/sysconfig/postgres_exporter /etc/sysconfig/postgres_exporter_mydb 
 
-WEB_LISTEN_ADDRESS="-web.listen-address=192.168.1.101:9188"
+WEB_LISTEN_ADDRESS="-web.listen-address=0.0.0.0:9188"
 QUERY_PATH="-extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
 ```
