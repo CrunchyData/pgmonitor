@@ -32,16 +32,18 @@ Install functions to all databases you will be monitoring in the cluster (if you
 
 For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
 ```
-cd /var/lib/ccp_monitoring/postgres_exporter/96
+cd /etc/postgres_exporter/96
 cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
-psql -f /var/lib/ccp_monitoring/postgres_exporter/96/functions_pg96.sql
+psql -f /etc/postgres_exporter/96/functions_pg96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
-cd /var/lib/ccp_monitoring/postgres_exporter/10
+cd /etc/postgres_exporter/10
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
-psql -f /var/lib/ccp_monitoring/postgres_exporter/10/functions_pg10.sql
+psql -f /etc/postgres_exporter/10/functions_pg10.sql
 ```
+
+For replica servers, the setup is the same except that the functions_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
 
 ### GRANTS
 The ccp_monitoring role (created by running the "functions_pg##.sql" file above) must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
@@ -82,14 +84,14 @@ systemctl status crunchy_postgres_exporter@postgres_exporter
 Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
 ```
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
-cp queries_mydbname.yml /var/lib/ccp_monitoring/postgres_exporter/96/queries_mydb.yml
+cp queries_mydbname.yml /etc/postgres_exporter/96/queries_mydb.yml
 ```
 You'll need to create a new sysconfig environment file for the second exporter service. You can just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file 
 ```
 cp /etc/sysconfig/postgres_exporter /etc/sysconfig/postgres_exporter_mydb 
 
 WEB_LISTEN_ADDRESS="-web.listen-address=192.168.1.101:9188"
-QUERY_PATH="-extend.query-path=/var/lib/ccp_monitoring/postgres_exporter/96/queries_mydb.yml"
+QUERY_PATH="-extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
 ```
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
