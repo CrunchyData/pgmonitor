@@ -4,7 +4,7 @@
 
 * Install latest node_exporter package from Crunchy Repository
 * Install latest postgres_exporter package from Crunchy Repository
-* Install latest crunchy-monitoring-extras-pg## package for your major version of PostgreSQL
+* Install latest crunchy-monitoring-pg##-extras package for your major version of PostgreSQL
 * Install latest crunchy-pg_bloat-check package if you need to monitor database bloat
 
 ## Service Setup (RHEL/CENTOS 7)
