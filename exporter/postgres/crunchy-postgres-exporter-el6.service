@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#	/etc/rc.d/init.d/postgres_exporter
+#	/etc/init.d/postgres_exporter
 #
 # chkconfig: 2345 80 80
 #

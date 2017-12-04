@@ -12,7 +12,7 @@
 * Copy/Rename /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf.example to override default node_exporter service. See notes in example file for more details.
 * Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is node_exporter.
 * Copy/Rename & modify /etc/sysconfig/postgres_exporter_pg##.example as necessary. Default name expected is postgres_exporter.
-* Modify /var/lib/ccp_monitoring/crontab.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
+* Modify /etc/postgres_exporter/##/crontab##.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
 
@@ -80,7 +80,7 @@ systemctl status crunchy_postgres_exporter@postgres_exporter
 
 ```
 
-## Running multiple postgres exporters
+## Running multiple postgres exporters (RHEL7)
 Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
 ```
 cd /etc/postgres_exporter/96
@@ -101,6 +101,7 @@ systemctl start cruncy_postgres_exporter@postgres_exporter_mydb
 systemctl status crunchy_postgres_exporter@postgres_exporter_mydb
 
 ```
+Lastly, update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
 
 ## Note for packaging (RHEL/CENTOS 7)
 
@@ -112,4 +113,36 @@ After a daemon-reload, systemd should automatically find these files and the cru
  
 
 ## Setup (RHEL/CENTOS 6)
-TODO
+
+All setup for the exporters is the same on RHEL6 as it was for 7 with the exception of the base service files. Whereas RHEL7 uses systemd, RHEL6 uses init.d. The RHEL6 packages will create the base service files for you
+
+    /etc/init.d/crunchy-node-exporter
+    /etc/init.d/crunchy-postgres-exporter
+
+Note that these service files are managed by the package and any changes you make to them could be overwritten by future updates. If you need to customize the service files for RHEL6, it's recommended making a copy and editing/using those.
+
+The same /etc/sysconfig files that are used in RHEL7 above are also used in RHEL6, so follow guidance above concerning them and the notes that are contained in the files themselves.
+
+Once the files are in place, set the service to start on boot, then manually start it
+
+    chkconfig crunchy-node-exporter on
+    service crunchy-node-exporter start
+    service crunchy-node-exporter status
+
+    chkconfig crunchy-postgres-exporter on
+    service crunchy-postgres-exporter start
+    service crunchy-postgres-exporter status
+
+
+## Running multiple postgres exporters (RHEL6)
+If you need to run multiple postgres_exporter services, follow the same instructions as RHEL7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
+
+    - Make a copy of the /etc/sysconfig file with a new name
+    - Update the WEB_LISTEN_ADDRESS in the new sysconfig file to use a new port number
+    - Update the QUERY_PATH in the new sysconfig file to point to the new query file generated
+    - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored
+    - Make a copy of the /etc/init.d/crunchy-postgres-exporter with a new name
+    - Update the DAEMON_SYSCONFIG variable in the new init.d file to use the new sysconfig file
+    - Update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
+
+Remaining steps to initialize service at boot and start it up should be the same as above for the default service.
