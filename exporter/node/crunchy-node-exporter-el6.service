@@ -1,7 +1,7 @@
 
 #!/bin/bash
 #
-#	/etc/rc.d/init.d/node_exporter
+#	/etc/init.d/node_exporter
 #
 # chkconfig: 2345 80 80
 #
@@ -33,7 +33,7 @@ start() {
 #  do_start_prepare
 
   echo -n $"Starting node_exporter: "
-  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} ${ARGS}
+  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} ${TEXTFILE_DIR} ${IGNORED_DEVICES}
   RETVAL=$?
   echo 
   return $RETVAL
