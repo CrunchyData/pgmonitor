@@ -20,13 +20,13 @@
 
 ## Start services (RHEL/CENTOS 7)
 ```
-systemctl enable prometheus
-systemctl start prometheus
-systemctl status prometheus
+sudo systemctl enable prometheus
+sudo systemctl start prometheus
+sudo systemctl status prometheus
 
-systemctl enable alertmanager
-systemctl start alertmanager
-systemctl status alertmanager
+sudo systemctl enable alertmanager
+sudo systemctl start alertmanager
+sudo systemctl status alertmanager
 ```
 
 ## Note for packaging (RHEL/CENTOS 7)
