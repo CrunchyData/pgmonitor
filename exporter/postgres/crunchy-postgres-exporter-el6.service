@@ -12,11 +12,12 @@
 
 RETVAL=0
 PROG="postgres_exporter"
-DAEMON_SYSCONFIG=/etc/sysconfig/${PROG}
+SYSCONFIG="postgres_exporter"
+DAEMON_SYSCONFIG=/etc/sysconfig/${SYSCONFIG}
 DAEMON=/usr/bin/${PROG}
-PID_FILE=/var/run/${PROG}/${PROG}.pid
-LOCK_FILE=/var/lock/subsys/${PROG}
-LOG_FILE=/var/log/${PROG}/${PROG}.log
+PID_FILE=/var/run/${PROG}/${SYSCONFIG}.pid
+LOCK_FILE=/var/lock/subsys/${SYSCONFIG}
+LOG_FILE=/var/log/${PROG}/${SYSCONFIG}.log
 DAEMON_USER="ccp_monitoring"
 GOMAXPROCS=$(grep -c ^processor /proc/cpuinfo)
 

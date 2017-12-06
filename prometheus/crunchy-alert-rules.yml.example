@@ -5,7 +5,7 @@ groups:
 ########## EXPORTER RULES ##########
   - alert: PGExporterScrapeError
     expr: pg_exporter_last_scrape_error > 0
-    for: 10s
+    for: 60s
     labels:
         service: postgresql
         severity: critical
@@ -14,7 +14,7 @@ groups:
 
   - alert: NodeExporterScrapeError
     expr: node_textfile_scrape_error > 0
-    for: 10s
+    for: 60s
     labels:
         service: system 
         severity: critical
@@ -25,7 +25,7 @@ groups:
 ########## POSTGRESQL RULES ##########
   - alert: PGIsReady
     expr: ccp_pg_ready < 1
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -44,7 +44,7 @@ groups:
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 300
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -54,7 +54,7 @@ groups:
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 900
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -64,7 +64,7 @@ groups:
 
   - alert: PGConnPerc
     expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90 
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -74,7 +74,7 @@ groups:
 
   - alert: PGConnPerc
     expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 75
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -84,7 +84,7 @@ groups:
 
   - alert: PGDBSize
     expr: ccp_database_size > 1.073741824e+11
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -94,7 +94,7 @@ groups:
 
   - alert: PGDBSize
     expr: ccp_database_size > 2.68435456e+11
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -104,7 +104,7 @@ groups:
 
   - alert: PGReplicationByteLag
     expr: ccp_replication_status_byte_lag > 5.24288e+07
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -114,7 +114,7 @@ groups:
 
   - alert: PGReplicationByteLag
     expr: ccp_replication_status_byte_lag > 1.048576e+08
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -124,7 +124,7 @@ groups:
 
   - alert: PGReplicationSlotsInactive
     expr: ccp_replication_slots_active == 0
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -134,7 +134,7 @@ groups:
 
   - alert: PGXIDWraparound
     expr: ccp_transaction_wraparound_percent_towards_wraparound > 50
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -144,7 +144,7 @@ groups:
 
   - alert: PGXIDWraparound
     expr: ccp_transaction_wraparound_percent_towards_wraparound > 75
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -154,7 +154,7 @@ groups:
 
   - alert: PGEmergencyVacuum
     expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 75
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: warning
@@ -164,7 +164,7 @@ groups:
 
   - alert: PGEmergencyVacuum
     expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 90
-    for: 10s
+    for: 60s
     labels:
       service: postgresql
       severity: critical
@@ -175,12 +175,12 @@ groups:
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
     expr: up == 0
-    for: 10s
+    for: 60s 
     labels:
       service: system
       severity: critical
     annotations:
-      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down for more than 10 seconds.'
+      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} is down .'
       summary: 'Prometheus Exporter Service Down'
 
   - alert: DiskUsagePerc
@@ -212,7 +212,7 @@ groups:
 
   - alert: SystemLoad5m
     expr: node_load5 > 5
-    for: 1m
+    for: 10m
     labels:
       service: system
       severity: warning
@@ -221,7 +221,7 @@ groups:
 
   - alert: SystemLoad5m
     expr: node_load5 > 10
-    for: 1m
+    for: 10m
     labels:
       service: system
       severity: critical

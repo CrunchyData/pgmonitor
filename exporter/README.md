@@ -10,8 +10,8 @@
 ## Service Setup (RHEL/CENTOS 7)
 
 * Copy/Rename /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf.example to override default node_exporter service. See notes in example file for more details.
-* Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is node_exporter.
-* Copy/Rename & modify /etc/sysconfig/postgres_exporter_pg##.example as necessary. Default name expected is postgres_exporter.
+* Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is "node_exporter".
+* Copy/Rename & modify /etc/sysconfig/postgres_exporter_pg##.example as necessary. Default name expected is "postgres_exporter".
 * Modify /etc/postgres_exporter/##/crontab##.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
@@ -68,15 +68,15 @@ psql -d postgres -c "GRANT SELECT ON bloat_indexes, bloat_stats, bloat_tables TO
 ## Startup services (RHEL/CENTOS 7)
 
 ```
-systemctl enable node_exporter
-systemctl start node_exporter
-systemctl status node_exporter
+sudo systemctl enable node_exporter
+sudo systemctl start node_exporter
+sudo systemctl status node_exporter
 ```
 To most easily allow the possibility of multiple postgres exporters and avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's EnvironmentFile is named "postgres_exporter".
 ```
-systemctl enable crunchy_postgres_exporter@postgres_exporter.service
-systemctl start cruncy_postgres_exporter@postgres_exporter
-systemctl status crunchy_postgres_exporter@postgres_exporter
+sudo systemctl enable crunchy_postgres_exporter@postgres_exporter.service
+sudo systemctl start cruncy_postgres_exporter@postgres_exporter
+sudo systemctl status crunchy_postgres_exporter@postgres_exporter
 
 ```
 
@@ -96,9 +96,9 @@ DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disabl
 ```
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
 ```
-systemctl enable crunchy_postgres_exporter@postgres_exporter_mydb.service
-systemctl start cruncy_postgres_exporter@postgres_exporter_mydb
-systemctl status crunchy_postgres_exporter@postgres_exporter_mydb
+sudo systemctl enable crunchy_postgres_exporter@postgres_exporter_mydb.service
+sudo systemctl start cruncy_postgres_exporter@postgres_exporter_mydb
+sudo systemctl status crunchy_postgres_exporter@postgres_exporter_mydb
 
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
@@ -114,6 +114,10 @@ After a daemon-reload, systemd should automatically find these files and the cru
 
 ## Setup (RHEL/CENTOS 6)
 
+The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
+
+    sudo yum install epel-release
+
 All setup for the exporters is the same on RHEL6 as it was for 7 with the exception of the base service files. Whereas RHEL7 uses systemd, RHEL6 uses init.d. The RHEL6 packages will create the base service files for you
 
     /etc/init.d/crunchy-node-exporter
@@ -125,13 +129,13 @@ The same /etc/sysconfig files that are used in RHEL7 above are also used in RHEL
 
 Once the files are in place, set the service to start on boot, then manually start it
 
-    chkconfig crunchy-node-exporter on
-    service crunchy-node-exporter start
-    service crunchy-node-exporter status
+    sudo chkconfig crunchy-node-exporter on
+    sudo service crunchy-node-exporter start
+    sudo service crunchy-node-exporter status
 
-    chkconfig crunchy-postgres-exporter on
-    service crunchy-postgres-exporter start
-    service crunchy-postgres-exporter status
+    sudo chkconfig crunchy-postgres-exporter on
+    sudo service crunchy-postgres-exporter start
+    sudo service crunchy-postgres-exporter status
 
 
 ## Running multiple postgres exporters (RHEL6)
@@ -142,7 +146,7 @@ If you need to run multiple postgres_exporter services, follow the same instruct
     - Update the QUERY_PATH in the new sysconfig file to point to the new query file generated
     - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored
     - Make a copy of the /etc/init.d/crunchy-postgres-exporter with a new name
-    - Update the DAEMON_SYSCONFIG variable in the new init.d file to use the new sysconfig file
+    - Update the SYSCONFIG variable in the new init.d file to match the new sysconfig file
     - Update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
 
 Remaining steps to initialize service at boot and start it up should be the same as above for the default service.
