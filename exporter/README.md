@@ -4,14 +4,14 @@
 
 * Install latest node_exporter package from Crunchy Repository
 * Install latest postgres_exporter package from Crunchy Repository
-* Install latest crunchy-monitoring-pg##-extras package for your major version of PostgreSQL
+* Install latest pgmonitor-pg##-extras package for your major version of PostgreSQL
 * Install latest crunchy-pg_bloat-check package if you need to monitor database bloat
 
 ## Service Setup (RHEL/CENTOS 7)
 
-* Copy/Rename /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf.example to override default node_exporter service. See notes in example file for more details.
-* Copy/Rename & modify /etc/sysconfig/node_exporter.example as necessary. Default name expected is "node_exporter".
-* Copy/Rename & modify /etc/sysconfig/postgres_exporter_pg##.example as necessary. Default name expected is "postgres_exporter".
+* If necessary, modify /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf. See notes in file for more details.
+* If necessary, modify /etc/sysconfig/node_exporter. See notes in file for more details.
+* If necessary, modify /etc/sysconfig/postgres_exporter. See notes in file for more details.
 * Modify /etc/postgres_exporter/##/crontab##.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
@@ -75,13 +75,13 @@ sudo systemctl status node_exporter
 To most easily allow the possibility of multiple postgres exporters and avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's EnvironmentFile is named "postgres_exporter".
 ```
 sudo systemctl enable crunchy_postgres_exporter@postgres_exporter.service
-sudo systemctl start cruncy_postgres_exporter@postgres_exporter
+sudo systemctl start crunchy_postgres_exporter@postgres_exporter
 sudo systemctl status crunchy_postgres_exporter@postgres_exporter
 
 ```
 
 ## Running multiple postgres exporters (RHEL7)
-Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together.
+Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together. Note that the "functions_*.sql" file does not need to be run on these additional databases.
 ```
 cd /etc/postgres_exporter/96
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml

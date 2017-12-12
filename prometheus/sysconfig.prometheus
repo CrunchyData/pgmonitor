@@ -1,5 +1,5 @@
-# Copy this file to a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/prometheus)
-
+# This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/prometheus)
+#
 # For CONFIG, this is the path to the prometheus server configuration file
 # For STORAGEPATH, this is the location that prometheus will store its time series database files
 # For STORAGERETENTION, this is how long prometheus will keep data before expiring it. This is how much data will be available to trend in grafana.
