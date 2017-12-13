@@ -1,11 +1,9 @@
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/prometheus)
 #
-# For CONFIG, this is the path to the prometheus server configuration file
-# For STORAGEPATH, this is the location that prometheus will store its time series database files
-# For STORAGERETENTION, this is how long prometheus will keep data before expiring it. This is how much data will be available to trend in grafana.
-# For LOGLEVEL, this sets how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
+# --config-file: the path to the prometheus server configuration file
+# --storage.tsdb.path: location that prometheus will store its time series database files
+# --storage.tsdb.retention: how long prometheus will keep data before expiring it. This is how much data will be available to trend in grafana.
+# --log.level: how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
+# --web.enable-admin-api: set this to make the admin api available which allows database snaphot backups. Left off by default for security.
 
-CONFIG="--config.file=/etc/prometheus/crunchy-prometheus.yml"
-STORAGEPATH="--storage.tsdb.path=/var/lib/ccp_monitoring/prometheus"
-STORAGERETENTION="--storage.tsdb.retention=168h"
-LOGLEVEL="--log.level=info"
+OPT="--config.file=/etc/prometheus/crunchy-prometheus.yml --storage.tsdb.path=/var/lib/ccp_monitoring/prometheus --storage.tsdb.retention=168h --log.level=info"
