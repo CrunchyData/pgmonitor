@@ -1,2 +1,2 @@
-# crunchy-monitoring-resources
-Crunchy monitoring resources for collecting, storing, and visualizing both PostgreSQL and Operating System metrics.
+# pgmonitor
+Crunchy pgmonitor is set of resources for collecting, storing, and visualizing both PostgreSQL and Operating System metrics.
