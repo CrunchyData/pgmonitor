@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-CCP_DIR=/etc/ccp_monitoring
+CCP_DIR=/etc/prometheus
 CCP_SVC_DIR=${CCP_DIR}/auto.d
 JOBNAME=$1
 

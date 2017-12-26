@@ -7,12 +7,10 @@ CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 CREATE OR REPLACE FUNCTION monitor.streaming_replica_check() RETURNS TABLE (replica_hostname text, replica_addr inet, byte_lag numeric)
     LANGUAGE SQL SECURITY DEFINER
 AS $$
-BEGIN 
     SELECT client_hostname as replica_hostname
         , client_addr as replica_addr
         , pg_wal_lsn_diff(pg_stat_replication.sent_lsn, pg_stat_replication.replay_lsn) AS byte_lag 
         FROM pg_catalog.pg_stat_replication;
-END
 $$;
 
 REVOKE ALL ON FUNCTION monitor.streaming_replica_check() FROM PUBLIC;
