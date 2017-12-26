@@ -1,0 +1,12 @@
+1.2
+-- Change service and sysconfig files to use single OPT environment variable instead of one variable per cmd option
+-- Fix error in PG10 monitoring functions file
+-- Initial version of Prometheus 2.0 job deletion script. Requires API call not available yet in 2.0.0 for full functionality
+
+
+1.1
+-- Implement rpmnew/rpmsave feature instead of using .example files to prevent package overwriting user changes to configs
+
+
+1.0
+-- Initial stable release

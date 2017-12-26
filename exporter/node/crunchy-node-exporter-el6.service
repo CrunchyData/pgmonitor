@@ -32,7 +32,7 @@ start() {
 #  do_start_prepare
 
   echo -n $"Starting node_exporter: "
-  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} ${TEXTFILE_DIR} ${IGNORED_DEVICES}
+  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} $OPT
   RETVAL=$?
   echo 
   return $RETVAL

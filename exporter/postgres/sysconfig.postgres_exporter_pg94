@@ -1,10 +1,9 @@
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/postgres_exporter)
 
-# For WEB_LISTEN_ADDRESS, change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.
-# For QUERY_PATH, the path below is the default place we recommend putting the custom queries file.
-# For DATA_SOURCE_NAME, set the database that the exporter will connect to. Default is `postgres`.
+# --web.listen-address: change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.
+# --extend.query-path: location of file containing custom queries to run. Location below is one recommended by crunchy setup steps.
+# DATA_SOURCE_NAME: psql connection string. set the database that the exporter will connect to. Default is `postgres`.
 
-WEB_LISTEN_ADDRESS="--web.listen-address=0.0.0.0:9187"
-QUERY_PATH="--extend.query-path=/etc/postgres_exporter/94/queries.yml"
+OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/94/queries.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
 

@@ -1,9 +1,7 @@
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/alertmanager)
 #
-# For CONFIG, this is the path to the alertmanager server configuration file
-# For STORAGE, this is the location that the alertmanager will keep files it generates
-# For LOGLEVEL, this sets how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
+# --config.file: path to the alertmanager server configuration file
+# --storage.path: location that the alertmanager will keep files it generates
+# --log.level: how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
 
-CONFIG="--config.file=/etc/prometheus/crunchy-alertmanager.yml"
-STORAGE="--storage.path=/var/lib/ccp_monitoring/alertmanager"
-LOGLEVEL="--log.level=info"
+OPT="--config.file=/etc/prometheus/crunchy-alertmanager.yml --storage.path=/var/lib/ccp_monitoring/alertmanager --log.level=info"

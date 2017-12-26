@@ -90,8 +90,7 @@ You'll need to create a new sysconfig environment file for the second exporter s
 ```
 cp /etc/sysconfig/postgres_exporter /etc/sysconfig/postgres_exporter_mydb 
 
-WEB_LISTEN_ADDRESS="-web.listen-address=0.0.0.0:9188"
-QUERY_PATH="-extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
+OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
 ```
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
@@ -142,8 +141,8 @@ Once the files are in place, set the service to start on boot, then manually sta
 If you need to run multiple postgres_exporter services, follow the same instructions as RHEL7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
 
     - Make a copy of the /etc/sysconfig file with a new name
-    - Update the WEB_LISTEN_ADDRESS in the new sysconfig file to use a new port number
-    - Update the QUERY_PATH in the new sysconfig file to point to the new query file generated
+    - Update --web.listen-address in the new sysconfig file to use a new port number
+    - Update --extend.query-path in the new sysconfig file to point to the new query file generated
     - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored
     - Make a copy of the /etc/init.d/crunchy-postgres-exporter with a new name
     - Update the SYSCONFIG variable in the new init.d file to match the new sysconfig file

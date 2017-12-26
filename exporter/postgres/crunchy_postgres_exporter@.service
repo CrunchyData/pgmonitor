@@ -10,7 +10,7 @@ After=network.target
 PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/%i
-ExecStart=/usr/bin/postgres_exporter ${WEB_LISTEN_ADDRESS} ${QUERY_PATH}
+ExecStart=/usr/bin/postgres_exporter $OPT
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always
 

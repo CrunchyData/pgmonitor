@@ -36,7 +36,7 @@ start() {
 
   echo -n $"Starting postgres_exporter: "
   echo  $DATA_SOURCE_NAME
-  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} ${WEB_LISTEN_ADDRESS} ${QUERY_PATH}
+  daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} $OPT
   RETVAL=$?
   echo 
   return $RETVAL
