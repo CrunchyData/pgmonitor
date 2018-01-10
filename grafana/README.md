@@ -1,8 +1,10 @@
 # Grafana
 
-Download and install graphana RPM Package from https://grafana.com/grafana/download
+The Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download.
 
-* Connect to grafana &gt;ip|&lt;:3000
+The steps to access the customized dashboards are as follows:
+
+* Connect to Grafana via https://&gt;ip-address&lt;:3000
 * Login as admin/admin
 * Change admin password
 * Add Prometheus datasource
