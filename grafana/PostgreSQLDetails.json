@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "4.5.2"
+      "version": "4.6.3"
     },
     {
       "type": "panel",
@@ -42,7 +42,17 @@
     }
   ],
   "annotations": {
-    "list": []
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "editable": false,
   "gnetId": null,
@@ -50,7 +60,7 @@
   "hideControls": true,
   "id": null,
   "links": [],
-  "refresh": "30s",
+  "refresh": false,
   "rows": [
     {
       "collapse": false,
@@ -1599,113 +1609,6 @@
       "height": 250,
       "panels": [
         {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "id": 28,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 12,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "ccp_stat_statements_max_query_runtime{job=\"[[jobname]]\"}",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "max run time",
-              "metric": "ccp_stat_statements_mean_time",
-              "refId": "A",
-              "step": 60
-            },
-            {
-              "expr": "ccp_stat_statements_max_query_meantime{job=\"[[jobname]]\"}",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "max mean time",
-              "refId": "B",
-              "step": 60
-            },
-            {
-              "expr": "ccp_stat_statements_max_stddev_time",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "max stddev time",
-              "refId": "C",
-              "step": 60
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Slowest Query Times",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Dashboard Row 7",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": false,
-      "height": 250,
-      "panels": [
-        {
           "cacheTimeout": null,
           "colorBackground": false,
           "colorValue": true,
@@ -2647,7 +2550,7 @@
           "text": "Prod",
           "value": "Prod"
         },
-        "hide": 2,
+        "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
@@ -2665,7 +2568,7 @@
     ]
   },
   "time": {
-    "from": "now/d",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -2695,5 +2598,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 6
+  "version": 7
 }

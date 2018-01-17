@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "4.5.2"
+      "version": "4.6.3"
     },
     {
       "type": "panel",
@@ -30,7 +30,17 @@
     }
   ],
   "annotations": {
-    "list": []
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "editable": false,
   "gnetId": null,
@@ -135,24 +145,23 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "Prod",
-          "value": "Prod"
-        },
-        "hide": 2,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "jobname",
-        "options": [
-          {
-            "selected": false,
-            "text": "jobname",
-            "value": "jobname"
-          }
-        ],
-        "query": "jobname",
-        "type": "custom"
+        "options": [],
+        "query": "label_values(job)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
       {
         "allValue": null,
@@ -164,10 +173,10 @@
         "multi": false,
         "name": "dbname",
         "options": [],
-        "query": "label_values(ccp_database_size_bytes,dbname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=\"[[jobname]]\"},dbname)",
         "refresh": 1,
         "regex": "",
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -184,10 +193,10 @@
         "multi": false,
         "name": "schemaname",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{dbname=\"[[dbname]]\"},schemaname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=\"[[jobname]]\",dbname=\"[[dbname]]\"},schemaname)",
         "refresh": 1,
         "regex": "",
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -204,7 +213,7 @@
         "multi": false,
         "name": "tablename",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=\"[[jobname]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -217,7 +226,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {

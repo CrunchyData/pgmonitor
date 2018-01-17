@@ -33,8 +33,8 @@ Install functions to all databases you will be monitoring in the cluster (if you
 For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
 ```
 cd /etc/postgres_exporter/96
-cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
-psql -f /etc/postgres_exporter/96/functions_pg96.sql
+cat queries_common.yml queries_per_db.yml queries_pg92-96.yml > queries.yml
+psql -f /etc/postgres_exporter/96/functions_pg92-96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
 ```
