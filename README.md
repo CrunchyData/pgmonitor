@@ -81,8 +81,6 @@ Installation instructions for each package are provided in that packages subfold
 
 ## Version History
 
-The current version of pgmonitor is 1.2
-
 For the [full history](CHANGELOG) of pgmonitor, please see the [CHANGELOG](CHANGELOG).
 
 ## Sponsors
