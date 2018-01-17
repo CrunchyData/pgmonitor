@@ -184,16 +184,16 @@ groups:
       summary: 'Prometheus Exporter Service Down'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device)) > 70
+    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 70
     for: 2m
     labels:
       service: system
       severity: warning
     annotations:
-      description: 'Disk usage on target {{ $labels.job }} at {{ value }}%'
+      description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (device)) > 85
+    expr: (100 - 100 * sum(node_filesystem_avail{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 85
     for: 2m
     labels:
       service: system

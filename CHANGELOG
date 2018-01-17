@@ -1,5 +1,6 @@
 1.3
 -- Fixed error in PG10 queries file. 
+-- Fixed disk usage alert for prometheus to work better when there are many jobs with similar mountpoints. Also fixed syntax error in warning alert.
 -- Moved connection stats query from common to version specific queries due to PG10 differences. Clarified naming of files for which versions they work for.
 -- Added dropdown for the Job to the lower level drill down dashboards in Grafana. Allows selecting of a specific system from the dashboard itself without having to click through on a higher level.
 -- Removed pg_stat_statements graph from PostgreSQLDetails dashboard. Needs refinement to make it more useful.
