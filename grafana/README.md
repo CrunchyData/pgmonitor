@@ -18,17 +18,17 @@ The steps to access the customized dashboards are as follows:
 
 ### API Import
 
-It is possible it import these graphs through the "import" HTTP API using the following curl command to add some required wrapper information to each json blob. 
+It is possible to import these graphs through the "import" HTTP API using the following curl command to add some required wrapper information to each json blob. 
 ```
-curl --user admin:admin -S "http://localhost:3000/api/dashboards/import" -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary "{  \"dashboard\" : $(cat PostgreSQL.json) , \"overwrite\":true, \"inputs\":[  {  \"name\":\"DS_PROMETHEUS\", \"type\":\"datasource\", \"pluginId\":\"prometheus\", \"value\":\"PROMETHEUS\" } ] }"
+curl --user username:password -S "http://localhost:3000/api/dashboards/import" -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary "{  \"dashboard\" : $(cat PostgreSQL.json) , \"overwrite\":true, \"inputs\":[  {  \"name\":\"DS_PROMETHEUS\", \"type\":\"datasource\", \"pluginId\":\"prometheus\", \"value\":\"PROMETHEUS\" } ] }"
 ```
 You will likely have to edit the following parts of the above command:
 
  * Username
  * Password
- * Hostname (and port if different from default)
+ * URL (and port if different from default)
  * The file to import goes in the $cat() parentheses. In the above example this is "PostgreSQL.json".
- * The name of your grafana datasource is the final json "value". In the above example this is "PROMETHEUS".
+ * In the above example, "value: PROMETHEUS" is your grafana datasource name for this dashboard. Replace "PROMETHEUS" with the proper datasource name.
 
 
 
