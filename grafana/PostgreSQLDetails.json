@@ -138,7 +138,7 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
@@ -1675,6 +1675,7 @@
           "targets": [
             {
               "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
+              "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
               "step": 1200
@@ -1745,12 +1746,13 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
               "step": 1200
@@ -1820,12 +1822,13 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
               "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
               "step": 1200
@@ -1944,88 +1947,6 @@
               "logBase": 1,
               "max": "100",
               "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "id": 20,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 3,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "node_filesystem_free{job=\"[[jobname]]\", device=\"rootfs\"}",
-              "intervalFactor": 2,
-              "legendFormat": "Free",
-              "refId": "B",
-              "step": 240
-            },
-            {
-              "expr": "node_filesystem_size{job=\"[[jobname]]\", device=\"rootfs\"}",
-              "intervalFactor": 2,
-              "legendFormat": "Total",
-              "refId": "C",
-              "step": 240
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "FileSystem",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "decbytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
@@ -2217,6 +2138,82 @@
               "show": true
             }
           ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "fill": 1,
+          "id": 20,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "100-(100*(node_filesystem_free{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "{{mountpoint}}",
+              "refId": "B",
+              "step": 240
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FileSystem Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": "100",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
         }
       ],
       "repeat": null,
@@ -2233,25 +2230,25 @@
         {
           "cacheTimeout": null,
           "colorBackground": false,
-          "colorValue": false,
+          "colorValue": true,
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
           "datasource": "${DS_PROMETHEUS}",
-          "format": "percent",
+          "format": "none",
           "gauge": {
-            "maxValue": 100,
+            "maxValue": 30,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
             "thresholdMarkers": true
           },
-          "id": 24,
+          "id": 27,
           "interval": null,
           "links": [],
-          "mappingType": 1,
+          "mappingType": 2,
           "mappingTypes": [
             {
               "name": "value to text",
@@ -2269,31 +2266,28 @@
           "postfixFontSize": "50%",
           "prefix": "",
           "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
+          "rangeMaps": [],
           "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
-              "expr": "100*node_filesystem_free{job=\"[[jobname]]\", device=\"rootfs\"}/node_filesystem_size{job=\"[[jobname]]\", device=\"rootfs\"}",
+              "expr": "node_load5{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
+              "legendFormat": "",
+              "metric": "node_cpu",
               "refId": "A",
               "step": 1200
             }
           ],
-          "thresholds": "80,95",
-          "title": "Disk Free",
+          "thresholds": "5,15",
+          "title": "System Load (5m)",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -2356,12 +2350,13 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
               "expr": "100 * (node_memory_MemFree{job=\"[[jobname]]\"} + node_memory_Cached{job=\"[[jobname]]\"} + node_memory_Buffers{job=\"[[jobname]]\"}) / node_memory_MemTotal{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "refId": "A",
@@ -2432,12 +2427,13 @@
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
           "tableColumn": "",
           "targets": [
             {
               "expr": "100 * node_memory_SwapFree{job=\"[[jobname]]\"} / node_memory_SwapTotal{job=\"[[jobname]]\"}",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "node_memory_SwapFree",
@@ -2447,78 +2443,6 @@
           ],
           "thresholds": "30,70",
           "title": "SWAP Free",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": 30,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 27,
-          "interval": null,
-          "links": [],
-          "mappingType": 2,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [],
-          "span": 3,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "expr": "node_load5{job=\"[[jobname]]\"}",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "",
-              "metric": "node_cpu",
-              "refId": "A",
-              "step": 1200
-            }
-          ],
-          "thresholds": "5,15",
-          "title": "System Load (5m)",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -2597,5 +2521,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 4
+  "version": 3
 }
