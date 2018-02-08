@@ -2146,6 +2146,7 @@
           "dashes": false,
           "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
+          "height": "250px",
           "id": 20,
           "legend": {
             "avg": false,
@@ -2267,7 +2268,7 @@
           "prefix": "",
           "prefixFontSize": "50%",
           "rangeMaps": [],
-          "span": 3,
+          "span": 4,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -2345,7 +2346,7 @@
               "to": "null"
             }
           ],
-          "span": 3,
+          "span": 4,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -2422,7 +2423,7 @@
               "to": "null"
             }
           ],
-          "span": 3,
+          "span": 4,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -2521,5 +2522,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 3
+  "version": 6
 }
