@@ -2146,7 +2146,6 @@
           "dashes": false,
           "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
-          "height": "250px",
           "id": 20,
           "legend": {
             "avg": false,
