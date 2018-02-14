@@ -1,3 +1,9 @@
+1.4
+-- Fixed filesystem graphs in PostgreSQLDetails dashboard
+-- Cosmetic changes to PostgreSQLDetails dashboard
+-- Added instructions for importing dashboards via Grafana API
+
+
 1.3
 -- Fixed error in PG10 queries file. 
 -- Fixed disk usage alert for prometheus to work better when there are many jobs with similar mountpoints. Also fixed syntax error in warning alert.
