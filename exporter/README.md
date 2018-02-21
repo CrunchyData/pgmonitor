@@ -2,7 +2,7 @@
 
 ## Installation (RHEL/CENTOS 7)
 
-RPMs are available to Crunchy customers through our access portal. The RPM will take care of all the steps below in the Installation section. From the Setup section onward, the instructions are relevant no matter the installation method.
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the Crunchy Data [access portal](https://access.crunchydata.com/).  Installing these RPMs will take care of all of the steps described in this Installation section. If you install via the RPM, you can continue reading at the [Service Setup](#service-setup-rhelcentos-7) section.
 
 Packages available: node_exporter, postgres_exporter, pgmonitor-pg##-extras, pg_bloat_check 
 
