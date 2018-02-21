@@ -1,17 +1,47 @@
 # Setting up exporters
 
-## Installation
+## Installation (RHEL/CENTOS 7)
 
-* Install latest node_exporter package from Crunchy Repository
-* Install latest postgres_exporter package from Crunchy Repository
-* Install latest pgmonitor-pg##-extras package for your major version of PostgreSQL
-* Install latest crunchy-pg_bloat-check package if you need to monitor database bloat
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the Crunchy Data [access portal](https://access.crunchydata.com/).  Installing these RPMs will take care of all of the steps described in this Installation section. If you install via the RPM, you can continue reading at the [Service Setup](#service-setup-rhelcentos-7) section.
+
+Packages available: node_exporter, postgres_exporter, pgmonitor-pg##-extras, pg_bloat_check 
+
+For non-package installations, the exporters & pg_bloat_check can be downloaded from their respective repositories. 
+ * https://github.com/prometheus/node_exporter/releases
+ * https://github.com/wrouesnel/postgres_exporter/releases
+ * https://github.com/keithf4/pg_bloat_check
+
+All executables are expected to be in /usr/bin. A base node_exporter systemd file is expected to be in place already. An example one can be found here https://github.com/lest/prometheus-rpm/tree/master/node_exporter
+
+The files contained in this repository are assumed to be installed in the following locations with the following names. A double hash is replaced by the two-digit major version of PostgreSQL you are running (ex: 95, 96, 10, etc).
+```
+Folder /var/lib/ccp_monitoring/node_exporter is used for custom monitor script output. It is assumed to be owned by ccp_monitoring user.
+
+- node/crunchy-node-exporter-service-el7.conf -> /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf
+- node/sysconfig.node_exporter -> /etc/sysconfig/node_exporter
+- node/ccp_pg_isready##.sh -> /usr/bin/ccp_pg_isready##.sh
+
+- crontab##.txt -> /etc/postgres_exporter/##/crontab##.txt
+
+- postgres/crunchy_postgres_exporter@.service -> /usr/lib/systemd/system/crunchy_postgres_exporter@.service
+
+- postgres/sysconfig.postgres_exporter_pg## -> /etc/sysconfig/postgres_exporter_p##
+- /etc/sysconfig/postgres_exporter symlinked to /etc/sysconfig/postgres_exporter_p##
+
+- postgres/functions_pg##.sql -> /etc/postgres_exporter/##/functions_pg##.sql
+- postgres/queries_pg##.yml -> /etc/postgres_exporter/##/queries_pg##.yml 
+- postgres/queries_common.yml -> /etc/postgres_exporter/##/queries_common.yml
+- postgres/queries_per_db.yml -> /etc/postgres_exporter/##/queries_per_db.yml
+- postgres/queries_bloat.yml -> /etc/postgres_exporter/##/queries_bloat.yml
+- postgres/queries_pg_stat_statements.yml -> /etc/postgres_exporter/##/queries_pg_stat_statements.yml
+
+```
 
 ## Service Setup (RHEL/CENTOS 7)
 
 * If necessary, modify /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf. See notes in file for more details.
 * If necessary, modify /etc/sysconfig/node_exporter. See notes in file for more details.
-* If necessary, modify /etc/sysconfig/postgres_exporter. See notes in file for more details.
+* If necessary, modify /etc/sysconfig/postgres_exporter. See notes in file for more details. Also note this is a symlink to avoid issues during PG major version upgrades.
 * Modify /etc/postgres_exporter/##/crontab##.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
 
 ## Database Setup
@@ -111,18 +141,31 @@ The service override file(s) must be placed in the relevant drop-in folder to ov
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
  
 
-## Setup (RHEL/CENTOS 6)
+## Installation & Setup (RHEL/CENTOS 6)
 
 The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
 
     sudo yum install epel-release
 
-All setup for the exporters is the same on RHEL6 as it was for 7 with the exception of the base service files. Whereas RHEL7 uses systemd, RHEL6 uses init.d. The RHEL6 packages will create the base service files for you
+All setup for the exporters is the same on RHEL6 as it was for 7 with the exception of the base service files. Whereas RHEL7 uses systemd, RHEL6 uses init.d. The Crunchy RHEL6 packages will create the base service files for you
 
     /etc/init.d/crunchy-node-exporter
     /etc/init.d/crunchy-postgres-exporter
 
 Note that these service files are managed by the package and any changes you make to them could be overwritten by future updates. If you need to customize the service files for RHEL6, it's recommended making a copy and editing/using those.
+
+Or if you are setting this up manually, the repository file locations and expected directories are:
+```
+node/crunchy-node-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
+postgres/crunchy-postgres-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
+
+/var/run/postgres_exporter/
+/var/log/postgres_exporter/ (owned by postgres_exporter service user)
+
+/var/run/node_exporter/
+/var/log/node_exporter/ (owned by node_exporter service user)
+
+```
 
 The same /etc/sysconfig files that are used in RHEL7 above are also used in RHEL6, so follow guidance above concerning them and the notes that are contained in the files themselves.
 
