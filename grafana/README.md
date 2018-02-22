@@ -8,12 +8,13 @@ The steps to access the customized dashboards are as follows:
 * Login as admin/admin
 * Change admin password
 * Add Prometheus datasource
-* Import all 5 dashboards 
+* Import all dashboards 
   * PostgreSQL.json
   * PostgreSQLDetails.json
   * BloatDetails.json
   * CRUD_Details.json
   * TableSize_Details.json
+  * FilesystemDetails.json
 
 
 ### API Import

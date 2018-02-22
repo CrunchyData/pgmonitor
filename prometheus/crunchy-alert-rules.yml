@@ -174,13 +174,13 @@ groups:
 
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
-    expr: up == 0
-    for: 60s 
+    expr: avg_over_time(up[5m]) < 0.9 
+    for: 10s 
     labels:
       service: system
       severity: critical
     annotations:
-      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} is down .'
+      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down at least 50% of the time for the last 5 minutes. Service may be flapping or down.'
       summary: 'Prometheus Exporter Service Down'
 
   - alert: DiskUsagePerc
