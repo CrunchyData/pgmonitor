@@ -2158,7 +2158,16 @@
           },
           "lines": true,
           "linewidth": 1,
-          "links": [],
+          "links": [
+            {
+              "dashUri": "db/filesystemdetails",
+              "dashboard": "FilesystemDetails",
+              "includeVars": true,
+              "targetBlank": true,
+              "title": "FilesystemDetails",
+              "type": "dashboard"
+            }
+          ],
           "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
@@ -2521,5 +2530,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 6
+  "version": 3
 }
