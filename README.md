@@ -59,6 +59,10 @@ pgmonitor combines multiple open-source software packages and necessary configur
 - 9.6
 - 10
 
+#### Known issues
+
+- PostgreSQL 10 SCRAM-SHA-256 encrypted password are not yet supported by underlying go library.
+
 ## Installation
 
 Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
