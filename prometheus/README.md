@@ -123,12 +123,17 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 
 #### Enable Services
 
+To enable and start Prometheus as a service, execute the following commands:
+
 ```bash
 sudo systemctl enable prometheus
 sudo systemctl start prometheus
 sudo systemctl status prometheus
+```
 
-# If using Alertmanager, run the following commands:
+To enable and start Alertmanager as a service, execute the following commands:
+
+```bash
 sudo systemctl enable alertmanager
 sudo systemctl start alertmanager
 sudo systemctl status alertmanager

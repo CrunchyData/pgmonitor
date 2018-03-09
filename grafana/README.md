@@ -7,7 +7,7 @@ The steps to access the customized dashboards are as follows:
 1. Connect to Grafana via https://&lt;ip-address&gt;:3000
 1. Login as admin/admin
 1. Change admin password
-1. Add a Prometheus datasource. Ensure the resource matches what you setup for pgmonitor, e.g. `localhost:9000`
+1. Add a Prometheus datasource. Ensure the resource matches what you setup for pgmonitor, e.g. `localhost:9090`
 1. Download and import all dashboards to the datasource you created:
   - [PostgreSQL.json](PostgreSQL.json)
   - [PostgreSQLDetails.json](PostgreSQL.json)
