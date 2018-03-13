@@ -31,10 +31,7 @@ For installations without using packages, you can download [Prometheus](https://
 
 ##### Minimum Versions
 
-|              | Minimum Version |
-|--------------|-----------------|
-| Prometheus   | 2.0             |
-| Alertmanager | 0.12.0          |
+pgmonitor assumes to be using at least Prometheus 2.0 and Alertmanager 0.12.0 should always use the latest minor versions of both Prometheus and the Alertmanager.
 
 ##### User and Configuration Directory Installation
 
@@ -119,7 +116,7 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 | `/etc/prometheus/crunchy-prometheus.yml` | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Default service expects config file to be named `crunchy-prometheus.yml` |
 | `/etc/prometheus/crunchy-alertmanager.yml` | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Default service expects config file to be named `crunchy-alertmanager.yml` |
 | `/etc/prometheus/crunchy-alert-rules.yml` | Update rules as needed. Default Prometheus config expects file to be named `crunchy-alert-rules.yml` |
-| `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a `.yml` extension in this folder in order to autodiscover and scrape data from your [exporters](exporter/README.md). Copy the example file to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. |
+| `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example file to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. |
 
 #### Enable Services
 
