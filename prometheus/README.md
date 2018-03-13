@@ -31,7 +31,7 @@ For installations without using packages, you can download [Prometheus](https://
 
 ##### Minimum Versions
 
-pgmonitor assumes to be using at least Prometheus 2.0 and Alertmanager 0.12.0 should always use the latest minor versions of both Prometheus and the Alertmanager.
+pgmonitor assumes to be using Prometheus 2.x. We recommend to always use the latest minor version of Prometheus.
 
 ##### User and Configuration Directory Installation
 
