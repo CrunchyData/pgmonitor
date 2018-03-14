@@ -1,73 +1,182 @@
-# Setting up exporters
+# Setting up exporters for pgmonitor
 
-## Installation (RHEL/CENTOS 7)
+The exporters below can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the Crunchy Data [access portal](https://access.crunchydata.com/).  Installing these RPMs will take care of all of the steps described in this Installation section. If you install via the RPM, you can continue reading at the [Service Setup](#service-setup-rhelcentos-7) section.
+- [Installation](#installation)
+- [Setup](#setup)
+   - [RHEL / CentOS 7](#setup-on-rhelcentos-7)
+   - [RHEL / CentOS 6](#installationsetup-on-rhelcentos-6)
 
-Packages available: node_exporter, postgres_exporter, pgmonitor-pg##-extras, pg_bloat_check 
+## Installation
 
-For non-package installations, the exporters & pg_bloat_check can be downloaded from their respective repositories. 
- * https://github.com/prometheus/node_exporter/releases
- * https://github.com/wrouesnel/postgres_exporter/releases
- * https://github.com/keithf4/pg_bloat_check
+### Installation on RHEL/CentOS 7
 
-All executables are expected to be in /usr/bin. A base node_exporter systemd file is expected to be in place already. An example one can be found here https://github.com/lest/prometheus-rpm/tree/master/node_exporter
+#### With RPM Packages
 
-The files contained in this repository are assumed to be installed in the following locations with the following names. A double hash is replaced by the two-digit major version of PostgreSQL you are running (ex: 95, 96, 10, etc).
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/).
+
+If you install the below available packages with RPM, you can continue reading at the [Setup](#setup) section.
+
+##### Available Packages
+
+| Package Name                  |
+|-------------------------------|
+| node_exporter                 |
+| pg_bloat_check                |
+| pgmonitor-pg10-extras         |
+| pgmonitor-pg96-extras         |
+| pgmonitor-pg95-extras         |
+| pgmonitor-pg94-extras         |
+| postgres_exporter             |
+
+#### Without Packages
+
+For non-package installations, the exporters & pg_bloat_check can be downloaded from their respective repositories:
+
+| Library                       |            |
+|-------------------------------|------------|
+| node_exporter                 | https://github.com/prometheus/node_exporter/releases |
+| postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases |
+| pg_bloat_check                | https://github.com/keithf4/pg_bloat_check |
+
+##### User and Configuration Directory Installation
+
+You will need to create a user named `ccp_monitoring` which you can do with the following command:
+
+```bash
+sudo useradd ccp_monitoring
 ```
-Folder /var/lib/ccp_monitoring/node_exporter is used for custom monitor script output. It is assumed to be owned by ccp_monitoring user.
 
-- node/crunchy-node-exporter-service-el7.conf -> /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf
-- node/sysconfig.node_exporter -> /etc/sysconfig/node_exporter
-- node/ccp_pg_isready##.sh -> /usr/bin/ccp_pg_isready##.sh
+Create a folder in `/var/lib/` and set its permissions as such:
 
-- crontab##.txt -> /etc/postgres_exporter/##/crontab##.txt
-
-- postgres/crunchy_postgres_exporter@.service -> /usr/lib/systemd/system/crunchy_postgres_exporter@.service
-
-- postgres/sysconfig.postgres_exporter_pg## -> /etc/sysconfig/postgres_exporter_p##
-- /etc/sysconfig/postgres_exporter symlinked to /etc/sysconfig/postgres_exporter_p##
-
-- postgres/functions_pg##.sql -> /etc/postgres_exporter/##/functions_pg##.sql
-- postgres/queries_pg##.yml -> /etc/postgres_exporter/##/queries_pg##.yml 
-- postgres/queries_common.yml -> /etc/postgres_exporter/##/queries_common.yml
-- postgres/queries_per_db.yml -> /etc/postgres_exporter/##/queries_per_db.yml
-- postgres/queries_bloat.yml -> /etc/postgres_exporter/##/queries_bloat.yml
-- postgres/queries_pg_stat_statements.yml -> /etc/postgres_exporter/##/queries_pg_stat_statements.yml
-
+```bash
+sudo mkdir /var/lib/ccp_monitoring
+sudo chmod 0700 /var/lib/ccp_monitoring
+sudo chown ccp_monitoring /var/lib/ccp_monitoring
 ```
 
-## Service Setup (RHEL/CENTOS 7)
+##### Configuration File Installation
 
-* If necessary, modify /etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf. See notes in file for more details.
-* If necessary, modify /etc/sysconfig/node_exporter. See notes in file for more details.
-* If necessary, modify /etc/sysconfig/postgres_exporter. See notes in file for more details. Also note this is a symlink to avoid issues during PG major version upgrades.
-* Modify /etc/postgres_exporter/##/crontab##.txt to run relevant scripts and schedule the bloat check for off-peak hours. Add crontab entries manually to ccp_monitoring user (or user relevant for your environment).
+All executables are expected to be in the `/usr/bin` directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
 
-## Database Setup
+https://github.com/lest/prometheus-rpm/tree/master/node_exporter
 
-### postgresql.conf
-Install contrib modules to provide additional monitoring capabilities. This requires a restart of the database if you would like these contrib modules installed.
+The files contained in this repository are assumed to be installed in the following locations with the following names. In the instructions below, you should replace a double-hash (`##`) with the two-digit major version of PostgreSQL you are running (ex: 95, 96, 10, etc.).
+
+##### node_exporter
+
+The node_exporter data directory should be `/var/lib/ccp_monitoring/node_exporter` and owned by the `ccp_monitoring` user.  You can set it up with:
+
+```bash
+sudo mkdir /var/lib/ccp_monitoring/node_exporter
+sudo chmod 0700 /var/lib/ccp_monitoring/node_exporter
+sudo chown ccp_monitoring /var/lib/ccp_monitoring/node_exporter
+```
+
+The following pgmonitor configuration files should be placed according to the following mapping:
+
+| pgmonitor Configuration File | System Location |
+|------------------------------|-----------------|
+| node/crunchy-node-exporter-service-el7.conf | `/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf`  |
+| node/sysconfig.prometheus | `/etc/sysconfig/node_exporter` |
+| node/ccp_pg_isready##.sh | `/usr/bin/ccp_pg_isready##.sh` |
+
+##### postgres_exporter
+
+The following pgmonitor configuration files should be placed according to the following mapping:
+
+| pgmonitor Configuration File | System Location |
+|------------------------------|-----------------|
+| crontab##.txt | `/etc/postgres_exporter/##/crontab##.txt`  |
+| postgres/crunchy_postgres_exporter@.service | `/usr/lib/systemd/system/crunchy_postgres_exporter@.service`  |
+| postgres/sysconfig.postgres_exporter_pg## | `/etc/sysconfig/postgres_exporter_pg##`  |
+| postgres/functions_pg##.sql | `/etc/postgres_exporter/##/functions_pg##.sql`  |
+| postgres/queries_pg##.yml | `/etc/postgres_exporter/##/queries_pg##.yml`  |
+| postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
+| postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
+| postgres/queries_bloat.yml | `/etc/postgres_exporter/##/queries_bloat.yml`  |
+| postgres/queries_pg_stat_statements.ymll | `/etc/postgres_exporter/##/queries_pg_stat_statements.yml`  |
+
+
+Make sure `/etc/sysconfig/postgres_exporter` is symlinked to `/etc/sysconfig/postgres_exporter_pg##`. For example, if you are monitoring PostgreSQL 10, you can use the following command:
+
+```bash
+sudo ln -s /etc/sysconfig/postgres_exporter_pg10 /etc/sysconfig/postgres_exporter
+```
+
+## Setup
+
+### Setup on RHEL/CentOS 7
+
+#### Service Configuration
+
+The following files contain defaults that should enable the exporters to run effectively on your system for the purposes of using pgmonitor.  You should take some time to review them.
+
+If you need to modify them, see the notes in the files for more details and recommendations:
+- `/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf`
+- `/etc/sysconfig/node_exporter`
+- `/etc/sysconfig/postgres_exporter`
+
+Note that `/etc/sysconfig/postgres_exporter` is a symlink to avoid issues during major version upgrades of PostgreSQL.
+
+##### Crontab for pg_bloat_check
+
+In the default pgmonitor setup, the `pg_bloat_check.py` script is meant to be run by the `ccp_monitoring` user created earlier.  The `/etc/postgres_exporter/##/crontab.txt` file (where "##" is your PostgreSQL version, e.g. `10`) is meant to be a guide for how you setup your _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours.
+
+If you want to run `pg_bloat_check.py`, install the entries in the crontab of the `ccp_monitoring` user.
+
+#### Database Configuration
+
+##### General Configuration
+
+First, make sure you have installed the PostgreSQL contrib modules.  You can install them with the following command:
+
+```bash
+sudo yum install postgresqlXX-contrib
+```
+
+Where `XX` corresponds to your current PostgreSQL version.  For PostgreSQL 10 this would be:
+
+```bash
+sudo yum install postgresql10-contrib
+```
+
+You will need to modify your `postgresql.conf` configuration file to tell PostgreSQL to load shared libraries. In the default setup, this file can be found at `/var/lib/pgsql/10/data/postgresql.conf`.
+
+Modify your `postgresql.conf` configuration file to add the following shared libraries
+
 ```
 shared_preload_libraries = 'pg_stat_statements,auto_explain'
 ```
-pg_stat_statements requires running the following statement in the database(s) to be monitored
-```
-psql -d postgres -c "CREATE EXTENSION pg_stat_statements"
+
+You will need to restart your PostgreSQL instance for the change to take effect.
+
+For each database you are planning to monitor, you will need to run the following command as a PostgreSQL superuser:
+
+```sql
+CREATE EXTENSION pg_stat_statements;
 ```
 
-### Monitoring Queries File
+If you want for the `pg_stat_statements` extension to be available in all newly created databases, you can run the following command as a PostgreSQL superuser:
 
-Install functions to all databases you will be monitoring in the cluster (if you don't have pg_stat_statements installed, you can ignore the error given). The queries common to all postgres versions are contained in queries_common.yml. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file. 
+```bash
+psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
+```
+
+##### Monitoring Setup
+
+Install functions to all databases you will be monitoring in the cluster (if you don't have `pg_stat_statements` installed, you can ignore the error given). The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
 
 For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
-```
+
+```bash
 cd /etc/postgres_exporter/96
 cat queries_common.yml queries_per_db.yml queries_pg92-96.yml > queries.yml
 psql -f /etc/postgres_exporter/96/functions_pg92-96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as pg_stat_statements and bloat do the following:
-```
+
+```bash
 cd /etc/postgres_exporter/10
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_pg_stat_statements.yml queries_bloat.yml > queries.yml
 psql -f /etc/postgres_exporter/10/functions_pg10.sql
@@ -75,50 +184,58 @@ psql -f /etc/postgres_exporter/10/functions_pg10.sql
 
 For replica servers, the setup is the same except that the functions_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
 
-### GRANTS
-The ccp_monitoring role (created by running the "functions_pg##.sql" file above) must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
-```
-SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;' FROM pg_database WHERE datallowconn = true;
+###### Access Control: GRANT statements
+
+The `ccp_monitoring` database role (created by running the "functions_pg##.sql" file above) must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
+
+```sql
+SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;'
+FROM pg_database
+WHERE datallowconn = true;
 ```
 This should generate one or more statements similar to the following:
-```
+
+```sql
 GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 ```
 
-### Bloat setup
+###### Bloat setup
 
 Run script on the specific database(s) you will be monitoring bloat for in the cluster. See special note in crontab.txt concerning a superuser requirement for using this script
 
-```
+```bash
 psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 /usr/bin/pg_bloat_check.py -c "host=localhost dbname=postgres user=postgres" --create_stats_table
-psql -d postgres -c "GRANT SELECT ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
+psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
 
-## Startup services (RHEL/CENTOS 7)
+#### Enable Services
 
-```
+```bash
 sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
 sudo systemctl status node_exporter
 ```
+
 To most easily allow the possibility of multiple postgres exporters and avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's EnvironmentFile is named "postgres_exporter".
-```
+
+```bash
 sudo systemctl enable crunchy_postgres_exporter@postgres_exporter.service
 sudo systemctl start crunchy_postgres_exporter@postgres_exporter
 sudo systemctl status crunchy_postgres_exporter@postgres_exporter
 
 ```
 
-## Running multiple postgres exporters (RHEL7)
+### Running multiple postgres exporters (RHEL / CentOS 7)
+
 Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together. Note that the "functions_*.sql" file does not need to be run on these additional databases.
 ```
 cd /etc/postgres_exporter/96
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
 ```
-You'll need to create a new sysconfig environment file for the second exporter service. You can just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file 
+You'll need to create a new sysconfig environment file for the second exporter service. You can just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file
 ```
-cp /etc/sysconfig/postgres_exporter /etc/sysconfig/postgres_exporter_mydb 
+cp /etc/sysconfig/postgres_exporter /etc/sysconfig/postgres_exporter_mydb
 
 OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
@@ -139,9 +256,9 @@ The service override file(s) must be placed in the relevant drop-in folder to ov
     /etc/systemd/system/node_exporter.service.d/*.conf
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
- 
 
-## Installation & Setup (RHEL/CENTOS 6)
+
+## Installation / Setup on RHEL/CentOS 6
 
 The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
 
@@ -155,7 +272,8 @@ All setup for the exporters is the same on RHEL6 as it was for 7 with the except
 Note that these service files are managed by the package and any changes you make to them could be overwritten by future updates. If you need to customize the service files for RHEL6, it's recommended making a copy and editing/using those.
 
 Or if you are setting this up manually, the repository file locations and expected directories are:
-```
+
+```bash
 node/crunchy-node-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
 postgres/crunchy-postgres-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
 
@@ -164,24 +282,24 @@ postgres/crunchy-postgres-exporter-el6.service -> /etc/init.d/crunchy-postgres-e
 
 /var/run/node_exporter/
 /var/log/node_exporter/ (owned by node_exporter service user)
-
 ```
 
 The same /etc/sysconfig files that are used in RHEL7 above are also used in RHEL6, so follow guidance above concerning them and the notes that are contained in the files themselves.
 
 Once the files are in place, set the service to start on boot, then manually start it
 
-    sudo chkconfig crunchy-node-exporter on
-    sudo service crunchy-node-exporter start
-    sudo service crunchy-node-exporter status
+```bash
+sudo chkconfig crunchy-node-exporter on
+sudo service crunchy-node-exporter start
+sudo service crunchy-node-exporter status
 
-    sudo chkconfig crunchy-postgres-exporter on
-    sudo service crunchy-postgres-exporter start
-    sudo service crunchy-postgres-exporter status
+sudo chkconfig crunchy-postgres-exporter on
+sudo service crunchy-postgres-exporter start
+sudo service crunchy-postgres-exporter status
+```
 
-
-## Running multiple postgres exporters (RHEL6)
-If you need to run multiple postgres_exporter services, follow the same instructions as RHEL7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
+### Running multiple postgres exporters (RHEL / CentOS 6)
+If you need to run multiple postgres_exporter services, follow the same instructions as RHEL / CentOS 7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
 
     - Make a copy of the /etc/sysconfig file with a new name
     - Update --web.listen-address in the new sysconfig file to use a new port number
