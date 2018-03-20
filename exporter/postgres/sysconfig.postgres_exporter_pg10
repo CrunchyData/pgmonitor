@@ -4,6 +4,6 @@
 # --extend.query-path: location of file containing custom queries to run. Location below is one recommended by crunchy setup steps.
 # DATA_SOURCE_NAME: psql connection string. set the database that the exporter will connect to. Default is `postgres`.
 
-OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/10/queries.yml"
+OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/10/queries.yml --disable-default-metrics"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
 
