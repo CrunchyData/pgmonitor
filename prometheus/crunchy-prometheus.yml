@@ -22,6 +22,7 @@ scrape_configs:
       - /etc/prometheus/auto.d/*.yml
 
     # Do not store the metrics that come built into postgres_exporter
+    # Version 0.4.5+ of postgres_exporter has option to disable most of these, but ignore here as well for older versions
     metric_relabel_configs:
     - source_labels: [ __name__ ]
       regex: '(pg_locks_count.*|pg_settings.*|pg_stat_activity.*|pg_stat_bgwriter.*|pg_stat_database.*)'
