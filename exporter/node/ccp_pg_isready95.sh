@@ -11,7 +11,12 @@ rm -f ${PGDIR}/${PGTMP}
 $PGBIN/pg_isready -d postgres >/dev/null
 EX_VAL=$?
 if [ $EX_VAL -eq  0 ]; then
-	echo "ccp_pg_ready 1" >>${PGDIR}/${PGTMP}
+	REC=$(psql -d postgres -Atc 'select pg_is_in_recovery()')
+	if [ "$REC" = "f" ]; then
+		echo "ccp_pg_ready 2" >>${PGDIR}/${PGTMP}
+	else
+		echo "ccp_pg_ready 1" >>${PGDIR}/${PGTMP}
+	fi
 else
 	echo "ccp_pg_ready 0" >>${PGDIR}/${PGTMP}
 fi
