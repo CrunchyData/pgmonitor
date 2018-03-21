@@ -60,13 +60,13 @@
           "colorValue": true,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(68, 126, 188, 0.9)",
+            "rgba(50, 172, 45, 0.9)"
           ],
           "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
-            "maxValue": 1,
+            "maxValue": 2,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
@@ -131,7 +131,7 @@
               "step": 2
             }
           ],
-          "thresholds": "0.5,0.8",
+          "thresholds": "0.5,1.5",
           "title": "[[jobname]]",
           "transparent": false,
           "type": "singlestat",
@@ -144,7 +144,12 @@
             },
             {
               "op": "=",
-              "text": "UP",
+              "text": "UP/RW",
+              "value": "2"
+            },
+            {
+              "op": "=",
+              "text": "UP/RO",
               "value": "1"
             },
             {
@@ -222,5 +227,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQL",
-  "version": 1
+  "version": 2
 }
