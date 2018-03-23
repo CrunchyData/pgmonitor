@@ -19,15 +19,15 @@ If you install the below available packages with RPM, you can continue reading a
 
 ##### Available Packages
 
-| Package Name                  |
-|-------------------------------|
-| node_exporter                 |
-| pg_bloat_check                |
-| pgmonitor-pg10-extras         |
-| pgmonitor-pg96-extras         |
-| pgmonitor-pg95-extras         |
-| pgmonitor-pg94-extras         |
-| postgres_exporter             |
+| Package Name                  | Description                                                   |
+|-------------------------------|---------------------------------------------------------------|
+| node_exporter                 | Base package for node_exporter                                |
+| postgres_exporter             | Base package for postgres_exporter                            |
+| pgmonitor-pg10-extras         | Custom Crunchy configurations for exporters (PostgreSQL 10)   | 
+| pgmonitor-pg96-extras         | Custom Crunchy configurations for exporters (PostgreSQL 9.6)  | 
+| pgmonitor-pg95-extras         | Custom Crunchy configurations for exporters (PostgreSQL 9.5)  | 
+| pgmonitor-pg94-extras         | Custom Crunchy configurations for exporters (PostgreSQL 9.4)  | 
+| pg_bloat_check                | Package for pg_bloat_check script                             |
 
 #### Without Packages
 
