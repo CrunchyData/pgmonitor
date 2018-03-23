@@ -21,8 +21,8 @@ If you install the below available packages with RPM, you can continue reading a
 | Package Name                  | Description                                       |
 |-------------------------------|---------------------------------------------------|
 | alertmanager                  | Base package for the Alertmanager                 |
-| prometheus2                   | Base package for Prometheus 2.0                   |
-| pgmonitor-alertmanager-extras | justom Crunchy configurations for Alertmanager    |
+| prometheus2                   | Base package for Prometheus 2.x                   |
+| pgmonitor-alertmanager-extras | Custom Crunchy configurations for Alertmanager    |
 | pgmonitor-prometheus-extras   | Custom Crunchy configurations for Prometheus      |
 
 #### Without Packages
