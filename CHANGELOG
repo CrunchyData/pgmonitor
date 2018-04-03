@@ -1,3 +1,7 @@
+1.6
+-- Fixed formatting bug in crunchy-prometheus.yml. Thanks to Doug Hunley for reporting the issue.
+
+
 1.5
 -- Add support for disabling built in queries in postgres_exporter 0.4.5. Also explicitly ignore these metrics via a prometheus filter so they're not ingested even if new option isn't used. This means that v1.5 of pgmonitor now requires 0.4.5 of postgres_exporter by default.
 -- Improved exporter down alert to avoid unnecessary alerts for brief outages that resolve themselves quickly.
