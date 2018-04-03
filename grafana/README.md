@@ -8,14 +8,7 @@ The steps to access the customized dashboards are as follows:
 1. Login as admin/admin
 1. Change admin password
 1. Add a Prometheus datasource. Ensure the resource matches what you setup for pgmonitor, e.g. `localhost:9090`
-1. Download and import all dashboards to the datasource you created:
-  - [PostgreSQL.json](PostgreSQL.json)
-  - [PostgreSQLDetails.json](PostgreSQL.json)
-  - [BloatDetails.json](BloatDetails.json)
-  - [CRUD_Details.json](CRUD_Details.json)
-  - [TableSize_Details.json](TableSize_Details.json)
-  - [FilesystemDetails.json](FilesystemDetails.json)
-
+1. Download and import all dashboards to the datasource you created. JSON files are in the repository with this README file.
 
 ### API Import
 
