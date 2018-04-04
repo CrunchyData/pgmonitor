@@ -26,7 +26,7 @@ scrape_configs:
     metric_relabel_configs:
     - source_labels: [ __name__ ]
       regex: '(pg_locks_count.*|pg_settings.*|pg_stat_activity.*|pg_stat_bgwriter.*|pg_stat_database.*)'
-          action: drop
+      action: drop
 
 #### Uncomment below if using alertmanager ####        
 #
