@@ -47,11 +47,21 @@ ccp_replication_lag:
 
 
 ccp_replication_lag_size:
-  query: "SELECT client_addr as replica, pg_wal_lsn_diff(sent_lsn, replay_lsn) as bytes FROM pg_catalog.pg_stat_replication"
+  query: "SELECT client_addr as replica
+        , client_hostname as replica_hostname
+        , client_port as replica_port
+        , pg_wal_lsn_diff(sent_lsn, replay_lsn) as bytes 
+        FROM pg_catalog.pg_stat_replication"
   metrics:
     - replica:
         usage: "LABEL"
         description: "Replica address"
+    - replica_hostname:
+        usage: "LABEL"
+        description: "Replica hostname"
+    - replica_port:
+        usage: "LABEL"
+        description: "Replica port"
     - bytes:
         usage: "GAUGE"
         description: "Replication lag in bytes"
