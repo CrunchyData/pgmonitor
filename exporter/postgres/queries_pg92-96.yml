@@ -47,14 +47,24 @@ ccp_replication_lag:
 
 
 ccp_replication_lag_size:
-  query: "SELECT client_addr as replica, pg_xlog_location_diff( sent_location, replay_location) as bytes FROM pg_catalog.pg_stat_replication"
+  query: "SELECT replica_addr::text as replica
+                , replica_hostname::text
+                , replica_port::text
+                , byte_lag::bigint as bytes 
+                FROM monitor.streaming_replica_check();"
   metrics:
     - replica:
         usage: "LABEL"
-        description: "Replica address"
+        description: "Replica IP address"
+    - replica_hostname:
+        usage: "LABEL"
+        description: "Hostname of replica system (if available)"
+    - replica_port:
+        usage: "LABEL"
+        description: "Replica port"
     - bytes:
         usage: "GAUGE"
-        description: "Replication lag in bytes"
+        description: "Replication lag in bytes between primary and replica"
 
 
 ccp_replication_slots:

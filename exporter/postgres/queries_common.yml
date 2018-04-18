@@ -49,21 +49,6 @@ ccp_postmaster_runtime:
         usage: "GAUGE"
         description: "Time at which postmaster started"
 
-
-ccp_replication_status:
-  query: "SELECT replica_hostname, replica_addr, byte_lag FROM monitor.streaming_replica_check()"
-  metrics:
-    - replica_hostname:
-        usage: "LABEL"
-        description: "Hostname of replica system (if available)"
-    - replica_addr:
-        usage: "LABEL"
-        description: "Replica IP address"
-    - byte_lag:
-        usage: "GAUGE"
-        description: "Replication lag in bytes between primary and replica"
-
-
 ccp_settings_guage:
   query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_timeout') as checkpoint_timeout
             , (select setting::float from pg_catalog.pg_settings where name = 'checkpoint_completion_target') as checkpoint_completion_target

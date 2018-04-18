@@ -2,7 +2,7 @@
   "__inputs": [
     {
       "name": "DS_PROMETHEUS",
-      "label": "PROMETHEUS",
+      "label": "Prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -529,7 +529,7 @@
           "tableColumn": "",
           "targets": [
             {
-              "expr": "max(ccp_replication_status_byte_lag{job=\"[[jobname]]\"})",
+              "expr": "max(ccp_replication_lag_size_bytes{job=\"[[jobname]]\"})",
               "format": "time_series",
               "intervalFactor": 2,
               "refId": "A",
@@ -2530,5 +2530,5 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "version": 3
+  "version": 4
 }
