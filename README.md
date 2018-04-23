@@ -43,7 +43,7 @@ pgmonitor combines multiple open-source software packages and necessary configur
 
 - [Prometheus](https://prometheus.io/) - an open-source metrics collector that is highly customizable.
 - [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
-- [Crunchy PostgreSQL Server Exporter](https://github.com/CrunchyData/postgres_exporter/) - an open-source data export to Prometheus that supports collecting metrics from any PostgreSQL server version 9.1 and above.
+- [PostgreSQL Exporter](https://github.com/wrouesnel/postgres_exporter) - an open-source data export to Prometheus that supports collecting metrics from any PostgreSQL server version 9.1 and above.
 
 ## Supported Platforms
 
@@ -91,7 +91,7 @@ For the [full history](CHANGELOG) of pgmonitor, please see the [CHANGELOG](CHANG
 
 ![Crunchy Data](docs/crunchy_logo.png)
 
-[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsors pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
 ## Legal Notices
 
