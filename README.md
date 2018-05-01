@@ -26,8 +26,6 @@ Running pgmonitor will give you confidence in understanding how well your Postgr
   - [Operating Systems](#operating-systems)
   - [PostgreSQL](#postgesql)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Advanced Usage](#advanced-usage)
 - [Roadmap](#roadmap)
 - [Version History](#version-history)
 - [Sponsors](#sponsors)
@@ -72,10 +70,6 @@ Installation instructions for each package are provided in that packages subfold
 ### 2. [exporter](exporter/README.md)
 
 ### 3. [Grafana](grafana/README.md)
-
-## Usage
-
-## Advanced Usage
 
 ## Roadmap
 
