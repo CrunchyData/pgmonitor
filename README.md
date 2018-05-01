@@ -73,10 +73,6 @@ Installation instructions for each package are provided in that packages subfold
 
 ### 3. [Grafana](grafana/README.md)
 
-## Usage
-
-## Advanced Usage
-
 ## Roadmap
 
 - Additional monitoring metrics out-of-the-box
