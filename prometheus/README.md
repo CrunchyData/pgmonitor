@@ -25,7 +25,7 @@ If you install the below available packages with RPM, you can continue reading a
 | pgmonitor-alertmanager-extras | Custom Crunchy configurations for Alertmanager    |
 | pgmonitor-prometheus-extras   | Custom Crunchy configurations for Prometheus      |
 
-#### Without Crunchy Packages
+#### Without Crunchy Data Packages
 
 For installations without using packages provided by Crunchy Data, we recommend using the repository maintained at https://github.com/lest/prometheus-rpm. Instructions for setup and installation are contained there. Note this only sets up the base service. The additional files and steps for pgmonitor still need to be set up as instructed below.
 

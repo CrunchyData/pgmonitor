@@ -26,8 +26,6 @@ Running pgmonitor will give you confidence in understanding how well your Postgr
   - [Operating Systems](#operating-systems)
   - [PostgreSQL](#postgesql)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Advanced Usage](#advanced-usage)
 - [Roadmap](#roadmap)
 - [Version History](#version-history)
 - [Sponsors](#sponsors)
