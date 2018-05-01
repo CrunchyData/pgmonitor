@@ -78,7 +78,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | pgmonitor Configuration File | System Location |
 |------------------------------|-----------------|
 | node/crunchy-node-exporter-service-el7.conf | `/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf`  |
-| node/sysconfig.prometheus | `/etc/sysconfig/node_exporter` |
+| node/sysconfig.node_exporter | `/etc/sysconfig/node_exporter` |
 | node/ccp_pg_isready##.sh | `/usr/bin/ccp_pg_isready##.sh` |
 
 ##### postgres_exporter
