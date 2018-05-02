@@ -95,7 +95,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
 | postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
 | postgres/queries_bloat.yml | `/etc/postgres_exporter/##/queries_bloat.yml`  |
-| postgres/queries_pg_stat_statements.ymll | `/etc/postgres_exporter/##/queries_pg_stat_statements.yml`  |
+| postgres/queries_pg_stat_statements.yml | `/etc/postgres_exporter/##/queries_pg_stat_statements.yml`  |
 
 
 Make sure `/etc/sysconfig/postgres_exporter` is symlinked to `/etc/sysconfig/postgres_exporter_pg##`. For example, if you are monitoring PostgreSQL 10, you can use the following command:
