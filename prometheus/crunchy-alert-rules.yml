@@ -62,6 +62,26 @@ groups:
       description: '{{ $labels.job }} has at least one session idle in transaction for over 15 minutes.'
       summary: 'PGSQL Instance idle transactions'
 
+  - alert: PGQueryTime
+    expr: ccp_connection_stats_max_query_time > 43200
+    for: 60s
+    labels:
+      service: postgresql
+      severity: warning 
+    annotations:
+      description: '{{ $labels.job }} has at least one query running for over 12 hours.'
+      summary: 'PGSQL Max Query Runtime'
+
+  - alert: PGQueryTime
+    expr: ccp_connection_stats_max_query_time > 86400 
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+    annotations:
+      description: '{{ $labels.job }} has at least one query running for over 1 day.'
+      summary: 'PGSQL Max Query Runtime'
+
   - alert: PGConnPerc
     expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90 
     for: 60s
