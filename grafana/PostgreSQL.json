@@ -1,34 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "PROMETHEUS",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "4.6.3"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -45,139 +15,280 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "hideControls": false,
-  "id": null,
+  "id": 73,
+  "iteration": 1529511124964,
   "links": [],
-  "refresh": "30s",
-  "rows": [
+  "panels": [
     {
-      "collapse": false,
-      "height": "250px",
-      "panels": [
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(50, 172, 45, 0.9)",
+        "rgba(68, 126, 188, 0.9)"
+      ],
+      "datasource": "PROMETHEUS",
+      "format": "none",
+      "gauge": {
+        "maxValue": 2,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": false
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "interval": null,
+      "links": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(68, 126, 188, 0.9)",
-            "rgba(50, 172, 45, 0.9)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": 2,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
-          },
-          "id": 1,
-          "interval": null,
-          "links": [
-            {
-              "dashUri": "db/postgresqldetails",
-              "dashboard": "PostgreSQLDetails",
-              "includeVars": false,
-              "params": "var-jobname=[[jobname]]",
-              "targetBlank": true,
-              "title": "PostgreSQLDetails",
-              "type": "dashboard"
-            }
-          ],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "minSpan": 3,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "repeat": "jobname",
-          "span": 12,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "expr": "ccp_pg_ready{job=\"[[jobname]]\"}",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "",
-              "metric": "up",
-              "refId": "A",
-              "step": 2
-            }
-          ],
-          "thresholds": "0.5,1.5",
-          "title": "[[jobname]]",
-          "transparent": false,
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            },
-            {
-              "op": "=",
-              "text": "UP/RW",
-              "value": "2"
-            },
-            {
-              "op": "=",
-              "text": "UP/RO",
-              "value": "1"
-            },
-            {
-              "op": "=",
-              "text": "Down",
-              "value": "0"
-            }
-          ],
-          "valueName": "current"
+          "$$hashKey": "object:227",
+          "dashUri": "db/postgresqldetails",
+          "dashboard": "PostgreSQLDetails",
+          "includeVars": true,
+          "targetBlank": false,
+          "title": "PostgreSQLDetails",
+          "type": "dashboard"
+        }
+      ],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:295",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:296",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "minSpan": 3,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "repeat": "jobname",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "jobname": {
+          "selected": false,
+          "text": "Prod",
+          "value": "Prod"
+        }
+      },
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$$hashKey": "object:243",
+          "expr": "pg_up{job=\"[[jobname]]\"} / ccp_is_in_recovery_status{job=\"[[jobname]]\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "metric": "up",
+          "refId": "A",
+          "step": 2
+        }
+      ],
+      "thresholds": "0.5,1",
+      "title": "[[jobname]]",
+      "transparent": false,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "$$hashKey": "object:298",
+          "op": "=",
+          "text": "DOWN",
+          "value": "null"
+        },
+        {
+          "$$hashKey": "object:299",
+          "op": "=",
+          "text": "PRIMARY",
+          "value": ".5"
+        },
+        {
+          "$$hashKey": "object:300",
+          "op": "=",
+          "text": "REPLICA",
+          "value": "1"
+        },
+        {
+          "$$hashKey": "object:301",
+          "op": "=",
+          "text": "DOWN",
+          "value": "0"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(50, 172, 45, 0.9)",
+        "rgba(68, 126, 188, 0.9)"
+      ],
+      "datasource": "PROMETHEUS",
+      "format": "none",
+      "gauge": {
+        "maxValue": 2,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": false
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "interval": null,
+      "links": [
+        {
+          "$$hashKey": "object:227",
+          "dashUri": "db/postgresqldetails",
+          "dashboard": "PostgreSQLDetails",
+          "includeVars": true,
+          "targetBlank": false,
+          "title": "PostgreSQLDetails",
+          "type": "dashboard"
+        }
+      ],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:295",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:296",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "minSpan": 3,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
         }
       ],
       "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Dashboard Row",
-      "titleSize": "h6"
+      "repeatDirection": "h",
+      "repeatIteration": 1529511124964,
+      "repeatPanelId": 1,
+      "scopedVars": {
+        "jobname": {
+          "selected": false,
+          "text": "Replica",
+          "value": "Replica"
+        }
+      },
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$$hashKey": "object:243",
+          "expr": "pg_up{job=\"[[jobname]]\"} / ccp_is_in_recovery_status{job=\"[[jobname]]\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "metric": "up",
+          "refId": "A",
+          "step": 2
+        }
+      ],
+      "thresholds": "0.5,1",
+      "title": "[[jobname]]",
+      "transparent": false,
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "$$hashKey": "object:298",
+          "op": "=",
+          "text": "DOWN",
+          "value": "null"
+        },
+        {
+          "$$hashKey": "object:299",
+          "op": "=",
+          "text": "PRIMARY",
+          "value": ".5"
+        },
+        {
+          "$$hashKey": "object:300",
+          "op": "=",
+          "text": "REPLICA",
+          "value": "1"
+        },
+        {
+          "$$hashKey": "object:301",
+          "op": "=",
+          "text": "DOWN",
+          "value": "0"
+        }
+      ],
+      "valueName": "current"
     }
   ],
-  "schemaVersion": 14,
+  "refresh": "30s",
+  "schemaVersion": 16,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "PROMETHEUS",
         "hide": 2,
         "includeAll": true,
         "label": null,
@@ -227,5 +338,6 @@
   },
   "timezone": "browser",
   "title": "PostgreSQL",
-  "version": 2
+  "uid": "pxinDnNik",
+  "version": 1
 }
