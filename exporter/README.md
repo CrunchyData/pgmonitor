@@ -154,8 +154,8 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
-| functions_pg10.sql    | Creates ccp_monitoring role with all necessary grants. Creates any extra monitoring functions required.  |
-| functions_pg92-96.sql | Creates ccp_monitoring role with all necessary grants. Creates any extra monitoring functions required.  |
+| functions_pg10.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
+| functions_pg92-96.sql | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The Vacuum graph on the PostgreSQLDetails Dashboard and the CRUD_Details Dashboard use these statistics.                                                   |
@@ -166,7 +166,7 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 
 Install functions to all databases you will be monitoring in the cluster (if you don't have `pg_stat_statements` installed, you can ignore the error given). The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
 
-For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the ccp_monitoring directory:
+For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the `/etc/postgres_exporter` directory:
 
 ```bash
 cd /etc/postgres_exporter/96
@@ -207,11 +207,9 @@ psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 /usr/bin/pg_bloat_check.py -c "host=localhost dbname=postgres user=postgres" --create_stats_table
 psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
-
 In the default pgmonitor setup, the `pg_bloat_check.py` script is meant to be run by the `ccp_monitoring` system user created earlier.  The `/etc/postgres_exporter/##/crontab.txt` file is meant to be a guide for how you setup the `ccp_monitoring` _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
 
 The script requires being run by a database superuser by default since it must be able to run a scan on every table. If you'd like to not run it as a superuser, you will have to create a new role that has read permissions on all tables in all schemas that are to be monitored for bloat. You can then change the user in the connection string option to the script.
-
 
 #### Enable Services
 
