@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Additional metric option to monitor disk queue depth with node_exporter. Set the DISK variable to the disk system that is to be monitored
+
 IODIR=/var/lib/ccp_monitoring
 IOTMP=io_queue.tmp
 IOFILE=io_queue.prom
