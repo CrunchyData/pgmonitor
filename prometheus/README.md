@@ -8,6 +8,10 @@ Prometheus can be set up on any Linux-based system, but the instructions below u
 
 ## Installation
 
+### Upgrading
+
+When upgrading from pgmonitor 1.x to 2.x, note that the alerting rules for node_exporter metrics have had many of their names changed. If you've changed the provided alerting rules file, installing the new package should create a file called `/etc/prometheus/crunchy-alert-rules.yml.rpmnew` and not overwrite your current file. You should be able to copy the new rules as needed from there.
+
 ### Installation on RHEL/CentOS 7
 
 #### With RPM Packages

@@ -7,10 +7,9 @@
  * The postgres_exporter service no longer uses a symlink in /etc/sysconfig to point to a default "postgres_exporter" file. This was causing issues with several upgrade scenarios. New installation instructions now have the service pointing directly to the relevant sysconfig file for the major PostgreSQL version. No existing setups should be affected, but please check your postgres_exporter service configuration after this update to ensure everything is working properly.
  * Removed the requirement for a shell script to monitor if the database is up and its status as either a primary or replica. Up status is now using the native "pg_up" metric from postgres_exporter and a new metric query was written for checking the recovery status of a system (ccp_is_in_recovery).
    * The PostgreSQL.json overview dashboard that used this metric has been redesigned. Unfortunately it can no longer be colored RED for down systems, only go colorless and say "DOWN". This is a known limitation of handling null metric values in Grafana and part of a larger fix coming in future versions - https://github.com/grafana/grafana/issues/11418
- * Upgrade required version of Grafana to minimum of 5.1.4. 
+ * Upgrade required version of Grafana to minimum of 5.2.1. 
    * All provided dashboards require this minimum version to work.
-   * Issue encountered with dashboards that are upgraded from 4.x to 5.x has been reported to developers. Do not remove any upgraded dashboards that have links between them otherwise the link will be permanently broken if you want the links to open in new tabs. https://github.com/grafana/grafana/issues/12349
-   * Newly created or imported dashboards in 5.1.x do not have this problem.
+   * If you notice that links between the dashboards are broken after the upgrade, clear your browser's cache. The 301 redirects used between dashboards can get cached and they have changed in the new major version.
    * See extensive release notes for major version changes in Grafana - https://community.grafana.com/t/release-notes-v-5-1-x
  * Change Grafana datasource and dashboard installation to use provisioning vs manual setup via the web interface. Note this means that future updates to the provided datasources and dashboards must be done through config files as well. Or they can be saved as a new dashboard for more extensive customization.
  * Change recommended configuration for Grafana to use PostgreSQL as database backend. Updated installation documentation.
@@ -23,6 +22,7 @@
  * Removed unnecessary functions from functions_pg10.sql. All queries in queries_pg10.yml currently only require the pg_monitor system role to be granted and have been updated with this assumption. 
  * Changed default cron runtime of pg_bloat_check to once a week on early morning weekend.
  * Change PostgreSQL overview dashboard to use background colors instead of gauges for better visibility.
+ * Fixed permission issues with /etc/postgres_exporter folder to allow ccp_monitoring system user better control.
 
 
 ### 1.7

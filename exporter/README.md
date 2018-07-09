@@ -9,6 +9,15 @@ The exporters below can be set up on any Linux-based system, but the instruction
 
 ## Installation
 
+### Upgrading
+
+#### 1.x -> 2.x
+* See CHANGLOG.md file for full details on what has changed in this major version upgrade.
+* Many of the metric names in node_exporter v0.16.0 have had their names changed. All of the ones that pgmonitor uses in alerting and grafana related to CPU, Memory and Disk have been renamed. All files provided by pgmonitor 2.x have been updated to account for these changes so please either use these new files or see what has changed an incorporate them into your environment.
+* The symlink for the postgres_exporter sysconfig file is no longer being used. The symlink is removed as part of the upgrade, so the default postgres_exporter service that previously used this may have to be updated. See the `Enable Services` section below for the correct systemctl command to create the new service name. The old service can then be disabled/removed.
+* The `ccp_is_ready` check has been removed and pgmonitor now uses the `pg_up` check built into postgres_exporter. Prometheus alerting and grafana dashboards have been updated to account for this. 
+* And a new metric `ccp_is_in_recovery` is used to help determine the primary/replica state of a given database in the grafana dashboards.
+
 ### Installation on RHEL/CentOS 7
 
 #### With RPM Packages
