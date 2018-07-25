@@ -16,7 +16,7 @@ The exporters below can be set up on any Linux-based system, but the instruction
 * Many of the metric names in node_exporter v0.16.0 have had their names changed. All of the ones that pgmonitor uses in alerting and grafana related to CPU, Memory and Disk have been renamed. All files provided by pgmonitor 2.x have been updated to account for these changes so please either use these new files or see what has changed an incorporate them into your environment.
 * The symlink for the postgres_exporter sysconfig file is no longer being used. The symlink is removed as part of the upgrade, so the default postgres_exporter service that previously used this may have to be updated. See the `Enable Services` section below for the correct systemctl command to create the new service name. The old service can then be disabled/removed.
 * The `ccp_is_ready` check has been removed and pgmonitor now uses the `pg_up` check built into postgres_exporter. Prometheus alerting and grafana dashboards have been updated to account for this. 
-* And a new metric `ccp_is_in_recovery` is used to help determine the primary/replica state of a given database in the grafana dashboards.
+* A new metric `ccp_is_in_recovery` is used to help determine the primary/replica state of a given database in the grafana dashboards. The query for this can be found in queries_common.sql
 
 ### Installation on RHEL/CentOS 7
 
@@ -28,25 +28,26 @@ If you install the below available packages with RPM, you can continue reading a
 
 ##### Available Packages
 
-| Package Name                  | Description                                                       |
-|-------------------------------|-------------------------------------------------------------------|
-| node_exporter                 | Base package for node_exporter                                    |
-| postgres_exporter             | Base package for postgres_exporter                                |
-| pgmonitor-pg10-extras         | Crunchy optimized configurations for exporters (PostgreSQL 10)    | 
-| pgmonitor-pg96-extras         | Crunchy optimized configurations for exporters (PostgreSQL 9.6)   | 
-| pgmonitor-pg95-extras         | Crunchy optimized configurations for exporters (PostgreSQL 9.5)   | 
-| pgmonitor-pg94-extras         | Crunchy optimized configurations for exporters (PostgreSQL 9.4)   | 
-| pg_bloat_check                | Package for pg_bloat_check script                                 |
+| Package Name                   | Description                                                               |
+|--------------------------------|---------------------------------------------------------------------------|
+| node_exporter                  | Base package for node_exporter                                            |
+| postgres_exporter              | Base package for postgres_exporter                                        |
+| pgmonitor-pg10-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 10)    | 
+| pgmonitor-pg96-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.6)   | 
+| pgmonitor-pg95-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.5)   | 
+| pgmonitor-pg94-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.4)   | 
+| pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        | 
+| pg_bloat_check                 | Package for pg_bloat_check script                                         |
 
 #### Without Packages
 
 For non-package installations, the exporters & pg_bloat_check can be downloaded from their respective repositories:
 
-| Library                       |            |
-|-------------------------------|------------|
-| node_exporter                 | https://github.com/prometheus/node_exporter/releases |
-| postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases |
-| pg_bloat_check                | https://github.com/keithf4/pg_bloat_check |
+| Library                       |                                                           |
+|-------------------------------|-----------------------------------------------------------|
+| node_exporter                 | https://github.com/prometheus/node_exporter/releases      |
+| postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases   |
+| pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
 
 ##### User and Configuration Directory Installation
 

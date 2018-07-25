@@ -31,9 +31,9 @@ Create the following directories on your grafana server if they don't exist:
     mkdir -p /etc/grafana/provisioning/dashboards
     mkdir -p /etc/grafana/crunchy_dashboards
 
-Review the datasource.yml file to ensure it is looking at your Prometheus database. The included file assumes Grafana and Prometheus are running on the same system. DO NOT CHANGE the datasource "name" if you will be using the dashboards provided in this repo. They assume that name and will not work otherwise. Any other options can be changed as needed. Save the datasource.yml file to /etc/grafana/provisioning/datasources. Restart grafana and confirm through the web interface that the datasource was provisioned and working.
+Review the crunchy_grafana_datasource.yml file to ensure it is looking at your Prometheus database. The included file assumes Grafana and Prometheus are running on the same system. DO NOT CHANGE the datasource "name" if you will be using the dashboards provided in this repo. They assume that name and will not work otherwise. Any other options can be changed as needed. Save the crunchy_grafana_datasource.yml file to /etc/grafana/provisioning/datasources. Restart grafana and confirm through the web interface that the datasource was provisioned and working.
 
-Review the dashboards.yml file to ensure it's looking at where you stored the provided dashboards. By default it is looking in /etc/grafana/crunchy_dashboards. Save this file to /etc/grafana/provisioning/dashboards. Restart grafana so it picks up the new config.
+Review the crunchy_grafana_dashboards.yml file to ensure it's looking at where you stored the provided dashboards. By default it is looking in /etc/grafana/crunchy_dashboards. Save this file to /etc/grafana/provisioning/dashboards. Restart grafana so it picks up the new config.
 
 Save all of the .json dashboard files to the /etc/grafana/crunchy_dashboards folder. 
 
