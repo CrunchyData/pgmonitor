@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:168",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,10 +15,102 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 53,
-  "iteration": 1529095061906,
+  "id": 1,
+  "iteration": 1533066138232,
   "links": [],
   "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 43,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "dashUri": "db/bloatdetails",
+          "dashboard": "BloatDetails",
+          "includeVars": true,
+          "title": "BloatDetails",
+          "type": "dashboard"
+        }
+      ],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
+          "format": "time_series",
+          "hide": "[[container_suite]]",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Bloat %",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
     {
       "aliasColors": {},
       "bars": false,
@@ -31,7 +122,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 2,
       "legend": {
@@ -118,7 +209,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 15
       },
       "id": 1,
       "legend": {
