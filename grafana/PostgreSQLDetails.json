@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:460",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,8 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1529693256624,
+  "id": 6,
+  "iteration": 1533066262502,
   "links": [],
   "panels": [
     {
@@ -682,8 +681,8 @@
       "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 5,
-        "w": 8,
+        "h": 10,
+        "w": 12,
         "x": 0,
         "y": 29
       },
@@ -694,7 +693,7 @@
         "current": true,
         "max": true,
         "min": true,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -815,106 +814,9 @@
       "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 8,
-        "y": 29
-      },
-      "id": 15,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Conflicts",
-          "metric": "pg_stat_database_conflicts",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "DeadLocks",
-          "metric": "pg_stat_database_deadlocks",
-          "refId": "B",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Conflicts/DeadLocks",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 16,
+        "h": 10,
+        "w": 12,
+        "x": 12,
         "y": 29
       },
       "id": 17,
@@ -924,7 +826,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -1055,10 +957,107 @@
       "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 34
+        "y": 39
+      },
+      "id": 15,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Conflicts",
+          "metric": "pg_stat_database_conflicts",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "DeadLocks",
+          "metric": "pg_stat_database_deadlocks",
+          "refId": "B",
+          "step": 240
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Conflicts/DeadLocks",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 39
       },
       "id": 14,
       "legend": {
@@ -1067,8 +1066,9 @@
         "current": false,
         "max": true,
         "min": true,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
+        "sortDesc": true,
         "total": false,
         "values": true
       },
@@ -1179,10 +1179,10 @@
       "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 12,
-        "x": 12,
-        "y": 34
+        "x": 0,
+        "y": 46
       },
       "id": 16,
       "legend": {
@@ -1191,7 +1191,7 @@
         "current": false,
         "max": true,
         "min": true,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -1292,92 +1292,9 @@
       "fill": 1,
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 39
-      },
-      "id": 47,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "% toward wraparound",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 39
+        "w": 12,
+        "x": 12,
+        "y": 46
       },
       "id": 45,
       "legend": {
@@ -1458,11 +1375,11 @@
       "fill": 1,
       "gridPos": {
         "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 39
+        "w": 12,
+        "x": 6,
+        "y": 53
       },
-      "id": 43,
+      "id": 47,
       "legend": {
         "avg": false,
         "current": false,
@@ -1474,15 +1391,7 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [
-        {
-          "dashUri": "db/bloatdetails",
-          "dashboard": "BloatDetails",
-          "includeVars": true,
-          "title": "BloatDetails",
-          "type": "dashboard"
-        }
-      ],
+      "links": [],
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 5,
@@ -1494,7 +1403,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1503,7 +1412,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Bloat %",
+      "title": "% toward wraparound",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1524,546 +1433,6 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 46
-      },
-      "id": 49,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "node_load1{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "1m",
-          "refId": "A"
-        },
-        {
-          "expr": "node_load5{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "5m",
-          "refId": "B"
-        },
-        {
-          "expr": "node_load15{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "15m",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "System Load",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 6,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 46
-      },
-      "id": 19,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": true,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"idle\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"system\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "E",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"user\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "B",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"iowait\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "C",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"idle\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "D",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"system\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "F",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"user\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "G",
-          "step": 240
-        },
-        {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"iowait\", job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "H",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPU Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": "",
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 53
-      },
-      "id": 22,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "node_memory_MemTotal_bytes{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Total",
-          "refId": "A"
-        },
-        {
-          "expr": "node_memory_MemTotal_bytes{job=\"[[jobname]]\"} - node_memory_MemAvailable_bytes{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Used",
-          "refId": "B"
-        },
-        {
-          "expr": "node_memory_Cached_bytes{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Cached",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "decbytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 53
-      },
-      "id": 23,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "node_memory_SwapTotal_bytes{job=\"[[jobname]]\"}  ",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Total",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "node_memory_SwapTotal_bytes{job=\"[[jobname]]\"} - node_memory_SwapFree_bytes{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Used",
-          "refId": "B",
-          "step": 240
-        },
-        {
-          "expr": "node_memory_SwapCached_bytes{job=\"[[jobname]]\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Cached",
-          "refId": "C",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "SWAP",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "decbytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fill": 1,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 60
-      },
-      "id": 20,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [
-        {
-          "dashUri": "db/filesystemdetails",
-          "dashboard": "FilesystemDetails",
-          "includeVars": true,
-          "targetBlank": false,
-          "title": "FilesystemDetails",
-          "type": "dashboard"
-        }
-      ],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "100-(100*(node_filesystem_free_bytes{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "B",
-          "step": 240
-        },
-        {
-          "expr": "100-(100*(node_filesystem_free{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=\"[[jobname]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "A",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "FileSystem Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
           "show": true
         },
         {

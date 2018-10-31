@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:282",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,8 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 52,
-  "iteration": 1529095083752,
+  "id": 2,
+  "iteration": 1533066189533,
   "links": [],
   "panels": [
     {
