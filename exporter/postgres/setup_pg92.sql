@@ -34,18 +34,21 @@ $$;
 REVOKE ALL ON FUNCTION monitor.pg_stat_statements () FROM PUBLIC;
 
 
-CREATE OR REPLACE FUNCTION monitor.pg_ls_wal_dir(text) RETURNS SETOF TEXT 
+-- Drop previously unused version of this function if it exists from older pgmonitor installs
+DROP FUNCTION IF EXISTS monitor.pg_ls_wal_dir(text);
+
+CREATE OR REPLACE FUNCTION monitor.pg_ls_waldir() RETURNS SETOF TEXT 
     LANGUAGE plpgsql SECURITY DEFINER
 as $$
 BEGIN 
     IF current_setting('server_version_num')::int >= 100000 THEN
-        RETURN query(SELECT pg_catalog.pg_ls_dir('pg_wal')); 
+       RAISE EXCEPTION 'Use version of this function included with core in PG10+';
     ELSE
         RETURN query(SELECT pg_catalog.pg_ls_dir('pg_xlog')); 
     END IF;
 END
 $$;
-REVOKE ALL ON FUNCTION monitor.pg_ls_wal_dir(text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION monitor.pg_ls_waldir() FROM PUBLIC;
 
 
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;

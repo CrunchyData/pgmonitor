@@ -1,3 +1,15 @@
+### 2.1 
+ * IMPORTANT UPGRADE NOTE FOR CRUNCHY PACKAGE USERS: In version 2.0, the Crunchy provided extras for node_exporter were split out from the pg##-extras package. A dependency was kept between these packages to make upgrading easier. For 2.1, the dependency between these packages has been removed. When upgrading from 1.7 or less, if you have node_exporter and postgres_exporter running on the same systems, ensure that you install the separate node_exporters_extras package after the update. See the README for the full package name(s).
+
+ * Fixed Grafana data source to use the "proxy" mode instead of "direct" with default install. Should fix issues encountered with the default setup when Grafana is not installed on the same system as Prometheus.
+ * Renamed functions_pg##.sql file to setup_pg##.sql to better clarify what it's for (and because it's not just functions).
+ * Added ccp_wal_activity metric to help monitor WAL generation rate. Note that for PG96 and lower, an new security definer function must be added (can just run setup_pg##.sql again). New metric definition is located in the queries_pg##.yml file. No default rules have been added since this is very use-case dependent.
+ * Improved accuracy of Idle In Transaction monitoring times in PostgreSQL. Base the time measured on the state change of the session vs the total transaction runtime.
+ * Split setup_pg92-96.sql and queries_pg92-96.sql into individual files per major version. 
+ * Added commented out example prometheus alert rule for checking if a postgres database has changed from replica to primary or vice versa. Must be set on a per system basis since you have to tell it if a system is supposed to be a primary or replica.
+ * Update documentation
+
+
 ### 2.0
  * Recommended version of Prometheus is now 2.3.2. Recommended version of Alertmanager is 0.15.1. Recommended version of postgres_exporter is 0.4.6.
  * Upgrade required version of node_exporter to minimum of 0.16.0. Note that many of the metrics that are used in Grafana and Prometheus alerting have had their names changed. 
@@ -7,7 +19,7 @@
    * See full release notes for 0.16.0 - https://github.com/prometheus/node_exporter/releases/tag/v0.16.0
  * The postgres_exporter service no longer uses a symlink in /etc/sysconfig to point to a default "postgres_exporter" file. This was causing issues with several upgrade scenarios. New installation instructions now have the service pointing directly to the relevant sysconfig file for the major PostgreSQL version. 
    * IMPORTANT: If you are using the default postgres_exporter service, you will need to update your service name so it uses the proper sysconfig file. See the README file for the new default service name in the "Enable Services" section and run the "enable" command found there. You should then also disable/remove the old service so it doesn't try to start again in the future.
- * The additional Crunchy provided configurations for node_exporter have been split out from the pgmonitor-pg##-extras package to the pgmonitor-node_exporter-extras package. This was done to allow multiple versions of the pg##-extras package to be installed with different major versions of Postgres. There is still currently a dependency that the node extras packages must be installed with the pg##-extras so that upgrading doesn't break existing systems. This dependency will be revisted in the future.
+ * The additional Crunchy provided configurations for node_exporter have been split out from the pgmonitor-pg##-extras package to the pgmonitor-node_exporter-extras package. This was done to allow multiple versions of the pg##-extras package to be installed with different major versions of Postgres. There is still currently a dependency that the node extras packages must be installed with the pg##-extras so that upgrading doesn't break existing systems. This dependency will be revisited in the future.
  * Removed the requirement for a shell script to monitor if the database is up and its status as either a primary or replica. Up status is now using the native "pg_up" metric from postgres_exporter and a new metric query was written for checking the recovery status of a system (ccp_is_in_recovery).
    * The PostgreSQL.json overview dashboard that used this metric has been redesigned. Unfortunately it can no longer be colored RED for down systems, only go colorless and say "DOWN". This is a known limitation of handling null metric values in Grafana and part of a larger fix coming in future versions - https://github.com/grafana/grafana/issues/11418
  * Upgrade required version of Grafana to minimum of 5.2.1. 

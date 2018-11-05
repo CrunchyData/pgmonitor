@@ -32,10 +32,7 @@ If you install the below available packages with RPM, you can continue reading a
 |--------------------------------|---------------------------------------------------------------------------|
 | node_exporter                  | Base package for node_exporter                                            |
 | postgres_exporter              | Base package for postgres_exporter                                        |
-| pgmonitor-pg10-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 10)    | 
-| pgmonitor-pg96-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.6)   | 
-| pgmonitor-pg95-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.5)   | 
-| pgmonitor-pg94-extras          | Crunchy optimized configurations for postgres_exporter (PostgreSQL 9.4)   | 
+| pgmonitor-pg##-extras          | Crunchy optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) | 
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        | 
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 
@@ -99,7 +96,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | crontab.txt | `/etc/postgres_exporter/##/crontab.txt`  |
 | postgres/crunchy_postgres_exporter@.service | `/usr/lib/systemd/system/crunchy_postgres_exporter@.service`  |
 | postgres/sysconfig.postgres_exporter_pg## | `/etc/sysconfig/postgres_exporter_pg##`  |
-| postgres/functions_pg##.sql | `/etc/postgres_exporter/##/functions_pg##.sql`  |
+| postgres/setup_pg##.sql | `/etc/postgres_exporter/##/setup_pg##.sql`  |
 | postgres/queries_pg##.yml | `/etc/postgres_exporter/##/queries_pg##.yml`  |
 | postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
 | postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
@@ -120,7 +117,7 @@ If you need to modify them, see the notes in the files for more details and reco
 - `/etc/sysconfig/node_exporter`
 - `/etc/sysconfig/postgres_exporter_pg##`
 
-Note that `/etc/sysconfig/postgres_exporter_pg##` is the default sysconfig file for monitoring the database running on the default port 5432 and connects to the "postgres" database. If you've installed the pgmonitor functions to a different database, modify this file accordingly or make a new one. If you make a new one, ensure the service name you enable references this file (see the Enable Services section below ). 
+Note that `/etc/sysconfig/postgres_exporter_pg##` is the default sysconfig file for monitoring the database running on the default port 5432 and connects to the "postgres" database. If you've installed the pgmonitor setup to a different database, modify this file accordingly or make a new one. If you make a new one, ensure the service name you enable references this file (see the Enable Services section below ). 
 
 #### Database Configuration
 
@@ -164,38 +161,36 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
-| functions_pg10.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
-| functions_pg92-96.sql | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
+| setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The Vacuum graph on the PostgreSQLDetails Dashboard and the CRUD_Details Dashboard use these statistics.                                                   |
-| queries_pg10.yml      | postgres_exporter query file for queries that are specific to PostgreSQL 10+.                            |
-| queries_pg92-96.yml   | postgres_exporter query file for queries that are specific to PostgreSQL 9.2, 9.3, 9.4, 9.5, & 9.6.      |
+| queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
 | queries_pg_stat_statements.yml | postgres_exporter query file for gathering pg_stat_statements stastistics. Currently not used in any Grafana Dashboards. |
 
 
-Install functions to all databases you will be monitoring in the cluster (if you don't have `pg_stat_statements` installed, you can ignore the error given). The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
+Install the setup_pg##.sql script to all databases you will be monitoring in the cluster (if you don't have `pg_stat_statements` installed, you can ignore the error given). The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
 
 For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the `/etc/postgres_exporter` directory:
 
 ```bash
 cd /etc/postgres_exporter/96
-cat queries_common.yml queries_per_db.yml queries_pg92-96.yml > queries.yml
-psql -f /etc/postgres_exporter/96/functions_pg92-96.sql
+cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
+psql -f /etc/postgres_exporter/96/setup_pg96.sql
 ```
 As another example, to include queries for PostgreSQL 10 as well as bloat do the following:
 
 ```bash
 cd /etc/postgres_exporter/10
 cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_bloat.yml > queries.yml
-psql -f /etc/postgres_exporter/10/functions_pg10.sql
+psql -f /etc/postgres_exporter/10/setup_pg10.sql
 ```
 
-For replica servers, the setup is the same except that the functions_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
+For replica servers, the setup is the same except that the setup_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
 
 ###### Access Control: GRANT statements
 
-The `ccp_monitoring` database role (created by running the "functions_pg##.sql" file above) must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
+The `ccp_monitoring` database role (created by running the "setup_pg##.sql" file above) must be allowed to connect to all databases in the cluster. To do this, run the following command to generate the necessary GRANT statements:
 
 ```sql
 SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;'
@@ -217,7 +212,7 @@ psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 /usr/bin/pg_bloat_check.py -c "host=localhost dbname=postgres user=postgres" --create_stats_table
 psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
-In the default pgmonitor setup, the `pg_bloat_check.py` script is meant to be run by the `ccp_monitoring` system user created earlier.  The `/etc/postgres_exporter/##/crontab.txt` file is meant to be a guide for how you setup the `ccp_monitoring` _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
+The `/etc/postgres_exporter/##/crontab.txt` file is meant to be a guide for how you setup the `ccp_monitoring` _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
 
 The script requires being run by a database superuser by default since it must be able to run a scan on every table. If you'd like to not run it as a superuser, you will have to create a new role that has read permissions on all tables in all schemas that are to be monitored for bloat. You can then change the user in the connection string option to the script.
 
@@ -240,7 +235,7 @@ sudo systemctl status crunchy_postgres_exporter@postgres_exporter_pg##
 
 ### Running multiple postgres exporters (RHEL / CentOS 7)
 
-Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together. Note that the "functions_*.sql" file does not need to be run on these additional databases.
+Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. The queries_per_db.yml file contains these queries and the secondary exporter(s) can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that job in Prometheus so that all the metrics are collected together. Note that the "setup_*.sql" file does not need to be run on these additional databases.
 ```
 cd /etc/postgres_exporter/96
 cat queries_per_db.yml queries_bloat.yml > queries_mydb.yml
