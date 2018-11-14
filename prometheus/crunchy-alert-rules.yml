@@ -38,7 +38,27 @@ groups:
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
-  # Absence alerts must be configured per named job, otherwise there's no way to know which job is down
+
+# Whether a system switches from primary to replica or vice versa must be configured per named job.
+# No way to tell what value a system is supposed to be without a rule expression for that specific system
+# 2 to 1 means it changed from primary to replica. 1 to 2 means it changed from replica to primary
+# Set this alert for each system that you want to monitor a recovery status change
+# Below is an example for a target job called "Replica" and watches for the value to change above 1 which means it's no longer a replica
+#
+#  - alert: PGRecoveryStatusSwitch_Replica 
+#    expr: ccp_is_in_recovery_status{job="Replica"} > 1 
+#    for: 60s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#      alert_value: '{{ $value }}'
+#    annotations:
+#      summary: '{{ $labels.job }} has changed from replica to primary'
+
+
+# Absence alerts must be configured per named job, otherwise there's no way to know which job is down
+# Below is an example for a target job called "Prod"
 #  - alert: PGConnectionAbsent
 #    expr: absent(ccp_connection_stats_max_connections{job="Prod"})
 #    for: 10s
@@ -49,6 +69,8 @@ groups:
 #      alert_value: '{{ $value }}'
 #    annotations:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
+
+
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 300

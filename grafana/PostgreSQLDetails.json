@@ -15,8 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1533066262502,
+  "id": 7,
+  "iteration": 1542145496589,
   "links": [],
   "panels": [
     {
@@ -1184,17 +1184,15 @@
         "x": 0,
         "y": 46
       },
-      "id": 16,
+      "id": 47,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
+        "max": false,
+        "min": false,
+        "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -1210,43 +1208,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[jobname]]\"}[5m]))",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "AutoVacuum",
-          "metric": "ccp_stat_user_tables_autovacuum_count",
-          "refId": "A",
-          "step": 120
-        },
-        {
-          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "AutoAnalyze",
-          "refId": "B",
-          "step": 120
-        },
-        {
-          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Vacuum",
-          "refId": "C",
-          "step": 120
-        },
-        {
-          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[jobname]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Analyze",
-          "refId": "D",
-          "step": 120
+          "intervalFactor": 1,
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Vacuum/Analyze",
+      "title": "% toward wraparound",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1262,7 +1233,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "percent",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1376,10 +1347,10 @@
       "gridPos": {
         "h": 7,
         "w": 12,
-        "x": 6,
+        "x": 0,
         "y": 53
       },
-      "id": 47,
+      "id": 49,
       "legend": {
         "avg": false,
         "current": false,
@@ -1403,7 +1374,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
+          "expr": "ccp_wal_activity_total_size_bytes{job=\"[[jobname]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1412,7 +1383,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "% toward wraparound",
+      "title": "Total WAL Size",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1428,7 +1399,119 @@
       },
       "yaxes": [
         {
-          "format": "percent",
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "fill": 1,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 53
+      },
+      "id": 16,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "AutoVacuum",
+          "metric": "ccp_stat_user_tables_autovacuum_count",
+          "refId": "A",
+          "step": 120
+        },
+        {
+          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "AutoAnalyze",
+          "refId": "B",
+          "step": 120
+        },
+        {
+          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Vacuum",
+          "refId": "C",
+          "step": 120
+        },
+        {
+          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[jobname]]\"}[5m]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Analyze",
+          "refId": "D",
+          "step": 120
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Vacuum/Analyze Activity Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1459,6 +1542,7 @@
       {
         "allValue": null,
         "current": {
+          "selected": true,
           "text": "Prod",
           "value": "Prod"
         },
@@ -1472,6 +1556,7 @@
         "query": "label_values(job)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -1512,6 +1597,6 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "uid": "KcqXffNiz",
-  "version": 1
+  "uid": "6jtN_vfiz",
+  "version": 6
 }
