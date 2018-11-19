@@ -1,8 +1,12 @@
 ### 2.1 
  * **IMPORTANT UPGRADE NOTE FOR CRUNCHY PACKAGE USERS**: In version 2.0, the Crunchy provided extras for node_exporter were split out from the pgmonitor-pg##-extras package. A dependency was kept between these packages to make upgrading easier. For 2.1, the dependency between these packages has been removed. When upgrading from 1.7 or earlier, if you have node_exporter and postgres_exporter running on the same systems, ensure that you install the separate pgmonitor-node_exporters_extras package after the update. See the README for the full package name(s).
 
- * Minium required versions of software used in pgmonitor have been updated to: Prometheus 2.5.0, Prometheus Alertmanager 0.15.3, postgres_exporter 0.4.7 (enables full PG11 support) & Grafana 5.3.4.
- * Fixed Grafana data source to use the "proxy" mode instead of "direct" with default install. Should fix issues encountered with the default setup when Grafana is not installed on the same system as Prometheus.
+ * Minimum required versions of software used in pgmonitor have been updated to: 
+   * Prometheus 2.5.0
+   * Prometheus Alertmanager 0.15.3
+   * postgres_exporter 0.4.7 (enables full PG11 support)
+   * Grafana 5.3.4.
+ * Fixed Grafana data source to use the "proxy" mode instead of "direct" with default install. Should fix connection issues encountered during default setup between Grafana & Prometheus.
  * Renamed functions_pg##.sql file to setup_pg##.sql to better clarify what it's for (and because it's not just functions).
  * Added ccp_wal_activity metric to help monitor WAL generation rate. 
    * For all PG versions, provides total current size of WAL directory. For PG10+, it also provides the size of WAL generated in the last 5 minutes
@@ -13,6 +17,7 @@
  * Split setup_pg92-96.sql and queries_pg92-96.sql into individual files per major version. 
  * Added commented out example prometheus alert rule for checking if a postgres database has changed from replica to primary or vice versa. Must be set on a per system basis since you have to tell it if a system is supposed to be a primary or replica.
  * Removed pg_stat_statements prometheus metric and security definer function from setup script. We highly recommend having pg_stat_statements installed on a database, and we still include its installation in the documentation, but we currently don't have any useful metric recommendations from it to collect in prometheus.
+ * Added some default filters for the bloat check cronjob to avoid unnecessary waste in the prometheus storage of bloat metrics.
  * Update documentation.
 
 
