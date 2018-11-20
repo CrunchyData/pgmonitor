@@ -149,7 +149,7 @@ The service override files must be placed in the relevant drop-in folder to over
 
 ```
 /etc/systemd/system/prometheus.service.d/crunchy-prometheus-service.conf
-/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service.con
+/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service.conf
 ```
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.

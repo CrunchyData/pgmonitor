@@ -47,19 +47,17 @@ pgmonitor combines multiple open-source software packages and necessary configur
 
 ### Operating Systems
 
-- CentOS 6 or greater
-- RHEL 6 or greater
+- Prometheus/Alertmanager & Grafana: CentOS/RHEL 7 or greater
+- Exporters (node & postgres): CentOS/RHEL 6 or greater
 
 ### PostgreSQL
 
-- 9.4
-- 9.5
-- 9.6
-- 10
+- pgmonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgmonitor will cease supporting that major version.
+- 11, 10, 9.6, 9.5, 9.4
 
 #### Known issues
 
-- PostgreSQL 10 SCRAM-SHA-256 encrypted password are not yet supported by underlying go library.
+- PostgreSQL 10+ SCRAM-SHA-256 encrypted password are not yet supported by underlying go library used by postgres_exporter.
 
 ## Installation
 

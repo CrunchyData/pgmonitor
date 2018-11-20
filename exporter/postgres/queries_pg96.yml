@@ -5,7 +5,7 @@ ccp_connection_stats:
         , total
         , idle
         , idle_in_txn
-        , (select coalesce(extract(epoch from (max(now() - query_start))),0) from monitor.pg_stat_activity() where state = 'idle in transaction') as max_idle_in_txn_time
+        , (select coalesce(extract(epoch from (max(now() - state_change))),0) from monitor.pg_stat_activity() where state = 'idle in transaction') as max_idle_in_txn_time
         , (select coalesce(extract(epoch from (max(now() - query_start))),0) from monitor.pg_stat_activity() where state <> 'idle') as max_query_time
         , max_connections
         from (
@@ -84,4 +84,13 @@ ccp_replication_slots:
         usage: "GAUGE"
         description: "The amount of WAL (in bytes) being retained for this slot"
 
+
+ccp_wal_activity:
+  query: "SELECT (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_segment_size') * 
+    (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_block_size') * 
+    (SELECT count(*) FROM monitor.pg_ls_waldir()) AS total_size_bytes;"
+  metrics:
+    - count:
+        usage: "GAUGE"
+        description: "Current size in bytes of the WAL directory"
 
