@@ -52,12 +52,12 @@ pgmonitor combines multiple open-source software packages and necessary configur
 
 ### PostgreSQL
 
-- We strive to officially support all versions of PostgreSQL supported by the community itself. This means we will drop support for versions that are moved out of community support. And we will do our best to add support as soon as possible when new major versions are released.
-- 9.4, 9.5, 9.6, 10, 11
+- pgmonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgmonitor will cease supporting that major version.
+- 11, 10, 9.6, 9.5, 9.4
 
 #### Known issues
 
-- PostgreSQL 10 SCRAM-SHA-256 encrypted password are not yet supported by underlying go library used by postgres_exporter.
+- PostgreSQL 10+ SCRAM-SHA-256 encrypted password are not yet supported by underlying go library used by postgres_exporter.
 
 ## Installation
 
