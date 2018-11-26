@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>pgmonitor</title>
+    
+      <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="generator" content="Hugo 0.40" />
+<title>Setting up Prometheus :: pgmonitor</title>
+<link rel="shortcut icon" href="../favicon.png" type="image/x-icon" />
+<link href="../css/font-awesome.min.css" rel="stylesheet">
+<link href="../css/nucleus.css" rel="stylesheet">
+<link href="../theme-flex/style.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link href="../css/custom.css" rel="stylesheet">
+<script src="../js/jquery-2.x.min.js"></script>
+<script src="../js/toc.js"></script>
+<script type="text/javascript">
+      var baseurl = "";
+</script>
+<meta name="description" content="">
+
+
+
+    
+  </head>
+  <body data-url="/prometheus/">
+    
+      <header>
+  <div class="logo">
+    
+	
+  
+    <img alt="Crunchy Data" src="../images/crunchy_reverse_white.png">
+    <a class="baselink" href="">pgmonitor</a>
+  
+
+
+  </div>
+  <div class="burger"><a href="javascript:void(0);" style="font-size:15px;">&#9776;</a></div>
+    <nav class="shortcuts">
+            <li class="" role="">
+                <a href="https://github.com/CrunchyData/pgmonitor"  rel="noopener">
+                  <i class='fa fa-github'></i> <label>Github repo</label>
+                </a>
+            </li>
+            <li class="" role="">
+                <a href="../pdf/pgmonitor.pdf"  rel="noopener">
+                  <i class='fa fa-book'></i> <label>PDF Documentation</label>
+                </a>
+            </li>
+            <li class="" role="">
+                <a href="https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"  rel="noopener">
+                  <i class='fa fa-file'></i> <label>License</label>
+                </a>
+            </li>
+    </nav>
+</header>
+<article>
+  <aside>
+    <div>
+      <div class="searchbox">
+        <input data-search-input id="search-by" type="text" placeholder="Search...">
+      </div>
+      <script type="text/javascript" src="../js/lunr.min.js"></script>
+      <script type="text/javascript" src="../js/auto-complete.js"></script>
+      <link href="../css/auto-complete.css" rel="stylesheet">
+      <script type="text/javascript">
+        
+            var baseurl = "";
+        
+      </script>
+      <script type="text/javascript" src="../js/search.js"></script>
+    </div>
+
+    <ul class="menu">
+      <b>Navigation</b>
+          <li data-nav-id="/" class="dd-item">
+          <a href="../">
+            Home
+          </a>
+          </li>
+    <li data-nav-id="/exporter/" class="dd-item
+        ">
+      <div>
+      <a href="../exporter/">Setting up Exporters</a>
+
+      </div>
+    </li>
+    <li data-nav-id="/grafana/" class="dd-item
+        ">
+      <div>
+      <a href="../grafana/">Setting up Grafana</a>
+
+      </div>
+    </li>
+    <li data-nav-id="/prometheus/" class="dd-item parent active
+        ">
+      <div>
+      <a href="../prometheus/">Setting up Prometheus</a>
+
+      </div>
+    </li>
+    <li data-nav-id="/contributing/" class="dd-item
+        ">
+      <div>
+      <a href="../contributing/">Contributing</a>
+
+      </div>
+    </li>
+
+
+
+
+    </ul>
+
+    <hr><b>Table of Contents</b>
+<nav id="TableOfContents"></nav>
+
+
+
+    <section>
+    </section>
+  </aside>
+  <section class="page">
+
+    <div class="nav-select">
+      <center>Navigation :
+        <select onchange="javascript:location.href = this.value;">
+          
+    <option value="/exporter/" >
+   Setting up Exporters</option>
+    <option value="/grafana/" >
+   Setting up Grafana</option>
+    <option value="/prometheus/"  selected>
+   Setting up Prometheus</option> 
+  
+    <option value="/contributing/" >
+   Contributing</option>
+
+
+
+        </select>
+      </center>
+    </div>
+
+    
+      <div id="top-bar">
+        <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <span id="sidebar-toggle-span">
+              <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                <i class="fa fa-bars"></i>
+              </a>
+            </span>
+            <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+            <span class="links">
+            
+
+
+
+
+ <a href='../'></a> > Setting up Prometheus
+
+ 
+
+
+            </span>
+        </div>
+
+      </div>
+    
+
+    
+    <div id="body-inner">
+
+    <h1>Setting up Prometheus</h1>
+
+    
+    
+    
+
+
+
+<p>Prometheus can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.</p>
+
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#setup">Setup</a>
+
+<ul>
+<li><a href="#setup-on-rhelcentos-7">RHEL / CentOS 7</a></li>
+</ul></li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="upgrading">Upgrading</h3>
+
+<p>When upgrading from pgmonitor 1.x to 2.x, note that the alerting rules for node_exporter metrics have had many of their names changed. If you&rsquo;ve changed the provided alerting rules file, installing the new package should create a file called <code>/etc/prometheus/crunchy-alert-rules.yml.rpmnew</code> and not overwrite your current file. You should be able to copy the new rules as needed from there.</p>
+
+<h3 id="installation-on-rhel-centos-7">Installation on RHEL/CentOS 7</h3>
+
+<h4 id="with-rpm-packages">With RPM Packages</h4>
+
+<p>There are RPM packages available to <a href="https://www.crunchydata.com">Crunchy Data</a> customers through the <a href="https://access.crunchydata.com/">Crunchy Customer Portal</a>.</p>
+
+<p>If you install the below available packages with RPM, you can continue reading at the <a href="#setup">Setup</a> section.</p>
+
+<h5 id="available-packages">Available Packages</h5>
+
+<table>
+<thead>
+<tr>
+<th>Package Name</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>alertmanager</td>
+<td>Base package for the Alertmanager</td>
+</tr>
+
+<tr>
+<td>prometheus2</td>
+<td>Base package for Prometheus 2.x</td>
+</tr>
+
+<tr>
+<td>pgmonitor-alertmanager-extras</td>
+<td>Custom Crunchy configurations for Alertmanager</td>
+</tr>
+
+<tr>
+<td>pgmonitor-prometheus-extras</td>
+<td>Custom Crunchy configurations for Prometheus</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="without-crunchy-data-packages">Without Crunchy Data Packages</h4>
+
+<p>For installations without using packages provided by Crunchy Data, we recommend using the repository maintained at <a href="https://github.com/lest/prometheus-rpm">https://github.com/lest/prometheus-rpm</a>. Instructions for setup and installation are contained there. Note this only sets up the base service. The additional files and steps for pgmonitor still need to be set up as instructed below.</p>
+
+<p>Or you can also download <a href="https://prometheus.io/">Prometheus</a> and <a href="https://prometheus.io/docs/alerting/alertmanager/">Alertmanager</a> from the original site at <a href="https://prometheus.io/download">https://prometheus.io/download</a>. Note that no base service setup is provided here, just the binaries.</p>
+
+<h5 id="minimum-versions">Minimum Versions</h5>
+
+<p>pgmonitor assumes to be using Prometheus 2.x. We recommend to always use the latest minor version of Prometheus.</p>
+
+<h5 id="user-and-configuration-directory-installation">User and Configuration Directory Installation</h5>
+
+<p>You will need to create a user named <code>ccp_monitoring</code> which you can do with the following command:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo useradd ccp_monitoring</code></pre></div>
+<p>Create a folder in <code>/var/lib/</code> and set its permissions as such:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /var/lib/ccp_monitoring
+sudo chmod <span style="color:#ae81ff">0700</span> /var/lib/ccp_monitoring
+sudo chown ccp_monitoring /var/lib/ccp_monitoring</code></pre></div>
+<h5 id="configuration-file-installation">Configuration File Installation</h5>
+
+<p>The files contained in this repository are assumed to be installed in the following locations with the following names:</p>
+
+<h6 id="prometheus">Prometheus</h6>
+
+<p>The Prometheus data directory should be <code>/var/lib/ccp_monitoring/prometheus</code> and owned by the <code>ccp_monitoring</code> user.  You can set it up with:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /var/lib/ccp_monitoring/prometheus
+sudo chmod <span style="color:#ae81ff">0700</span> /var/lib/ccp_monitoring/prometheus
+sudo chown ccp_monitoring /var/lib/ccp_monitoring/prometheus</code></pre></div>
+<p>The following pgmonitor configuration files should be placed according to the following mapping:</p>
+
+<table>
+<thead>
+<tr>
+<th>pgmonitor Configuration File</th>
+<th>System Location</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>crunchy-prometheus-service-el7.conf</td>
+<td><code>/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf</code></td>
+</tr>
+
+<tr>
+<td>sysconfig.prometheus</td>
+<td><code>/etc/sysconfig/prometheus</code></td>
+</tr>
+
+<tr>
+<td>crunchy-prometheus.yml</td>
+<td><code>/etc/prometheus/crunchy-prometheus.yml</code></td>
+</tr>
+
+<tr>
+<td>auto.d/ProductionDB.yml.example</td>
+<td><code>/etc/prometheus/auto.d/ProductionDB.yml.example</code></td>
+</tr>
+
+<tr>
+<td>crunchy-alertmanager.yml</td>
+<td><code>/etc/prometheus/crunchy-alertmanager.yml</code></td>
+</tr>
+
+<tr>
+<td>crunchy-alert-rules.yml</td>
+<td><code>/etc/prometheus/crunchy-alert-rules.yml</code></td>
+</tr>
+</tbody>
+</table>
+
+<h6 id="alertmanager">Alertmanager</h6>
+
+<p>The Alertmanager data directory should be <code>/var/lib/ccp_monitoring/alertmanager</code> and owned by the <code>ccp_monitoring</code> user.  You can set it up with:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir /var/lib/ccp_monitoring/alertmanager
+sudo chmod <span style="color:#ae81ff">0700</span> /var/lib/ccp_monitoring/alertmanager
+sudo chown ccp_monitoring /var/lib/ccp_monitoring/alertmanager</code></pre></div>
+<p>The following pgmonitor configuration files should be placed according to the following mapping:</p>
+
+<table>
+<thead>
+<tr>
+<th>pgmonitor Configuration File</th>
+<th>System Location</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>crunchy-alertmanager-service-el7.conf</td>
+<td><code>/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf</code></td>
+</tr>
+
+<tr>
+<td>sysconfig.alertmanager</td>
+<td><code>/etc/sysconfig/alertmanager</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="setup-on-rhel-centos-7">Setup on RHEL/CentOS 7</h3>
+
+<h4 id="service-configuration">Service Configuration</h4>
+
+<p>The following files contain defaults that should enable Prometheus and Alertmanager to run effectively on your system for the purposes of using pgmonitor.  You should take some time to review them.</p>
+
+<p>If you need to modify them, see the notes in the files for more details and recommendations:</p>
+
+<ul>
+<li><code>/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf</code></li>
+<li><code>/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf</code></li>
+</ul>
+
+<p>The below files contain startup properties for Prometheues and Alertmanager.  Please review and modify these files as you see fit:</p>
+
+<ul>
+<li><code>/etc/sysconfig/prometheus</code></li>
+<li><code>/etc/sysconfig/alertmanager</code></li>
+</ul>
+
+<p>The below files dictate how Prometheus and Alertmanager will behave at runtime for the purposes of using pgmonitor.  Please review each file below and follow the instructions in order to set things up:</p>
+
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Instructions</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>/etc/prometheus/crunchy-prometheus.yml</code></td>
+<td>Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Default service expects config file to be named <code>crunchy-prometheus.yml</code></td>
+</tr>
+
+<tr>
+<td><code>/etc/prometheus/crunchy-alertmanager.yml</code></td>
+<td>Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Default service expects config file to be named <code>crunchy-alertmanager.yml</code></td>
+</tr>
+
+<tr>
+<td><code>/etc/prometheus/crunchy-alert-rules.yml</code></td>
+<td>Update rules as needed. Default Prometheus config expects file to be named <code>crunchy-alert-rules.yml</code></td>
+</tr>
+
+<tr>
+<td><code>/etc/prometheus/auto.d/*.yml</code></td>
+<td>You will need at least one file with a final <code>.yml</code> extension. Copy the example file to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in <code>.yml.example</code> but only with <code>.yml</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="enable-services">Enable Services</h4>
+
+<p>To enable and start Prometheus as a service, execute the following commands:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl <span style="color:#111">enable</span> prometheus
+sudo systemctl start prometheus
+sudo systemctl status prometheus</code></pre></div>
+<p>To enable and start Alertmanager as a service, execute the following commands:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl <span style="color:#111">enable</span> alertmanager
+sudo systemctl start alertmanager
+sudo systemctl status alertmanager</code></pre></div>
+<h2 id="note-for-packaging-rhel-centos-7">Note for packaging (RHEL/CentOS 7)</h2>
+
+<p>The service override files must be placed in the relevant drop-in folder to override the default service files.</p>
+
+<pre><code>/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service.conf
+/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service.conf
+</code></pre>
+
+<p>After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.</p>
+
+<h3 id="setup-on-rhel-centos-6">Setup on RHEL/CentOS 6</h3>
+
+<p>Detailed instructions coming soon.</p>
+
+
+
+    
+    
+        <div class="chevrons">
+    <div id="navigation">
+<a class="nav nav-prev" href="../grafana/" title="Setting up Grafana"> <i class="fa fa-chevron-left"></i><label>Setting up Grafana</label></a>
+    <a class="nav nav-next" href="../contributing/" title="Contributing" style="margin-right: 0px;"><label>Contributing</label><i class="fa fa-chevron-right"></i></a></div>
+  </div>
+
+  </section>
+</article>
+
+<footer>
+
+<div class="footline">
+    
+
+    
+
+  
+
+  </div>
+
+
+	<div>
+
+
+  
+
+
+
+	</div>
+</footer>
+
+<link href="../css/featherlight.min.css" rel="stylesheet">
+<script src="../js/featherlight.min.js"></script>
+
+
+
+<script src="../theme-flex/script.js"></script>
+
+
+    
+
+    
+    
+
+    
+  </body>
+</html>
