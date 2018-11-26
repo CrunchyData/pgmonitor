@@ -1,0 +1,55 @@
+baseURL = ""
+
+canonifyurls = true
+DefaultContentLanguage = "current"
+languageCode = "en-us"
+relativeURLs = true
+
+title = "pgmonitor"
+theme = "crunchy-hugo-theme"
+#themesdir = "themes/"
+pygmentsCodeFences = true
+pygmentsStyle = "monokailight"
+publishDir = "../docs"
+
+defaultContentLanguage = "current"
+defaultContentLanguageInSubdir= true
+enableMissingTranslationPlaceholders = true
+
+[Languages]
+[Languages.current]
+title = "pgmonitor"
+weight = 1
+languageName = "current"
+
+[params]
+showVisitedLinks = false # default is false
+themeStyle = "flex" # "original" or "flex" # default "flex"
+themeVariant = "" # choose theme variant "green", "gold" , "gray", "blue" (default)
+ordersectionsby = "weight" # ordersectionsby = "title"
+disableHomeIcon = false # default is false
+disableSearch = false # default is false
+disableNavChevron = false # set true to hide next/prev chevron, default is false
+highlightClientSide = false # set true to use highlight.pack.js instead of the default hugo chroma highlighter
+menushortcutsnewtab = false # set true to open shortcuts links to a new tab/window
+enableGitInfo = true
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[[menu.shortcuts]]
+pre = "<h3>More</h3>"
+name = "<i class='fa fa-github'></i> <label>Github repo</label>"
+identifier = "ds"
+url = "https://github.com/CrunchyData/pgmonitor"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-book'></i> <label>PDF Documentation</label>"
+url = "/pdf/pgmonitor.pdf"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-file'></i> <label>License</label>"
+url = "https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"
+weight = 30
