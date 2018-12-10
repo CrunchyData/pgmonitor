@@ -88,9 +88,8 @@ ccp_replication_slots:
 ccp_wal_activity:
   query: "SELECT (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_segment_size') * 
     (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_block_size') * 
-    (SELECT count(*) FROM monitor.pg_ls_dir('pg_xlog')) AS total_size_bytes;"
+    (SELECT count(*) FROM monitor.pg_ls_waldir()) AS total_size_bytes;"
   metrics:
     - count:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
-

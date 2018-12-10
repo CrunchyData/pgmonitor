@@ -6,7 +6,7 @@ ccp_bloat_check:
         , objectname
         , size_bytes
         , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::bigint ))::bigint AS total_wasted_space_bytes
-          FROM public.bloat_stats" 
+          FROM bloat_stats" 
   metrics: 
     - dbname: 
         usage: "LABEL" 
