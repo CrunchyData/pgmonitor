@@ -93,4 +93,3 @@ ccp_wal_activity:
     - count:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
-

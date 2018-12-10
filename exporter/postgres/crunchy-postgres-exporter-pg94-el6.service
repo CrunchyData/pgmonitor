@@ -12,7 +12,7 @@
 
 RETVAL=0
 PROG="postgres_exporter"
-SYSCONFIG="postgres_exporter"
+SYSCONFIG="postgres_exporter_pg94"
 DAEMON_SYSCONFIG=/etc/sysconfig/${SYSCONFIG}
 DAEMON=/usr/bin/${PROG}
 PID_FILE=/var/run/${PROG}/${SYSCONFIG}.pid

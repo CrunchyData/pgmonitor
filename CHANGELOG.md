@@ -1,3 +1,11 @@
+### 2.2
+
+ * Fixed broken ccp_wal_activity check for PostgreSQL 9.4 & 9.5. Updated check is located in the relevant exporter/postgres/queries_pg##.yml file
+ * Fixed broken service files for postgres_exporter on RHEL6 systems.
+ * Removed explicit "public" schema in ccp_bloat_check query so that it will properly use the search_path in case bloat tables were installed in another schema 
+ * Removed query files for PostgreSQL versions no longer supported by pgmonitor (9.2 & 9.3)
+
+
 ### 2.1 
  * **IMPORTANT UPGRADE NOTE FOR CRUNCHY PACKAGE USERS**: In version 2.0, the Crunchy provided extras for node_exporter were split out from the pgmonitor-pg##-extras package. A dependency was kept between these packages to make upgrading easier. For 2.1, the dependency between these packages has been removed. When upgrading from 1.7 or earlier, if you have node_exporter and postgres_exporter running on the same systems, ensure that you install the separate pgmonitor-node_exporters_extras package after the update. See the README for the full package name(s).
 
