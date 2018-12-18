@@ -39,17 +39,17 @@ home = [ "HTML", "RSS", "JSON"]
 
 [[menu.shortcuts]]
 pre = "<h3>More</h3>"
-name = "<i class='fa fa-github'></i> <label>Github repo</label>"
+name = "<i class='fab fa-github'></i> <label>GitHub</label>"
 identifier = "ds"
 url = "https://github.com/CrunchyData/pgmonitor"
 weight = 10
 
 [[menu.shortcuts]]
-name = "<i class='fa fa-book'></i> <label>PDF Documentation</label>"
-url = "/pdf/pgmonitor.pdf"
+name = "<i class='fas fa-file-contract'></i> <label>License</label>"
+url = "https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"
 weight = 20
 
-[[menu.shortcuts]]
-name = "<i class='fa fa-file'></i> <label>License</label>"
-url = "https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"
-weight = 30
+[[menu.downloads]]
+name = "<i class='fas fa-file-pdf'></i> <label>PDF</label>"
+url = "/pdf/pgmonitor.pdf"
+weight = 20
