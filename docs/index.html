@@ -5,15 +5,15 @@
     
       <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="generator" content="Hugo 0.40" />
+<meta name="generator" content="Hugo 0.52" />
 <title> :: pgmonitor</title>
 <link rel="shortcut icon" href="./favicon.png" type="image/x-icon" />
-<link href="./css/font-awesome.min.css" rel="stylesheet">
 <link href="./css/nucleus.css" rel="stylesheet">
 <link href="./theme-flex/style.css" rel="stylesheet">
 
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link href="./css/custom.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <script src="./js/jquery-2.x.min.js"></script>
 <script src="./js/toc.js"></script>
 <script type="text/javascript">
@@ -32,8 +32,7 @@
     
 	
   
-    <img alt="Crunchy Data" src="./images/crunchy_reverse_white.png">
-    <a class="baselink" href="">pgmonitor</a>
+    <a href="https://www.crunchydata.com/"><img alt="Crunchy Data" src="./images/logo.svg"></a>
   
 
 
@@ -42,39 +41,48 @@
     <nav class="shortcuts">
             <li class="" role="">
                 <a href="https://github.com/CrunchyData/pgmonitor"  rel="noopener">
-                  <i class='fa fa-github'></i> <label>Github repo</label>
-                </a>
-            </li>
-            <li class="" role="">
-                <a href="./pdf/pgmonitor.pdf"  rel="noopener">
-                  <i class='fa fa-book'></i> <label>PDF Documentation</label>
+                  <i class='fab fa-github'></i> <label>GitHub</label>
                 </a>
             </li>
             <li class="" role="">
                 <a href="https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"  rel="noopener">
-                  <i class='fa fa-file'></i> <label>License</label>
+                  <i class='fas fa-file-contract'></i> <label>License</label>
                 </a>
             </li>
     </nav>
 </header>
 <article>
   <aside>
-    <div>
-      <div class="searchbox">
-        <input data-search-input id="search-by" type="text" placeholder="Search...">
-      </div>
-      <script type="text/javascript" src="./js/lunr.min.js"></script>
-      <script type="text/javascript" src="./js/auto-complete.js"></script>
-      <link href="./css/auto-complete.css" rel="stylesheet">
-      <script type="text/javascript">
-        
-            var baseurl = "";
-        
-      </script>
-      <script type="text/javascript" src="./js/search.js"></script>
-    </div>
 
     <ul class="menu">
+      <div>
+        <div class="searchbox">
+          <input data-search-input id="search-by" type="text" placeholder="Search...">
+        </div>
+        <script type="text/javascript" src="./js/lunr.min.js"></script>
+        <script type="text/javascript" src="./js/auto-complete.js"></script>
+        <link href="./css/auto-complete.css" rel="stylesheet">
+        <script type="text/javascript">
+          
+              var baseurl = "";
+          
+        </script>
+        <script type="text/javascript" src="./js/search.js"></script>
+      </div>
+
+      <hr>
+      <a class="baselink" href="./">pgmonitor</a>
+      <hr>
+        <b>Available Formats</b>
+        <nav class="downloads">
+                <li class="" role="">
+                    <a href="./pdf/pgmonitor.pdf"  rel="noopener">
+                      <i class='fas fa-file-pdf'></i> <label>PDF</label>
+                    </a>
+                </li>
+        </nav>
+        <hr>
+
       <b>Navigation</b>
           <li data-nav-id="/" class="dd-item">
           <a href="./">
@@ -113,15 +121,14 @@
 
 
 
-    </ul>
-
-    <hr><b>Table of Contents</b>
+      <hr><b>Table of Contents</b>
 <nav id="TableOfContents"></nav>
 
 
 
-    <section>
-    </section>
+      <section>
+      </section>
+    </ul>
   </aside>
   <section class="page">
 
@@ -164,7 +171,8 @@
 
 <h3 id="pgmonitor-https-github-com-crunchydata-pgmonitor-is-your-all-in-one-tool-to-easily-create-an-environment-to-visualize-the-health-and-performance-of-your-postgresql-http-www-postgresql-org-cluster"><a href="https://github.com/CrunchyData/pgmonitor">pgmonitor</a> is your all-in-one tool to easily create an environment to visualize the health and performance of your <a href="http://www.postgresql.org/">PostgreSQL</a> cluster.</h3>
 
-<p><img src="images/dashboard.png" alt="pgmonitor" /></p>
+<p><img src="./images/pgmonitor_top_level.png" alt="pgmonitor" />
+<img src="./images/pgmonitor_pgdetails.png" alt="pgmonitor" /></p>
 
 <p>pgmonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:</p>
 

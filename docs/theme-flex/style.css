@@ -63,7 +63,10 @@ header {
     -ms-flex-pack: end;
     justify-content: flex-end;
     list-style-type: none; }
-    header nav.shortcuts li .fa {
+    header nav.shortcuts li .fa,
+    header nav.shortcuts li .fab,
+    header nav.shortcuts li .far,
+    header nav.shortcuts li .fas {
       font-size: 1.5rem;
       margin-right: 0.5rem; }
     header nav.shortcuts li a:active,
