@@ -10,7 +10,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
 
@@ -21,9 +20,30 @@ groups:
       service: system 
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )'
+
+
+########## PGBACKREST RULES ##########
+#
+# Uncomment and customize this rule to monitor your pgbackrest backups. Value monitored is seconds since the last completed backup.
+# Specific stanza backups can be monitored by setting the "stanza" label. 
+# Otherwise, all backups returned by the pgbackrest info command run from where the database exists will be checked
+#
+# Relevant metric names are: 
+#   ccp_backrest_last_full_backup_seconds_since_completed
+#   ccp_backrest_last_incr_backup_seconds_since_completed
+#   ccp_backrest_last_diff_backup_seconds_since_completed
+#
+#  - alert: PGBackRestLastFull
+#    expr: ccp_backrest_last_full_backup_seconds_since_completed > 86400
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'At least one full backup monitored from system {{ $labels.job }} has not completed in the last 24 hours.'
 
 
 ########## POSTGRESQL RULES ##########
@@ -34,7 +54,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
@@ -52,7 +71,6 @@ groups:
 #      service: postgresql
 #      severity: critical
 #      severity_num: 300
-#      alert_value: '{{ $value }}'
 #    annotations:
 #      summary: '{{ $labels.job }} has changed from replica to primary'
 
@@ -66,7 +84,6 @@ groups:
 #      service: postgresql
 #      severity: critical
 #      severity_num: 300
-#      alert_value: '{{ $value }}'
 #    annotations:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
 
@@ -79,7 +96,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one session idle in transaction for over 5 minutes.'
       summary: 'PGSQL Instance idle transactions'
@@ -91,7 +107,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one session idle in transaction for over 15 minutes.'
       summary: 'PGSQL Instance idle transactions'
@@ -103,7 +118,6 @@ groups:
       service: postgresql
       severity: warning 
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one query running for over 12 hours.'
       summary: 'PGSQL Max Query Runtime'
@@ -115,7 +129,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one query running for over 1 day.'
       summary: 'PGSQL Max Query Runtime'
@@ -127,7 +140,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} is using 75% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
@@ -139,7 +151,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
@@ -151,7 +162,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value }} bytes'
       summary: 'PGSQL Instance size warning'
@@ -163,7 +173,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value }} bytes'
       summary: 'PGSQL Instance size critical'
@@ -175,7 +184,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 50MB behind.'
       summary: 'PGSQL Instance replica lag warning'
@@ -187,7 +195,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 100MB behind.'
       summary: 'PGSQL Instance replica lag warning'
@@ -199,7 +206,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has one or more inactive replication slots'
       summary: 'PGSQL Instance inactive replication slot'
@@ -211,7 +217,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 50% towards transaction id wraparound.'
       summary: 'PGSQL Instance {{ $labels.job }} transaction id wraparound imminent'
@@ -223,7 +228,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 75% towards transaction id wraparound.'
       summary: 'PGSQL Instance transaction id wraparound imminent'
@@ -235,7 +239,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 75% towards emergency autovacuum processes beginning'
       summary: 'PGSQL Instance emergency vacuum imminent'
@@ -247,10 +250,21 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 90% towards emergency autovacuum processes beginning'
       summary: 'PGSQL Instance emergency vacuum imminent'
+
+  - alert: PGArchiveCommandStatus
+    expr: ccp_archive_command_status_seconds_since_last_fail > 300
+    for: 60s
+    labels:
+        service: postgresql
+        severity: critical
+        severity_num: 300
+    annotations:
+        description: 'PGSQL Instance {{ $labels.job }} has a recent failing archive command'
+        summary: 'Seconds since the last recorded failure of the archive_command'
+
 
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
@@ -260,7 +274,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down at least 50% of the time for the last 5 minutes. Service may be flapping or down.'
       summary: 'Prometheus Exporter Service Down'
@@ -272,7 +285,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
@@ -283,7 +295,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
@@ -294,7 +305,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '(EXPERIMENTAL) Disk {{ $labels.device }} on target {{ $labels.job }} is predicted to fill in 4 hrs based on current usage'
 
@@ -305,7 +315,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
@@ -316,7 +325,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
@@ -327,7 +335,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -338,7 +345,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -349,7 +355,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -360,6 +365,5 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
