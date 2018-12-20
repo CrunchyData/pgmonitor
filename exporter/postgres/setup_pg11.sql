@@ -10,29 +10,37 @@ GRANT pg_monitor to ccp_monitoring;
 
 CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
+DROP TABLE IF EXISTS monitor.pgbackrest_info;
+CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (data jsonb NOT NULL);
+
 CREATE OR REPLACE FUNCTION monitor.pgbackrest_info() returns jsonb 
     LANGUAGE plpgsql SECURITY DEFINER
 AS $$
 DECLARE
-    data jsonb;
+    v_data jsonb;
 BEGIN
     -- Get pgBackRest info in JSON format
 
-    -- Create a temp table to hold the JSON data
-    CREATE TEMP TABLE temp_pgbackrest_data (data jsonb);
+    -- Ensure table is empty 
+    TRUNCATE monitor.pgbackrest_info;
 
     -- Copy data into the table directory from the pgBackRest into command
-    COPY temp_pgbackrest_data (data)
+    COPY monitor.pgbackrest_info (data)
         FROM program
             'pgbackrest --output=json info | tr ''\n'' '' ''' (format text);
 
-    SELECT temp_pgbackrest_data.data
-      INTO data
-      FROM temp_pgbackrest_data;
+    SELECT data
+      INTO v_data
+      FROM monitor.pgbackrest_info;
 
-    DROP TABLE temp_pgbackrest_data;
+    TRUNCATE monitor.pgbackrest_info;
 
-    RETURN data;
+    IF v_data IS NULL THEN
+        RAISE EXCEPTION 'No backups being returned from pgbackrest info command';
+    END IF;
+
+    RETURN v_data;
+
 END $$; 
 
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;
