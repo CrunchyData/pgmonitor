@@ -44,6 +44,23 @@ groups:
 #       severity_num: 300
 #    annotations:
 #       summary: 'At least one full backup monitored from system {{ $labels.job }} has not completed in the last 24 hours.'
+#
+## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires. 
+## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
+## Checking for absence of just the full backup type should be sufficient (no need for diff/incr).
+## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this 
+## check gives a clearer answer as to what is causing it and that something is wrong with the backups.
+#
+#  - alert: PGBackrestAbsent_Prod
+#    expr: absent(ccp_backrest_last_full_backup_seconds_since_completed{job="Prod"})
+#    for: 10s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
+
 
 
 ########## POSTGRESQL RULES ##########
