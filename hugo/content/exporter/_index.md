@@ -55,15 +55,7 @@ For non-package installations, the exporters & pg_bloat_check can be downloaded 
 You will need to create a user named `ccp_monitoring` which you can do with the following command:
 
 ```bash
-sudo useradd ccp_monitoring
-```
-
-Create a folder in `/var/lib/` and set its permissions as such:
-
-```bash
-sudo mkdir /var/lib/ccp_monitoring
-sudo chmod 0700 /var/lib/ccp_monitoring
-sudo chown ccp_monitoring /var/lib/ccp_monitoring
+sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 ```
 
 ##### Configuration File Installation
@@ -262,10 +254,9 @@ Lastly, update the Prometheus auto.d target file to include the new exporter in 
 
 The service override file(s) must be placed in the relevant drop-in folder to override the default service files.
 
-    /etc/systemd/system/node_exporter.service.d/*.conf
+    /etc/systemd/system/node_exporter.service.d/\*.conf
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
-
 
 ## Installation / Setup on RHEL/CentOS 6
 

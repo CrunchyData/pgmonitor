@@ -53,3 +53,8 @@ weight = 20
 name = "<i class='fas fa-file-pdf'></i> <label>PDF</label>"
 url = "/pdf/pgmonitor.pdf"
 weight = 20
+
+[[menu.downloads]]
+name = "<i class='fas fa-book'></i> <label>EPUB</label>"
+url = "/epub/pgmonitor.epub"
+weight = 30

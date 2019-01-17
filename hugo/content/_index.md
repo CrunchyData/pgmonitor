@@ -2,8 +2,8 @@
 
 ### [pgmonitor](https://github.com/CrunchyData/pgmonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
 
-![pgmonitor](/images/pgmonitor_top_level.png)
-![pgmonitor](/images/pgmonitor_pgdetails.png)
+![pgmonitor](images/pgmonitor_top_level.png)
+![pgmonitor](images/pgmonitor_pgdetails.png)
 
 pgmonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
 
@@ -62,13 +62,13 @@ pgmonitor combines multiple open-source software packages and necessary configur
 
 ## Installation
 
-Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
+Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
 
-### 1. [Prometheus](/prometheus/)
+### 1. [Prometheus](/prometheus)
 
-### 2. [exporter](/exporter/)
+### 2. [exporter](/exporter)
 
-### 3. [Grafana](/grafana/)
+### 3. [Grafana](/grafana)
 
 ## Roadmap
 
@@ -78,11 +78,11 @@ Each step in the installation process is listed here, with a link to additional 
 
 ## Version History
 
-For the [full history](CHANGELOG) of pgmonitor, please see the [CHANGELOG](CHANGELOG).
+For the [full history](/changelog) of pgmonitor, please see the [CHANGELOG](/changelog).
 
 ## Sponsors
 
-![Crunchy Data](images/crunchy_logo.png)
+![Crunchy Data](images/crunchy_logo.svg)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 

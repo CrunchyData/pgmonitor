@@ -30,9 +30,3 @@ hugo server
 The local version of the Hugo server is accessible by default from
 `localhost:1313`. Once you've run `hugo server`, that will let you interactively make changes to the documentation as desired and view the updates
 in real-time.
-
-
-## Contributing to the Documentation
-
-When you're ready to commit a change, please view and run the script located in the root folder labeled `generate-docs.sh` which will automatically generate a new
-set of webpages using Hugo that will update the live website after the change has been committed to the repository.
