@@ -20,13 +20,9 @@ Running pgmonitor will give you confidence in understanding how well your Postgr
 
 ---
 
-Please view the official pgmonitor documentation
-[here](https://crunchydata.github.io/pgmonitor/). If you
-are interested in contributing or making an update to the documentation,
+If you are interested in contributing or making an update to the documentation,
 please view the
 [Contributing Guidelines](https://crunchydata.github.io/pgmonitor/contributing/).
-
-[![Official Documentation](hugo/static/images/btn.png)](https://crunchydata.github.io/pgmonitor/)
 
 ---
 
