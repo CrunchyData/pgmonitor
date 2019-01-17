@@ -78,11 +78,11 @@ Installation instructions for each package are provided in that packages subfold
 
 ## Version History
 
-For the [full history](/changelog) of pgmonitor, please see the [CHANGELOG](/changelog).
+For the [full history](CHANGELOG.md) of pgmonitor, please see the [CHANGELOG](CHANGELOG.md).
 
 ## Sponsors
 
-![Crunchy Data](images/crunchy_logo.svg)
+![Crunchy Data](hugo/static/images/crunchy_logo.svg)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
