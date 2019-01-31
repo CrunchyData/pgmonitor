@@ -20,71 +20,23 @@ Running pgmonitor will give you confidence in understanding how well your Postgr
 
 ---
 
-## Contents
+Please view the official Crunchy Data pgmonitor documentation
+[here](https://access.crunchydata.com/documentation/pgmonitor/2.2/). If you
+are interested in contributing or making an update to the documentation,
+please view the
+[Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/2.2/contributing/).
 
-- [Purpose](#purpose)
-- [Supported Platforms](#supported-platforms)
-  - [Operating Systems](#operating-systems)
-  - [PostgreSQL](#postgesql)
-- [Installation](#installation)
-- [Roadmap](#roadmap)
-- [Version History](#version-history)
-- [Sponsors](#sponsors)
-- [Legal Notices](#legal-notices)
+[<img src="https://access.crunchydata.com/documentation/pgmonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/2.2/)
 
 ---
-
-## Purpose
-
-pgmonitor is an open-source monitoring solution for PostgreSQL and the systems that it runs on. pgmonitor came from the need to provide a way to easily create a visual environment to monitor all the metrics a database administrator needs to proactively ensure the health of the system.
-
-pgmonitor combines multiple open-source software packages and necessary configuration to create a robust PostgreSQL monitoring environment.  These include:
-
-- [Prometheus](https://prometheus.io/) - an open-source metrics collector that is highly customizable.
-- [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
-- [PostgreSQL Exporter](https://github.com/wrouesnel/postgres_exporter) - an open-source data export to Prometheus that supports collecting metrics from any PostgreSQL server version 9.1 and above.
-
-## Supported Platforms
-
-### Operating Systems
-
-- Prometheus/Alertmanager & Grafana: CentOS/RHEL 7 or greater
-- Exporters (node & postgres): CentOS/RHEL 6 or greater
-
-### PostgreSQL
-
-- pgmonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgmonitor will cease supporting that major version.
-- 11, 10, 9.6, 9.5, 9.4
-
-#### Known issues
-
-- PostgreSQL 10+ SCRAM-SHA-256 encrypted password are not yet supported by underlying go library used by postgres_exporter.
-
-## Installation
-
-Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
-
-### 1. [Prometheus](/prometheus)
-
-### 2. [exporter](/exporter)
-
-### 3. [Grafana](/grafana)
-
-## Roadmap
-
-- Additional monitoring metrics out-of-the-box
-- Improved visualizations
-- Project build testing
-
-## Version History
-
-For the [full history](CHANGELOG.md) of pgmonitor, please see the [CHANGELOG](CHANGELOG.md).
 
 ## Sponsors
 
 ![Crunchy Data](hugo/static/images/crunchy_logo.svg)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+
+---
 
 ## Legal Notices
 
