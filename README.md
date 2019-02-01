@@ -1,11 +1,11 @@
-# pgmonitor
+# pgMonitor
 
-### [pgmonitor](https://github.com/CrunchyData/pgmonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
+### [pgMonitor](https://github.com/CrunchyData/pgMonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
 
-![pgmonitor](hugo/static/images/pgmonitor_top_level.png)
-![pgmonitor](hugo/static/images/pgmonitor_pgdetails.png)
+![pgMonitor](hugo/static/images/pgmonitor_top_level.png)
+![pgMonitor](hugo/static/images/pgmonitor_pgdetails.png)
 
-pgmonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
+pgMonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
 
 - Connection counts: how busy is your system being accessed and if connections are hanging
 - Database size: how much disk your cluster is using
@@ -14,9 +14,9 @@ pgmonitor combines a suite of tools to facilitate the collection and visualizati
 - Bloat: how much extra space are your tables and indexes using
 - System metrics: CPU, Memory, I/O, uptime
 
-pgmonitor is also highly configurable, and advanced users can design their own metrics, visualizations, and add in other features such as alerting.
+pgMonitor is also highly configurable, and advanced users can design their own metrics, visualizations, and add in other features such as alerting.
 
-Running pgmonitor will give you confidence in understanding how well your PostgreSQL cluster is performing, and will provide you the information to make calculated adjustments to your environment.
+Running pgMonitor will give you confidence in understanding how well your PostgreSQL cluster is performing, and will provide you the information to make calculated adjustments to your environment.
 
 ---
 
@@ -36,9 +36,9 @@ Running pgmonitor will give you confidence in understanding how well your Postgr
 
 ## Purpose
 
-pgmonitor is an open-source monitoring solution for PostgreSQL and the systems that it runs on. pgmonitor came from the need to provide a way to easily create a visual environment to monitor all the metrics a database administrator needs to proactively ensure the health of the system.
+pgMonitor is an open-source monitoring solution for PostgreSQL and the systems that it runs on. pgMonitor came from the need to provide a way to easily create a visual environment to monitor all the metrics a database administrator needs to proactively ensure the health of the system.
 
-pgmonitor combines multiple open-source software packages and necessary configuration to create a robust PostgreSQL monitoring environment.  These include:
+pgMonitor combines multiple open-source software packages and necessary configuration to create a robust PostgreSQL monitoring environment.  These include:
 
 - [Prometheus](https://prometheus.io/) - an open-source metrics collector that is highly customizable.
 - [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
@@ -53,7 +53,7 @@ pgmonitor combines multiple open-source software packages and necessary configur
 
 ### PostgreSQL
 
-- pgmonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgmonitor will cease supporting that major version.
+- pgMonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgMonitor will cease supporting that major version.
 - 11, 10, 9.6, 9.5, 9.4
 
 #### Known issues
@@ -78,13 +78,13 @@ Installation instructions for each package are provided in that packages subfold
 
 ## Version History
 
-For the [full history](CHANGELOG.md) of pgmonitor, please see the [CHANGELOG](CHANGELOG.md).
+For the [full history](CHANGELOG.md) of pgMonitor, please see the [CHANGELOG](CHANGELOG.md).
 
 ## Sponsors
 
-![Crunchy Data](hugo/static/images/crunchy_logo.svg)
+![Crunchy Data](hugo/static/images/crunchy_logo.png)
 
-[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
 ## Legal Notices
 
