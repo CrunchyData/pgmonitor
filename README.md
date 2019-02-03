@@ -26,13 +26,13 @@ are interested in contributing or making an update to the documentation,
 please view the
 [Contributing Guidelines](https://access.crunchydata.com/documentation/pgMonitor/2.2/contributing/).
 
-[<img src="https://access.crunchydata.com/documentation/pgMonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgMonitor/2.2/)
+[<img src="https://access.crunchydata.com/documentation/pgmonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/2.2/)
 
 ---
 
 ## Sponsors
 
-![Crunchy Data](hugo/static/images/crunchy_logo.svg)
+![Crunchy Data](/hugo/static/images/crunchy_logo.png)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
