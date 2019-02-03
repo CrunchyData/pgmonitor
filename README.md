@@ -1,11 +1,11 @@
-# pgmonitor
+# pgMonitor
 
-### [pgmonitor](https://github.com/CrunchyData/pgmonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
+### [pgMonitor](https://github.com/CrunchyData/pgMonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
 
-![pgmonitor](hugo/static/images/pgmonitor_top_level.png)
-![pgmonitor](hugo/static/images/pgmonitor_pgdetails.png)
+![pgMonitor](hugo/static/images/pgmonitor_top_level.png)
+![pgMonitor](hugo/static/images/pgmonitor_pgdetails.png)
 
-pgmonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
+pgMonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
 
 - Connection counts: how busy is your system being accessed and if connections are hanging
 - Database size: how much disk your cluster is using
@@ -14,19 +14,19 @@ pgmonitor combines a suite of tools to facilitate the collection and visualizati
 - Bloat: how much extra space are your tables and indexes using
 - System metrics: CPU, Memory, I/O, uptime
 
-pgmonitor is also highly configurable, and advanced users can design their own metrics, visualizations, and add in other features such as alerting.
+pgMonitor is also highly configurable, and advanced users can design their own metrics, visualizations, and add in other features such as alerting.
 
-Running pgmonitor will give you confidence in understanding how well your PostgreSQL cluster is performing, and will provide you the information to make calculated adjustments to your environment.
+Running pgMonitor will give you confidence in understanding how well your PostgreSQL cluster is performing, and will provide you the information to make calculated adjustments to your environment.
 
 ---
 
-Please view the official Crunchy Data pgmonitor documentation
-[here](https://access.crunchydata.com/documentation/pgmonitor/2.2/). If you
+Please view the official Crunchy Data pgMonitor documentation
+[here](https://access.crunchydata.com/documentation/pgMonitor/2.2/). If you
 are interested in contributing or making an update to the documentation,
 please view the
-[Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/2.2/contributing/).
+[Contributing Guidelines](https://access.crunchydata.com/documentation/pgMonitor/2.2/contributing/).
 
-[<img src="https://access.crunchydata.com/documentation/pgmonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/2.2/)
+[<img src="https://access.crunchydata.com/documentation/pgMonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgMonitor/2.2/)
 
 ---
 
@@ -34,7 +34,7 @@ please view the
 
 ![Crunchy Data](hugo/static/images/crunchy_logo.svg)
 
-[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgmonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
+[Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
 ---
 

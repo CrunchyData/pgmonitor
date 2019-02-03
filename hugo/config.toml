@@ -5,7 +5,7 @@ DefaultContentLanguage = "current"
 languageCode = "en-us"
 relativeURLs = true
 
-title = "pgmonitor"
+title = "pgMonitor"
 theme = "crunchy-hugo-theme"
 #themesdir = "themes/"
 pygmentsCodeFences = true
@@ -18,7 +18,7 @@ enableMissingTranslationPlaceholders = true
 
 [Languages]
 [Languages.current]
-title = "pgmonitor"
+title = "pgMonitor"
 weight = 1
 languageName = "current"
 
