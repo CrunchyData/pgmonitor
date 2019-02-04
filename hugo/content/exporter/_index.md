@@ -1,4 +1,8 @@
-# Setting up exporters for pgmonitor
+---
+title: "Setting up Exporters"
+draft: false
+weight: 1
+---
 
 The exporters below can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.
 
@@ -250,10 +254,9 @@ Lastly, update the Prometheus auto.d target file to include the new exporter in 
 
 The service override file(s) must be placed in the relevant drop-in folder to override the default service files.
 
-    /etc/systemd/system/node_exporter.service.d/*.conf
+    /etc/systemd/system/node_exporter.service.d/\*.conf
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
-
 
 ## Installation / Setup on RHEL/CentOS 6
 
