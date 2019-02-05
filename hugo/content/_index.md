@@ -82,7 +82,7 @@ For the [full history](/changelog) of pgMonitor, please see the [CHANGELOG](/cha
 
 ## Sponsors
 
-![Crunchy Data](/images/crunchy_logo.png)
+[![Crunchy Data](/images/crunchy_logo.png)](https://www.crunchydata.com/)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
