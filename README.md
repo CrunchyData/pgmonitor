@@ -32,7 +32,7 @@ please view the
 
 ## Sponsors
 
-![Crunchy Data](/hugo/static/images/crunchy_logo.png)
+[![Crunchy Data](/hugo/static/images/crunchy_logo.png)](https://www.crunchydata.com/)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
