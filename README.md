@@ -21,10 +21,10 @@ Running pgMonitor will give you confidence in understanding how well your Postgr
 ---
 
 Please view the official Crunchy Data pgMonitor documentation
-[here](https://access.crunchydata.com/documentation/pgMonitor/2.2/). If you
+[here](https://access.crunchydata.com/documentation/pgmonitor/2.2/). If you
 are interested in contributing or making an update to the documentation,
 please view the
-[Contributing Guidelines](https://access.crunchydata.com/documentation/pgMonitor/2.2/contributing/).
+[Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/2.2/contributing/).
 
 [<img src="https://access.crunchydata.com/documentation/pgmonitor/2.2/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/2.2/)
 

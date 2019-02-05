@@ -97,6 +97,8 @@ The following pgmonitor configuration files should be placed according to the fo
 | postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
 | postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
 | postgres/queries_bloat.yml | `/etc/postgres_exporter/##/queries_bloat.yml`  |
+| postgres/queries_backrest.yml | `/etc/postgres_exporter/##/queries_backrest.yml` |
+| postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
 
 
 ## Setup
@@ -161,6 +163,7 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The Vacuum graph on the PostgreSQLDetails Dashboard and the CRUD_Details Dashboard use these statistics.                                                   |
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
+| queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status                             |
 
 
 Install the setup_pg##.sql script to all databases you will be monitoring in the cluster. The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
@@ -172,11 +175,11 @@ cd /etc/postgres_exporter/96
 cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
 psql -f /etc/postgres_exporter/96/setup_pg96.sql
 ```
-As another example, to include queries for PostgreSQL 10 as well as bloat do the following:
+As another example, to include queries for PostgreSQL 10 as well as pgbackrest and bloat do the following:
 
 ```bash
 cd /etc/postgres_exporter/10
-cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_bloat.yml > queries.yml
+cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_bloat.yml queries_backrest.yml > queries.yml
 psql -f /etc/postgres_exporter/10/setup_pg10.sql
 ```
 

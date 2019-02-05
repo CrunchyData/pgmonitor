@@ -1,17 +1,24 @@
 ### 2.3
+TODO UPDATE DOCS
+
  * Fixed bug in Prometheus alerts that was causing some of them to be stuck in PENDING mode indefinitely and never firing. This unfortunately removes the current alert value from the Grafana Prometheus Alerts dashboard.
    * If you can't simply overwrite your current alerts configuration file with the one provided, remove the following option from every alert: `alert_value: '{{ $value }}'`
  * Added feature to monitor pgbackrest backups (https://pgbackrest.org)
    * Separate metrics exist to monitor for the latest full, incremental and/or differential backups. Note that a full will always count as both an incremnetal and diff and a diff will always count as an incremental.
    * Run the setup_pg##.sql file again in the database that your exporter(s) connect to to install the new, required function: "monitor.pgbackrest_info()". It has security definer so execution privileges can be granted as needed, but it must be owned by a superuser.
-   * New metrics are located in the exporter/postgres/queries_backrest.yml file. Add the ones you want to the main queries file being used by your currently running exporter(s) and restart.
+   * New metrics are located in the exporter/postgres/queries_backrest.yml file. Add the one(s) you want to the main queries file being used by your currently running exporter(s) and restart.
    * An example alert rule for monitoring the last full backup has been added to the prometheus/crunchy-alert-rules.yml file. It is commented out to avoid false alarms until valid backup interval thresholds are set. Monitoring for incrementals/diffs can be done in a similar manner using the relevant metric.
 
  * Added new feature to monitor for failing archive_command calls.
     * New metric "ccp_archive_command_status" is located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.
     * A new alert rule "PGArchiveCommandStatus" has been added to the prometheus/crunchy-alert-rules.yml file.
 
- * The setup_pg##.sql file now has logic to avoid throwing errors when the ccp_monitoring role already exists. Allows easier re-running of the script when new features are added or used in automation systems. Thanks to Jason O'Donnell.
+* Added new feature to monitor for sequence exhaustion
+    * Requires installation of a new function located in the setup_pg##.yml file for your relevant major version of PostgreSQL. Must be installed by a superuser.
+    * New metric "ccp_sequence_exhaustion" located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.
+    A new alert rule "PGSequenceExhaustion" has been added to the prometheus/crunchy-alert-rules.yml file.
+
+ * The setup_pg##.sql file now has logic to avoid throwing errors when the ccp_monitoring role already exists. Also always attempts to drop the functions it manages first to account for when the function signature changes in ways that OR REPLACE doesn't handle. All this allows easier re-running of the script when new features are added or used in automation systems. Thanks to Jason O'Donnell for role logic.
 
 
 ### 2.2

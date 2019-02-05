@@ -182,3 +182,11 @@ FROM pg_catalog.pg_stat_archiver"
         - seconds_since_last_fail:
             usage: "GAUGE"
             description: "Seconds since the last recorded failure of the archive_command"
+
+
+ccp_sequence_exhaustion:
+    query: "SELECT count(*) AS count FROM monitor.sequence_status() WHERE percent >= 75"
+    metrics:
+        - count:
+            usage: "GAUGE"
+            description: "Count of sequences that have reached greater than or equal to 75% of their max available numbers. Function monitor.sequence_status() can provide more details if run directly on system."

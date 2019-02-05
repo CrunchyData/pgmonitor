@@ -1,14 +1,19 @@
 
 ccp_backrest_last_full_backup:
-    query: "WITH all_backups AS 
-            (SELECT data->>'name' AS stanza
-                , jsonb_array_elements(data->'backup') AS backups  
-                FROM jsonb_array_elements(monitor.pgbackrest_info()) as data)
-            SELECT stanza
+    query: "WITH all_backups AS
+          (SELECT config_file 
+                , jsonb_array_elements(data)->>'name' as stanza
+                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
+                FROM  monitor.pgbackrest_info())
+          SELECT config_file 
+                , stanza
                 , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS seconds_since_completed
-            FROM all_backups where backups->>'type' = 'full' 
-            GROUP BY stanza"
+          FROM all_backups where backups->>'type' = 'full' 
+          GROUP BY config_file, stanza"
     metrics:
+        - config_file:
+            usage: "LABEL"
+            description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
             description: "PGBackrest Stanza Name"
@@ -18,15 +23,20 @@ ccp_backrest_last_full_backup:
 
 
 ccp_backrest_last_incr_backup:
-    query: "WITH all_backups AS 
-            (SELECT data->>'name' AS stanza
-                , jsonb_array_elements(data->'backup') AS backups  
-                FROM jsonb_array_elements(monitor.pgbackrest_info()) as data)
-            SELECT stanza
-                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint))))) AS seconds_since_completed
-            FROM all_backups where backups->>'type' IN ('full', 'diff', 'incr')
-            GROUP BY stanza"
+    query: "WITH all_backups AS
+          (SELECT config_file 
+                , jsonb_array_elements(data)->>'name' as stanza
+                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
+                FROM  monitor.pgbackrest_info())
+          SELECT config_file 
+                , stanza
+                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS seconds_since_completed
+          FROM all_backups where backups->>'type' IN ('full' , 'diff', 'incr')
+          GROUP BY config_file, stanza"
     metrics:
+        - config_file:
+            usage: "LABEL"
+            description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
             description: "PGBackrest Stanza Name"
@@ -36,19 +46,23 @@ ccp_backrest_last_incr_backup:
 
 
 ccp_backrest_last_diff_backup:
-    query: "WITH all_backups AS 
-            (SELECT data->>'name' AS stanza
-                , jsonb_array_elements(data->'backup') AS backups  
-                FROM jsonb_array_elements(monitor.pgbackrest_info()) as data)
-            SELECT stanza
-                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint))))) AS seconds_since_completed
-            FROM all_backups where backups->>'type' IN ('full', 'diff')
-            GROUP BY stanza"
+    query: "WITH all_backups AS
+          (SELECT config_file 
+                , jsonb_array_elements(data)->>'name' as stanza
+                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
+                FROM  monitor.pgbackrest_info())
+          SELECT config_file 
+                , stanza
+                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS seconds_since_completed
+          FROM all_backups where backups->>'type' IN ('full' , 'diff')
+          GROUP BY config_file, stanza"
     metrics:
+        - config_file:
+            usage: "LABEL"
+            description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
             description: "PGBackrest Stanza Name"
         - seconds_since_completed:
             usage: "GAUGE"
             description: "Seconds since the last completed full or differential backup. Differential is always based off last full."
-
