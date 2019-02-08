@@ -84,10 +84,10 @@
           "to": "null"
         }
       ],
-      "repeat": "jobname",
+      "repeat": "pgnodes",
       "repeatDirection": "h",
       "scopedVars": {
-        "jobname": {
+        "pgnodes": {
           "selected": false,
           "text": "Prod",
           "value": "Prod"
@@ -103,7 +103,7 @@
       "targets": [
         {
           "$$hashKey": "object:243",
-          "expr": "pg_up{job=\"[[jobname]]\"} / ccp_is_in_recovery_status{job=\"[[jobname]]\"}",
+          "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -114,7 +114,7 @@
         }
       ],
       "thresholds": "0.5,1",
-      "title": "[[jobname]]",
+      "title": "[[pgnodes]]",
       "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
@@ -216,7 +216,7 @@
       "repeatIteration": 1529511124964,
       "repeatPanelId": 1,
       "scopedVars": {
-        "jobname": {
+        "pgnodes": {
           "selected": false,
           "text": "Replica",
           "value": "Replica"
@@ -232,7 +232,7 @@
       "targets": [
         {
           "$$hashKey": "object:243",
-          "expr": "pg_up{job=\"[[jobname]]\"} / ccp_is_in_recovery_status{job=\"[[jobname]]\"}",
+          "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -243,7 +243,7 @@
         }
       ],
       "thresholds": "0.5,1",
-      "title": "[[jobname]]",
+      "title": "[[pgnodes]]",
       "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
@@ -291,13 +291,13 @@
         "datasource": "PROMETHEUS",
         "hide": 2,
         "includeAll": true,
-        "label": null,
+        "label": "PGCluster",
         "multi": true,
-        "name": "jobname",
+        "name": "pgnodes",
         "options": [],
-        "query": "label_values(job)",
-        "refresh": 1,
-        "regex": "",
+        "query": "query_result( up{ exp_type = 'pg' } )",
+         "refresh": 1,
+        "regex": "/.*job=\"(.*)\"/",
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],

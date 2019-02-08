@@ -20,7 +20,7 @@
   "links": [],
   "panels": [
     {
-      "content": "<H1><center>[[jobname]]</center></h1>",
+      "content": "<H1><center>[[pgnodes]]</center></h1>",
       "gridPos": {
         "h": 2,
         "w": 24,
@@ -72,7 +72,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_connections{job=\"[[jobname]]\"}",
+          "expr": "ccp_connection_stats_max_connections{job=\"[[pgnodes]]\"}",
           "hide": false,
           "intervalFactor": 2,
           "legendFormat": "Max",
@@ -81,7 +81,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_active{job=\"[[jobname]]\"}",
+          "expr": "ccp_connection_stats_active{job=\"[[pgnodes]]\"}",
           "intervalFactor": 2,
           "legendFormat": "Active",
           "metric": "",
@@ -89,7 +89,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle_in_txn{job=\"[[jobname]]\"}",
+          "expr": "ccp_connection_stats_idle_in_txn{job=\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "IdleTrn",
@@ -98,7 +98,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle{job=\"[[jobname]]\"}",
+          "expr": "ccp_connection_stats_idle{job=\"[[pgnodes]]\"}",
           "intervalFactor": 2,
           "legendFormat": "Idle",
           "metric": "",
@@ -185,14 +185,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_database_size_bytes{job=\"[[jobname]]\"})",
+          "expr": "sum(ccp_database_size_bytes{job=\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "total size",
           "refId": "A"
         },
         {
-          "expr": "ccp_database_size_bytes{job=\"[[jobname]]\"}",
+          "expr": "ccp_database_size_bytes{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{dbname}}",
@@ -276,7 +276,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[jobname]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{job=\"[[jobname]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[pgnodes]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{job=\"[[pgnodes]]\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -361,7 +361,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_replication_lag_size_bytes{job=\"[[jobname]]\"}",
+          "expr": "ccp_replication_lag_size_bytes{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -446,7 +446,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_replication_lag_replay_time{job=\"[[jobname]]\"}",
+          "expr": "ccp_replication_lag_replay_time{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -530,7 +530,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_stat_database_blks_hit{ job=\"[[jobname]]\"}  / ( ccp_stat_database_blks_hit{job=\"[[jobname]]\"} + ccp_stat_database_blks_read{ job=\"[[jobname]]\"} ) * 100",
+          "expr": "ccp_stat_database_blks_hit{ job=\"[[pgnodes]]\"}  / ( ccp_stat_database_blks_hit{job=\"[[pgnodes]]\"} + ccp_stat_database_blks_read{ job=\"[[pgnodes]]\"} ) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}",
@@ -616,7 +616,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Commit",
@@ -625,7 +625,7 @@
           "step": 120
         },
         {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Rollback",
@@ -721,7 +721,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_tup_fetched{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_fetched{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Fetched",
@@ -730,7 +730,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Inserted",
@@ -739,7 +739,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Updated",
@@ -748,7 +748,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Deleted",
@@ -757,7 +757,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Returned",
@@ -845,7 +845,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accessexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"accessexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "accessexclusive",
@@ -853,7 +853,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"accesssharelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"accesssharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "accessshare",
@@ -861,7 +861,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"exclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"exclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "exclusive",
@@ -869,7 +869,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"rowexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "rowexclusive",
@@ -877,7 +877,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"rowsharelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"rowsharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "rowshare",
@@ -885,7 +885,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"sharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "share",
@@ -893,7 +893,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"sharerowexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"sharerowexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "sharerowexclusive",
@@ -901,7 +901,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[jobname]]\",mode=\"shareupdateexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "shareupdateexclusive",
@@ -988,7 +988,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Conflicts",
@@ -997,7 +997,7 @@
           "step": 240
         },
         {
-          "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "DeadLocks",
@@ -1086,7 +1086,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{job=\"[[jobname]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{job=\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Allocated",
@@ -1095,7 +1095,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=\"[[jobname]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Backend",
@@ -1104,7 +1104,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=\"[[jobname]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "FSync",
@@ -1113,7 +1113,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=\"[[jobname]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "CheckPoint",
@@ -1122,7 +1122,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=\"[[jobname]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Clean",
@@ -1208,7 +1208,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[jobname]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1291,7 +1291,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[jobname]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1374,7 +1374,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_wal_activity_total_size_bytes{job=\"[[jobname]]\"}",
+          "expr": "ccp_wal_activity_total_size_bytes{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1459,7 +1459,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "AutoVacuum",
@@ -1468,7 +1468,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "AutoAnalyze",
@@ -1476,7 +1476,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Vacuum",
@@ -1484,7 +1484,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[jobname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Analyze",
@@ -1549,13 +1549,13 @@
         "datasource": "PROMETHEUS",
         "hide": 0,
         "includeAll": false,
-        "label": null,
+        "label": "PGCluster",
         "multi": false,
-        "name": "jobname",
+        "name": "pgnodes",
         "options": [],
-        "query": "label_values(job)",
-        "refresh": 1,
-        "regex": "",
+        "query": "query_result( up{ exp_type = 'pg' } )",
+         "refresh": 1,
+        "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
