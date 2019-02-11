@@ -24,44 +24,6 @@ groups:
       summary: 'Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )'
 
 
-########## PGBACKREST RULES ##########
-#
-# Uncomment and customize this rule to monitor your pgbackrest backups. Value monitored is seconds since the last completed backup.
-# Specific stanza backups can be monitored by setting the "stanza" label. 
-# Otherwise, all backups returned by the pgbackrest info command run from where the database exists will be checked
-#
-# Relevant metric names are: 
-#   ccp_backrest_last_full_backup_seconds_since_completed
-#   ccp_backrest_last_incr_backup_seconds_since_completed
-#   ccp_backrest_last_diff_backup_seconds_since_completed
-#
-#  - alert: PGBackRestLastFull
-#    expr: ccp_backrest_last_full_backup_seconds_since_completed > 86400
-#    for: 60s
-#    labels:
-#       service: postgresql
-#       severity: critical
-#       severity_num: 300
-#    annotations:
-#       summary: 'At least one full backup monitored from system {{ $labels.job }} has not completed in the last 24 hours.'
-#
-## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires. 
-## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
-## Checking for absence of just the full backup type should be sufficient (no need for diff/incr).
-## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this 
-## check gives a clearer answer as to what is causing it and that something is wrong with the backups.
-#
-#  - alert: PGBackrestAbsent_Prod
-#    expr: absent(ccp_backrest_last_full_backup_seconds_since_completed{job="Prod"})
-#    for: 10s
-#    labels:
-#      service: postgresql
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
-
 
 ########## POSTGRESQL RULES ##########
   - alert: PGIsUp
@@ -395,3 +357,87 @@ groups:
       severity_num: 300
     annotations:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
+
+
+########## PGBACKREST RULES ##########
+#
+# Uncomment and customize one or more of these rules to monitor your pgbackrest backups. 
+# Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
+#   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
+#   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
+# Stanza should also be set if different intervals are expected for each stanza. 
+#   Otherwise rule will be applied to all stanzas returned on target system if not set.
+# Otherwise, all backups returned by the pgbackrest info command run from where the database exists will be checked
+#
+# Relevant metric names are: 
+#   ccp_backrest_last_full_time_since_completion_seconds
+#   ccp_backrest_last_incr_time_since_completion_seconds
+#   ccp_backrest_last_diff_time_since_completion_seconds
+#
+#  - alert: PGBackRestLastCompletedFull_main
+#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 604800
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Full backup for stanza [main] on system {{ $labels.job }} has not completed in the last week.'
+#
+#  - alert: PGBackRestLastCompletedIncr_main
+#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 86400
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Incremental backup for stanza [main] on system {{ $labels.job }} has not completed in the last 24 hours.'
+#
+#
+# Runtime monitoring is handled with a single metric:
+#
+#   ccp_backrest_last_runtime_backup_runtime_seconds
+#
+# Runtime monitoring should have the "backup_type" label set. 
+#   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
+# Stanza should also be set if runtimes per stanza have different expected times
+#
+#  - alert: PGBackRestLastRuntimeFull_main
+#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="full", stanza="main"} > 14400
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Expected runtime of full backup for stanza [main] has exceeded 4 hours'
+#
+#  - alert: PGBackRestLastRuntimeDiff_main
+#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="diff", stanza="main"} > 3600
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Expected runtime of diff backup for stanza [main] has exceeded 1 hour'
+##
+#
+## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires. 
+## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
+## Checking for absence of just the full backup type should be sufficient (no need for diff/incr).
+## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this 
+## check gives a clearer answer as to what is causing it and that something is wrong with the backups.
+#
+#  - alert: PGBackrestAbsentFull_Prod
+#    expr: absent(ccp_backrest_last_full_backup_time_since_completion_seconds{job="Prod"})
+#    for: 10s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
+
+

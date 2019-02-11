@@ -1,13 +1,13 @@
 ### 2.3
-TODO UPDATE DOCS
 
  * Fixed bug in Prometheus alerts that was causing some of them to be stuck in PENDING mode indefinitely and never firing. This unfortunately removes the current alert value from the Grafana Prometheus Alerts dashboard.
    * If you can't simply overwrite your current alerts configuration file with the one provided, remove the following option from every alert: `alert_value: '{{ $value }}'`
  * Added feature to monitor pgbackrest backups (https://pgbackrest.org)
    * Separate metrics exist to monitor for the latest full, incremental and/or differential backups. Note that a full will always count as both an incremnetal and diff and a diff will always count as an incremental.
+   * Another metric can monitor the runtime of the latest backup of each type per stanza.
    * Run the setup_pg##.sql file again in the database that your exporter(s) connect to to install the new, required function: "monitor.pgbackrest_info()". It has security definer so execution privileges can be granted as needed, but it must be owned by a superuser.
    * New metrics are located in the exporter/postgres/queries_backrest.yml file. Add the one(s) you want to the main queries file being used by your currently running exporter(s) and restart.
-   * An example alert rule for monitoring the last full backup has been added to the prometheus/crunchy-alert-rules.yml file. It is commented out to avoid false alarms until valid backup interval thresholds are set. Monitoring for incrementals/diffs can be done in a similar manner using the relevant metric.
+   * Example alert rules for different backup scenarios have been added to the prometheus/crunchy-alert-rules.yml file. They are commented out to avoid false alarms until valid backup settings for your environment are in place. 
 
  * Added new feature to monitor for failing archive_command calls.
     * New metric "ccp_archive_command_status" is located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.
