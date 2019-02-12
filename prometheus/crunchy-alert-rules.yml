@@ -10,7 +10,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
 
@@ -21,9 +20,9 @@ groups:
       service: system 
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )'
+
 
 
 ########## POSTGRESQL RULES ##########
@@ -34,7 +33,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
@@ -52,7 +50,6 @@ groups:
 #      service: postgresql
 #      severity: critical
 #      severity_num: 300
-#      alert_value: '{{ $value }}'
 #    annotations:
 #      summary: '{{ $labels.job }} has changed from replica to primary'
 
@@ -66,7 +63,6 @@ groups:
 #      service: postgresql
 #      severity: critical
 #      severity_num: 300
-#      alert_value: '{{ $value }}'
 #    annotations:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
 
@@ -79,7 +75,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one session idle in transaction for over 5 minutes.'
       summary: 'PGSQL Instance idle transactions'
@@ -91,7 +86,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one session idle in transaction for over 15 minutes.'
       summary: 'PGSQL Instance idle transactions'
@@ -103,7 +97,6 @@ groups:
       service: postgresql
       severity: warning 
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one query running for over 12 hours.'
       summary: 'PGSQL Max Query Runtime'
@@ -115,7 +108,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} has at least one query running for over 1 day.'
       summary: 'PGSQL Max Query Runtime'
@@ -127,7 +119,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} is using 75% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
@@ -139,7 +130,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
@@ -151,7 +141,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value }} bytes'
       summary: 'PGSQL Instance size warning'
@@ -163,7 +152,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value }} bytes'
       summary: 'PGSQL Instance size critical'
@@ -175,7 +163,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 50MB behind.'
       summary: 'PGSQL Instance replica lag warning'
@@ -187,7 +174,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has at least one replica lagging over 100MB behind.'
       summary: 'PGSQL Instance replica lag warning'
@@ -199,7 +185,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} has one or more inactive replication slots'
       summary: 'PGSQL Instance inactive replication slot'
@@ -211,7 +196,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 50% towards transaction id wraparound.'
       summary: 'PGSQL Instance {{ $labels.job }} transaction id wraparound imminent'
@@ -223,7 +207,6 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 75% towards transaction id wraparound.'
       summary: 'PGSQL Instance transaction id wraparound imminent'
@@ -235,7 +218,6 @@ groups:
       service: postgresql
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 75% towards emergency autovacuum processes beginning'
       summary: 'PGSQL Instance emergency vacuum imminent'
@@ -247,10 +229,32 @@ groups:
       service: postgresql
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'PGSQL Instance {{ $labels.job }} is over 90% towards emergency autovacuum processes beginning'
       summary: 'PGSQL Instance emergency vacuum imminent'
+
+  - alert: PGArchiveCommandStatus
+    expr: ccp_archive_command_status_seconds_since_last_fail > 300
+    for: 60s
+    labels:
+        service: postgresql
+        severity: critical
+        severity_num: 300
+    annotations:
+        description: 'PGSQL Instance {{ $labels.job }} has a recent failing archive command'
+        summary: 'Seconds since the last recorded failure of the archive_command'
+
+  - alert: PGSequenceExhaustion
+    expr: ccp_sequence_exhaustion_count > 0
+    for: 60s
+    labels:
+        service: postgresql
+        severity: critical
+        severity_num: 300
+    annotations:
+        description: 'Count of sequences on instance {{ $labels.job }} at over 75% usage: {{ $value }}. Run following query to see full sequence status: SELECT * FROM monitor.sequence_status() WHERE percent >= 75'
+
+
 
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
@@ -260,7 +264,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down at least 50% of the time for the last 5 minutes. Service may be flapping or down.'
       summary: 'Prometheus Exporter Service Down'
@@ -272,7 +275,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
@@ -283,7 +285,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
@@ -294,7 +295,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: '(EXPERIMENTAL) Disk {{ $labels.device }} on target {{ $labels.job }} is predicted to fill in 4 hrs based on current usage'
 
@@ -305,7 +305,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
@@ -316,7 +315,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
@@ -327,7 +325,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -338,7 +335,6 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -349,7 +345,6 @@ groups:
       service: system
       severity: warning
       severity_num: 200
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
 
@@ -360,6 +355,89 @@ groups:
       service: system
       severity: critical
       severity_num: 300
-      alert_value: '{{ $value }}'
     annotations:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
+
+
+########## PGBACKREST RULES ##########
+#
+# Uncomment and customize one or more of these rules to monitor your pgbackrest backups. 
+# Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
+#   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
+#   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
+# Stanza should also be set if different intervals are expected for each stanza. 
+#   Otherwise rule will be applied to all stanzas returned on target system if not set.
+# Otherwise, all backups returned by the pgbackrest info command run from where the database exists will be checked
+#
+# Relevant metric names are: 
+#   ccp_backrest_last_full_time_since_completion_seconds
+#   ccp_backrest_last_incr_time_since_completion_seconds
+#   ccp_backrest_last_diff_time_since_completion_seconds
+#
+#  - alert: PGBackRestLastCompletedFull_main
+#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 604800
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Full backup for stanza [main] on system {{ $labels.job }} has not completed in the last week.'
+#
+#  - alert: PGBackRestLastCompletedIncr_main
+#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 86400
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Incremental backup for stanza [main] on system {{ $labels.job }} has not completed in the last 24 hours.'
+#
+#
+# Runtime monitoring is handled with a single metric:
+#
+#   ccp_backrest_last_runtime_backup_runtime_seconds
+#
+# Runtime monitoring should have the "backup_type" label set. 
+#   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
+# Stanza should also be set if runtimes per stanza have different expected times
+#
+#  - alert: PGBackRestLastRuntimeFull_main
+#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="full", stanza="main"} > 14400
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Expected runtime of full backup for stanza [main] has exceeded 4 hours'
+#
+#  - alert: PGBackRestLastRuntimeDiff_main
+#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="diff", stanza="main"} > 3600
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Expected runtime of diff backup for stanza [main] has exceeded 1 hour'
+##
+#
+## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires. 
+## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
+## Checking for absence of just the full backup type should be sufficient (no need for diff/incr).
+## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this 
+## check gives a clearer answer as to what is causing it and that something is wrong with the backups.
+#
+#  - alert: PGBackrestAbsentFull_Prod
+#    expr: absent(ccp_backrest_last_full_backup_time_since_completion_seconds{job="Prod"})
+#    for: 10s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
+
+

@@ -1,4 +1,27 @@
-### 2.2
+## 2.3
+
+ * Fixed bug in Prometheus alerts that was causing some of them to be stuck in PENDING mode indefinitely and never firing. This unfortunately removes the current alert value from the Grafana Prometheus Alerts dashboard.
+   * If you can't simply overwrite your current alerts configuration file with the one provided, remove the following option from every alert: `alert_value: '{{ $value }}'`
+ * Added feature to monitor pgbackrest backups (https://pgbackrest.org)
+   * Separate metrics exist to monitor for the latest full, incremental and/or differential backups. Note that a full will always count as both an incremnetal and diff and a diff will always count as an incremental.
+   * Another metric can monitor the runtime of the latest backup of each type per stanza.
+   * Run the setup_pg##.sql file again in the database that your exporter(s) connect to to install the new, required function: "monitor.pgbackrest_info()". It has security definer so execution privileges can be granted as needed, but it must be owned by a superuser.
+   * New metrics are located in the exporter/postgres/queries_backrest.yml file. Add the one(s) you want to the main queries file being used by your currently running exporter(s) and restart.
+   * Example alert rules for different backup scenarios have been added to the prometheus/crunchy-alert-rules.yml file. They are commented out to avoid false alarms until valid backup settings for your environment are in place. 
+
+ * Added new feature to monitor for failing archive_command calls.
+    * New metric "ccp_archive_command_status" is located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.
+    * A new alert rule "PGArchiveCommandStatus" has been added to the prometheus/crunchy-alert-rules.yml file.
+
+* Added new feature to monitor for sequence exhaustion
+    * Requires installation of a new function located in the setup_pg##.yml file for your relevant major version of PostgreSQL. Must be installed by a superuser.
+    * New metric "ccp_sequence_exhaustion" located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.
+    A new alert rule "PGSequenceExhaustion" has been added to the prometheus/crunchy-alert-rules.yml file.
+
+ * The setup_pg##.sql file now has logic to avoid throwing errors when the ccp_monitoring role already exists. Also always attempts to drop the functions it manages first to account for when the function signature changes in ways that OR REPLACE doesn't handle. All this allows easier re-running of the script when new features are added or used in automation systems. Thanks to Jason O'Donnell for role logic.
+
+
+## 2.2
 
  * Fixed broken ccp_wal_activity check for PostgreSQL 9.4 & 9.5. Updated check is located in the relevant exporter/postgres/queries_pg##.yml file
  * Fixed broken service files for postgres_exporter on RHEL6 systems.
@@ -6,7 +29,7 @@
  * Removed query files for PostgreSQL versions no longer supported by pgmonitor (9.2 & 9.3)
 
 
-### 2.1 
+## 2.1 
  * **IMPORTANT UPGRADE NOTE FOR CRUNCHY PACKAGE USERS**: In version 2.0, the Crunchy provided extras for node_exporter were split out from the pgmonitor-pg##-extras package. A dependency was kept between these packages to make upgrading easier. For 2.1, the dependency between these packages has been removed. When upgrading from 1.7 or earlier, if you have node_exporter and postgres_exporter running on the same systems, ensure that you install the separate pgmonitor-node_exporters_extras package after the update. See the README for the full package name(s).
 
  * Minimum required versions of software used in pgmonitor have been updated to: 
@@ -29,7 +52,7 @@
  * Update documentation.
 
 
-### 2.0
+## 2.0
  * Recommended version of Prometheus is now 2.3.2. Recommended version of Alertmanager is 0.15.1. Recommended version of postgres_exporter is 0.4.6.
  * Upgrade required version of node_exporter to minimum of 0.16.0. Note that many of the metrics that are used in Grafana and Prometheus alerting have had their names changed. 
    * This version adds these new metrics into Grafana graphs without removing the old metric names on most, but not all, graphs. This allows trending history to be kept. Note that line colors will change in graphs and legend names will be duplicated until the old metric data is expired out.
@@ -59,18 +82,18 @@
  * Fixed permission issues with /etc/postgres_exporter folder to allow ccp_monitoring system user better control.
 
 
-### 1.7
+## 1.7
  * Fixed duplicate and incorrect replication byte lag queries. The one contained in queries_common.yml should not have been there. It should be in queries_pg92-96.yml, but there was also one already there. However, the one already in pg92-96 was incorrect since prior to PG10, it requires superuser/security definer to fully access replication statistics. Corrected the version specific file to have the correct query. Made the query in the pg10 file consistent. Ensure you update your generated queries.yml file with he new queries.
  * Fixed the PostgreSQLDetails.json dashboard to use the correct replication byte lag metric (referencing above fix). The easiest way to fix this is to delete this dashboard and re-import it. Otherwise, if you've made customizations you don't want to lose, you can grab the correct metric query from the updated dashboard gauge and edit your existing dashboard to use it.
  * The combination of the above two fixes corrects the pgmonitor setup being able to properly handle there being multiple replicas from a single primary. Previously this would cause postgres_exporter to throw duplicate metric errors.
  * Fixed the query in queries_bloat.yml to be able to properly handle if there was a bloat amount larger than max int4 bytes. Ensure you update your generated queries.yml file with the new query.
 
  
-### 1.6
+## 1.6
  * Fixed formatting bug in crunchy-prometheus.yml. Thanks to Doug Hunley for reporting the issue.
 
 
-### 1.5
+## 1.5
  * Add support for disabling built in queries in postgres_exporter 0.4.5. Also explicitly ignore these metrics via a prometheus filter so they're not ingested even if new option isn't used. This means that v1.5 of pgmonitor now requires 0.4.5 of postgres_exporter by default.
  * Improved exporter down alert to avoid unnecessary alerts for brief outages that resolve themselves quickly.
  *  Added new FilesystemDetails dashboard for grafana that is linked to from the Filesystem graph on PostgreSQLDetails.
@@ -79,13 +102,13 @@
  * Revised and better formatted README documentation
 
 
-### 1.4
+## 1.4
  * Fixed filesystem graphs in PostgreSQLDetails dashboard
  * Cosmetic changes to PostgreSQLDetails dashboard
  * Added instructions for importing dashboards via Grafana API
 
 
-### 1.3
+## 1.3
  * Fixed error in PG10 queries file. 
  * Fixed disk usage alert for prometheus to work better when there are many jobs with similar mountpoints. Also fixed syntax error in warning alert.
  * Moved connection stats query from common to version specific queries due to PG10 differences. Clarified naming of files for which versions they work for.
@@ -93,15 +116,15 @@
  * Removed pg_stat_statements graph from PostgreSQLDetails dashboard. Needs refinement to make it more useful.
 
 
-### 1.2
+## 1.2
  * Change service and sysconfig files to use single OPT environment variable instead of one variable per cmd option
  * Fix error in PG10 monitoring functions file
  * Initial version of Prometheus 2.0 job deletion script. Requires API call not available yet in 2.0.0 for full functionality
 
 
-### 1.1
+## 1.1
  * Implement rpmnew/rpmsave feature instead of using .example files to prevent package overwriting user changes to configs
 
 
-### 1.0
+## 1.0
  * Initial stable release

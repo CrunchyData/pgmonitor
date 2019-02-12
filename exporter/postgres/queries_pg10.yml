@@ -85,7 +85,6 @@ ccp_replication_slots:
         description: "The amount of WAL (in bytes) being retained for this slot"
 
 
-
 ccp_wal_activity:
   query: "SELECT last_5_min_size_bytes,
       (SELECT COALESCE(sum(size),0) FROM pg_catalog.pg_ls_waldir()) AS total_size_bytes
@@ -97,4 +96,5 @@ ccp_wal_activity:
     - total_size_bytes:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
+
 
