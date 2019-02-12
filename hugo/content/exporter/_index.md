@@ -37,6 +37,7 @@ If you install the below available packages with RPM, you can continue reading a
 | node_exporter                  | Base package for node_exporter                                            |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 | pgmonitor-pg##-extras          | Crunchy optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) |
+| pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of postgres |
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 
