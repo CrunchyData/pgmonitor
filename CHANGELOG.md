@@ -1,3 +1,13 @@
+### 3.0
+
+ * Dynamically create query yml used by postgres_exporter
+ * Split OS Metric from PG Metric
+   * Obsolete jobname grfana variable in all dashboards
+   * Add new grafana variables pgnodes, osnodes
+   * Add new label in prometheus exp_type (export type), possible values pg or node
+   * Added new OSResource dashboard
+
+
 ## 2.3
 
  * Fixed bug in Prometheus alerts that was causing some of them to be stuck in PENDING mode indefinitely and never firing. This unfortunately removes the current alert value from the Grafana Prometheus Alerts dashboard.

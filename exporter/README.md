@@ -33,6 +33,7 @@ If you install the below available packages with RPM, you can continue reading a
 | node_exporter                  | Base package for node_exporter                                            |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 | pgmonitor-pg##-extras          | Crunchy optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) |
+| pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of postgres |
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 
@@ -93,6 +94,8 @@ The following pgmonitor configuration files should be placed according to the fo
 | postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
 | postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
 | postgres/queries_bloat.yml | `/etc/postgres_exporter/##/queries_bloat.yml`  |
+| postgres/queries_backrest.yml | `/etc/postgres_exporter/##/queries_backrest.yml` |
+| postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
 
 
 ## Setup
@@ -157,23 +160,24 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The Vacuum graph on the PostgreSQLDetails Dashboard and the CRUD_Details Dashboard use these statistics.                                                   |
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
+| queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status                             |
 
 
-Install the setup_pg##.sql script to all databases you will be monitoring in the cluster. The queries common to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. postgres_exporter only takes a single query file as an argument for custom queries, so cat together the queries necessary into a single file.
+Install the setup_pg##.sql script to all databases on Primary cluster you will be monitoring in the cluster.
 
-For example, to use just the common queries for PostgreSQL 9.6 do the following. Note the location of the final queries file is based on the major version installed. The exporter service will look in the relevant version folder in the `/etc/postgres_exporter` directory:
+The common queries to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. Current postgres_exporter only takes a single yaml file as an argument for custom queries, this requires file concatination. Service startup script helps with this concatination task.  Sysconfig config file `/etc/sysconfig/postgres_exporter_pg##` defines `QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml"`, this contains list of yaml files to use for concatination.
+
+
+For example, to use just the common queries for PostgreSQL 9.6 modify relevant `/etc/sysconfig/` file and update `QUERY_FILE_LIST`.
 
 ```bash
-cd /etc/postgres_exporter/96
-cat queries_common.yml queries_per_db.yml queries_pg96.yml > queries.yml
-psql -f /etc/postgres_exporter/96/setup_pg96.sql
+QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_per_db.yml /etc/postgres_exporter/96/queries_pg96.yml"
 ```
-As another example, to include queries for PostgreSQL 10 as well as bloat do the following:
+
+As an another example, to include queries for PostgreSQL 10 as well as pgbackrest and bloat modify relevant `/etc/sysconfig/` file and update `QUERY_FILE_LIST`:
 
 ```bash
-cd /etc/postgres_exporter/10
-cat queries_common.yml queries_per_db.yml queries_pg10.yml queries_bloat.yml > queries.yml
-psql -f /etc/postgres_exporter/10/setup_pg10.sql
+QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_per_db.yml /etc/postgres_exporter/10/queries_pg10.yml /etc/postgres_exporter/10/queries_bloat.yml /etc/postgres_exporter/10/queries_backrest.yml"
 ```
 
 For replica servers, the setup is the same except that the setup_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
@@ -236,6 +240,7 @@ cp /etc/sysconfig/postgres_exporter_pg## /etc/sysconfig/postgres_exporter_mydb
 
 OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/96/queries_mydb.yml"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/mydb?sslmode=disable"
+QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_per_db.yml /etc/postgres_exporter/96/queries_pg96.yml"
 ```
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
 ```
@@ -253,7 +258,6 @@ The service override file(s) must be placed in the relevant drop-in folder to ov
     /etc/systemd/system/node_exporter.service.d/*.conf
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
-
 
 ## Installation / Setup on RHEL/CentOS 6
 
@@ -302,6 +306,7 @@ If you need to run multiple postgres_exporter services, follow the same instruct
     - Update --web.listen-address in the new sysconfig file to use a new port number
     - Update --extend.query-path in the new sysconfig file to point to the new query file generated
     - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored
+    - Update the QUERY_FILE_LIST in the new sysconfig file to list all the name of yaml files used for metric collection
     - Make a copy of the /etc/init.d/crunchy-postgres-exporter with a new name
     - Update the SYSCONFIG variable in the new init.d file to match the new sysconfig file
     - Update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system

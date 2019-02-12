@@ -7,5 +7,5 @@
 
 OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/96/queries.yml --disable-default-metrics"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
-QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg96.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/96/queries_pg96.yml"
 
