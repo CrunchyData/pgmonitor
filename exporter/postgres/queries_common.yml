@@ -1,3 +1,8 @@
+###
+#
+# Begin File: queries_common.yml
+#
+###
 
 ccp_is_in_recovery:
   query: "SELECT CASE WHEN pg_is_in_recovery = true THEN 1 ELSE 2 END AS status from pg_is_in_recovery();"
@@ -190,3 +195,9 @@ ccp_sequence_exhaustion:
         - count:
             usage: "GAUGE"
             description: "Count of sequences that have reached greater than or equal to 75% of their max available numbers. Function monitor.sequence_status() can provide more details if run directly on system."
+
+###
+#
+# End File: queries_common.yml
+#
+###

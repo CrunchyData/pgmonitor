@@ -1,4 +1,8 @@
-
+###
+#
+# Begin File: queries_bloat.yml
+#
+###
 
 ccp_bloat_check: 
   query: "SELECT current_database() AS dbname
@@ -24,4 +28,8 @@ ccp_bloat_check:
         usage: "GAUGE" 
         description: "Total wasted space in bytes of current database" 
 
-
+###
+#
+# End File: queries_bloat.yml
+#
+###

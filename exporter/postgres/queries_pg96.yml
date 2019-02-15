@@ -1,3 +1,8 @@
+###
+#
+# Begin File: queries_pg96.yml
+#
+###
 
 
 ccp_connection_stats:
@@ -93,3 +98,9 @@ ccp_wal_activity:
     - count:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
+
+###
+#
+# End File: queries_pg96.yml
+#
+###

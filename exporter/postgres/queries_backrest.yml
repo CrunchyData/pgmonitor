@@ -1,3 +1,9 @@
+###
+#
+# Begin File: queries_backrest.yml
+#
+###
+
 ccp_backrest_last_runtime:
     query: "WITH all_backups AS
           (SELECT config_file 
@@ -93,3 +99,9 @@ ccp_backrest_last_diff_backup:
         - time_since_completion_seconds:
             usage: "GAUGE"
             description: "Seconds since the last completed full or differential backup. Differential is always based off last full."
+
+###
+#
+# End File: queries_backrest.yml
+#
+###
