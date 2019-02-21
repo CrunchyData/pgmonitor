@@ -7,7 +7,7 @@ relativeURLs = true
 
 title = "pgMonitor"
 theme = "crunchy-hugo-theme"
-#themesdir = "themes/"
+
 pygmentsCodeFences = true
 pygmentsStyle = "monokailight"
 publishDir = "../docs"
@@ -31,7 +31,7 @@ disableHomeIcon = false # default is false
 disableSearch = false # default is false
 disableNavChevron = false # set true to hide next/prev chevron, default is false
 highlightClientSide = false # set true to use highlight.pack.js instead of the default hugo chroma highlighter
-menushortcutsnewtab = false # set true to open shortcuts links to a new tab/window
+menushortcutsnewtab = true # set true to open shortcuts links to a new tab/window
 enableGitInfo = true
 
 [outputs]
@@ -48,6 +48,11 @@ weight = 10
 name = "<i class='fas fa-file-contract'></i> <label>License</label>"
 url = "https://github.com/CrunchyData/pgmonitor/blob/master/LICENSE"
 weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-copy'></i> <label>View All Documentation</label>"
+url = "https://access.crunchydata.com/documentation"
+weight = 30
 
 [[menu.downloads]]
 name = "<i class='fas fa-file-pdf'></i> <label>PDF</label>"
