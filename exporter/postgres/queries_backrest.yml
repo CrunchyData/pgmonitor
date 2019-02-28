@@ -1,15 +1,10 @@
 ccp_backrest_last_runtime:
-    query: "WITH all_backups AS
-          (SELECT config_file 
-                , jsonb_array_elements(data)->>'name' as stanza
-                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM monitor.pgbackrest_info())
-          SELECT config_file 
+    query: "SELECT config_file 
                 , stanza
-                , backups->>'type' AS backup_type
-                , EXTRACT(epoch FROM ( (max(to_timestamp((backups->'timestamp'->>'stop')::bigint))) - (max(to_timestamp((backups->'timestamp'->>'start')::bigint))) ) )  AS backup_runtime_seconds
-          FROM all_backups 
-          GROUP BY config_file, stanza, backups->>'type'"
+                , backup_type
+                , EXTRACT(epoch FROM ((max(to_timestamp(backup_stop))) - (max(to_timestamp(backup_start))))) AS backup_runtime_seconds
+          FROM monitor.pgbackrest_info() 
+          GROUP BY config_file, stanza, backup_type"
     metrics:
         - config_file:
             usage: "LABEL"
@@ -25,17 +20,11 @@ ccp_backrest_last_runtime:
             description: "Total runtime in seconds of this backup"
 
 
-
 ccp_backrest_last_full_backup:
-    query: "WITH all_backups AS
-          (SELECT config_file 
-                , jsonb_array_elements(data)->>'name' as stanza
-                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
-          SELECT config_file 
+    query: "SELECT config_file 
                 , stanza
-                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
-          FROM all_backups where backups->>'type' = 'full' 
+                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp(backup_stop)))))  AS time_since_completion_seconds
+          FROM monitor.pgbackrest_info() WHERE backup_type = 'full' 
           GROUP BY config_file, stanza"
     metrics:
         - config_file:
@@ -49,16 +38,29 @@ ccp_backrest_last_full_backup:
             description: "Seconds since the last completed full backup"
 
 
-ccp_backrest_last_incr_backup:
-    query: "WITH all_backups AS
-          (SELECT config_file 
-                , jsonb_array_elements(data)->>'name' as stanza
-                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
-          SELECT config_file 
+ccp_backrest_last_diff_backup:
+    query: "SELECT config_file 
                 , stanza
-                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
-          FROM all_backups where backups->>'type' IN ('full' , 'diff', 'incr')
+                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp(backup_stop)))))  AS time_since_completion_seconds
+          FROM monitor.pgbackrest_info() WHERE backup_type IN ('full', 'diff') 
+          GROUP BY config_file, stanza"
+    metrics:
+        - config_file:
+            usage: "LABEL"
+            description: "Configuration file for this backup"
+        - stanza: 
+            usage: "LABEL"
+            description: "PGBackrest Stanza Name"
+        - time_since_completion_seconds:
+            usage: "GAUGE"
+            description: "Seconds since the last completed full or differential backup. Differential is always based off last full."
+
+
+ccp_backrest_last_incr_backup:
+    query: "SELECT config_file 
+                , stanza
+                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp(backup_stop)))))  AS time_since_completion_seconds
+          FROM monitor.pgbackrest_info() WHERE backup_type IN ('full', 'diff', 'incr') 
           GROUP BY config_file, stanza"
     metrics:
         - config_file:
@@ -71,25 +73,3 @@ ccp_backrest_last_incr_backup:
             usage: "GAUGE"
             description: "Seconds since the last completed full, differential or incremental backup. Incremental is always based off last full or differential."
 
-
-ccp_backrest_last_diff_backup:
-    query: "WITH all_backups AS
-          (SELECT config_file 
-                , jsonb_array_elements(data)->>'name' as stanza
-                , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
-          SELECT config_file 
-                , stanza
-                , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
-          FROM all_backups where backups->>'type' IN ('full' , 'diff')
-          GROUP BY config_file, stanza"
-    metrics:
-        - config_file:
-            usage: "LABEL"
-            description: "Configuration file for this backup"
-        - stanza: 
-            usage: "LABEL"
-            description: "PGBackrest Stanza Name"
-        - time_since_completion_seconds:
-            usage: "GAUGE"
-            description: "Seconds since the last completed full or differential backup. Differential is always based off last full."

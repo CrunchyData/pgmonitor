@@ -11,14 +11,26 @@ GRANT pg_monitor to ccp_monitoring;
 CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
 DROP TABLE IF EXISTS monitor.pgbackrest_info CASCADE;
-CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL);
+CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL, gather_timestamp timestamptz DEFAULT now() NOT NULL);
 
-CREATE OR REPLACE FUNCTION monitor.pgbackrest_info() RETURNS SETOF monitor.pgbackrest_info
+DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
+DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
+CREATE OR REPLACE FUNCTION monitor.pgbackrest_info(p_throttle_minutes int DEFAULT 10) RETURNS TABLE(config_file text, stanza text, backup_type text, backup_start bigint, backup_stop bigint)
     LANGUAGE plpgsql SECURITY DEFINER
 AS $function$
 DECLARE
+
+v_gather_timestamp      timestamptz;
+v_throttle              interval;
+ 
 BEGIN
-    -- Get pgBackRest info in JSON format
+-- Get pgBackRest info in JSON format
+
+v_throttle := make_interval(mins := p_throttle_minutes);
+
+SELECT COALESCE(max(gather_timestamp), '1970-01-01'::timestamptz) INTO v_gather_timestamp FROM monitor.pgbackrest_info;
+
+IF (CURRENT_TIMESTAMP - v_gather_timestamp) > v_throttle THEN
 
     -- Ensure table is empty 
     TRUNCATE monitor.pgbackrest_info;
@@ -26,13 +38,31 @@ BEGIN
     -- Copy data into the table directory from the pgBackRest into command
     COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
 
-    RETURN QUERY SELECT * FROM monitor.pgbackrest_info;
+END IF;
 
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'No backups being returned from pgbackrest info command';
-    END IF;
+RETURN QUERY WITH all_backups AS (
+    SELECT p.config_file
+        , jsonb_array_elements(data) AS stanza_data
+    FROM monitor.pgbackrest_info p
+)
+, per_stanza AS ( 
+    SELECT a.config_file
+        , stanza_data->>'name' AS stanza
+        , jsonb_array_elements(stanza_data->'backup') AS backup_data
+    FROM all_backups a
+)
+SELECT p.config_file
+    , p.stanza
+    , p.backup_data->>'type' AS backup_type
+    , (p.backup_data->'timestamp'->>'start')::bigint AS backup_start
+    , (p.backup_data->'timestamp'->>'stop')::bigint AS backup_stop
+FROM per_stanza p;
 
-    TRUNCATE monitor.pgbackrest_info;
+
+IF NOT FOUND THEN
+    RAISE EXCEPTION 'No backups being returned from pgbackrest info command';
+END IF;
+
 
 END 
 $function$;
