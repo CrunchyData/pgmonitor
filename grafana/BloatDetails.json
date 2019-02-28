@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1551369602528,
+  "iteration": 1551392051643,
   "links": [],
   "panels": [
     {
@@ -57,7 +57,7 @@
         {
           "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
           "format": "time_series",
-          "hide": "[[container_suite]]",
+          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
         }
@@ -423,5 +423,5 @@
   "timezone": "browser",
   "title": "BloatDetails",
   "uid": "Sa8VDnNmz",
-  "version": 1
+  "version": 2
 }

@@ -11,9 +11,9 @@ weight: 5
    * Fixed incorrect data being returned by monitor query on PostgreSQL 9.6 and earlier. The same, latest backup time was being returned for all stanzas instead of returning the time per stanza.
    * Fixed monitor to work with larger amount of data being returned by the "pgbackrest info" command. Previously, once returned data size reached a certain point, would cause a "missing chunk" error.
    * Added a parameter to the function that is called to control how often the underlying info command is actually run. On systems with high backup counts, info can be a slightly more expensive call. This helps to control that, no matter what the scrape interval of prometheus is set to. Default is to get new data every 10 minutes, otherwise just queries from an internal table that stores the last info run. 
-   * Moved more functionality into the plpgsql function to make the check query simpler.
  * Added new metric (ccp_replication_slots) and alert (PGReplicationSlotsInactive) for monitoring replication slot status. New metric and alert can be found in queries_pg##.yml and crunchy-alert-rules.yml respectively.
  * Added Grafana Dashboard for PGBackrest status information.
+ * Fixed lines being hidden in the "Total Bloat %" graph in BloatDetails dashboard.
  * Fixed unnecessary drilldown link in Total Bloat % graph in BloatDetails dashboard.
 
 
