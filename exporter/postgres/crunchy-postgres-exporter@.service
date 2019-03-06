@@ -10,7 +10,7 @@ After=network.target
 PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/%i
-ExecStartPre=/bin/bash -c "cat $QUERY_FILE_LIST > $$(echo $OPT | sed 's/.*--extend.query-path=\(.*\) .*/\1/')"
+ExecStartPre=/bin/bash -c "cat $QUERY_FILE_LIST | sed 's/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g'> $$(echo $OPT | sed 's/.*--extend.query-path=\(.*\) .*/\1/')"
 ExecStart=/usr/bin/postgres_exporter $OPT
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always

@@ -9,7 +9,7 @@ ccp_backrest_last_runtime:
           (SELECT config_file 
                 , jsonb_array_elements(data)->>'name' as stanza
                 , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM monitor.pgbackrest_info())
+                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
           SELECT config_file 
                 , stanza
                 , backups->>'type' AS backup_type
@@ -37,7 +37,7 @@ ccp_backrest_last_full_backup:
           (SELECT config_file 
                 , jsonb_array_elements(data)->>'name' as stanza
                 , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
+                FROM  monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
           SELECT config_file 
                 , stanza
                 , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
@@ -60,7 +60,7 @@ ccp_backrest_last_incr_backup:
           (SELECT config_file 
                 , jsonb_array_elements(data)->>'name' as stanza
                 , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
+                FROM  monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
           SELECT config_file 
                 , stanza
                 , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
@@ -83,7 +83,7 @@ ccp_backrest_last_diff_backup:
           (SELECT config_file 
                 , jsonb_array_elements(data)->>'name' as stanza
                 , jsonb_array_elements(jsonb_array_elements(data)->'backup') as backups 
-                FROM  monitor.pgbackrest_info())
+                FROM  monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
           SELECT config_file 
                 , stanza
                 , EXTRACT(epoch FROM (CURRENT_TIMESTAMP - (max(to_timestamp((backups->'timestamp'->>'stop')::bigint)))))  AS time_since_completion_seconds
