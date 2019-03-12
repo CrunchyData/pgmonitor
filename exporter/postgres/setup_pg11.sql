@@ -8,10 +8,9 @@ $$;
  
 GRANT pg_monitor to ccp_monitoring;
 
-CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
+ALTER ROLE ccp_monitoring SET lock_timeout TO '2m';
 
-DROP TABLE IF EXISTS monitor.pgbackrest_info CASCADE;
-CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL, gather_timestamp timestamptz DEFAULT now() NOT NULL);
+CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
@@ -33,7 +32,7 @@ SELECT COALESCE(max(gather_timestamp), '1970-01-01'::timestamptz) INTO v_gather_
 IF (CURRENT_TIMESTAMP - v_gather_timestamp) > v_throttle THEN
 
     -- Ensure table is empty 
-    TRUNCATE monitor.pgbackrest_info;
+    DELETE FROM monitor.pgbackrest_info;
 
     -- Copy data into the table directory from the pgBackRest into command
     COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
@@ -55,8 +54,14 @@ CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, las
     LANGUAGE sql SECURITY DEFINER
 AS $function$
 
+/* 
+ * Provide detailed status information of sequences in the current database
+ */
+
 WITH default_value_sequences AS (
     -- Get sequences defined as default values with related table
+    -- Note this subquery can be locked/hung by DDL that affects tables with sequences. 
+    --  Use monitor.sequence_exhaustion() to actually monitor for sequences running out
     SELECT s.seqrelid, c.oid 
     FROM pg_catalog.pg_attribute a
     JOIN pg_catalog.pg_attrdef ad on (ad.adrelid,ad.adnum) = (a.attrelid,a.attnum)
@@ -97,6 +102,26 @@ FROM (
     GROUP BY 1,2,3,4,5
 ) x 
 ORDER BY ROUND(used/slots*100) DESC
+
+$function$;
+
+
+DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
+CREATE FUNCTION monitor.sequence_exhaustion(p_percent int DEFAULT 75) RETURNS bigint
+    LANGUAGE sql SECURITY DEFINER
+AS $function$
+
+/* 
+ * Returns count of sequences that have used up the % value given via the p_percent parameter (default 75%)
+ */
+
+SELECT count(*) 
+FROM (
+     SELECT CEIL((s.max_value-min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS slots
+        , CEIL((COALESCE(s.last_value,s.min_value)-s.min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS used
+    FROM pg_catalog.pg_sequences s
+) x 
+WHERE (ROUND(used/slots*100)::int) > p_percent;
 
 $function$;
 
