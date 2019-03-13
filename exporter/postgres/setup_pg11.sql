@@ -29,14 +29,16 @@ v_throttle := make_interval(mins := p_throttle_minutes);
 
 SELECT COALESCE(max(gather_timestamp), '1970-01-01'::timestamptz) INTO v_gather_timestamp FROM monitor.pgbackrest_info;
 
-IF (CURRENT_TIMESTAMP - v_gather_timestamp) > v_throttle THEN
+IF pg_catalog.pg_is_in_recovery() = 'f' THEN
+    IF ((CURRENT_TIMESTAMP - v_gather_timestamp) > v_throttle) THEN
 
-    -- Ensure table is empty 
-    DELETE FROM monitor.pgbackrest_info;
+        -- Ensure table is empty 
+        DELETE FROM monitor.pgbackrest_info;
 
-    -- Copy data into the table directory from the pgBackRest into command
-    COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
+        -- Copy data into the table directory from the pgBackRest into command
+        COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
 
+    END IF;
 END IF;
 
 RETURN QUERY SELECT * FROM monitor.pgbackrest_info;
@@ -107,15 +109,15 @@ $function$;
 
 
 DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
-CREATE FUNCTION monitor.sequence_exhaustion(p_percent int DEFAULT 75) RETURNS bigint
-    LANGUAGE sql SECURITY DEFINER
+CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
+ LANGUAGE sql SECURITY DEFINER
 AS $function$
 
 /* 
  * Returns count of sequences that have used up the % value given via the p_percent parameter (default 75%)
  */
 
-SELECT count(*) 
+SELECT count(*) AS count
 FROM (
      SELECT CEIL((s.max_value-min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS slots
         , CEIL((COALESCE(s.last_value,s.min_value)-s.min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS used
