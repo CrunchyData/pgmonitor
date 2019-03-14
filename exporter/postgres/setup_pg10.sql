@@ -12,6 +12,11 @@ ALTER ROLE ccp_monitoring SET lock_timeout TO '2min';
 
 CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
+DROP TABLE IF EXISTS monitor.pgbackrest_info CASCADE;
+CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL, gather_timestamp timestamptz DEFAULT now() NOT NULL);
+-- Force more aggressive autovacuum to avoid table bloat over time
+ALTER TABLE monitor.pgbackrest_info SET (autovacuum_analyze_scale_factor = 0, autovacuum_vacuum_scale_factor = 0, autovacuum_vacuum_threshold = 10, autovacuum_analyze_threshold = 10);
+
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
 CREATE OR REPLACE FUNCTION monitor.pgbackrest_info(p_throttle_minutes int DEFAULT 10) RETURNS SETOF monitor.pgbackrest_info
