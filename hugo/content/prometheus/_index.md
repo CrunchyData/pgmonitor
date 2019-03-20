@@ -1,7 +1,7 @@
 ---
 title: "Setting up Prometheus"
 draft: false
-weight: 3
+weight: 2
 ---
 
 Prometheus can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.

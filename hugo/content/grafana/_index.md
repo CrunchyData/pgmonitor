@@ -1,7 +1,7 @@
 ---
 title: "Setting up Grafana"
 draft: false
-weight: 2
+weight: 3
 ---
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). Otherwise the Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download. There is no difference between the Crunchy provided package and the one directly from Grafana.
