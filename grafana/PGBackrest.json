@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1551392051643,
+  "id": 11,
+  "iteration": 1551373177905,
   "links": [],
   "panels": [
     {
@@ -23,21 +24,20 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 5,
-        "w": 24,
+        "h": 9,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 43,
+      "id": 2,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -55,10 +55,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[jobname]]\"})*100",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
           "format": "time_series",
-          "hide": false,
           "intervalFactor": 1,
+          "legendFormat": "{{stanza}}",
           "refId": "A"
         }
       ],
@@ -66,7 +66,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Total Bloat %",
+      "title": "Time Since Last Completed Backup (Any)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -82,7 +82,7 @@
       },
       "yaxes": [
         {
-          "format": "percent",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -108,25 +108,22 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 5
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
       },
-      "id": 2,
+      "id": 4,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": true,
+        "max": false,
+        "min": false,
         "show": true,
-        "total": true,
-        "values": true
+        "total": false,
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -142,19 +139,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\",objectname=\"[[objectname]]\"}",
+          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{job=\"[[jobname]]\"}",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{schemaname}}.{{objectname}}",
-          "refId": "A",
-          "step": 60
+          "intervalFactor": 1,
+          "legendFormat": "{{stanza}}_{{backup_type}}",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Bloat Per Table",
+      "title": "Backup Runtime (Any)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -170,7 +166,7 @@
       },
       "yaxes": [
         {
-          "format": "decbytes",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -196,25 +192,22 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
       "fill": 1,
       "gridPos": {
-        "h": 12,
-        "w": 24,
+        "h": 9,
+        "w": 12,
         "x": 0,
-        "y": 15
+        "y": 9
       },
-      "id": 1,
+      "id": 5,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": true,
+        "max": false,
+        "min": false,
         "show": true,
-        "total": true,
-        "values": true
+        "total": false,
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -230,19 +223,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\", dbname=\"[[dbname]]\"} > 10240",
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{dbname}}.{{schemaname}}.{{objectname}}",
-          "refId": "A",
-          "step": 60
+          "intervalFactor": 1,
+          "legendFormat": "{{stanza}}",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Top N Bloated Tables > 10kB",
+      "title": "Time Since Last Completed Backup (Full)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -258,7 +250,91 @@
       },
       "yaxes": [
         {
-          "format": "decbytes",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{stanza}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Time Since Last Completed Backup (Full,Diff)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -280,7 +356,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": false,
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -289,97 +365,36 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "Prod",
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(job)",
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "jobname",
-        "options": [],
+        "options": [
+          {
+            "selected": false,
+            "text": "PG96",
+            "value": "PG96"
+          },
+          {
+            "selected": true,
+            "text": "Prod",
+            "value": "Prod"
+          },
+          {
+            "selected": false,
+            "text": "Replica",
+            "value": "Replica"
+          }
+        ],
         "query": "label_values(job)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "dbname",
-        "options": [],
-        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\"},dbname)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "schemaname",
-        "options": [],
-        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\",dbname=\"[[dbname]]\"},schemaname)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "objectname",
-        "options": [],
-        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=\"[[jobname]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"}, objectname)",
-        "refresh": 1,
+        "refresh": 0,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -392,7 +407,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-30d",
     "to": "now"
   },
   "timepicker": {
@@ -420,8 +435,8 @@
       "30d"
     ]
   },
-  "timezone": "browser",
-  "title": "BloatDetails",
-  "uid": "Sa8VDnNmz",
-  "version": 2
+  "timezone": "",
+  "title": "PGBackrest",
+  "uid": "QtHwNCrik",
+  "version": 7
 }

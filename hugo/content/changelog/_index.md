@@ -4,6 +4,23 @@ draft: false
 weight: 5
 ---
 
+## 2.4
+
+* UPGRADE NOTE: All exporter issues below can be fixed by re-running the setup_pg##.sql file for your major version of postgres. For the pgbackrest fix, you will also need to update the queries.yml file for the exporter to include the new queries found in the queries_backrest.yml file.
+ * Fixed several issues with pgbackrest monitor in postgres_exporter that was included in pgmonitor v2.3
+   * Fixed incorrect data being returned by monitor query on PostgreSQL 9.6 and earlier. The same, latest backup time was being returned for all stanzas instead of returning the time per stanza.
+   * Fixed backrest query causing the postgres_exporter to hang and cause all metric output to stop.
+   * Fixed backrest monitor to work with larger amount of data being returned by the "pgbackrest info" command. Previously, once returned data size reached a certain point, would cause a "missing chunk" error.
+   * Added a parameter to the function that is called to control how often the underlying info command is actually run. On systems with high backup counts, info can be a slightly more expensive call. This helps to control that, no matter what the scrape interval of prometheus is set to. Default is to get new data every 10 minutes, otherwise just queries from an internal table that stores the last info run. 
+   * Backrest monitoring can now be run on replicas as well, but cannot update the current backup status since that requires writing to the database. This is mostly to enable monitoring setups to be consistent between primary/replica in case of failover.
+ * Fixed issue with ccp_sequence_exhaustion metric that would cause postgres_exporter output to hang if any table that contained a sequence was dropped during a long running transaction.
+ * Added new metric (ccp_replication_slots) and alert (PGReplicationSlotsInactive) for monitoring replication slot status. New metric and alert can be found in queries_pg##.yml and crunchy-alert-rules.yml respectively.
+ * Added lock_timeout of 2 minutes to the ccp_monitoring role. Avoids monitoring causing any extensive lock interference with normal database operations.
+ * Added Grafana Dashboard for PGBackrest status information.
+ * Fixed lines being hidden in the "Total Bloat %" graph in BloatDetails Grafana dashboard.
+ * Removed unnecessary drilldown link in Total Bloat % graph in BloatDetails Grafana dashboard.
+
+
 ## 2.3
 
  * Fixed bug in Prometheus alerts that was causing some of them to be stuck in PENDING mode indefinitely and never firing. This unfortunately removes the current alert value from the Grafana Prometheus Alerts dashboard.
