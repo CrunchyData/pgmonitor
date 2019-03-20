@@ -8,31 +8,49 @@ $$;
  
 GRANT pg_monitor to ccp_monitoring;
 
+ALTER ROLE ccp_monitoring SET lock_timeout TO '2min';
+
 CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
 DROP TABLE IF EXISTS monitor.pgbackrest_info CASCADE;
-CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL);
+CREATE TABLE IF NOT EXISTS monitor.pgbackrest_info (config_file text NOT NULL, data jsonb NOT NULL, gather_timestamp timestamptz DEFAULT now() NOT NULL);
+-- Force more aggressive autovacuum to avoid table bloat over time
+ALTER TABLE monitor.pgbackrest_info SET (autovacuum_analyze_scale_factor = 0, autovacuum_vacuum_scale_factor = 0, autovacuum_vacuum_threshold = 10, autovacuum_analyze_threshold = 10);
 
-CREATE OR REPLACE FUNCTION monitor.pgbackrest_info() RETURNS SETOF monitor.pgbackrest_info
+DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
+DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
+CREATE OR REPLACE FUNCTION monitor.pgbackrest_info(p_throttle_minutes int DEFAULT 10) RETURNS SETOF monitor.pgbackrest_info
     LANGUAGE plpgsql SECURITY DEFINER
 AS $function$
 DECLARE
+
+v_gather_timestamp      timestamptz;
+v_throttle              interval;
+ 
 BEGIN
-    -- Get pgBackRest info in JSON format
+-- Get pgBackRest info in JSON format
 
-    -- Ensure table is empty 
-    TRUNCATE monitor.pgbackrest_info;
+v_throttle := make_interval(mins := p_throttle_minutes);
 
-    -- Copy data into the table directory from the pgBackRest into command
-    COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
+SELECT COALESCE(max(gather_timestamp), '1970-01-01'::timestamptz) INTO v_gather_timestamp FROM monitor.pgbackrest_info;
 
-    RETURN QUERY SELECT * FROM monitor.pgbackrest_info;
+IF pg_catalog.pg_is_in_recovery() = 'f' THEN
+    IF ((CURRENT_TIMESTAMP - v_gather_timestamp) > v_throttle) THEN
 
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'No backups being returned from pgbackrest info command';
+        -- Ensure table is empty 
+        DELETE FROM monitor.pgbackrest_info;
+
+        -- Copy data into the table directory from the pgBackRest into command
+        COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
+
     END IF;
+END IF;
 
-    TRUNCATE monitor.pgbackrest_info;
+RETURN QUERY SELECT * FROM monitor.pgbackrest_info;
+
+IF NOT FOUND THEN
+    RAISE EXCEPTION 'No backups being returned from pgbackrest info command';
+END IF;
 
 END 
 $function$;
@@ -43,8 +61,14 @@ CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, las
     LANGUAGE sql SECURITY DEFINER
 AS $function$
 
+/* 
+ * Provide detailed status information of sequences in the current database
+ */
+
 WITH default_value_sequences AS (
     -- Get sequences defined as default values with related table
+    -- Note this subquery can be locked/hung by DDL that affects tables with sequences. 
+    --  Use monitor.sequence_exhaustion() to actually monitor for sequences running out
     SELECT s.seqrelid, c.oid 
     FROM pg_catalog.pg_attribute a
     JOIN pg_catalog.pg_attrdef ad on (ad.adrelid,ad.adnum) = (a.attrelid,a.attnum)
@@ -85,6 +109,26 @@ FROM (
     GROUP BY 1,2,3,4,5
 ) x 
 ORDER BY ROUND(used/slots*100) DESC
+
+$function$;
+
+
+DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
+CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
+ LANGUAGE sql SECURITY DEFINER
+AS $function$
+
+/* 
+ * Returns count of sequences that have used up the % value given via the p_percent parameter (default 75%)
+ */
+
+SELECT count(*) AS count
+FROM (
+     SELECT CEIL((s.max_value-min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS slots
+        , CEIL((COALESCE(s.last_value,s.min_value)-s.min_value::NUMERIC+1)/s.increment_by::NUMERIC) AS used
+    FROM pg_catalog.pg_sequences s
+) x 
+WHERE (ROUND(used/slots*100)::int) > p_percent;
 
 $function$;
 
