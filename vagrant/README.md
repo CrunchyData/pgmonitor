@@ -1,1 +1,0 @@
-# Vagrant setup for testing
