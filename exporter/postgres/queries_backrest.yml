@@ -8,7 +8,7 @@ ccp_backrest_last_runtime:
     query: "WITH all_backups AS (
                 SELECT config_file
                  , jsonb_array_elements(data) AS stanza_data
-                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
+                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
             , per_stanza AS ( 
                 SELECT config_file
@@ -41,7 +41,7 @@ ccp_backrest_last_full_backup:
     query: "WITH all_backups AS (
                 SELECT config_file
                  , jsonb_array_elements(data) AS stanza_data
-                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
+                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
             , per_stanza AS ( 
                 SELECT config_file
@@ -71,7 +71,7 @@ ccp_backrest_last_diff_backup:
     query: "WITH all_backups AS (
                 SELECT config_file
                  , jsonb_array_elements(data) AS stanza_data
-             FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
+             FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
             , per_stanza AS ( 
                 SELECT config_file
@@ -101,7 +101,7 @@ ccp_backrest_last_incr_backup:
     query: "WITH all_backups AS (
                 SELECT config_file
                  , jsonb_array_elements(data) AS stanza_data
-                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#))
+                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
             , per_stanza AS ( 
                 SELECT config_file
