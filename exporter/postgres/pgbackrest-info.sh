@@ -2,13 +2,13 @@
 
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
 
-if [ -z "$PGBACKREST_CONFIGS" ]; then
+if [ -z "$BACKREST_CONFIGS" ]; then
     conf="default"
     echo $(echo -n "$conf|" | tr '/' '_'; pgbackrest --output=json info | tr -d '\n')
 
 else
 
-    IFS=':' read -r -a array <<< "$PGBACKREST_CONFIGS"
+    IFS=':' read -r -a array <<< "$BACKREST_CONFIGS"
 
     for conf in "${array[@]}"
     do
