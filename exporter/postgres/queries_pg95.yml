@@ -1,4 +1,8 @@
-
+###
+#
+# Begin File: queries_pg95.yml
+#
+###
 
 ccp_connection_stats:
   query: "select ((total - idle) - idle_in_txn) as active
@@ -93,3 +97,9 @@ ccp_wal_activity:
     - count:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
+
+###
+#
+# End File: queries_pg95.yml
+#
+###

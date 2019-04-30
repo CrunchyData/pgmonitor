@@ -1,0 +1,4 @@
+- targets: [ "10.123.202.13:9100" ]
+  labels:
+    job: "Replica"
+    exp_type: "node"

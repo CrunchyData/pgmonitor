@@ -1,7 +1,7 @@
 ---
 title: "Setting up Grafana"
 draft: false
-weight: 2
+weight: 3
 ---
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). Otherwise the Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download. There is no difference between the Crunchy provided package and the one directly from Grafana.
@@ -38,7 +38,7 @@ Create the following directories on your grafana server if they don't exist:
 | pgmonitor Configuration File              | System Location                                        |
 |-------------------------------------------|--------------------------------------------------------|
 | grafana/crunchy_grafana_datasource.yml    | `/etc/grafana/provisioning/datasources/datasource.yml` |  
-| grafana/crunchy_grafana_dashboards.yml    | `/etc/grafana/provisioning/dashboards/dashboards.yml`  |  
+| grafana/crunchy_grafana_dashboards.yml    | `/etc/grafana/provisioning/dashboards/dashboards.yml` |  
 
 Review the crunchy_grafana_datasource.yml file to ensure it is looking at your Prometheus database. The included file assumes Grafana and Prometheus are running on the same system. DO NOT CHANGE the datasource "name" if you will be using the dashboards provided in this repo. They assume that name and will not work otherwise. Any other options can be changed as needed. Save the crunchy_grafana_datasource.yml file and rename to /etc/grafana/provisioning/datasources/datasources.yml. Restart grafana and confirm through the web interface that the datasource was provisioned and working.
 

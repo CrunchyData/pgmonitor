@@ -1,7 +1,7 @@
 ---
 title: "Setting up Prometheus"
 draft: false
-weight: 3
+weight: 2
 ---
 
 Prometheus can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.
@@ -81,6 +81,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | sysconfig.prometheus | `/etc/sysconfig/prometheus` |
 | crunchy-prometheus.yml | `/etc/prometheus/crunchy-prometheus.yml` |
 | auto.d/ProductionDB.yml.example | `/etc/prometheus/auto.d/ProductionDB.yml.example` |
+| auto.d/ProductionOS.yml.example | `/etc/prometheus/auto.d/ProductionOS.yml.example` |
 | crunchy-alertmanager.yml | `/etc/prometheus/crunchy-alertmanager.yml` |
 | crunchy-alert-rules.yml | `/etc/prometheus/crunchy-alert-rules.yml` |
 

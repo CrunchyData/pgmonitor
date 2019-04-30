@@ -64,9 +64,9 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
 
-### 1. [Prometheus](/prometheus)
+### 1. [exporter](/exporter)
 
-### 2. [exporter](/exporter)
+### 2. [Prometheus](/prometheus)
 
 ### 3. [Grafana](/grafana)
 

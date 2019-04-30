@@ -4,6 +4,16 @@ draft: false
 weight: 5
 ---
 
+## 3.0
+
+ * Dynamically create query yml used by postgres_exporter
+ * Split OS Metric from PG Metric
+   * Obsolete jobname grfana variable in all dashboards
+   * Add new grafana variables pgnodes, osnodes
+   * Add new label in prometheus exp_type (export type), possible values pg or node
+   * Added new OSResource dashboard
+
+
 ## 2.4
 
 * UPGRADE NOTE: All exporter issues below can be fixed by re-running the setup_pg##.sql file for your major version of postgres. For the pgbackrest fix, you will also need to update the queries.yml file for the exporter to include the new queries found in the queries_backrest.yml file.

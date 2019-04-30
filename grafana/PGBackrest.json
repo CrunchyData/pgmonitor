@@ -12,11 +12,11 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 11,
-  "iteration": 1551373177905,
+  "id": 2,
+  "iteration": 1555699716557,
   "links": [],
   "panels": [
     {
@@ -55,7 +55,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -139,7 +139,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{job=\"[[jobname]]\"}",
+          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}_{{backup_type}}",
@@ -223,7 +223,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -307,7 +307,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[jobname]]\"}",
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -357,7 +357,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 16,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -365,37 +365,36 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "Prod",
-          "value": "Prod"
+          "text": "PG_pg3",
+          "value": "PG_pg3"
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(job)",
+        "definition": "query_result( up{ exp_type = 'pg' } )",
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "jobname",
+        "name": "pgnodes",
         "options": [
           {
             "selected": false,
-            "text": "PG96",
-            "value": "PG96"
-          },
-          {
-            "selected": true,
-            "text": "Prod",
-            "value": "Prod"
+            "text": "PG_pg1",
+            "value": "PG_pg1"
           },
           {
             "selected": false,
-            "text": "Replica",
-            "value": "Replica"
+            "text": "PG_pg2",
+            "value": "PG_pg2"
+          },
+          {
+            "selected": true,
+            "text": "PG_pg3",
+            "value": "PG_pg3"
           }
         ],
-        "query": "label_values(job)",
+        "query": "query_result( up{ exp_type = 'pg' } )",
         "refresh": 0,
-        "regex": "",
+        "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -407,7 +406,7 @@
     ]
   },
   "time": {
-    "from": "now-30d",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -438,5 +437,5 @@
   "timezone": "",
   "title": "PGBackrest",
   "uid": "QtHwNCrik",
-  "version": 7
+  "version": 2
 }

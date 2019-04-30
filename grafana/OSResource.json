@@ -25,8 +25,8 @@
       "colorValue": false,
       "colors": [
         "rgba(245, 54, 54, 0.9)",
-        "rgba(50, 172, 45, 0.9)",
-        "rgba(68, 126, 188, 0.9)"
+        "rgba(68, 126, 188, 0.9)",
+        "rgba(50, 172, 45, 0.9)"
       ],
       "datasource": "PROMETHEUS",
       "format": "none",
@@ -47,24 +47,21 @@
       "interval": null,
       "links": [
         {
-          "$$hashKey": "object:227",
-          "dashUri": "db/postgresqldetails",
-          "dashboard": "PostgreSQLDetails",
+          "dashUri": "db/osresourcedetails",
+          "dashboard": "OSResourceDetails",
           "includeVars": true,
           "targetBlank": false,
-          "title": "PostgreSQLDetails",
+          "title": "OSResourceDetails",
           "type": "dashboard"
         }
       ],
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:295",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:296",
           "name": "range to text",
           "value": 2
         }
@@ -84,13 +81,13 @@
           "to": "null"
         }
       ],
-      "repeat": "pgnodes",
+      "repeat": "osnodes",
       "repeatDirection": "h",
       "scopedVars": {
-        "pgnodes": {
+        "osnodes": {
           "selected": false,
-          "text": "Prod",
-          "value": "Prod"
+          "text": "node0",
+          "value": "node0"
         }
       },
       "sparkline": {
@@ -102,8 +99,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "$$hashKey": "object:243",
-          "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
+          "expr": "up{job=\"[[osnodes]]\", exp_type=\"node\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -113,32 +109,23 @@
           "step": 2
         }
       ],
-      "thresholds": "0.5,1",
-      "title": "[[pgnodes]]",
+      "thresholds": "0.5,0.5",
+      "title": "[[osnodes]]",
       "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
         {
-          "$$hashKey": "object:298",
           "op": "=",
           "text": "DOWN",
           "value": "null"
         },
         {
-          "$$hashKey": "object:299",
           "op": "=",
-          "text": "PRIMARY",
-          "value": ".5"
-        },
-        {
-          "$$hashKey": "object:300",
-          "op": "=",
-          "text": "REPLICA",
+          "text": "UP",
           "value": "1"
         },
         {
-          "$$hashKey": "object:301",
           "op": "=",
           "text": "DOWN",
           "value": "0"
@@ -174,24 +161,21 @@
       "interval": null,
       "links": [
         {
-          "$$hashKey": "object:227",
-          "dashUri": "db/postgresqldetails",
-          "dashboard": "PostgreSQLDetails",
+          "dashUri": "db/osresourcedetails",
+          "dashboard": "OSResourceDetails",
           "includeVars": true,
           "targetBlank": false,
-          "title": "PostgreSQLDetails",
+          "title": "OSResourceDetails",
           "type": "dashboard"
         }
       ],
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:295",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:296",
           "name": "range to text",
           "value": 2
         }
@@ -213,13 +197,13 @@
       ],
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1529511124964,
+      "repeatIteration": 1549572107341,
       "repeatPanelId": 1,
       "scopedVars": {
-        "pgnodes": {
+        "osnodes": {
           "selected": false,
-          "text": "Replica",
-          "value": "Replica"
+          "text": "node1",
+          "value": "node1"
         }
       },
       "sparkline": {
@@ -231,8 +215,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "$$hashKey": "object:243",
-          "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
+          "expr": "up{job=\"[[osnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -242,32 +225,23 @@
           "step": 2
         }
       ],
-      "thresholds": "0.5,1",
-      "title": "[[pgnodes]]",
+      "thresholds": "0,1",
+      "title": "[[osnodes]]",
       "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
         {
-          "$$hashKey": "object:298",
           "op": "=",
           "text": "DOWN",
           "value": "null"
         },
         {
-          "$$hashKey": "object:299",
           "op": "=",
-          "text": "PRIMARY",
-          "value": ".5"
-        },
-        {
-          "$$hashKey": "object:300",
-          "op": "=",
-          "text": "REPLICA",
+          "text": "UP",
           "value": "1"
         },
         {
-          "$$hashKey": "object:301",
           "op": "=",
           "text": "DOWN",
           "value": "0"
@@ -291,11 +265,11 @@
         "datasource": "PROMETHEUS",
         "hide": 2,
         "includeAll": true,
-        "label": "PGCluster",
+        "label": "Node",
         "multi": true,
-        "name": "pgnodes",
+        "name": "osnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "query_result( up{ exp_type = 'node' } )",
          "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
         "sort": 1,
@@ -337,7 +311,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "PostgreSQL",
-  "uid": "pxinDnNik",
+  "title": "OSResource",
+  "uid": "pxinDnKik",
   "version": 1
 }
