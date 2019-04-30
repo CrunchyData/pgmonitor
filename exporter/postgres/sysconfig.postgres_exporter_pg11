@@ -9,7 +9,9 @@ PGBACKREST_INFO_THROTTLE_MINUTES=10
 OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/11/queries.yml --disable-default-metrics"
 DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
 # For global / cluster metric
+# Ex: Include recommended defaults + bloat and pgbackrest monitoring
 QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_common.yml /etc/postgres_exporter/11/queries_pg11.yml /etc/postgres_exporter/11/queries_per_db.yml /etc/postgres_exporter/11/queries_bloat.yml /etc/postgres_exporter/11/queries_backrest.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_common.yml /etc/postgres_exporter/11/queries_pg11.yml /etc/postgres_exporter/11/queries_per_db.yml"
 # For per db metric
 # QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_pg11.yml"
 
