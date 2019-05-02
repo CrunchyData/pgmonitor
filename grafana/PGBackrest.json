@@ -393,7 +393,7 @@
           }
         ],
         "query": "query_result( up{ exp_type = 'pg' } )",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
         "sort": 1,
