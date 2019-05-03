@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
 
