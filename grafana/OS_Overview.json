@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 73,
-  "iteration": 1529511124964,
+  "iteration": 1556901720039,
   "links": [],
   "panels": [
     {
@@ -39,7 +38,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -67,7 +66,7 @@
         }
       ],
       "maxDataPoints": 100,
-      "minSpan": 3,
+      "maxPerRow": 8,
       "nullPointMode": "connected",
       "nullText": null,
       "postfix": "",
@@ -86,8 +85,8 @@
       "scopedVars": {
         "osnodes": {
           "selected": false,
-          "text": "node0",
-          "value": "node0"
+          "text": "Prod",
+          "value": "Prod"
         }
       },
       "sparkline": {
@@ -111,123 +110,6 @@
       ],
       "thresholds": "0.5,0.5",
       "title": "[[osnodes]]",
-      "transparent": false,
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "DOWN",
-          "value": "null"
-        },
-        {
-          "op": "=",
-          "text": "UP",
-          "value": "1"
-        },
-        {
-          "op": "=",
-          "text": "DOWN",
-          "value": "0"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(50, 172, 45, 0.9)",
-        "rgba(68, 126, 188, 0.9)"
-      ],
-      "datasource": "PROMETHEUS",
-      "format": "none",
-      "gauge": {
-        "maxValue": 2,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 2,
-      "interval": null,
-      "links": [
-        {
-          "dashUri": "db/osresourcedetails",
-          "dashboard": "OSResourceDetails",
-          "includeVars": true,
-          "targetBlank": false,
-          "title": "OSResourceDetails",
-          "type": "dashboard"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "minSpan": 3,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": null,
-      "repeatDirection": "h",
-      "repeatIteration": 1549572107341,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "node1",
-          "value": "node1"
-        }
-      },
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "up{job=\"[[osnodes]]\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "thresholds": "0,1",
-      "title": "[[osnodes]]",
-      "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -250,8 +132,8 @@
       "valueName": "current"
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -263,6 +145,7 @@
           "value": "$__all"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 2,
         "includeAll": true,
         "label": "Node",
@@ -270,8 +153,9 @@
         "name": "osnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'node' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -311,7 +195,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "OSResource",
+  "title": "OS Overview",
   "uid": "pxinDnKik",
-  "version": 1
+  "version": 3
 }
