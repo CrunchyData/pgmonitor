@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 73,
-  "iteration": 1529511124964,
+  "iteration": 1556901669219,
   "links": [],
   "panels": [
     {
@@ -47,7 +46,6 @@
       "interval": null,
       "links": [
         {
-          "$$hashKey": "object:227",
           "dashUri": "db/postgresqldetails",
           "dashboard": "PostgreSQLDetails",
           "includeVars": true,
@@ -59,18 +57,16 @@
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:295",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:296",
           "name": "range to text",
           "value": 2
         }
       ],
       "maxDataPoints": 100,
-      "minSpan": 3,
+      "maxPerRow": 8,
       "nullPointMode": "connected",
       "nullText": null,
       "postfix": "",
@@ -102,7 +98,6 @@
       "tableColumn": "",
       "targets": [
         {
-          "$$hashKey": "object:243",
           "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
@@ -115,30 +110,25 @@
       ],
       "thresholds": "0.5,1",
       "title": "[[pgnodes]]",
-      "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
         {
-          "$$hashKey": "object:298",
           "op": "=",
           "text": "DOWN",
           "value": "null"
         },
         {
-          "$$hashKey": "object:299",
           "op": "=",
           "text": "PRIMARY",
           "value": ".5"
         },
         {
-          "$$hashKey": "object:300",
           "op": "=",
           "text": "REPLICA",
           "value": "1"
         },
         {
-          "$$hashKey": "object:301",
           "op": "=",
           "text": "DOWN",
           "value": "0"
@@ -174,7 +164,6 @@
       "interval": null,
       "links": [
         {
-          "$$hashKey": "object:227",
           "dashUri": "db/postgresqldetails",
           "dashboard": "PostgreSQLDetails",
           "includeVars": true,
@@ -186,18 +175,16 @@
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:295",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:296",
           "name": "range to text",
           "value": 2
         }
       ],
       "maxDataPoints": 100,
-      "minSpan": 3,
+      "maxPerRow": 8,
       "nullPointMode": "connected",
       "nullText": null,
       "postfix": "",
@@ -213,13 +200,13 @@
       ],
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1529511124964,
+      "repeatIteration": 1556901669219,
       "repeatPanelId": 1,
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "Replica",
-          "value": "Replica"
+          "text": "Replica2",
+          "value": "Replica2"
         }
       },
       "sparkline": {
@@ -231,7 +218,6 @@
       "tableColumn": "",
       "targets": [
         {
-          "$$hashKey": "object:243",
           "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
@@ -244,30 +230,25 @@
       ],
       "thresholds": "0.5,1",
       "title": "[[pgnodes]]",
-      "transparent": false,
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
         {
-          "$$hashKey": "object:298",
           "op": "=",
           "text": "DOWN",
           "value": "null"
         },
         {
-          "$$hashKey": "object:299",
           "op": "=",
           "text": "PRIMARY",
           "value": ".5"
         },
         {
-          "$$hashKey": "object:300",
           "op": "=",
           "text": "REPLICA",
           "value": "1"
         },
         {
-          "$$hashKey": "object:301",
           "op": "=",
           "text": "DOWN",
           "value": "0"
@@ -276,8 +257,8 @@
       "valueName": "current"
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -289,6 +270,7 @@
           "value": "$__all"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 2,
         "includeAll": true,
         "label": "PGCluster",
@@ -296,8 +278,9 @@
         "name": "pgnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -337,7 +320,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "PostgreSQL",
+  "title": "PostgreSQL Overview",
   "uid": "pxinDnNik",
-  "version": 1
+  "version": 2
 }

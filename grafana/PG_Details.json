@@ -12,26 +12,104 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1542145496589,
+  "iteration": 1556900112171,
   "links": [],
   "panels": [
     {
-      "content": "<H1><center>[[pgnodes]]</center></h1>",
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgb(7, 6, 79)",
+        "rgba(50, 172, 45, 0.9)"
+      ],
+      "format": "dtdurations",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
       "gridPos": {
         "h": 2,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 33,
-      "links": [],
-      "mode": "html",
-      "title": "",
-      "type": "text"
+      "id": 52,
+      "interval": null,
+      "links": [
+        {
+          "dashboard": "PGBackrest",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "PGBackrest",
+          "type": "dashboard",
+          "url": "/d/QtHwNCrik/pgbackrest"
+        }
+      ],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "Time Since Last Backup:",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "(ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "[[pgnodes]] Backup Details",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
     },
     {
       "aliasColors": {},
@@ -108,6 +186,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Connections",
       "tooltip": {
@@ -173,7 +252,14 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
+      "links": [
+        {
+          "dashboard": "TableSize_Detail",
+          "title": "TableSize_Detail",
+          "type": "dashboard",
+          "url": "/d/Igh7D7Hmz/tablesize_detail"
+        }
+      ],
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 5,
@@ -201,6 +287,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Database Size",
       "tooltip": {
@@ -285,6 +372,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Transactions Per Minute (TPM)",
       "tooltip": {
@@ -371,6 +459,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Replication Byte Lag (Primary Only)",
       "tooltip": {
@@ -455,6 +544,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Replication Lag Time (Replica Only)",
       "tooltip": {
@@ -541,6 +631,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Cache Hit Ratio",
       "tooltip": {
@@ -635,6 +726,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Commit vs Rollback",
       "tooltip": {
@@ -768,6 +860,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "CRUD",
       "tooltip": {
@@ -911,6 +1004,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Locks",
       "tooltip": {
@@ -1008,6 +1102,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Conflicts/DeadLocks",
       "tooltip": {
@@ -1133,6 +1228,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Buffers",
       "tooltip": {
@@ -1216,6 +1312,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "% toward wraparound",
       "tooltip": {
@@ -1299,6 +1396,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "% towards emergency vacuum",
       "tooltip": {
@@ -1382,6 +1480,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Total WAL Size",
       "tooltip": {
@@ -1494,6 +1593,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Vacuum/Analyze Activity Rate",
       "tooltip": {
@@ -1533,8 +1633,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1542,11 +1642,11 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
           "text": "Prod",
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
@@ -1554,7 +1654,7 @@
         "name": "pgnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
         "sort": 1,
@@ -1598,5 +1698,5 @@
   "timezone": "browser",
   "title": "PostgreSQLDetails",
   "uid": "6jtN_vfiz",
-  "version": 6
+  "version": 7
 }
