@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1533066213953,
+  "iteration": 1557419337785,
   "links": [],
   "panels": [
     {
@@ -46,7 +45,6 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "minSpan": null,
       "nullPointMode": "null",
       "percentage": false,
       "pointradius": 5,
@@ -74,6 +72,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Filesystem Usage %",
       "tooltip": {
@@ -166,6 +165,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Filesystem Space Used",
       "tooltip": {
@@ -277,6 +277,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Disk IO Per Device [5m]",
       "tooltip": {
@@ -387,6 +388,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Disk Throughput Per Device [5m]",
       "tooltip": {
@@ -430,7 +432,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -471,6 +472,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "IO Time Per Device in Seconds  [5m]",
       "tooltip": {
@@ -510,7 +512,8 @@
       }
     }
   ],
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -522,6 +525,7 @@
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -529,8 +533,9 @@
         "name": "osnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'node' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -546,8 +551,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -570,7 +573,7 @@
     ]
   },
   "timezone": "",
-  "title": "FilesystemDetails",
+  "title": "Filesystem Details",
   "uid": "g8iVvnHmz",
   "version": 1
 }

@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1533066238696,
+  "iteration": 1557419629610,
   "links": [],
   "panels": [
     {
@@ -79,6 +78,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "System Load",
       "tooltip": {
@@ -212,6 +212,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "CPU Usage",
       "tooltip": {
@@ -310,6 +311,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Memory",
       "tooltip": {
@@ -408,6 +410,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Swap",
       "tooltip": {
@@ -451,7 +454,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -474,10 +476,11 @@
       "links": [
         {
           "dashUri": "db/filesystemdetails",
-          "dashboard": "FilesystemDetails",
+          "dashboard": "Filesystem Details",
           "includeVars": true,
-          "title": "FilesystemDetails",
-          "type": "dashboard"
+          "title": "Filesystem Details",
+          "type": "dashboard",
+          "url": "/d/g8iVvnHmz/filesystem-details"
         }
       ],
       "nullPointMode": "null",
@@ -507,6 +510,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "FileSystem Usage",
       "tooltip": {
@@ -546,8 +550,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -559,6 +563,7 @@
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -566,8 +571,9 @@
         "name": "osnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'node' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -583,8 +589,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -607,7 +611,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "OSResourceDetails",
+  "title": "OS Details",
   "uid": "4t6SO2Fik",
-  "version": 1
+  "version": 2
 }

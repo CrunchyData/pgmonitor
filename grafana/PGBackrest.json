@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1555699716557,
+  "iteration": 1557427686752,
   "links": [],
   "panels": [
     {
@@ -365,8 +364,10 @@
       {
         "allValue": null,
         "current": {
-          "text": "PG_pg3",
-          "value": "PG_pg3"
+          "selected": false,
+          "tags": [],
+          "text": "Prod",
+          "value": "Prod"
         },
         "datasource": "PROMETHEUS",
         "definition": "query_result( up{ exp_type = 'pg' } )",
@@ -375,23 +376,7 @@
         "label": null,
         "multi": false,
         "name": "pgnodes",
-        "options": [
-          {
-            "selected": false,
-            "text": "PG_pg1",
-            "value": "PG_pg1"
-          },
-          {
-            "selected": false,
-            "text": "PG_pg2",
-            "value": "PG_pg2"
-          },
-          {
-            "selected": true,
-            "text": "PG_pg3",
-            "value": "PG_pg3"
-          }
-        ],
+        "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
         "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
@@ -406,13 +391,11 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -437,5 +420,5 @@
   "timezone": "",
   "title": "PGBackrest",
   "uid": "QtHwNCrik",
-  "version": 2
+  "version": 3
 }

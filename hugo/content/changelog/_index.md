@@ -5,13 +5,56 @@ weight: 5
 ---
 
 ## 3.0
+  
+ * New minimum version requirements for software that is part of pgmonitor are as follows, including links to release notes:
+    * Prometheus: 2.9.2 - https://github.com/prometheus/prometheus/releases
+    * Alertmanager: 0.17.0 - https://github.com/prometheus/alertmanager/releases
+    * Grafana: 6.1.6 (major version change from 5.x) - https://community.grafana.com/t/release-notes-v6-1-x/15772
 
- * Dynamically create query yml used by postgres_exporter
- * Split OS Metric from PG Metric
-   * Obsolete jobname grfana variable in all dashboards
-   * Add new grafana variables pgnodes, osnodes
-   * Add new label in prometheus exp_type (export type), possible values pg or node
-   * Added new OSResource dashboard
+* The service file for postgres_exporter provided by pgmonitor has been renamed to make it more consistent with typical systemd service names. 
+    * Only applies to systemd file for RHEL/CentOS 7
+    * Changed crunchy_postgres_exporter@.service to crunchy-postgres-exporter@.service (underscores to dashes).
+    * Note that you will need to use the new service name to interact with it from now on. It is recommended to do a restart to bring the running service name in line with the new name. IMPORTANT: See upgrade notes below about changes to sysconfig file before restarting!
+    * Ex. `systemctl restart crunchy-postgres-exporter@postgres_exporter_pg11`
+
+ * The single query.yml file used by postgres_exporter to use Crunchy's custom queries is now dynamically generated automatically upon service start/restart.
+    * A new variable, QUERY_FILE_LIST, is now set in the sysconfig file for the service. It is a space delimited list of the full paths to all query files that will be concatenated together. See sysconfig file for several examples and a recommended default to set.
+    * This now ensures that any updates to desired query files will be automatically applied when the package is updated and the service is restarted without having to manually rebuild the query.yml file.
+    * This new variable is not required and you can continue to manually manage your queries.yml file. Ensure that the QUERY_FILE_LIST variable is not set if this is desired.
+    * UPGRADE NOTES: 
+        * Backup your current queries.yml file.
+        * If you have not modified the default sysconfig file for your postgres_exporter service (/etc/sysconfig/postgres_exporter_pg##), updating to 3.0 will overwrite your current sysconfig file and put the default QUERY_FILE_LIST value in place, possibly overwriting your current queries.yml file. Again, please ensure you backup your current queries.yml file and then set the QUERY_FILE_LIST variable appropriately to dynamically generate your queries file for you in the future. Or unset the variable and continue managing it manually.
+        * If you have modified your sysconfig file from what the package provides, it will not be overwritten and a new sysconfig file with an `.rpmnew` extension will be created. You can reference this .rpmnew file for how to update your sysconfig file to take advantage of the new QUERY_FILE_LIST option.
+        * Ensure all postgres_exporters you have running set the QUERY_FILE_LIST properly if using it. Especially if multiple exporters are using the same query file.
+
+ * Prometheus targets for pgmonitor provided exporters (postgres_exporter & node_exporter) have had labels added to them for use in pgmonitor provided Grafana Dashboards. 
+    * Added new label `exp_type` (export type) in prometheus targets to better distinguish OS and Postgres metrics in Prometheus. Possible current values are `pg` or `node`.
+    * UPGRADE NOTES: This new label must be applied to your Prometheus target files if you are using the Grafana dashboards provided by pgmonitor. Note that if you previously defined node and postgres_exporter targets under a single target, you will now need to separate them, keeping the same job name for both. See example target files provided in package/repo for how to apply new label (Ex. ProductionDB.yml.example & ProductionOS.yml.example).
+    * If you are not using the pgmonitor provided Grafana dashboards, these new labels are optional.
+
+ * Grafana Dashboards Updates
+    * New dashboards require at least Grafana 6.x.
+    * UPGRADE NOTES: Once new Prometheus label (mentioned above) is applied, dashboard provisioning should take care of updating all dashboards once the new ones are in place. Note that all dashboards provided by pgmonitor 3.0+ now assume this new label and will not work until the Prometheus exp_type label is added.
+    * Renamed dashboard files for better naming consistency. Dashboard titles also updated accordingly.
+        * UPGRADE NOTES: If installing from package, it will take care of care of renaming dashboard files. Otherwise, dashboards have been renamed as follows below. Ensure old files are renamed/removed to avoid duplicating/breaking current dashboards. Easiest manual update method is to remove all dashboards provided by pgmonitor and copy all new ones back. Provisioning will then take care of updating things for you.
+        * renamed:  BloatDetails.json -> Bloat_Details.json
+        * renamed:  FilesystemDetails.json -> Filesystem_Details.json
+        * renamed:  PostgreSQLDetails.json -> PG_Details.json
+        * renamed:  PostgreSQL.json -> PG_Overview.json
+        * renamed:  TableSize_Detail.json -> TableSize_Details.json
+    * Dashboard names have been updated to match with new naming consistency. If you had direct links to dashboards, these may need to be updated.
+    * Split OS Metrics into their own dashboard separate from PG Metrics. 
+    * Added link to PGbackrest dashboard to top of Postgres Details Dashboard. Link shows time since last successful backup (any type) for that target system.
+    * Added new OS Details dashboard
+    * Added new etcd dashboard
+    * Add new Top Level Overview dashboard that links to all other Overview dashboards
+    * Set default refresh rate for most dashboards to 15 minutes.
+    * Obsolete "jobname" grafana variable in all dashboards. Add new grafana variables pgnodes, osnodes that use the new labels added in prometheus targets notded above.
+
+* New configuration option for postgres_exporter sysconfig file to control PGBackrest refresh rate
+    * PGBACKREST_INFO_THROTTLE_MINUTES
+    * This is the value, in minutes, passed along to the monitor.pgbackrest_info() function in all backrest checks
+    * Default is 10 minutes
 
 
 ## 2.4

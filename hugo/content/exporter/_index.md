@@ -4,7 +4,7 @@ draft: false
 weight: 1
 ---
 
-The exporters below can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.
+The exporters below can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 6 or 7. Version 7 or higher is recommended if possible.
 
 - [Installation](#installation)
 - [Setup](#setup)
@@ -15,12 +15,7 @@ The exporters below can be set up on any Linux-based system, but the instruction
 
 ### Upgrading
 
-#### 1.x -> 2.x
-* See CHANGLOG.md file for full details on what has changed in this major version upgrade.
-* Many of the metric names in node_exporter v0.16.0 have had their names changed. All of the ones that pgmonitor uses in alerting and grafana related to CPU, Memory and Disk have been renamed. All files provided by pgmonitor 2.x have been updated to account for these changes so please either use these new files or see what has changed an incorporate them into your environment.
-* The symlink for the postgres_exporter sysconfig file is no longer being used. The symlink is removed as part of the upgrade, so the default postgres_exporter service that previously used this may have to be updated. See the `Enable Services` section below for the correct systemctl command to create the new service name. The old service can then be disabled/removed.
-* The `ccp_is_ready` check has been removed and pgmonitor now uses the `pg_up` check built into postgres_exporter. Prometheus alerting and grafana dashboards have been updated to account for this.
-* A new metric `ccp_is_in_recovery` is used to help determine the primary/replica state of a given database in the grafana dashboards. The query for this can be found in queries_common.sql
+* See CHANGELOG in documentation for full details on both major & minor version upgrades.
 
 ### Installation on RHEL/CentOS 7
 
@@ -127,13 +122,13 @@ First, make sure you have installed the PostgreSQL contrib modules.  You can ins
 sudo yum install postgresql##-contrib
 ```
 
-Where `##` corresponds to your current PostgreSQL version.  For PostgreSQL 10 this would be:
+Where `##` corresponds to your current PostgreSQL version.  For PostgreSQL 11 this would be:
 
 ```bash
-sudo yum install postgresql10-contrib
+sudo yum install postgresql11-contrib
 ```
 
-You will need to modify your `postgresql.conf` configuration file to tell PostgreSQL to load shared libraries. In the default setup, this file can be found at `/var/lib/pgsql/10/data/postgresql.conf`.
+You will need to modify your `postgresql.conf` configuration file to tell PostgreSQL to load shared libraries. In the default setup, this file can be found at `/var/lib/pgsql/11/data/postgresql.conf`.
 
 Modify your `postgresql.conf` configuration file to add the following shared libraries
 
@@ -162,15 +157,16 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
-| queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The Vacuum graph on the PostgreSQLDetails Dashboard and the CRUD_Details Dashboard use these statistics.                                                   |
+| queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
-| queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status                             |
+| queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
 
 
-Install the setup_pg##.sql script to all databases on Primary cluster you will be monitoring in the cluster.
+Install the setup_pg##.sql script on the primary to main database you will be monitoring. If you have multiple databases in your cluster, it is best to just run this setup on the default "postgres" database and have the exporter service connect to it. For monitoring database specific metrics, see the section below for running multiple postgres exporters.
 
-The common queries to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. Current postgres_exporter only takes a single yaml file as an argument for custom queries, this requires file concatination. Service startup script helps with this concatination task.  Sysconfig config file `/etc/sysconfig/postgres_exporter_pg##` defines `QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml"`, this contains list of yaml files to use for concatination.
+The common queries to all postgres versions are contained in `queries_common.yml`. Major version specific queries are contained in a relevantly named file. Queries for more specialized monitoring are contained in additional files. 
 
+postgres_exporter only takes a single yaml file as an argument for custom queries, so this requires concatinating the relevant files together. The sysconfig file for the service helps with this concatination task. The sysconfig config file `/etc/sysconfig/postgres_exporter_pg##` defines the variable `QUERY_FILE_LIST=`. Set this variable to a space delimited list of the full path names to all files that contain queries you want to be in the single file that postgres_exporter uses.
 
 For example, to use just the common queries for PostgreSQL 9.6 modify relevant `/etc/sysconfig/` file and update `QUERY_FILE_LIST`.
 
@@ -178,13 +174,13 @@ For example, to use just the common queries for PostgreSQL 9.6 modify relevant `
 QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_per_db.yml /etc/postgres_exporter/96/queries_pg96.yml"
 ```
 
-As an another example, to include queries for PostgreSQL 10 as well as pgbackrest and bloat modify relevant `/etc/sysconfig/` file and update `QUERY_FILE_LIST`:
+As an another example, to include queries for PostgreSQL 10 as well as pgbackrest and bloat modify the relevant `/etc/sysconfig/` file and update `QUERY_FILE_LIST`:
 
 ```bash
 QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_per_db.yml /etc/postgres_exporter/10/queries_pg10.yml /etc/postgres_exporter/10/queries_bloat.yml /etc/postgres_exporter/10/queries_backrest.yml"
 ```
 
-For replica servers, the setup is the same except that the setup_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the master.
+For replica servers, the setup is the same except that the setup_pg##.sql file does not need to be run since writes cannot be done there and it was already run on the primary.
 
 ###### Access Control: GRANT statements
 
@@ -203,7 +199,7 @@ GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 
 ###### Bloat setup
 
-Run script on the specific database(s) you will be monitoring bloat for in the cluster. See special note in crontab.txt concerning a superuser requirement for using this script
+Run the script on the specific database(s) you will be for monitoring bloat in the cluster. See special note in crontab.txt concerning a superuser requirement for using this script
 
 ```bash
 psql -d postgres -c "CREATE EXTENSION pgstattuple;"

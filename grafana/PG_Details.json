@@ -12,10 +12,10 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1556900112171,
+  "iteration": 1557427485278,
   "links": [],
   "panels": [
     {
@@ -254,10 +254,10 @@
       "linewidth": 1,
       "links": [
         {
-          "dashboard": "TableSize_Detail",
-          "title": "TableSize_Detail",
+          "dashboard": "TableSize Details",
+          "title": "TableSize Details",
           "type": "dashboard",
-          "url": "/d/Igh7D7Hmz/tablesize_detail"
+          "url": "/d/Igh7D7Hmz/tablesize-details"
         }
       ],
       "nullPointMode": "null",
@@ -795,11 +795,12 @@
       "links": [
         {
           "dashUri": "db/crud_details",
-          "dashboard": "CRUD_Details",
+          "dashboard": "CRUD Details",
           "includeVars": true,
           "targetBlank": false,
-          "title": "CRUD_Details",
-          "type": "dashboard"
+          "title": "CRUD Details",
+          "type": "dashboard",
+          "url": "/d/ubhVvnNmk/crud-details"
         }
       ],
       "nullPointMode": "null",
@@ -1642,8 +1643,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "Replica",
+          "value": "Replica"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -1672,8 +1673,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -1696,7 +1695,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "PostgreSQLDetails",
+  "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 7
+  "version": 2
 }

@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1533066189533,
+  "iteration": 1557419143308,
   "links": [],
   "panels": [
     {
@@ -82,6 +81,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "CRUD",
       "tooltip": {
@@ -121,8 +121,8 @@
       }
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -134,6 +134,7 @@
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
@@ -141,8 +142,9 @@
         "name": "pgnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -157,6 +159,7 @@
           "value": "postgres"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -166,6 +169,7 @@
         "query": "label_values(ccp_database_size_bytes{job=\"[[pgnodes]]\"},dbname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -176,10 +180,11 @@
       {
         "allValue": null,
         "current": {
-          "text": "public",
-          "value": "public"
+          "text": "monitor",
+          "value": "monitor"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -189,6 +194,7 @@
         "query": "label_values(ccp_stat_user_tables_n_tup_ins{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\"},schemaname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -199,10 +205,11 @@
       {
         "allValue": null,
         "current": {
-          "text": "bloat_indexes",
-          "value": "bloat_indexes"
+          "text": "pgbackrest_info",
+          "value": "pgbackrest_info"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -212,6 +219,7 @@
         "query": "label_values(ccp_stat_user_tables_n_tup_ins{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -227,8 +235,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -251,7 +257,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "CRUD_Details",
+  "title": "CRUD Details",
   "uid": "ubhVvnNmk",
-  "version": 1
+  "version": 2
 }
