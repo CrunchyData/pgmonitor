@@ -4,7 +4,7 @@ draft: false
 weight: 2
 ---
 
-Prometheus can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 7.
+Prometheus can be set up on any Linux-based system, but pgmonitor currently only supports running it on RHEL/CentOS 7.
 
 - [Installation](#installation)
 - [Setup](#setup)
@@ -41,11 +41,11 @@ Or you can also download [Prometheus](https://prometheus.io/) and [Alertmanager]
 
 ##### Minimum Versions
 
-pgmonitor assumes to be using Prometheus 2.x. We recommend to always use the latest minor version of Prometheus.
+pgmonitor assumes to be using at least Prometheus 2.9.x. We recommend to always use the latest minor version of Prometheus.
 
 ##### User and Configuration Directory Installation
 
-You will need to create a user named `ccp_monitoring` which you can do with the following command:
+You will need to create a system user named `ccp_monitoring` which you can do with the following command:
 
 ```bash
 sudo useradd ccp_monitoring
@@ -80,8 +80,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | crunchy-prometheus-service-el7.conf | `/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf`  |
 | sysconfig.prometheus | `/etc/sysconfig/prometheus` |
 | crunchy-prometheus.yml | `/etc/prometheus/crunchy-prometheus.yml` |
-| auto.d/ProductionDB.yml.example | `/etc/prometheus/auto.d/ProductionDB.yml.example` |
-| auto.d/ProductionOS.yml.example | `/etc/prometheus/auto.d/ProductionOS.yml.example` |
+| auto.d/\*.yml.example | `/etc/prometheus/auto.d/*.yml.example` |
 | crunchy-alertmanager.yml | `/etc/prometheus/crunchy-alertmanager.yml` |
 | crunchy-alert-rules.yml | `/etc/prometheus/crunchy-alert-rules.yml` |
 
@@ -125,10 +124,10 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 
 | File                                     | Instructions |
 |------------------------------------------|--------------|
-| `/etc/prometheus/crunchy-prometheus.yml` | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Default service expects config file to be named `crunchy-prometheus.yml` |
-| `/etc/prometheus/crunchy-alertmanager.yml` | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Default service expects config file to be named `crunchy-alertmanager.yml` |
-| `/etc/prometheus/crunchy-alert-rules.yml` | Update rules as needed. Default Prometheus config expects file to be named `crunchy-alert-rules.yml` |
-| `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example file to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. |
+| `/etc/prometheus/crunchy-prometheus.yml` | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Service file provided by pgmonitor expects config file to be named `crunchy-prometheus.yml` |
+| `/etc/prometheus/crunchy-alertmanager.yml` | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgmonitor expects config file to be named `crunchy-alertmanager.yml` |
+| `/etc/prometheus/crunchy-alert-rules.yml` | Update rules as needed. Prometheus config provided by pgmonitor expects file to be named `crunchy-alert-rules.yml` |
+| `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to the target and be set appropriately (pg or node). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
 #### Enable Services
 
@@ -159,7 +158,3 @@ The service override files must be placed in the relevant drop-in folder to over
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
 
-
-### Setup on RHEL/CentOS 6
-
-Detailed instructions coming soon.

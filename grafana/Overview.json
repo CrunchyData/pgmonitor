@@ -13,10 +13,9 @@
     ]
   },
   "description": "",
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 12,
   "links": [],
   "panels": [
     {
@@ -49,11 +48,11 @@
       "interval": null,
       "links": [
         {
-          "dashboard": "OSResource",
+          "dashboard": "OS Overview",
           "targetBlank": true,
-          "title": "",
+          "title": "OS Overview",
           "type": "dashboard",
-          "url": "/d/pxinDnKik/osresource"
+          "url": "/d/pxinDnKik/os-overview"
         }
       ],
       "mappingType": 1,
@@ -144,11 +143,11 @@
       "interval": null,
       "links": [
         {
-          "dashboard": "PostgreSQL",
+          "dashboard": "PostgreSQL Overview",
           "targetBlank": true,
-          "title": "PostgreSQL",
+          "title": "PostgreSQL Overview",
           "type": "dashboard",
-          "url": "/d/pxinDnNik/postgresql"
+          "url": "/d/pxinDnNik/postgresql-overview"
         }
       ],
       "mappingType": 1,
@@ -237,11 +236,11 @@
       "interval": null,
       "links": [
         {
-          "dashboard": "ETCDResourceDetails",
+          "dashboard": "ETCD Details",
           "targetBlank": true,
-          "title": "ETCDResourceDetails",
+          "title": "ETCD Details",
           "type": "dashboard",
-          "url": "/d/wsdkI9RZz/etcdresourcedetails"
+          "url": "/d/wsdkI9RZz/etcd-details"
         }
       ],
       "mappingType": 1,
@@ -424,5 +423,5 @@
   "timezone": "",
   "title": "Overview",
   "uid": "AJlnXekWk",
-  "version": 10
+  "version": 1
 }

@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1556901720039,
+  "iteration": 1557419421391,
   "links": [],
   "panels": [
     {
@@ -49,7 +49,7 @@
           "dashUri": "db/osresourcedetails",
           "dashboard": "OSResourceDetails",
           "includeVars": true,
-          "targetBlank": false,
+          "targetBlank": true,
           "title": "OSResourceDetails",
           "type": "dashboard"
         }
@@ -171,8 +171,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -197,5 +195,5 @@
   "timezone": "browser",
   "title": "OS Overview",
   "uid": "pxinDnKik",
-  "version": 3
+  "version": 1
 }

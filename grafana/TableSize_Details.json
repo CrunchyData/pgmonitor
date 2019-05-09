@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1533066284867,
+  "iteration": 1557427341726,
   "links": [],
   "panels": [
     {
@@ -66,6 +65,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Table Size",
       "tooltip": {
@@ -105,7 +105,8 @@
       }
     }
   ],
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -117,6 +118,7 @@
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
@@ -124,8 +126,9 @@
         "name": "pgnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -140,6 +143,7 @@
           "value": "postgres"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -149,6 +153,7 @@
         "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\"},dbname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -163,6 +168,7 @@
           "value": "information_schema"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -172,6 +178,7 @@
         "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\"},schemaname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -186,6 +193,7 @@
           "value": "sql_features"
         },
         "datasource": "PROMETHEUS",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -195,6 +203,7 @@
         "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -210,8 +219,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -234,7 +241,7 @@
     ]
   },
   "timezone": "",
-  "title": "TableSize_Detail",
+  "title": "TableSize Details",
   "uid": "Igh7D7Hmz",
   "version": 1
 }

@@ -15,7 +15,6 @@
   "editable": false,
   "gnetId": 3070,
   "graphTooltip": 0,
-  "id": 11,
   "links": [],
   "panels": [
     {
@@ -1776,6 +1775,7 @@
       }
     }
   ],
+  "refresh": "15m",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -1783,13 +1783,11 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -1812,7 +1810,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "ETCDResourceDetails",
+  "title": "ETCD Details",
   "uid": "wsdkI9RZz",
-  "version": 5
+  "version": 1
 }

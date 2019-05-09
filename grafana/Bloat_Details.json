@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1551392051643,
+  "iteration": 1557418772030,
   "links": [],
   "panels": [
     {
@@ -280,8 +280,8 @@
       }
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 16,
+  "refresh": "15m",
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -301,7 +301,7 @@
         "name": "pgnodes",
         "options": [],
         "query": "query_result( up{ exp_type = 'pg' } )",
-         "refresh": 1,
+        "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
         "sort": 1,
@@ -397,8 +397,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
@@ -421,7 +419,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "BloatDetails",
+  "title": "Bloat Details",
   "uid": "Sa8VDnNmz",
-  "version": 2
+  "version": 3
 }
