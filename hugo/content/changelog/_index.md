@@ -10,6 +10,7 @@ weight: 5
     * Prometheus: 2.9.2 - https://github.com/prometheus/prometheus/releases
     * Alertmanager: 0.17.0 - https://github.com/prometheus/alertmanager/releases
     * Grafana: 6.1.6 (major version change from 5.x) - https://community.grafana.com/t/release-notes-v6-1-x/15772
+    * node_exporter: 0.18.0 - https://github.com/prometheus/node_exporter (Note breaking changes for some metrics. None of those broken are used by default in pgmonitor).
 
 * The service file for postgres_exporter provided by pgmonitor has been renamed to make it more consistent with typical systemd service names. 
     * Only applies to systemd file for RHEL/CentOS 7
