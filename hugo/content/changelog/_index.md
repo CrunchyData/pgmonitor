@@ -4,6 +4,13 @@ draft: false
 weight: 5
 ---
 
+## 3.1
+
+ * Fix broken links in Grafana OS & PG Overview Dashboards
+ * Updated UPGRADE steps in 3.0 release notes for new exporter service name setup. Need to re-enable service with new name and manually remove old symlink files.
+ * Update documentation for exporter setup to use new service names
+
+
 ## 3.0
   
  * New minimum version requirements for software that is part of pgmonitor are as follows, including links to release notes:
@@ -13,10 +20,14 @@ weight: 5
     * node_exporter: 0.18.0 - https://github.com/prometheus/node_exporter (Note breaking changes for some metrics. None of those broken are used by default in pgmonitor).
 
 * The service file for postgres_exporter provided by pgmonitor has been renamed to make it more consistent with typical systemd service names. 
+    * IMPORTANT: See upgrade notes below about changes to sysconfig file before restarting service!
     * Only applies to systemd file for RHEL/CentOS 7
     * Changed crunchy_postgres_exporter@.service to crunchy-postgres-exporter@.service (underscores to dashes).
-    * Note that you will need to use the new service name to interact with it from now on. It is recommended to do a restart to bring the running service name in line with the new name. IMPORTANT: See upgrade notes below about changes to sysconfig file before restarting!
-    * Ex. `systemctl restart crunchy-postgres-exporter@postgres_exporter_pg11`
+    * Note that you will need to use the new service name to interact with it from now on. This requires enabling the new service name and restarting it:
+        * `systemctl enable crunchy-postgres-exporter@postgres_exporter_pg11`
+        * `systemctl restart crunchy-postgres-exporter@postgres_exporter_pg11`
+    * Due to the removal of the old service file, you cannot use systemctl to disable the old service. Instead just remove the symlinks manually:
+        * `rm /etc/systemd/system/multi-user.target.wants/crunchy_postgres_exporter@*
 
  * The single query.yml file used by postgres_exporter to use Crunchy's custom queries is now dynamically generated automatically upon service start/restart.
     * A new variable, QUERY_FILE_LIST, is now set in the sysconfig file for the service. It is a space delimited list of the full paths to all query files that will be concatenated together. See sysconfig file for several examples and a recommended default to set.

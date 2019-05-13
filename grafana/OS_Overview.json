@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557419421391,
+  "iteration": 1557780622564,
   "links": [],
   "panels": [
     {
@@ -47,11 +47,12 @@
       "links": [
         {
           "dashUri": "db/osresourcedetails",
-          "dashboard": "OSResourceDetails",
+          "dashboard": "OS Details",
           "includeVars": true,
           "targetBlank": true,
-          "title": "OSResourceDetails",
-          "type": "dashboard"
+          "title": "OS Details",
+          "type": "dashboard",
+          "url": "/d/4t6SO2Fik/os-details"
         }
       ],
       "mappingType": 1,
