@@ -221,9 +221,9 @@ sudo systemctl status node_exporter
 To most easily allow the possibility of multiple postgres exporters, running multiple major versions of PostgreSQL, and to avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's EnvironmentFile is named "postgres_exporter_pg##" and tied to the major version of postgres that it was installed for. Be sure to replace the ## in the below commands first!
 
 ```bash
-sudo systemctl enable crunchy_postgres_exporter@postgres_exporter_pg##.service
-sudo systemctl start crunchy_postgres_exporter@postgres_exporter_pg##
-sudo systemctl status crunchy_postgres_exporter@postgres_exporter_pg##
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##.service
+sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##
 
 ```
 
@@ -244,9 +244,9 @@ QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_expo
 ```
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
 ```
-sudo systemctl enable crunchy_postgres_exporter@postgres_exporter_mydb.service
-sudo systemctl start cruncy_postgres_exporter@postgres_exporter_mydb
-sudo systemctl status crunchy_postgres_exporter@postgres_exporter_mydb
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_mydb.service
+sudo systemctl start cruncy-postgres-exporter@postgres_exporter_mydb
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_mydb
 
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
