@@ -3,6 +3,10 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 3.2
+
+ * Fixed postgres_exporter service in EL6 (Redhat/CentOS) to properly use the backrest throttle environment variable in sysconfig (Github Issue #107).
+
 
 ## 3.1
 
