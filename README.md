@@ -20,9 +20,9 @@ Running pgMonitor will give you confidence in understanding how well your Postgr
 
 ---
 
-Please view the official Crunchy Data pgMonitor 3.1 documentation [here](https://access.crunchydata.com/documentation/pgmonitor/3.1/). If you are interested in contributing or making an update to the documentation, please view the [Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/3.1/contributing/).
+Please view the official Crunchy Data pgMonitor 3.2 documentation [here](https://access.crunchydata.com/documentation/pgmonitor/3.2/). If you are interested in contributing or making an update to the documentation, please view the [Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/3.2/contributing/).
 
-[<img src="https://access.crunchydata.com/documentation/pgmonitor/3.1/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/3.1/)
+[<img src="https://access.crunchydata.com/documentation/pgmonitor/3.2/images/btn.png">](https://access.crunchydata.com/documentation/pgmonitor/3.2/)
 
 Please view the official Crunchy Data pgMonitor 2.4 documentation [here](https://access.crunchydata.com/documentation/pgmonitor/2.4/). If you are interested in contributing or making an update to the documentation, please view the [Contributing Guidelines](https://access.crunchydata.com/documentation/pgmonitor/2.4/contributing/).
 
