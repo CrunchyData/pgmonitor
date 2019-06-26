@@ -2,8 +2,7 @@
 
 ### [pgMonitor](https://github.com/CrunchyData/pgMonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
 
-![pgMonitor](hugo/static/images/pgmonitor_top_level.png)
-![pgMonitor](hugo/static/images/pgmonitor_pgdetails.png)
+![pgMonitor](hugo/static/images/PGMonitor.gif)
 
 pgMonitor combines a suite of tools to facilitate the collection and visualization of important metrics that you need be aware of in your PostgreSQL database and your host environment, including:
 
