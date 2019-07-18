@@ -12,11 +12,10 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 19,
-  "iteration": 1563475529836,
+  "iteration": 1563475702324,
   "links": [],
   "panels": [
     {
@@ -482,16 +481,16 @@
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( up{ exp_type = 'pg' } )",
+        "definition": "query_result(ccp_pgbouncer_pools_client_active)",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "query_result(ccp_pgbouncer_pools_client_active)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "/.*job=\"(.*?)\"/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -533,9 +532,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
       "1m",
       "5m",
       "15m",
@@ -559,5 +555,5 @@
   "timezone": "",
   "title": "PGBouncer",
   "uid": "H4OOvdVWz",
-  "version": 10
+  "version": 1
 }
