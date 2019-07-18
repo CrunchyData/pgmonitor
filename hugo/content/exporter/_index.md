@@ -35,16 +35,18 @@ If you install the below available packages with RPM, you can continue reading a
 | pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of postgres |
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
+| pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
 
 #### Without Packages
 
-For non-package installations, the exporters & pg_bloat_check can be downloaded from their respective repositories:
+For non-package installations, the exporters, extensions & pg_bloat_check can be downloaded from their respective repositories:
 
 | Library                       |                                                           |
 |-------------------------------|-----------------------------------------------------------|
 | node_exporter                 | https://github.com/prometheus/node_exporter/releases      |
 | postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases   |
 | pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
+| pgbouncer_fdw                 | https://github.com/CrunchyData/pgbouncer_fdw              |
 
 ##### User and Configuration Directory Installation
 
@@ -89,11 +91,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | postgres/crunchy_postgres_exporter@.service | `/usr/lib/systemd/system/crunchy_postgres_exporter@.service`  |
 | postgres/sysconfig.postgres_exporter_pg## | `/etc/sysconfig/postgres_exporter_pg##`  |
 | postgres/setup_pg##.sql | `/etc/postgres_exporter/##/setup_pg##.sql`  |
-| postgres/queries_pg##.yml | `/etc/postgres_exporter/##/queries_pg##.yml`  |
-| postgres/queries_common.yml | `/etc/postgres_exporter/##/queries_common.yml`  |
-| postgres/queries_per_db.yml | `/etc/postgres_exporter/##/queries_per_db.yml`  |
-| postgres/queries_bloat.yml | `/etc/postgres_exporter/##/queries_bloat.yml`  |
-| postgres/queries_backrest.yml | `/etc/postgres_exporter/##/queries_backrest.yml` |
+| postgres/queries_*.yml | `/etc/postgres_exporter/##/queries_*.yml`  |
 | postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
 
 
@@ -160,6 +158,7 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
 | queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
+| queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
 
 
 Install the setup_pg##.sql script on the primary to main database you will be monitoring. If you have multiple databases in your cluster, it is best to just run this setup on the default "postgres" database and have the exporter service connect to it. For monitoring database specific metrics, see the section below for running multiple postgres exporters.
@@ -209,6 +208,12 @@ psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes
 The `/etc/postgres_exporter/##/crontab.txt` file is meant to be a guide for how you setup the `ccp_monitoring` _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
 
 The script requires being run by a database superuser by default since it must be able to run a scan on every table. If you'd like to not run it as a superuser, you will have to create a new role that has read permissions on all tables in all schemas that are to be monitored for bloat. You can then change the user in the connection string option to the script.
+
+##### PGBouncer
+
+In order to monitor pgbouncer with pgmonitor, the pgbouncer_fdw maintained by CrunchyData is required. Please its repository for full installation instructions: https://github.com/CrunchyData/pgbouncer_fdw
+
+Once that is working, you should be able to add the queries_pgbouncer.yml file to the QUERY_FILE_LIST for the exporter that is monitoring the database where the FDW was installed.
 
 #### Enable Services
 
