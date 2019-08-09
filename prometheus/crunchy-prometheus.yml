@@ -31,7 +31,7 @@ scrape_configs:
 #### Uncomment below if using alertmanager ####        
 #
 #rule_files:
-#  - /etc/prometheus/crunchy-alert-rules.yml
+#  - /etc/prometheus/alert-rules.d/*.yml
 #
 #alerting:
 #  alertmanagers:
