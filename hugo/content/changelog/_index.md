@@ -29,6 +29,7 @@ weight: 5
     * Updated pgBackRest grafana dashboard to include size graphs. Also added per-stanza dropdown filter to the top of dashboard for better readability when there are many backups.
     * Changed metric name `ccp_backrest_last_runtime` to `ccp_backrest_last_info` to reflect that it is no longer only collecting runtime stats. Note that due to metric name change, you will appear to have lost runtime history in the new grafana dashboard. The data is still there under the old metric name and can be added back as an additional data point if needed.
 
+ * Added new metrics to check what versions are currently running for PostgreSQL (`ccp_postgresql_version_current`) and pgmonitor itself (`ccp_pgmonitor_version_current`).
 
 ## 3.2
 
