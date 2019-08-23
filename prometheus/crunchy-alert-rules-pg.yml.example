@@ -13,17 +13,6 @@ groups:
     annotations:
       summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
 
-  - alert: NodeExporterScrapeError
-    expr: node_textfile_scrape_error > 0
-    for: 60s
-    labels:
-      service: system 
-      severity: critical
-      severity_num: 300
-    annotations:
-      summary: 'Node Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing custom metrics.  Error count: ( {{ $value }} )'
-
-
 
 ########## POSTGRESQL RULES ##########
   - alert: PGIsUp
@@ -35,6 +24,19 @@ groups:
       severity_num: 300
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
+
+
+# Example to check for current version of PostgreSQL. Metric returns the version that the expoter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
+#
+#  - alert: PGMinimumVersion
+#    expr:  ccp_postgresql_version_current < 110005
+#    for: 60s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      summary: '{{ $labels.job }} is not running at least version 11.5 of PostgreSQL'
 
 
 # Whether a system switches from primary to replica or vice versa must be configured per named job.
@@ -253,110 +255,6 @@ groups:
         severity_num: 300
     annotations:
         description: 'Count of sequences on instance {{ $labels.job }} at over 75% usage: {{ $value }}. Run following query to see full sequence status: SELECT * FROM monitor.sequence_status() WHERE percent >= 75'
-
-
-
-########## SYSTEM RULES ##########
-  - alert: ExporterDown
-    expr: avg_over_time(up[5m]) < 0.9 
-    for: 10s 
-    labels:
-      service: system
-      severity: critical
-      severity_num: 300
-    annotations:
-      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down at least 50% of the time for the last 5 minutes. Service may be flapping or down.'
-      summary: 'Prometheus Exporter Service Down'
-
-  - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 70
-    for: 2m
-    labels:
-      service: system
-      severity: warning
-      severity_num: 200
-    annotations:
-      description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
-
-  - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 85
-    for: 2m
-    labels:
-      service: system
-      severity: critical
-      severity_num: 300
-    annotations:
-      description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
-
-  - alert: DiskFillPredict
-    expr: predict_linear(node_filesystem_free_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}[1h], 4 * 3600) < 0
-    for: 5m
-    labels:
-      service: system
-      severity: warning
-      severity_num: 200
-    annotations:
-      description: '(EXPERIMENTAL) Disk {{ $labels.device }} on target {{ $labels.job }} is predicted to fill in 4 hrs based on current usage'
-
-  - alert: SystemLoad5m
-    expr: node_load5 > 5
-    for: 10m
-    labels:
-      service: system
-      severity: warning
-      severity_num: 200
-    annotations:
-      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
-
-  - alert: SystemLoad5m
-    expr: node_load5 > 10
-    for: 10m
-    labels:
-      service: system
-      severity: critical
-      severity_num: 300
-    annotations:
-      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
-
-  - alert: MemoryAvailable
-    expr: (100 * (node_memory_Available_bytes) / node_memory_MemTotal_bytes) < 25
-    for: 1m
-    labels:
-      service: system
-      severity: warning
-      severity_num: 200
-    annotations:
-      description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
-
-  - alert: MemoryAvailable
-    expr: (100 * (node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) < 10
-    for: 1m
-    labels:
-      service: system
-      severity: critical
-      severity_num: 300
-    annotations:
-      description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
-
-  - alert: SwapUsage
-    expr: (100 - (100 * (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))) > 60
-    for: 1m
-    labels:
-      service: system
-      severity: warning
-      severity_num: 200
-    annotations:
-      description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
-
-  - alert: SwapUsage
-    expr: (100 - (100 * (node_memory_SwapFree_byte / node_memory_SwapTotal_bytes))) > 80
-    for: 1m
-    labels:
-      service: system
-      severity: critical
-      severity_num: 300
-    annotations:
-      description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
 
 
 ########## PGBACKREST RULES ##########
