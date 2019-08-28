@@ -6,8 +6,8 @@
 # QUERY_FILE_LIST: space delimitted yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
 
 PGBACKREST_INFO_THROTTLE_MINUTES=10
-OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/10/queries.yml --disable-default-metrics"
-DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=disable"
+OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/10/queries.yml --disable-default-metrics --disable-settings-metrics"
+DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 
 # For global / cluster metric
 # Ex: Include recommended defaults + bloat and pgbackrest monitoring
@@ -15,5 +15,5 @@ DATA_SOURCE_NAME="postgresql://ccp_monitoring@localhost:5432/postgres?sslmode=di
 # Ex: For per db metric
 # QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_per_db.yml"
 # QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_per_db.yml  /etc/postgres_exporter/10/queries_bloat.yml"
-QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml /etc/postgres_exporter/10/queries_per_db.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml"
 

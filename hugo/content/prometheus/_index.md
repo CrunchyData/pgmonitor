@@ -82,7 +82,8 @@ The following pgmonitor configuration files should be placed according to the fo
 | crunchy-prometheus.yml | `/etc/prometheus/crunchy-prometheus.yml` |
 | auto.d/\*.yml.example | `/etc/prometheus/auto.d/*.yml.example` |
 | crunchy-alertmanager.yml | `/etc/prometheus/crunchy-alertmanager.yml` |
-| crunchy-alert-rules.yml | `/etc/prometheus/crunchy-alert-rules.yml` |
+| crunchy-alert-rules-node.yml | `/etc/prometheus/alert-rules.d/crunchy-alert-rules-node.yml` |
+| crunchy-alert-rules-pg.yml | `/etc/prometheus/alert-rules.d/crunchy-alert-rules-pg.yml` |
 
 ###### Alertmanager
 
@@ -126,7 +127,7 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 |------------------------------------------|--------------|
 | `/etc/prometheus/crunchy-prometheus.yml` | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Service file provided by pgmonitor expects config file to be named `crunchy-prometheus.yml` |
 | `/etc/prometheus/crunchy-alertmanager.yml` | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgmonitor expects config file to be named `crunchy-alertmanager.yml` |
-| `/etc/prometheus/crunchy-alert-rules.yml` | Update rules as needed. Prometheus config provided by pgmonitor expects file to be named `crunchy-alert-rules.yml` |
+| `/etc/prometheus/alert-rules.d/*.yml` | Update rules as needed. Prometheus config provided by pgmonitor expects file with a .yml extention to be located in the given directory. ` |
 | `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to the target and be set appropriately (pg or node). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
 #### Enable Services
