@@ -16,7 +16,7 @@ groups:
 
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
-    expr: avg_over_time(up[5m]) < 0.9 
+    expr: avg_over_time(up[5m]) < 0.5
     for: 10s 
     labels:
       service: system
