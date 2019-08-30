@@ -214,25 +214,25 @@ groups:
       summary: 'PGSQL Instance transaction id wraparound imminent'
 
   - alert: PGEmergencyVacuum
-    expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 75
+    expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 110
     for: 60s
     labels:
       service: postgresql
       severity: warning
       severity_num: 200
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} is over 75% towards emergency autovacuum processes beginning'
+      description: 'PGSQL Instance {{ $labels.job }} is over 110% beyond autovacuum_freeze_max_age value. Autovacuum may need tuning to better keep up.'
       summary: 'PGSQL Instance emergency vacuum imminent'
 
   - alert: PGEmergencyVacuum
-    expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 90
+    expr: ccp_transaction_wraparound_percent_towards_emergency_autovac > 125
     for: 60s
     labels:
       service: postgresql
       severity: critical
       severity_num: 300
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} is over 90% towards emergency autovacuum processes beginning'
+      description: 'PGSQL Instance {{ $labels.job }} is over 125% beyond autovacuum_freeze_max_age value. Autovacuum needs tuning to better keep up.'
       summary: 'PGSQL Instance emergency vacuum imminent'
 
   - alert: PGArchiveCommandStatus
