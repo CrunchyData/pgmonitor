@@ -4,14 +4,6 @@
 #
 ###
 
-ccp_postgresql_version:
-  query: "SELECT current_setting('server_version_num')::int AS current"
-  metrics:
-    - current: 
-        usage: "GAUGE"
-        description: "The current version of PostgreSQL that this exporter is running on as a 6 digit integer (######)."
-
-
 ccp_is_in_recovery:
   query: "SELECT CASE WHEN pg_is_in_recovery = true THEN 1 ELSE 2 END AS status from pg_is_in_recovery();"
   metrics:
