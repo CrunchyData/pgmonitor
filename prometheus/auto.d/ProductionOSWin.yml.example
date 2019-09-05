@@ -1,4 +1,4 @@
-- targets: [ "10.123.202.12:9100" ]
+- targets: [ "10.123.202.12:9182" ]
   labels:
     job: "Prod"
     exp_type: "node"
