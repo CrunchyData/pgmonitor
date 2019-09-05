@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565641555284,
+  "iteration": 1557427485278,
   "links": [],
   "panels": [
     {
@@ -69,7 +69,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "Time Since Last Backup:",
@@ -90,7 +89,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\", stanza=\"[[backrest_stanza]]\"}",
+          "expr": "(ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -100,7 +99,7 @@
       "thresholds": "",
       "timeFrom": null,
       "timeShift": null,
-      "title": "[[pgnodes]] - [[backrest_stanza]] Backup Details",
+      "title": "[[pgnodes]] Backup Details",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -141,7 +140,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -263,7 +261,6 @@
         }
       ],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -356,7 +353,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -443,7 +439,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -530,7 +525,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -616,7 +610,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -704,7 +697,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -812,7 +804,6 @@
         }
       ],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -938,7 +929,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1083,7 +1073,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1183,7 +1172,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1307,7 +1295,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1392,7 +1379,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1477,7 +1463,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1564,7 +1549,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1659,8 +1643,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "Replica",
+          "value": "Replica"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -1680,41 +1664,18 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "tags": [],
-          "text": "main",
-          "value": "main"
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
-        "hide": 0,
-        "includeAll": false,
-        "label": "BackRest Stanza",
-        "multi": false,
-        "name": "backrest_stanza",
-        "options": [],
-        "query": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
-        "refresh": 1,
-        "regex": "/.*stanza=\"(.*)\"/",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
+      "30s",
+      "1m",
+      "5m",
       "15m",
       "30m",
       "1h",
@@ -1736,5 +1697,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 1
+  "version": 2
 }
