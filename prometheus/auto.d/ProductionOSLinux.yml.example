@@ -1,4 +1,4 @@
-- targets: [ "10.123.202.12:9100" ]
+- targets: [ "DB_SERVER_IP:NODE_OR_WMI_EXPORTER_PORT" ]
   labels:
     job: "Prod"
     exp_type: "node"
