@@ -3,7 +3,7 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
-## 3.3
+## 4.0
 
 ### New Features
 
@@ -22,7 +22,14 @@ weight: 5
 
  * Added new metric to check what version of PostgreSQL the exporter is currently running on (`ccp_postgresql_version_current`). 
 
+### Non-backward Compatible Changes
+
+ * Version 0.5x of postgres_exporter adds a new "server" label to all custom query output metrics. This breaks several single panel graphs that pgmonitor uses in Grafana (PG Overview, PGBackrest). 
+    * Added a metric_relabel_configs line to the crunchy-prometheus.yml file to filter out this new label. If you are upgrading, you may have to manually add this to your own prometheus config. The package update will only automatically add this if you haven't changed the default file. Otherwise the new settings will be contained in a crunchy-prometheus.yml.rpmnew file in the package install location.
+
 ### Manual Intervention Changes
+
+ * See Non-backward Compatible Changes section for update that may need to be done to prometheus config.
 
  * Changed default DATA_SOURCE_NAME value for postgres_exporter to use the local socket for the ccp_monitoring role. This should allow the exporter to work using peer authentication, which is the default authentication method allowed by most rpm/deb provided postgres packages. This should not change any existing installations, but may affect new deployments due to new default behavior.
 
