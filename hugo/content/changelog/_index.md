@@ -46,6 +46,7 @@ weight: 5
 
  * Fixed postgres_exporter service file to better parse out the destination query file name (exporter/postgres/crunchy-postgres-exporter@.service or exporter/postgres/crunchy-postgres-exporter-pg##-el6.service). Previously if any additional options were added to the OPT variable in the sysconfig, the service could throw errors on start. If you've customized your service file, please make note of changes for future compatability.
 
+ * Update Grafana Overview dashboard to be compatible with Grafana 6.4+
 
 
 ## 3.2
