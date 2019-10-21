@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565641192374,
+  "iteration": 1563475702324,
   "links": [],
   "panels": [
     {
@@ -25,18 +25,18 @@
       "dashes": false,
       "fill": 1,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 10,
+        "w": 8,
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 6,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -44,9 +44,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -55,10 +54,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_pgbouncer_databases_db_conn_perc_used",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{stanza}}",
+          "legendFormat": "{{pool_db}}",
           "refId": "A"
         }
       ],
@@ -66,7 +65,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Time Since Last Completed Backup (Any)",
+      "title": "Connection % Used",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -82,7 +81,7 @@
       },
       "yaxes": [
         {
-          "format": "s",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -110,9 +109,122 @@
       "dashes": false,
       "fill": 1,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
+        "h": 10,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "client_active",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(ccp_pgbouncer_pools_client_waiting{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "client_waiting",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(ccp_pgbouncer_pools_server_active{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_active",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(ccp_pgbouncer_pools_server_idle{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_idle",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(ccp_pgbouncer_pools_server_used{job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_used",
+          "refId": "E"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "PGBouncer Total State Counts",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
         "y": 0
       },
       "id": 4,
@@ -129,9 +241,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -140,10 +251,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_pgbouncer_lists_item_count{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{backup_type}}",
+          "legendFormat": "{{item}}",
           "refId": "A"
         }
       ],
@@ -151,7 +262,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Backup Runtime (Any)",
+      "title": "PGBouncer Item Counts",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -167,7 +278,7 @@
       },
       "yaxes": [
         {
-          "format": "s",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -198,7 +309,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 10
       },
       "id": 8,
       "legend": {
@@ -214,7 +325,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -225,10 +335,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_pgbouncer_clients_client_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{backup_type}}",
+          "legendFormat": "{{client_state}}",
           "refId": "A"
         }
       ],
@@ -236,7 +346,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Backup Size (Total)",
+      "title": "Client Connection Counts Per Pool - [[pgnodes]] - [[conn_pool]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -252,7 +362,7 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -283,9 +393,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 10
       },
-      "id": 9,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
@@ -299,7 +409,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -310,10 +419,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_pgbouncer_servers_server_state_count{job=\"[[pgnode]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{backup_type}}",
+          "legendFormat": "{{server_state}}",
           "refId": "A"
         }
       ],
@@ -321,7 +430,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Backup Size (Actual)",
+      "title": "Server Connection Counts Per Pool - [[pgnodes]] - [[conn_pool]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -336,178 +445,8 @@
         "values": []
       },
       "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
         {
           "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "id": 5,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {},
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{stanza}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Time Since Last Completed Backup (Full)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 16
-      },
-      "id": 6,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {},
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{stanza}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Time Since Last Completed Backup (Full,Diff)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -529,7 +468,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "15m",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -538,21 +477,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
           "text": "Prod",
           "value": "Prod"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( up{ exp_type = 'pg' } )",
+        "definition": "query_result(ccp_pgbouncer_pools_client_active)",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "query_result(ccp_pgbouncer_pools_client_active)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "/.*job=\"(.*?)\"/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -564,20 +502,20 @@
       {
         "allValue": null,
         "current": {
-          "text": "main",
-          "value": "main"
+          "text": "pgbouncer.ccp_monitoring",
+          "value": "pgbouncer.ccp_monitoring"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "definition": "query_result(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
         "hide": 0,
         "includeAll": false,
-        "label": "Stanza",
+        "label": "Connection Pool",
         "multi": false,
-        "name": "backrest_stanza",
+        "name": "conn_pool",
         "options": [],
-        "query": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "query": "query_result(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
         "refresh": 1,
-        "regex": "/.*stanza=\"(.*)\"/",
+        "regex": "/.*conn_pool=\"(.*?)\"/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -589,11 +527,13 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
+      "1m",
+      "5m",
       "15m",
       "30m",
       "1h",
@@ -613,7 +553,7 @@
     ]
   },
   "timezone": "",
-  "title": "PGBackrest",
-  "uid": "QtHwNCrik",
-  "version": 2
+  "title": "PGBouncer",
+  "uid": "H4OOvdVWz",
+  "version": 1
 }
