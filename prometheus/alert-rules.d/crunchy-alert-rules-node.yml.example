@@ -27,7 +27,7 @@ groups:
       summary: 'Prometheus Exporter Service Down'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 70
+    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext[234]"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext[234]"}) BY (job,device)) > 70
     for: 2m
     labels:
       service: system
@@ -37,7 +37,7 @@ groups:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
   - alert: DiskUsagePerc
-    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}) BY (job,device)) > 85
+    expr: (100 - 100 * sum(node_filesystem_avail_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext[234]"} / node_filesystem_size_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext[234]"}) BY (job,device)) > 85
     for: 2m
     labels:
       service: system
@@ -47,7 +47,7 @@ groups:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
   - alert: DiskFillPredict
-    expr: predict_linear(node_filesystem_free_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext"}[1h], 4 * 3600) < 0
+    expr: predict_linear(node_filesystem_free_bytes{device!~"tmpfs|by-uuid",fstype=~"xfs|ext[234]"}[1h], 4 * 3600) < 0
     for: 5m
     labels:
       service: system
