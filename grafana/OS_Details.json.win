@@ -26,7 +26,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
@@ -137,7 +137,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -248,7 +248,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -359,7 +359,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -496,7 +496,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -633,7 +633,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 2,
       "fillGradient": 0,
       "gridPos": {
@@ -770,7 +770,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -881,7 +881,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -992,7 +992,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1158,7 +1158,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
@@ -1298,7 +1298,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1324,14 +1324,14 @@
           "value": "awx_etcd1"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( up{ exp_type = 'node' } )",
+        "definition": "query_result( wmi_system_system_up_time / wmi_system_system_up_time )",
         "hide": 0,
         "includeAll": false,
         "label": "Node",
         "multi": false,
         "name": "osnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'node' } )",
+        "query": "query_result( wmi_system_system_up_time / wmi_system_system_up_time )",
         "refresh": 1,
         "regex": "/.*job=\"(.*)\"/",
         "skipUrlSync": false,
