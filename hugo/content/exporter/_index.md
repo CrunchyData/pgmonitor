@@ -163,9 +163,9 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
 
 
-By default, there are two postgres_exporter services expected to be running as of pgmonitor 4.0 and higher. One connects to the default `postgres` database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance, for example connection and replication statistics. This service uses the file postgres_exporter_pg##. Connect to this database and run the setup_pg##.sql script to install the required database objects for pgmonitor. 
+By default, there are two postgres_exporter services expected to be running as of pgmonitor 4.0 and higher. One connects to the default `postgres` database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance, for example connection and replication statistics. This service uses the sysconfig file postgres_exporter_pg##. Connect to this database and run the setup_pg##.sql script to install the required database objects for pgmonitor. 
 
-The second postgres_exporter service is used to collect per-database metrics and uses the postgres_exporter_pg##_per_db file. By default it is set to also connect to the `postgres` database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multitple databases for how to do this.
+The second postgres_exporter service is used to collect per-database metrics and uses the sysconfig file postgres_exporter_pg##_per_db. By default it is set to also connect to the `postgres` database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multitple databases for how to do this.
 
 Note that your pg_hba.conf will have to be configured to allow the `ccp_monitoring` system user to connect as the `ccp_monitoring` role to any database in the instance. As of version 4.0 of pg_monitor, the postgres_exporter service is set to connect via local socket, so passwordless local peer authentication is the expected default.
 
@@ -320,7 +320,7 @@ sudo service crunchy-postgres-exporter status
 ### Running multiple postgres exporters (RHEL / CentOS 6)
 If you need to run multiple postgres_exporter services, follow the same instructions as RHEL / CentOS 7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
 
-    - Make a copy of the /etc/sysconfig file with a new name
+    - Make a copy of the /etc/sysconfig file with a new name. If you need to collect per-db metrics, you can use the same per-db sysconfig file that CentOS7 uses.
     - Update --web.listen-address in the new sysconfig file to use a new port number
     - Update --extend.query-path in the new sysconfig file to point to the new query file generated
     - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored

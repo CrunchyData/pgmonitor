@@ -12,10 +12,10 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1563475702324,
+  "iteration": 1574700489462,
   "links": [],
   "panels": [
     {
@@ -23,7 +23,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 8,
@@ -44,6 +46,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -54,7 +59,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_databases_db_conn_perc_used",
+          "expr": "ccp_pgbouncer_databases_db_conn_perc_used{job=\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool_db}}",
@@ -107,7 +112,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 8,
@@ -128,7 +135,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -220,7 +229,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 8,
@@ -241,6 +252,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -304,7 +318,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -325,6 +341,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -388,7 +407,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -409,6 +430,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -469,7 +493,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {

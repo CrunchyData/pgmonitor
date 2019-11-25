@@ -25,6 +25,7 @@ weight: 5
 ### Non-backward Compatible Changes
 
  * Version 0.5x of postgres_exporter adds a new "server" label to all custom query output metrics. This breaks several single panel graphs that pgmonitor uses in Grafana (PG Overview, PGBackrest). 
+    * If upgrading, the update for the prometheus extras package must be done before upgrading to the new version of postgres_exporter. Otherwise the "server" label can cause duplication of some metrics.
     * Added a metric_relabel_configs line to the crunchy-prometheus.yml file to filter out this new label. If you are upgrading, you may have to manually add this to your own prometheus config. The package update will only automatically add this if you haven't changed the default file. Otherwise the new settings will be contained in a crunchy-prometheus.yml.rpmnew file in the package install location.
 
 ### Manual Intervention Changes
@@ -39,6 +40,8 @@ weight: 5
     * IMPORTANT UPGRADE NOTE: If upgrading with packages, prometheus may change and point to the new rules location causing your active alerts to change. Your custom alert rules have not been lost, just ensure your desired rules file(s) are moved to the new location for future compatability.
 
     * Changed metric name `ccp_backrest_last_runtime` to `ccp_backrest_last_info` to reflect that it is no longer only collecting runtime stats. Note that due to metric name change, you will appear to have lost runtime history in the new grafana dashboard. The data is still there under the old metric name and can be added back as an additional data point if needed.
+
+    * Fixed prometheus disk sizing rules to properly include ext filesystems (ext[234]). The correct syntax for the sizing-based rules is contained in the example rule files that the package provides. You will need to copy them to your current rule files if applicable.
 
 ### Bug Fixes
 
