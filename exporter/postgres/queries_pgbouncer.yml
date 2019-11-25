@@ -11,7 +11,7 @@ ccp_pgbouncer_pools:
             , sum(sv_active) AS server_active
             , sum(sv_idle) AS server_idle
             , sum(sv_used) AS server_used
-            FROM pgbouncer.pools
+            FROM pgbouncer_pools
             GROUP BY 1"
   metrics:
     - conn_pool:
@@ -41,7 +41,7 @@ ccp_pgbouncer_databases:
               END AS db_conn_perc_used
             , paused
             , disabled
-            FROM pgbouncer.databases"
+            FROM pgbouncer_databases"
   metrics:
     - pool_db:
           usage: "LABEL"
@@ -57,35 +57,43 @@ ccp_pgbouncer_databases:
           description: "Pooler connections to this database are currently disabled."
 
 ccp_pgbouncer_clients:
-  query: "SELECT database || '_' || state AS client_conn_state
-            , count(*) AS client_conn_status_count
-            FROM pgbouncer.clients
-            GROUP BY 1"
+  query: "SELECT database || '.' || user as conn_pool
+            , state AS client_state
+            , count(*) AS client_state_count
+            FROM pgbouncer_clients
+            GROUP BY 1,2"
   metrics:
-    - client_conn_state:
+    - conn_pool:
+          usage: "LABEL"
+          description: "Conection Pool"
+    - client_state:
           usage: "LABEL"
           description: "Client connection statuses per database"
-    - client_conn_status_count:
+    - client_state_count:
           usage: "GAUGE"
           description: "Count of the client connections with this status."
 
 ccp_pgbouncer_servers:
-  query: "SELECT database || '_' || state as server_conn_state
-            , count(*) AS server_conn_status_count
-            FROM pgbouncer.servers
-            GROUP BY 1"
+  query: "SELECT database || '.' || user as conn_pool
+            , state as server_state
+            , count(*) AS server_state_count
+            FROM pgbouncer_servers
+            GROUP BY 1,2"
   metrics:
-    - server_conn_state:
+    - conn_pool:
+          usage: "LABEL"
+          description: "Conection Pool"
+    - server_state:
           usage: "LABEL"
           description: "Server connection statuses per database"
-    - server_conn_status_count:
+    - server_state_count:
           usage: "GAUGE"
           description: "Count of the server connections with this status."
 
 ccp_pgbouncer_lists:
   query: "SELECT list AS item
             , items AS item_count
-            FROM pgbouncer.lists
+            FROM pgbouncer_lists
             WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')"
   metrics:
     - item:
