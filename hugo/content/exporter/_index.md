@@ -270,7 +270,7 @@ The service override file(s) must be placed in the relevant drop-in folder to ov
 
 After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
 
-## Installation / Setup on RHEL/CentOS 6
+### Installation / Setup on RHEL/CentOS 6
 
 The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
 
@@ -310,7 +310,7 @@ sudo service crunchy-postgres-exporter start
 sudo service crunchy-postgres-exporter status
 ```
 
-### Running multiple postgres exporters (RHEL / CentOS 6)
+#### Running multiple postgres exporters (RHEL / CentOS 6)
 If you need to run multiple postgres_exporter services, follow the same instructions as RHEL / CentOS 7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
 
     - Make a copy of the /etc/sysconfig file with a new name
