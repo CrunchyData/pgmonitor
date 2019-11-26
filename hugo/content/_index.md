@@ -57,7 +57,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 #### Known issues
 
-- PostgreSQL 10+ SCRAM-SHA-256 encrypted passwords are not yet supported by the underlying Go library used by postgres_exporter.
+- PostgreSQL 10+ SCRAM-SHA-256 encrypted passwords are supported on the Linux version of pgMonitor 4.0 or later only.
 
 ## Installation
 
