@@ -318,7 +318,7 @@ Remaining steps to initialize service at boot and start it up should be the same
 
 ### Windows Server 2012R2
 
-Currently the Windows installers assume you are logged in the local Administrator account, so please ensure to do so before attempting the following.
+Currently the Windows installers assume you are logged in as the local Administrator account, so please ensure to do so before attempting the following.
 
 Install the WMI and PostgreSQL exporters by:
 
