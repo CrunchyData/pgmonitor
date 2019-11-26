@@ -4,13 +4,13 @@ draft: false
 weight: 1
 ---
 
-The Linux instructions below use RHEL, but any Linux-based system should work. [Crunchy Data](https://www.crunchydata.com) customers can obtain Linux and Windows Server 2012R2 packages through the [Crunchy Customer Portal](https://access.crunchydata.com/).
+The Linux instructions below use RHEL, but any Linux-based system should work. [Crunchy Data](https://www.crunchydata.com) customers can obtain Linux packages through the [Crunchy Customer Portal](https://access.crunchydata.com/); for Windows packages, contact Crunchy Data directly.
 
 - [Installation](#installation)
-   - [Upgrading](#upgrading)
-   - [Linux RPMs](#linux-rpms)
-   - [Linux non-RPMs](#linux-non-rpms)
-   - [Windows packages](#windows-packages)
+   - [RPM installs](#rpm-installs)
+   - [Non-RPMs installs](#non-rpm-installs)
+   - [Windows installs](#windows-installs)
+- [Upgrading](#upgrading)
 - [Setup](#setup)
    - [RHEL / CentOS 7 (preferred)](#setup-on-rhelcentos-7)
    - [RHEL / CentOS 6](#installationsetup-on-rhelcentos-6)
@@ -18,13 +18,9 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
 
 ## Installation
 
-### Upgrading
+### RPM installs
 
-* See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
-
-### Linux RPMs
-
-The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing using the below RPM packages, continue reading at the [Setup](#setup) section.*
+The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing via these packages, continue reading at the [Setup](#setup) section.*
 
 ##### Available Packages
 
@@ -37,7 +33,7 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 
-### Linux non-RPMs
+### Non-RPM installs
 
 For non-package installations on Linux, the exporters & pg_bloat_check can be downloaded from their respective repositories:
 
@@ -95,9 +91,9 @@ The following pgMonitor configuration files should be placed according to the fo
 | postgres/queries_backrest.yml | `/etc/postgres_exporter/##/queries_backrest.yml` |
 | postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
 
-### Windows Packages
+### Windows installs
 
-The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing using the below packages, continue reading at the [Windows Server 2012R2](#in-server-2012R2) section.*
+The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers. *After installing via these packages, continue reading at the [Windows Server 2012R2](#in-server-2012R2) section.*
 
 ##### Available Packages
 
@@ -107,6 +103,10 @@ The following Windows Server 2012R2 packages are available to [Crunchy Data](htt
 
 
 The client package is run on the PostgreSQL server(s) to be monitored. *This includes the primary and all secondary servers.*
+
+## Upgrading
+
+* See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
 
 ## Setup
 
@@ -322,7 +322,7 @@ Currently the Windows installers assume you are logged in the local Administrato
 
 Install the WMI and PostgreSQL exporters by:
 
-1. Find and double-click the `pgMonitor_client_1.0_Crunchy.win.x86_64.exe` file previously downloaded from the [Crunchy Customer Portal](https://access.crunchydata.com/). It will present you with the following screen:
+1. Find and double-click the `pgMonitor_client_1.0_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
     ![client installer 1](/images/client_installer_1.png)
 2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
     ![client installer 2](/images/client_installer_2.png)
