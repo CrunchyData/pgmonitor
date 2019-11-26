@@ -262,14 +262,6 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_mydb
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
 
-## Note for packaging (RHEL/CENTOS 7)
-
-The service override file(s) must be placed in the relevant drop-in folder to override the default service files.
-
-    /etc/systemd/system/node_exporter.service.d/\*.conf
-
-After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
-
 ### Installation / Setup on RHEL/CentOS 6
 
 The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
