@@ -14,7 +14,7 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
 - [Setup](#setup)
    - [RHEL / CentOS 7 (preferred)](#setup-on-rhelcentos-7)
    - [RHEL / CentOS 6](#installationsetup-on-rhelcentos-6)
-   - [Win Server 2012R2](#win-server-2012r2)
+   - [Win Server 2012R2](#windows-server-2012r2)
 
 ## Installation
 
@@ -97,7 +97,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ### Windows Packages
 
-The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing using the below packages, continue reading at the [Win Server 2012R2](#in-server-2012R2) section.*
+The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing using the below packages, continue reading at the [Windows Server 2012R2](#in-server-2012R2) section.*
 
 ##### Available Packages
 
@@ -324,7 +324,7 @@ If you need to run multiple postgres_exporter services, follow the same instruct
 
 Remaining steps to initialize service at boot and start it up should be the same as above for the default service.
 
-### Win Server 2012R2
+### Windows Server 2012R2
 
 Currently the Windows installers assume you are logged in the local Administrator account, so please ensure to do so before attempting the following.
 
