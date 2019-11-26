@@ -14,7 +14,7 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
 - [Setup](#setup)
    - [RHEL / CentOS 7 (preferred)](#setup-on-rhelcentos-7)
    - [RHEL / CentOS 6](#installationsetup-on-rhelcentos-6)
-   - [Win Server 2012R2](#windows-server-2012r2)
+   - [Windows Server 2012R2](#windows-server-2012r2)
 
 ## Installation
 
