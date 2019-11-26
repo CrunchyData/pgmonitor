@@ -48,7 +48,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 ### Operating Systems
 
 - Prometheus/Alertmanager & Grafana: CentOS/RHEL 7 or greater, Win Server 2012R2 or later
-- Exporters (node & postgres): CentOS/RHEL 6 or greater, Win Server 2012R2 or later
+- Exporters (node, wmi, postgres): CentOS/RHEL 6 or greater (node), Win Server 2012R2 or later (WMI & postgres)
 
 ### PostgreSQL
 
