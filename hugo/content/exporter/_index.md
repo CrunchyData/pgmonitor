@@ -331,28 +331,28 @@ Currently the Windows installers assume you are logged in the local Administrato
 Install the WMI and PostgreSQL exporters by:
 
 1. Find and double-click the `pgMonitor_client_1.0_Crunchy.win.x86_64.exe` file previously downloaded from the [Crunchy Customer Portal](https://access.crunchydata.com/). It will present you with the following screen:
-    ![client installer 1](client_installer_1.png)
+    ![client installer 1](/images/client_installer_1.png)
 2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
-    ![client installer 2](client_installer_2.png)
+    ![client installer 2](/images/client_installer_2.png)
 3. The installer will then launch the configuration utility:
-    ![client installer 3](client_installer_3.png)
+    ![client installer 3](/images/client_installer_3.png)
 4. You will then be prompted to configure the `postgres_exporter`. Choose 'Yes' to do so:
-    ![client installer 4](client_installer_4.png)
+    ![client installer 4](/images/client_installer_4.png)
 5. The configuration window will open. It first prompts you for a name to be used to identify the services by. Keep the name simple, but informative. We use 'prod' as an example:
-    ![client installer 5](client_installer_5.png)
+    ![client installer 5](/images/client_installer_5.png)
 6. You will then be asked which exporter you're setting up: the cluster or the per-db. You will need one of both. We start with the global:
-    ![client installer 6](client_installer_6.png)
+    ![client installer 6](/images/client_installer_6.png)
 7. Choose '1' to configure the cluster exporter, then give it a meaningful name, e.g. payroll or whatever the main aop is for this PostgreSQL cluster, enter your PostgreSQL version, and specify the default port of 9187:
-    ![client installer 7](client_installer_7.png)
+    ![client installer 7](/images/client_installer_7.png)
 8. Enter the PostgreSQL connection info. You will need the name of the database superuser account, its password, you can use 127.0.0.1 to connect, and finally enter the port PostgreSQL is listening on:
-    ![client installer 8](client_installer_8.png)
+    ![client installer 8](/images/client_installer_8.png)
 9. The script will set up the cluster exporter service and bring you back to the main menu. Choose '1' to add a service, name it the same you used in the previous step but append 'db' to the name, e.g. payrolldb, and choose '2' for the exporter type:
-    ![client installer 9](client_installer_9.png)
+    ![client installer 9](/images/client_installer_9.png)
 10. Enter your PostgreSQL version again, then enter '9188' as the port (two exporters cannot share the same port). Enter the same PostgreSQL connection info again. The script will setup the per-db exporter. You may now choose option '5' to exit the script:
-    ![client installer 10](client_installer_10.png)
+    ![client installer 10](/images/client_installer_10.png)
 11. Confirm that the WMI Exporter is functional but loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
-    ![client installer 11](client_installer_11.png)
+    ![client installer 11](/images/client_installer_11.png)
 12. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
-    ![client installer 12](client_installer_12.png)
+    ![client installer 12](/images/client_installer_12.png)
 13. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
-    ![client installer 13](client_installer_13.png)
+    ![client installer 13](/images/client_installer_13.png)
