@@ -342,9 +342,10 @@ Install the WMI and PostgreSQL exporters by:
     ![client installer 9](/images/client_installer_9.png)
 10. Enter your PostgreSQL version again, then enter '9188' as the port (two exporters cannot share the same port). Enter the same PostgreSQL connection info again. The script will setup the per-db exporter. You may now choose option '5' to exit the script:
     ![client installer 10](/images/client_installer_10.png)
-11. Confirm that the WMI Exporter is functional but loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
+11. Run `C:\Crunchy Data\pgMonitor\postgres_exporter\##\setup_pg##.sql` against your `postgres` database as your PostgreSQL super user replacing `##` with the major version of your PostgreSQL install (e.g. 96, 10, 11).
+12. Confirm that the WMI Exporter is functional but loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
     ![client installer 11](/images/client_installer_11.png)
-12. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
+13. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
     ![client installer 12](/images/client_installer_12.png)
-13. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
+14. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
     ![client installer 13](/images/client_installer_13.png)
