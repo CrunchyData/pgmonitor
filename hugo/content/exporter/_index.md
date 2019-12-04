@@ -4,26 +4,23 @@ draft: false
 weight: 1
 ---
 
-The exporters below can be set up on any Linux-based system, but the instructions below use RHEL/CentOS 6 or 7. Version 7 or higher is recommended if possible.
+The Linux instructions below use RHEL, but any Linux-based system should work. [Crunchy Data](https://www.crunchydata.com) customers can obtain Linux packages through the [Crunchy Customer Portal](https://access.crunchydata.com/); for Windows packages, contact Crunchy Data directly.
 
 - [Installation](#installation)
+   - [RPM installs](#rpm-installs)
+   - [Non-RPMs installs](#non-rpm-installs)
+   - [Windows installs](#windows-installs)
+- [Upgrading](#upgrading)
 - [Setup](#setup)
-   - [RHEL / CentOS 7](#setup-on-rhelcentos-7)
-   - [RHEL / CentOS 6](#installationsetup-on-rhelcentos-6)
+   - [RHEL / CentOS 7 (preferred)](#setup-on-rhel-centos-7-preferred)
+   - [RHEL / CentOS 6](#installation-setup-on-rhel-centos-6)
+   - [Windows Server 2012R2](#windows-server-2012r2)
 
 ## Installation
 
-### Upgrading
+### RPM installs
 
-* See CHANGELOG in documentation for full details on both major & minor version upgrades.
-
-### Installation on RHEL/CentOS 7
-
-#### With RPM Packages
-
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/).
-
-If you install the below available packages with RPM, you can continue reading at the [Setup](#setup) section.
+The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing via these packages, continue reading at the [Setup](#setup) section.*
 
 ##### Available Packages
 
@@ -37,9 +34,9 @@ If you install the below available packages with RPM, you can continue reading a
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 | pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
 
-#### Without Packages
+### Non-RPM installs
 
-For non-package installations, the exporters, extensions & pg_bloat_check can be downloaded from their respective repositories:
+For non-package installations on Linux, the exporters & pg_bloat_check can be downloaded from their respective repositories:
 
 | Library                       |                                                           |
 |-------------------------------|-----------------------------------------------------------|
@@ -48,7 +45,7 @@ For non-package installations, the exporters, extensions & pg_bloat_check can be
 | pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
 | pgbouncer_fdw                 | https://github.com/CrunchyData/pgbouncer_fdw              |
 
-##### User and Configuration Directory Installation
+#### User and Configuration Directory Installation
 
 You will need to create a user named `ccp_monitoring` which you can do with the following command:
 
@@ -56,9 +53,9 @@ You will need to create a user named `ccp_monitoring` which you can do with the 
 sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 ```
 
-##### Configuration File Installation
+#### Configuration File Installation
 
-All executables are expected to be in the `/usr/bin` directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
+All executables installed via the above releases are expected to be in the `/usr/bin` directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
 
 https://github.com/lest/prometheus-rpm/tree/master/node_exporter
 
@@ -66,15 +63,13 @@ The files contained in this repository are assumed to be installed in the follow
 
 ##### node_exporter
 
-The node_exporter data directory should be `/var/lib/ccp_monitoring/node_exporter` and owned by the `ccp_monitoring` user.  You can set it up with:
+The `node_exporter` data directory should be `/var/lib/ccp_monitoring/node_exporter` and owned by the `ccp_monitoring` user.  You can set it up with:
 
 ```bash
-sudo mkdir /var/lib/ccp_monitoring/node_exporter
-sudo chmod 0700 /var/lib/ccp_monitoring/node_exporter
-sudo chown ccp_monitoring /var/lib/ccp_monitoring/node_exporter
+sudo install -m 0700 -o ccp_monitoring -g ccp_monitoring -d /var/lib/ccp_monitoring/node_exporter
 ```
 
-The following pgmonitor configuration files should be placed according to the following mapping:
+The following pgMonitor configuration files should be placed according to the following mapping:
 
 | pgmonitor Configuration File | System Location |
 |------------------------------|-----------------|
@@ -83,7 +78,7 @@ The following pgmonitor configuration files should be placed according to the fo
 
 ##### postgres_exporter
 
-The following pgmonitor configuration files should be placed according to the following mapping:
+The following pgMonitor configuration files should be placed according to the following mapping:
 
 | pgmonitor Configuration File | System Location |
 |------------------------------|-----------------|
@@ -95,10 +90,26 @@ The following pgmonitor configuration files should be placed according to the fo
 | postgres/queries_*.yml | `/etc/postgres_exporter/##/queries_*.yml`  |
 | postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
 
+### Windows installs
+
+The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers. *After installing via these packages, continue reading at the [Windows Server 2012R2](#in-server-2012R2) section.*
+
+##### Available Packages
+
+| PACKAGE NAME | DESCRIPTION |
+|--------------|-------------|
+| pgMonitor_client_#.#_Crunchy.win.x86_64.exe | Contains the needed metric exporters for monitoring the health of a PostgreSQL server. Contains both the `WMI Exporter` and the `postgres_exporter`. |
+
+
+The client package is run on the PostgreSQL server(s) to be monitored. *This includes the primary and all secondary servers.*
+
+## Upgrading
+
+* See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
 
 ## Setup
 
-### Setup on RHEL/CentOS 7
+### Setup on RHEL/CentOS 7 (preferred)
 
 #### Service Configuration
 
@@ -269,15 +280,7 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg11_per_db
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same job you already had running for this system
 
-## Note for packaging (RHEL/CENTOS 7)
-
-The service override file(s) must be placed in the relevant drop-in folder to override the default service files.
-
-    /etc/systemd/system/node_exporter.service.d/\*.conf
-
-After a daemon-reload, systemd should automatically find these files and the crunchy services should work as intended.
-
-## Installation / Setup on RHEL/CentOS 6
+### Installation / Setup on RHEL/CentOS 6
 
 The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
 
@@ -317,7 +320,7 @@ sudo service crunchy-postgres-exporter start
 sudo service crunchy-postgres-exporter status
 ```
 
-### Running multiple postgres exporters (RHEL / CentOS 6)
+#### Running multiple postgres exporters (RHEL / CentOS 6)
 If you need to run multiple postgres_exporter services, follow the same instructions as RHEL / CentOS 7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
 
     - Make a copy of the /etc/sysconfig file with a new name. If you need to collect per-db metrics, you can use the same per-db sysconfig file that CentOS7 uses.
@@ -330,3 +333,37 @@ If you need to run multiple postgres_exporter services, follow the same instruct
     - Update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
 
 Remaining steps to initialize service at boot and start it up should be the same as above for the default service.
+
+### Windows Server 2012R2
+
+Currently the Windows installers assume you are logged in as the local Administrator account, so please ensure to do so before attempting the following.
+
+Install the WMI and PostgreSQL exporters by:
+
+1. Find and launch the `pgMonitor_client_#.#_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
+    ![client installer 1](/images/client_installer_1.png)
+2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
+    ![client installer 2](/images/client_installer_2.png)
+3. The installer will then launch the configuration utility:
+    ![client installer 3](/images/client_installer_3.png)
+4. You will then be prompted to configure the `postgres_exporter`. Choose 'Yes' to do so:
+    ![client installer 4](/images/client_installer_4.png)
+5. The configuration window will open. It first prompts you for a name to be used to identify the services by. Keep the name simple, but informative. We use 'prod' as an example:
+    ![client installer 5](/images/client_installer_5.png)
+6. You will then be asked which exporter you're setting up: the cluster or the per-db. You will need one of each. We start with the global:
+    ![client installer 6](/images/client_installer_6.png)
+7. Choose '1' to configure the cluster exporter, then give it a meaningful name, e.g. payroll or whatever the main app is for this PostgreSQL cluster, enter your PostgreSQL version, and specify the default port of 9187:
+    ![client installer 7](/images/client_installer_7.png)
+8. Enter the PostgreSQL connection info. You will need the name of the database superuser account, its password, you can use 127.0.0.1 to connect, and finally enter the port PostgreSQL is listening on:
+    ![client installer 8](/images/client_installer_8.png)
+9. The script will set up the cluster exporter service and bring you back to the main menu. Choose '1' to add a service, name it the same you used in the previous step but append 'db' to the name, e.g. payrolldb, and choose '2' for the exporter type:
+    ![client installer 9](/images/client_installer_9.png)
+10. Enter your PostgreSQL version again, then enter '9188' as the port (two exporters cannot share the same port). Enter the same PostgreSQL connection info again. The script will setup the per-db exporter. You may now choose option '5' to exit the script:
+    ![client installer 10](/images/client_installer_10.png)
+11. Run `C:\Crunchy Data\pgMonitor\postgres_exporter\##\setup_pg##.sql` against your `postgres` database as your PostgreSQL super user replacing `##` with the major version of your PostgreSQL install (e.g. 96, 10, 11).
+12. Confirm that the WMI Exporter is functional by loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
+    ![client installer 11](/images/client_installer_11.png)
+13. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
+    ![client installer 12](/images/client_installer_12.png)
+14. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
+    ![client installer 13](/images/client_installer_13.png)
