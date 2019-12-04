@@ -322,7 +322,7 @@ Currently the Windows installers assume you are logged in as the local Administr
 
 Install the WMI and PostgreSQL exporters by:
 
-1. Find and double-click the `pgMonitor_client_#.#_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
+1. Find and launch the `pgMonitor_client_#.#_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
     ![client installer 1](/images/client_installer_1.png)
 2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
     ![client installer 2](/images/client_installer_2.png)
@@ -332,9 +332,9 @@ Install the WMI and PostgreSQL exporters by:
     ![client installer 4](/images/client_installer_4.png)
 5. The configuration window will open. It first prompts you for a name to be used to identify the services by. Keep the name simple, but informative. We use 'prod' as an example:
     ![client installer 5](/images/client_installer_5.png)
-6. You will then be asked which exporter you're setting up: the cluster or the per-db. You will need one of both. We start with the global:
+6. You will then be asked which exporter you're setting up: the cluster or the per-db. You will need one of each. We start with the global:
     ![client installer 6](/images/client_installer_6.png)
-7. Choose '1' to configure the cluster exporter, then give it a meaningful name, e.g. payroll or whatever the main aop is for this PostgreSQL cluster, enter your PostgreSQL version, and specify the default port of 9187:
+7. Choose '1' to configure the cluster exporter, then give it a meaningful name, e.g. payroll or whatever the main app is for this PostgreSQL cluster, enter your PostgreSQL version, and specify the default port of 9187:
     ![client installer 7](/images/client_installer_7.png)
 8. Enter the PostgreSQL connection info. You will need the name of the database superuser account, its password, you can use 127.0.0.1 to connect, and finally enter the port PostgreSQL is listening on:
     ![client installer 8](/images/client_installer_8.png)

@@ -157,7 +157,7 @@ Currently the Windows installers assume you are logged in as the local Administr
 
 Install the Prometheus, AlertManager, and Grafana servers by:
 
-1. Find and double-click the `pgMonitor_server_1.0_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen. Choose your install path and click 'Install'.
+1. Find and launch the `pgMonitor_server_1.0_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen. Choose your install path and click 'Install'.
     ![server_installer_1.png](/images/server_installer_1.png)
 2. Once installation has finished, clicked 'Close':
     ![server_installer_2.png](/images/server_installer_2.png)
