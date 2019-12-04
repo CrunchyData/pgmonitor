@@ -99,7 +99,7 @@ The following Windows Server 2012R2 packages are available to [Crunchy Data](htt
 
 | PACKAGE NAME | DESCRIPTION |
 |--------------|-------------|
-| pgMonitor_client_1.0_Crunchy.win.x86_64.exe | Contains the needed metric exporters for monitoring the health of a PostgreSQL server. Contains both the `WMI Exporter` and the `postgres_exporter`. |
+| pgMonitor_client_#.#_Crunchy.win.x86_64.exe | Contains the needed metric exporters for monitoring the health of a PostgreSQL server. Contains both the `WMI Exporter` and the `postgres_exporter`. |
 
 
 The client package is run on the PostgreSQL server(s) to be monitored. *This includes the primary and all secondary servers.*
@@ -322,7 +322,7 @@ Currently the Windows installers assume you are logged in as the local Administr
 
 Install the WMI and PostgreSQL exporters by:
 
-1. Find and double-click the `pgMonitor_client_1.0_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
+1. Find and double-click the `pgMonitor_client_#.#_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
     ![client installer 1](/images/client_installer_1.png)
 2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
     ![client installer 2](/images/client_installer_2.png)
@@ -343,7 +343,7 @@ Install the WMI and PostgreSQL exporters by:
 10. Enter your PostgreSQL version again, then enter '9188' as the port (two exporters cannot share the same port). Enter the same PostgreSQL connection info again. The script will setup the per-db exporter. You may now choose option '5' to exit the script:
     ![client installer 10](/images/client_installer_10.png)
 11. Run `C:\Crunchy Data\pgMonitor\postgres_exporter\##\setup_pg##.sql` against your `postgres` database as your PostgreSQL super user replacing `##` with the major version of your PostgreSQL install (e.g. 96, 10, 11).
-12. Confirm that the WMI Exporter is functional but loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
+12. Confirm that the WMI Exporter is functional by loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
     ![client installer 11](/images/client_installer_11.png)
 13. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
     ![client installer 12](/images/client_installer_12.png)
