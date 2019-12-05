@@ -19,7 +19,7 @@ scrape_configs:
     scrape_interval: 30s
     file_sd_configs:
     - files:
-      - /etc/prometheus/auto.d/*.yml
+      - CRUNCHYPATH\pgMonitor\config\prometheus\auto.d\*yml
 
     metric_relabel_configs:
     # Do not store the metrics that come built into postgres_exporter
@@ -40,7 +40,7 @@ scrape_configs:
 #### Uncomment below if using alertmanager ####        
 #
 rule_files:
-  - /etc/prometheus/alert-rules.d/*.yml
+  - CRUNCHYPATH\pgMonitor\config\prometheus\alert-rules.d\*.yml
 #
 #alerting:
 #  alertmanagers:
