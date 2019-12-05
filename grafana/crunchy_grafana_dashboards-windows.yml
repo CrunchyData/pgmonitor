@@ -8,4 +8,4 @@ providers:
   disableDeletion: false
   updateIntervalSeconds: 3 #how often Grafana will scan for changed dashboards
   options:
-    path: 'C:\Crunchy Data\pgMonitor\config\crunchy_dashboards'
+    path: 'CRUNCHYPATH\pgMonitor\config\crunchy_dashboards'
