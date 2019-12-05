@@ -16,384 +16,84 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 14,
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#5794F2",
-        "#5794F2",
-        "#5794F2"
-      ],
-      "description": "",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnKik/os-overview\" target=\"_blank>\">OS</a></center>\n\n\n\n\n\n",
+      "datasource": null,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 2,
-      "interval": null,
-      "links": [
-        {
-          "dashboard": "OS Overview",
-          "targetBlank": true,
-          "title": "OS Overview",
-          "type": "dashboard",
-          "url": "/d/pxinDnKik/os-overview"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "OS",
-      "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": null,
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
+      "id": 7,
+      "links": [],
+      "mode": "html",
+      "options": {},
       "timeFrom": null,
       "timeShift": null,
       "title": "",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "text"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#5794F2",
-        "#5794F2",
-        "#5794F2"
-      ],
-      "decimals": null,
-      "description": "",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnNik/postgresql-overview\" target=\"_blank>\">PostgreSQL</a></center>\n\n\n\n\n\n",
+      "datasource": null,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
         "y": 0
       },
-      "id": 5,
-      "interval": null,
-      "links": [
-        {
-          "dashboard": "PostgreSQL Overview",
-          "targetBlank": true,
-          "title": "PostgreSQL Overview",
-          "type": "dashboard",
-          "url": "/d/pxinDnNik/postgresql-overview"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "PostgreSQL",
-      "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
+      "id": 8,
+      "links": [],
+      "mode": "html",
+      "options": {},
       "timeFrom": null,
       "timeShift": null,
       "title": "",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "text"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#5794F2",
-        "#5794F2",
-        "#5794F2"
-      ],
-      "description": "",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/wsdkI9RZz/etcd-details\" target=\"_blank>\">etcd</a></center>\n\n\n\n\n\n",
+      "datasource": null,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 7
       },
-      "id": 4,
-      "interval": null,
-      "links": [
-        {
-          "dashboard": "ETCD Details",
-          "targetBlank": true,
-          "title": "ETCD Details",
-          "type": "dashboard",
-          "url": "/d/wsdkI9RZz/etcd-details"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "etcd",
-      "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
+      "id": 9,
+      "links": [],
+      "mode": "html",
+      "options": {},
       "timeFrom": null,
       "timeShift": null,
       "title": "",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "text"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#5794F2",
-        "#5794F2",
-        "#5794F2"
-      ],
-      "description": "",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/QTsttxNmk/prometheus-alerts\" target=\"_blank>\">Prometheus</a></center>\n\n\n\n\n\n",
+      "datasource": null,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 7
       },
-      "id": 3,
-      "interval": null,
-      "links": [
-        {
-          "dashboard": "Prometheus Alerts",
-          "targetBlank": true,
-          "title": "Prometheus Alerts",
-          "type": "dashboard",
-          "url": "/d/QTsttxNmk/prometheus-alerts"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "Prometheus",
-      "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
+      "id": 10,
+      "links": [],
+      "mode": "html",
+      "options": {},
       "timeFrom": null,
       "timeShift": null,
       "title": "",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "text"
     }
   ],
-  "schemaVersion": 18,
+  "refresh": false,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -422,6 +122,6 @@
   },
   "timezone": "",
   "title": "Overview",
-  "uid": "AJlnXekWk",
-  "version": 1
+  "uid": "VhzrGq2Wk",
+  "version": 14
 }
