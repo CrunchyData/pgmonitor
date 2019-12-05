@@ -3,6 +3,20 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.1
+
+### New Features
+
+  * Add support for PostgreSQL 12
+
+### Non-backward Compatible Changes
+
+  * None
+
+### Manual Intervention Changes
+
+ * None
+
 ## 4.0
 
 ### New Features
