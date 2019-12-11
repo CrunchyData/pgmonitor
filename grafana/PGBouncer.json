@@ -443,7 +443,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_servers_server_state_count{job=\"[[pgnode]]\", conn_pool=\"[[conn_pool]]\"}",
+          "expr": "ccp_pgbouncer_servers_server_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{server_state}}",

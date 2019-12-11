@@ -118,20 +118,37 @@ provisioning = /etc/grafana/provisioning
 Grafana is installed and configured to use the default Crunchy-provided Prometheus datasource and the Crunchy-provided dashboards automatically. We simply need to set the default admin user's password and verify that the dashboards are functional:
 
 1. Load the Grafana UI in your browser by visiting [http://localhost:3000](http://localhost:3000):
+
     ![server_installer_12](/images/server_installer_12.png)
+
 2. After entering 'admin' as both the user and password, you are prompted to change the password before continuing:
+
     ![server_installer_13](/images/server_installer_13.png)
+
 3. After changing the password, you are logged in and taken to the Home Dashboard. Here you can see the first three items are stricken-through indicating they are already completed. You can now optionally add users or plugins to you installation (we won't cover either of these steps):
+
     ![server_installer_14](/images/server_installer_14.png)
+
 4. Click the dashboard selector in the top left of the screen that currently has the four squares, the word Home, and the downward-facing triangle to see the list of installed dashboards:
+
     ![server_installer_15](/images/server_installer_15.png)
+
 5. Select the 'Overview' dashboard from the available choices. This is the 'main' dashboard:
+
     ![server_installer_16](/images/server_installer_16.png)
+
 6. Click on the 'OS' square to load the 'OS Overview' dashboard:
+
     ![server_installer_17](/images/server_installer_17.png)
+
 7. This dashboard shows you whether the host(s) you're monitoring are UP or DOWN. Click on a given host to load the 'OS Details' dashboard for that host:
+
     ![server_installer_18](/images/server_installer_18.png)
+
 8. From the 'Overview' dashboard, clicking the 'PostgreSQL' square will load the 'PostgreSQL Overview' dashboard showing which monitored PostgreSQL instances are up or down:
+
     ![server_installer_19](/images/server_installer_19.png)
+
 9. And finally, clicking any of the PostgreSQL hosts will take you to the 'PostgreSQL Details' dashboard for that PostgreSQL instance:
+
     ![server_installer_20](/images/server_installer_20.png)
