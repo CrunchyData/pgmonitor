@@ -17,7 +17,7 @@ weight: 5
 
  * None
 
-## 4.2
+## 4.1
 
  * Fixed bug in PGBouncer Grafana dashboard for the Server Connection Counts Per Pool showing zero data
  * Fixed Windows prometheus config file to use proper wildcard to pick up .yml files.
