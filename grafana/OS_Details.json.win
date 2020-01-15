@@ -1316,31 +1316,6 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "text": "awx_etcd1",
-          "value": "awx_etcd1"
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "query_result( wmi_system_system_up_time / wmi_system_system_up_time )",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Node",
-        "multi": false,
-        "name": "osnodes",
-        "options": [],
-        "query": "query_result( wmi_system_system_up_time / wmi_system_system_up_time )",
-        "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
       }
     ]
   },
