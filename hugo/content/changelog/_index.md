@@ -3,13 +3,26 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.2
+
+### New Features
+
+  * Add support for PostgreSQL 12
+
+### Non-backward Compatible Changes
+
+  * None
+
+### Manual Intervention Changes
+
+ * None
+
 ## 4.1
 
  * Fixed bug in PGBouncer Grafana dashboard for the Server Connection Counts Per Pool showing zero data
  * Fixed Windows prometheus config file to use proper wildcard to pick up .yml files.
  * Renamed Prometheus target example file to include yml extention to better ensure it is not missed. ReplicaOS.example to ReplicaOS.yml.example
  * Fixed documentation to display pictures properly.
-
 
 ## 4.0
 
