@@ -20,7 +20,7 @@
   "panels": [
     {
       "cacheTimeout": null,
-      "colorBackground": true,
+      "colorBackground": false,
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
