@@ -69,6 +69,22 @@ groups:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
 
 
+# Example of monitoring for changes to pg_settings (postgresql.conf) or pg_hba_file_rules (pg_hba.conf) system catalogs.
+# If metric returns 0, then NO settings have changed for either pg_settings or hba since last known valid state 
+# If metric returns 1, then just pg_settings have changed since last known valid state
+# If metric returns 2, then just hba has changed since last known valid state
+# If metric returns 3, then both pg_settings and hba have changed since last known valid state
+# To see what may have changed, check the monitor.settings_checksum table for a history of config state.
+#  - alert: PGSettingsChecksum
+#    expr: ccp_settings_checksum > 0
+#    for 60s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Configuration settings on {{ $labels.job }} have changed from previously known valid state. To reset current config to a valid state after alert fires, run monitor.settings_checksum_set_valid().' 
+#      summary: 'PGSQL Instance settings checksum'
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 300
