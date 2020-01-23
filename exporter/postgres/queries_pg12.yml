@@ -102,11 +102,11 @@ ccp_wal_activity:
         description: "Current size in bytes of the WAL directory"
 
 
-ccp_checksum_failure:
+ccp_data_checksum_failure:
   query: "SELECT datname AS dbname
             , checksum_failures AS count
             , coalesce(extract(epoch from (now() - checksum_last_failure)), 0) AS time_since_last_failure_seconds 
-          FROM pg_stat_database;"
+          FROM pg_catalog.pg_stat_database;"
   metrics:
     - dbname:
         usage: "LABEL"

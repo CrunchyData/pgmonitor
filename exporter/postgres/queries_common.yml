@@ -220,6 +220,15 @@ ccp_settings_checksum:
             usage: "GAUGE"
             description: "Value of checksum monitioring status. 0 = valid config. 1 = pg_settings changed. 2 = pg_hba.conf changed. 3 = both changed. To reset current config to valid after alert, run monitor.settings_checksum_set_valid()."
 
+
+ccp_settings_pending_restart:
+  query: "SELECT count(*) AS count FROM pg_catalog.pg_settings WHERE pending_restart = true"
+  metrics:
+    - count:
+        usage: "GAUGE"
+        description: "Number of settings from pg_settings catalog in a pending_restart state"
+
+
 ###
 #
 # End File: queries_common.yml
