@@ -141,15 +141,28 @@ $function$;
  * If function returns 1, then just pg_settings have changed since last known valid state
  * If function returns 2, then just hba has changed since last known valid state
  * If function returns 3, then both pg_settings and hba have changed since last known valid state
+ * For replicas, logging past settings is not possible to compare what may have changed
+ * For replicas, by default, it is expected that its settings will match the primary
+ * For replicas, if the pg_settings or pg_hba.conf are necessarily different from the primary, a known good hash of that replica's
+    settings can be sent as arguments to the settings_checksum() function. Views are provided to easily obtain hash values 
+    that this monitoring metric expects to use.
+ * If any known hash parameters are passed to the settings_checksum() function, note that it will override any past hash values for both
+    pg_settings and hba stored in the log table when doing comparisons and completely re-evaluate the entire state. This is
+    true even if done on a primary where the current state will then also be logged for comparison.
  */
 
 DROP TABLE IF EXISTS monitor.settings_checksum;
-DROP FUNCTION IF EXISTS monitor.settings_checksum();
+DROP FUNCTION IF EXISTS monitor.settings_checksum(text, text);
+DROP FUNCTION monitor.settings_checksum_set_valid();
+DROP VIEW IF EXISTS monitor.pg_settings_hash;
+DROP VIEW IF EXISTS monitor.pg_hba_hash;
 
 CREATE TABLE monitor.settings_checksum (
-    settings_hash text NOT NULL
+    settings_hash_generated text NOT NULL
+    , settings_hash_known_provided text
     , settings_string text NOT NULL
-    , hba_hash text NOT NULL
+    , hba_hash_generated text NOT NULL
+    , hba_hash_known_provided text
     , hba_string text NOT NULL
     , created_at timestamptz DEFAULT now() NOT NULL
     , valid smallint NOT NULL );
@@ -157,7 +170,8 @@ CREATE TABLE monitor.settings_checksum (
 COMMENT ON COLUMN monitor.settings_checksum.valid IS 'Set this column to zero if this group of settings is a valid change';
 CREATE INDEX ON monitor.settings_checksum (created_at);
 
-CREATE FUNCTION monitor.settings_checksum () RETURNS smallint
+CREATE FUNCTION monitor.settings_checksum(p_known_settings_hash text DEFAULT NULL, p_known_hba_hash text DEFAULT NULL) 
+    RETURNS smallint
     LANGUAGE plpgsql SECURITY DEFINER 
 AS $function$
 DECLARE
@@ -167,6 +181,7 @@ v_hba_hash_old          text;
 v_hba_match             smallint := 0;
 v_hba_string            text;
 v_hba_string_old        text;
+v_is_in_recovery        boolean;
 v_match_total           smallint := 0;
 v_settings_hash         text;
 v_settings_hash_old     text;
@@ -177,71 +192,115 @@ v_valid                 smallint;
 
 BEGIN
 
-WITH settings_ordered_list AS (
-    SELECT name
-        , COALESCE(setting, '<<NULL>>') AS setting
-    FROM pg_catalog.pg_settings 
-    ORDER BY name, setting)
-SELECT md5(string_agg(name||setting, ',')) 
-    , string_agg(name||setting, ',')
+SELECT pg_is_in_recovery() INTO v_is_in_recovery;
+
+SELECT md5_hash
+    , settings_string
 INTO v_settings_hash
     , v_settings_string
-FROM settings_ordered_list;
+FROM monitor.pg_settings_hash;
 
--- Order by line number so it's caught if no content is changed but the order of entries is changed
-WITH hba_ordered_list AS (
-    SELECT COALESCE(type, '<<NULL>>') AS type
-        , array_to_string(COALESCE(database, ARRAY['<<NULL>>']), ',') AS database
-        , array_to_string(COALESCE(user_name, ARRAY['<<NULL>>']), ',') AS user_name
-        , COALESCE(address, '<<NULL>>') AS address
-        , COALESCE(netmask, '<<NULL>>') AS netmask
-        , COALESCE(auth_method, '<<NULL>>') AS auth_method
-        , array_to_string(COALESCE(options, ARRAY['<<NULL>>']), ',') AS options
-    FROM pg_catalog.pg_hba_file_rules
-    ORDER BY line_number)
-SELECT md5(string_agg(type||database||user_name||address||netmask||auth_method||options, ','))
-    , string_agg(type||database||user_name||address||netmask||auth_method||options, ',')
-INTO v_hba_hash
-    , v_hba_string
-FROM hba_ordered_list;
+IF current_setting('server_version_num')::int >= 100000 THEN
 
-SELECT settings_hash, hba_hash, valid
+    SELECT md5_hash
+        , hba_string
+    INTO v_hba_hash
+        , v_hba_string
+    FROM monitor.pg_hba_hash;
+
+ELSE
+    v_hba_hash := 'unsupported in versions older than PostgreSQL 10';
+    v_hba_string := 'unsupported in versions older than PostgreSQL 10';
+END IF;
+
+SELECT settings_hash_generated, hba_hash_generated, valid
 INTO v_settings_hash_old, v_hba_hash_old, v_valid
 FROM monitor.settings_checksum
 ORDER BY created_at DESC LIMIT 1;
 
+IF p_known_hba_hash IS NOT NULL THEN
+    IF current_setting('server_version_num')::int >= 100000 THEN
+        v_hba_hash_old := p_known_hba_hash;
+    ELSE 
+        RAISE EXCEPTION 'p_known_hba_hash parameter can only be used with PG10+';
+    END IF;
+END IF;
+
+IF p_known_settings_hash IS NOT NULL THEN
+    v_settings_hash_old := p_known_settings_hash;
+END IF;
+
+IF v_is_in_recovery THEN
+    -- Do not base validity on the stored value on primary. 
+    -- Allow it to be re-evaluated on the replica itself
+    v_valid := 0;
+END IF;
+
+-- Check for NOT NULL in v_settings_hash_old since that will be set both when a manual known hash is given
+--      or the last stored one from the log file is used. Otherwise, must insert new row in history table.
 IF v_settings_hash_old IS NOT NULL THEN
 
     IF v_valid > 0 OR (v_settings_hash != v_settings_hash_old OR v_hba_hash != v_hba_hash_old) THEN
         
-        IF v_settings_hash != v_settings_hash_old OR v_valid = 1 THEN
+        IF v_settings_hash != v_settings_hash_old OR (v_valid = 1 AND p_known_settings_hash IS NULL) THEN
             v_settings_match := 1;
         END IF;
         
-        IF v_hba_hash != v_hba_hash_old OR v_valid = 2 THEN
+        IF v_hba_hash != v_hba_hash_old OR (v_valid = 2 AND p_known_hba_hash IS NULL )THEN
             v_hba_match := 2;
         END IF;
 
-        IF v_valid = 3 THEN 
-            -- If previous state had both mismatched, ensure that is preserved
+        IF (p_known_settings_hash IS NOT NULL OR p_known_hba_hash IS NOT NULL) THEN
+            -- If known hash values are being provided, always re-evaluate state
+            v_match_total := v_settings_match + v_hba_match;
+        ELSIF v_valid = 3 THEN
+            -- If previous state had both mismatched on the primary, and no known hashes are provided, preserve that state
             v_match_total = 3;
         ELSE
             -- Otherwise, ensure new state is set
             v_match_total := v_settings_match + v_hba_match;
         END IF;
 
-        -- Only insert a new row if one of the hashes has changed since last time
-        IF (v_settings_hash != v_settings_hash_old OR v_hba_hash != v_hba_hash_old) THEN 
-            INSERT INTO monitor.settings_checksum (settings_hash, settings_string, hba_hash, hba_string, valid)
-            VALUES (v_settings_hash, v_settings_string, v_hba_hash, v_hba_string, v_match_total);
+        -- Only insert a new row if one of the hashes has changed since last time (and on primary)
+        IF v_is_in_recovery = false AND (v_settings_hash != v_settings_hash_old OR v_hba_hash != v_hba_hash_old) THEN 
+            INSERT INTO monitor.settings_checksum (
+                    settings_hash_generated
+                    , settings_hash_known_provided
+                    , settings_string
+                    , hba_hash_generated
+                    , hba_hash_known_provided
+                    , hba_string
+                    , valid)
+            VALUES (v_settings_hash
+                    , p_known_settings_hash
+                    , v_settings_string
+                    , v_hba_hash
+                    , p_known_hba_hash
+                    , v_hba_string
+                    , v_match_total);
         END IF;
 
     END IF; 
 
 ELSE
 
-    INSERT INTO monitor.settings_checksum (settings_hash, settings_string, hba_hash, hba_string, valid)
-    VALUES (v_settings_hash, v_settings_string, v_hba_hash, v_hba_string, v_match_total);
+    IF v_is_in_recovery = false THEN
+        INSERT INTO monitor.settings_checksum (
+                settings_hash_generated
+                , settings_hash_known_provided
+                , settings_string
+                , hba_hash_generated
+                , hba_hash_known_provided
+                , hba_string
+                , valid)
+        VALUES (v_settings_hash
+                , p_known_settings_hash
+                , v_settings_string
+                , v_hba_hash
+                , p_known_hba_hash
+                , v_hba_string
+                , v_match_total);
+    END IF;
 
 END IF;
 
@@ -250,8 +309,9 @@ RETURN v_match_total;
 END
 $function$;
 
+
 /*
- * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid after alerting on a change.
+ * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid  against the one stored in the history table after alerting on a change.
  */
 CREATE FUNCTION monitor.settings_checksum_set_valid() RETURNS void
     LANGUAGE sql 
@@ -267,6 +327,34 @@ FROM max_time
 WHERE created_at = max_time.max_created;
 
 $function$;
+
+
+CREATE VIEW monitor.pg_settings_hash AS
+    WITH settings_ordered_list AS (
+        SELECT name
+            , COALESCE(setting, '<<NULL>>') AS setting
+        FROM pg_catalog.pg_settings 
+        ORDER BY name, setting)
+    SELECT md5(string_agg(name||setting, ',')) AS md5_hash
+        , string_agg(name||setting, ',') AS settings_string
+    FROM settings_ordered_list;
+
+
+CREATE VIEW monitor.pg_hba_hash AS
+    -- Order by line number so it's caught if no content is changed but the order of entries is changed
+    WITH hba_ordered_list AS (
+        SELECT COALESCE(type, '<<NULL>>') AS type
+            , array_to_string(COALESCE(database, ARRAY['<<NULL>>']), ',') AS database
+            , array_to_string(COALESCE(user_name, ARRAY['<<NULL>>']), ',') AS user_name
+            , COALESCE(address, '<<NULL>>') AS address
+            , COALESCE(netmask, '<<NULL>>') AS netmask
+            , COALESCE(auth_method, '<<NULL>>') AS auth_method
+            , array_to_string(COALESCE(options, ARRAY['<<NULL>>']), ',') AS options
+        FROM pg_catalog.pg_hba_file_rules
+        ORDER BY line_number)
+    SELECT md5(string_agg(type||database||user_name||address||netmask||auth_method||options, ',')) AS md5_hash
+        , string_agg(type||database||user_name||address||netmask||auth_method||options, ',') AS hba_string
+    FROM hba_ordered_list;
 
 
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;
