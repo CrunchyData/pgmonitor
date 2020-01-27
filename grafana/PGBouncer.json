@@ -59,7 +59,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_databases_db_conn_perc_used{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pgbouncer_databases_db_conn_perc_used{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool_db}}",
@@ -148,35 +148,35 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_client_active{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "client_active",
           "refId": "A"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_client_waiting{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_client_waiting{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "client_waiting",
           "refId": "B"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_active{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_active{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_active",
           "refId": "C"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_idle{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_idle{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_idle",
           "refId": "D"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_used{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_used{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_used",
@@ -265,7 +265,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_lists_item_count{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pgbouncer_lists_item_count{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{item}}",
@@ -354,7 +354,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_clients_client_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
+          "expr": "ccp_pgbouncer_clients_client_state_count{job=~\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{client_state}}",
@@ -443,7 +443,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_servers_server_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
+          "expr": "ccp_pgbouncer_servers_server_state_count{job=~\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{server_state}}",
@@ -537,7 +537,7 @@
         "multi": false,
         "name": "conn_pool",
         "options": [],
-        "query": "label_values(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"}, conn_pool)",
+        "query": "label_values(ccp_pgbouncer_pools_client_active{job=~\"[[pgnodes]]\"}, conn_pool)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

@@ -55,7 +55,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=\"[[pgnodes]]\"})/sum(ccp_bloat_check_size_bytes{job=\"[[pgnodes]]\"})*100",
+          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{job=~\"[[pgnodes]]\"})/sum(ccp_bloat_check_size_bytes{job=~\"[[pgnodes]]\"})*100",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -142,7 +142,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=\"[[pgnodes]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\",objectname=\"[[objectname]]\"}",
+          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=~\"[[pgnodes]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\",objectname=\"[[objectname]]\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{schemaname}}.{{objectname}}",
@@ -230,7 +230,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=\"[[pgnodes]]\", dbname=\"[[dbname]]\"} > 10240",
+          "expr": "ccp_bloat_check_total_wasted_space_bytes{job=~\"[[pgnodes]]\", dbname=\"[[dbname]]\"} > 10240",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}.{{schemaname}}.{{objectname}}",
@@ -326,7 +326,7 @@
         "multi": false,
         "name": "dbname",
         "options": [],
-        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=\"[[pgnodes]]\"},dbname)",
+        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=~\"[[pgnodes]]\"},dbname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -378,7 +378,7 @@
         "multi": false,
         "name": "objectname",
         "options": [],
-        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"}, objectname)",
+        "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{job=~\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"}, objectname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

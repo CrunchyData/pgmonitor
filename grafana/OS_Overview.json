@@ -99,7 +99,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "up{job=\"[[osnodes]]\", exp_type=\"node\"}",
+          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
