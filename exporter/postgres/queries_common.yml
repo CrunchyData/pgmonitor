@@ -213,12 +213,20 @@ ccp_postmaster_uptime:
             description: "Time interval in seconds since PostgreSQL database was last restarted"
 
 
-ccp_settings_checksum:
-    query: "SELECT monitor.settings_checksum() AS status" 
+ccp_pg_settings_checksum:
+    query: "SELECT monitor.pg_settings_checksum() AS status" 
     metrics:
         - status:
             usage: "GAUGE"
-            description: "Value of checksum monitioring status. 0 = valid config. 1 = pg_settings changed. 2 = pg_hba.conf changed. 3 = both changed. To reset current config to valid after alert, run monitor.settings_checksum_set_valid()."
+            description: "Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. To reset current config to valid after alert, run monitor.pg_settings_checksum_set_valid()."
+
+ccp_pg_hba_checksum:
+    query: "SELECT monitor.pg_hba_checksum() AS status" 
+    metrics:
+        - status:
+            usage: "GAUGE"
+            description: "Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid()."
+
 
 
 ccp_settings_pending_restart:
