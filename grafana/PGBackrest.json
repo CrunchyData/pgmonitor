@@ -55,7 +55,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -140,7 +140,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -225,7 +225,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -310,7 +310,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -395,7 +395,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -480,7 +480,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -575,7 +575,7 @@
         "multi": false,
         "name": "backrest_stanza",
         "options": [],
-        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"}, stanza)",
+        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\"}, stanza)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

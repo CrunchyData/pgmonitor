@@ -99,7 +99,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "pg_up{job=\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=\"[[pgnodes]]\"}",
+          "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

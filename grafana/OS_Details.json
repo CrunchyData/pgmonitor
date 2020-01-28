@@ -55,21 +55,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "node_load1{job=\"[[osnodes]]\"}",
+          "expr": "node_load1{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "1m",
           "refId": "A"
         },
         {
-          "expr": "node_load5{job=\"[[osnodes]]\"}",
+          "expr": "node_load5{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "5m",
           "refId": "B"
         },
         {
-          "expr": "node_load15{job=\"[[osnodes]]\"}",
+          "expr": "node_load15{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "15m",
@@ -154,56 +154,56 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"idle\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"idle\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{mode}}",
           "refId": "A"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"user\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"user\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "B"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"iowait\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"iowait\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "C"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"idle\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu{mode=\"idle\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "D"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"system\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"system\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "E"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"system\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu{mode=\"system\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "F"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"user\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu{mode=\"user\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
           "refId": "G"
         },
         {
-          "expr": "sum by (mode)(irate(node_cpu{mode=\"iowait\", job=\"[[osnodes]]\"}[5m]))",
+          "expr": "sum by (mode)(irate(node_cpu{mode=\"iowait\", job=~\"[[osnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mode}}",
@@ -288,21 +288,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "node_memory_MemTotal_bytes{job=\"[[osnodes]]\"}",
+          "expr": "node_memory_MemTotal_bytes{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "node_memory_MemTotal_bytes{job=\"[[osnodes]]\"} - node_memory_MemAvailable_bytes{job=\"[[osnodes]]\"}",
+          "expr": "node_memory_MemTotal_bytes{job=~\"[[osnodes]]\"} - node_memory_MemAvailable_bytes{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Used",
           "refId": "B"
         },
         {
-          "expr": "node_memory_Cached_bytes{job=\"[[osnodes]]\"}",
+          "expr": "node_memory_Cached_bytes{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Cached",
@@ -387,21 +387,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "node_memory_SwapTotal_bytes{job=\"[[osnodes]]\"}  ",
+          "expr": "node_memory_SwapTotal_bytes{job=~\"[[osnodes]]\"}  ",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "node_memory_SwapTotal_bytes{job=\"[[osnodes]]\"} - node_memory_SwapFree_bytes{job=\"[[osnodes]]\"}",
+          "expr": "node_memory_SwapTotal_bytes{job=~\"[[osnodes]]\"} - node_memory_SwapFree_bytes{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Used",
           "refId": "B"
         },
         {
-          "expr": "node_memory_SwapCached_bytes{job=\"[[osnodes]]\"}",
+          "expr": "node_memory_SwapCached_bytes{job=~\"[[osnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Cached",
@@ -494,14 +494,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100-(100*(node_filesystem_free_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "expr": "100-(100*(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
           "refId": "A"
         },
         {
-          "expr": "100-(100*(node_filesystem_free{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "expr": "100-(100*(node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
