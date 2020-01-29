@@ -10,11 +10,11 @@ weight: 5
   * Add support for PostgreSQL 12
   * Added new metrics (all PG versions):
     * ccp_postmaster_uptime - time in seconds since last restart of PG instance. Useful for monitoring for unexpected restarts.
-    * ccp_settings_checksum - monitors for changes in pg_settings and/or pg_hba.conf
-        * Replica settings monitoring can be done as well, but history tracking is not possible since writing to a log table is impossible. Also, if the configuration differs from the primary, hashes must be manually set for that postgres_exporter's sysconfig to pass along to the underlying function.
-        * Note that pg_hba.conf monitoring is only supported in PG10+
+    * ccp_pg_settings_checksum - monitors for changes in pg_settings 
   * Added new metrics (PG 9.5+ only)
     *  ccp_settings_pending_restart - monitors for any settings in pg_settings in a pending_restart state
+  * Added new metrics (PG 10+ only)
+    * ccp_pg_hba_checksum - monitors for changes in pg_hba.conf
   * Added new metrics (PG 12+ only)
     * ccp_data_checksum_failure - monitors for any errors encountered for databases that have data file checksums enabled
   * (Bugfix) Use proper comparison operators in all Grafana dashboards that are using Multi-value variables. Ensures proper values in all dropdown menus are shown
