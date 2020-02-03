@@ -1262,7 +1262,7 @@
       }
     }
   ],
-  "refresh": "10s",
+  "refresh": "15m",
   "schemaVersion": 19,
   "style": "dark",
   "tags": [
@@ -1325,8 +1325,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
-      "10s",
       "30s",
       "1m",
       "5m",
