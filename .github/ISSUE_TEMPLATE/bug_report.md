@@ -17,5 +17,6 @@ assignees: ''
 - pgMonitor Version:
 - PostgreSQL Version:  
 - Operating System:  
+- Exporter in use:  
 - Virtualization:  
-- Any customization:
+- Any customization:  
