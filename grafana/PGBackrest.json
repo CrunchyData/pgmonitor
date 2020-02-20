@@ -529,7 +529,7 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "15m",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -589,7 +589,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-2w",
     "to": "now"
   },
   "timepicker": {
@@ -613,7 +613,7 @@
     ]
   },
   "timezone": "",
-  "title": "PGBackrest",
+  "title": "pgBackRest",
   "uid": "QtHwNCrik",
   "version": 2
 }

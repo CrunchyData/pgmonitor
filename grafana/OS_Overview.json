@@ -133,7 +133,7 @@
       "valueName": "current"
     }
   ],
-  "refresh": "15m",
+  "refresh": "5m",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
