@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1574700489462,
+  "id": 12,
+  "iteration": 1582574901518,
   "links": [],
   "panels": [
     {
@@ -32,6 +33,7 @@
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
@@ -121,6 +123,7 @@
         "x": 8,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -238,6 +241,7 @@
         "x": 16,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
@@ -327,6 +331,7 @@
         "x": 0,
         "y": 10
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": false,
@@ -416,6 +421,7 @@
         "x": 12,
         "y": 10
       },
+      "hiddenSeries": false,
       "id": 10,
       "legend": {
         "avg": false,
@@ -493,7 +499,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 20,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -501,8 +507,10 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -526,8 +534,10 @@
       {
         "allValue": null,
         "current": {
-          "text": "pgbouncer.ccp_monitoring",
-          "value": "pgbouncer.ccp_monitoring"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -579,5 +589,5 @@
   "timezone": "",
   "title": "PGBouncer",
   "uid": "H4OOvdVWz",
-  "version": 1
+  "version": 2
 }

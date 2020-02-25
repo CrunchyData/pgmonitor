@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557419337785,
+  "id": 3,
+  "iteration": 1582574806450,
   "links": [],
   "panels": [
     {
@@ -25,6 +26,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -32,6 +34,7 @@
         "y": 0
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -46,6 +49,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -118,6 +124,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -125,6 +132,7 @@
         "y": 0
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 3,
       "legend": {
         "avg": false,
@@ -139,6 +147,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -211,6 +222,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
@@ -218,6 +230,7 @@
         "y": 7
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "avg": false,
@@ -232,6 +245,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -323,12 +339,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
@@ -343,6 +361,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -432,13 +453,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
@@ -453,6 +477,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -513,7 +540,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -521,8 +548,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -575,5 +602,5 @@
   "timezone": "",
   "title": "Filesystem Details",
   "uid": "g8iVvnHmz",
-  "version": 1
+  "version": 2
 }
