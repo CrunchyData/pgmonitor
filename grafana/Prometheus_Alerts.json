@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 77,
+  "id": 8,
   "links": [],
   "panels": [
     {
@@ -30,6 +30,7 @@
       },
       "id": 2,
       "links": [],
+      "options": {},
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
@@ -144,7 +145,6 @@
       "timeFrom": null,
       "title": "Active Alerts",
       "transform": "table",
-      "transparent": false,
       "type": "table"
     },
     {
@@ -159,6 +159,7 @@
       },
       "id": 3,
       "links": [],
+      "options": {},
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
@@ -273,12 +274,11 @@
       "timeFrom": "1w",
       "title": "Alert History (1 week)",
       "transform": "table",
-      "transparent": false,
       "type": "table"
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 16,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -314,5 +314,5 @@
   "timezone": "",
   "title": "Prometheus Alerts",
   "uid": "QTsttxNmk",
-  "version": 1
+  "version": 2
 }
