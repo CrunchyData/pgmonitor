@@ -16,7 +16,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 14,
+  "id": 5,
   "links": [],
   "panels": [
     {
@@ -93,7 +93,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 20,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -123,5 +123,5 @@
   "timezone": "",
   "title": "Overview",
   "uid": "VhzrGq2Wk",
-  "version": 14
+  "version": 1
 }

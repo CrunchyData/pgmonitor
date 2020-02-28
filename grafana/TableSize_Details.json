@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557427341726,
+  "id": 1,
+  "iteration": 1582574962837,
   "links": [],
   "panels": [
     {
@@ -25,12 +26,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "avg": false,
@@ -45,6 +48,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -106,7 +112,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -114,8 +120,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -139,8 +145,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "postgres",
-          "value": "postgres"
+          "text": "sampledb",
+          "value": "sampledb"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -243,5 +249,5 @@
   "timezone": "",
   "title": "TableSize Details",
   "uid": "Igh7D7Hmz",
-  "version": 1
+  "version": 2
 }

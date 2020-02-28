@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565641555284,
+  "id": 13,
+  "iteration": 1582574919045,
   "links": [],
   "panels": [
     {
@@ -28,6 +29,7 @@
         "rgb(7, 6, 79)",
         "rgba(50, 172, 45, 0.9)"
       ],
+      "datasource": null,
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -46,13 +48,9 @@
       "interval": null,
       "links": [
         {
-          "dashboard": "PGBackrest",
-          "includeVars": true,
-          "params": "",
           "targetBlank": true,
           "title": "PGBackrest",
-          "type": "dashboard",
-          "url": "/d/QtHwNCrik/pgbackrest"
+          "url": "/d/QtHwNCrik/pgbackrest?$__all_variables"
         }
       ],
       "mappingType": 1,
@@ -119,12 +117,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 24,
         "x": 0,
         "y": 2
       },
+      "hiddenSeries": false,
       "id": 18,
       "legend": {
         "alignAsTable": true,
@@ -141,7 +141,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -236,12 +238,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 39,
       "legend": {
         "avg": false,
@@ -256,14 +260,14 @@
       "linewidth": 1,
       "links": [
         {
-          "dashboard": "TableSize Details",
           "title": "TableSize Details",
-          "type": "dashboard",
           "url": "/d/Igh7D7Hmz/tablesize-details"
         }
       ],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -336,12 +340,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 41,
       "legend": {
         "avg": false,
@@ -356,7 +362,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -423,12 +431,14 @@
       "datasource": "PROMETHEUS",
       "description": "Note that replica_port can change if replicas ever detach and re-attach",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
         "y": 17
       },
+      "hiddenSeries": false,
       "id": 35,
       "legend": {
         "avg": false,
@@ -443,7 +453,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -510,12 +522,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
         "y": 17
       },
+      "hiddenSeries": false,
       "id": 37,
       "legend": {
         "avg": false,
@@ -530,7 +544,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -596,12 +612,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 12,
       "legend": {
         "avg": false,
@@ -616,7 +634,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -684,12 +704,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 13,
       "legend": {
         "avg": false,
@@ -704,7 +726,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -802,13 +826,9 @@
       "linewidth": 1,
       "links": [
         {
-          "dashUri": "db/crud_details",
-          "dashboard": "CRUD Details",
-          "includeVars": true,
           "targetBlank": false,
           "title": "CRUD Details",
-          "type": "dashboard",
-          "url": "/d/ubhVvnNmk/crud-details"
+          "url": "/d/ubhVvnNmk/crud-details?$__all_variables"
         }
       ],
       "nullPointMode": "null",
@@ -1651,7 +1671,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1659,8 +1679,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -1684,9 +1704,10 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "main",
-          "value": "main"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -1710,7 +1731,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -1736,5 +1757,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 1
+  "version": 2
 }
