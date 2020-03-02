@@ -259,13 +259,12 @@ END LOOP;
 END
 $function$;
 
-
 /*
- * Tables and functions for monitoring changes to pg_settings system catalog.
+ * Tables and functions for monitoring changes to pg_settings system catalogs.
  * Can't just do a raw check for the hash value since Prometheus only records numeric values for alerts
  * Tables allow recording of existing settings so they can be referred back to to see what changed
- * If checksum function returns 0, then NO settings have changed 
- * If checksum function returns 1, then something has changed since last known valid state
+ * If either checksum function returns 0, then NO settings have changed 
+ * If either checksum function returns 1, then something has changed since last known valid state
  * For replicas, logging past settings is not possible to compare what may have changed
  * For replicas, by default, it is expected that its settings will match the primary
  * For replicas, if the pg_settings are necessarily different from the primary, a known good hash of that replica's
@@ -274,11 +273,6 @@ $function$;
  */
 
 DROP TABLE IF EXISTS monitor.pg_settings_checksum;
--- Drop objects that are not supported pre-PG10 in case they somehow got added
-DROP TABLE IF EXISTS monitor.pg_hba_checksum;
-DROP FUNCTION IF EXISTS monitor.pg_hba_checksum(text);
-DROP FUNCTION IF EXISTS monitor.pg_hba_checksum_set_valid();
-DROP VIEW IF EXISTS monitor.pg_hba_hash;
 
 CREATE TABLE monitor.pg_settings_checksum (
     settings_hash_generated text NOT NULL
@@ -371,23 +365,17 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.pg_settings_checksum_set_valid();
 /*
- * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid  against the one stored in the history table after alerting on a change.
+ * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid after alerting on a change. Note that configuration history will be cleared.
  */
-CREATE FUNCTION monitor.pg_settings_checksum_set_valid() RETURNS void
+CREATE FUNCTION monitor.pg_settings_checksum_set_valid() RETURNS smallint
     LANGUAGE sql 
 AS $function$
 
--- Should also handle edge case of there being multiple timestamps with same value
--- All should be updated to ensure consistency in a weird state
-WITH max_time AS ( 
-    SELECT max(created_at) as max_created FROM monitor.pg_settings_checksum ) 
-UPDATE monitor.pg_settings_checksum 
-SET valid = 0 
-FROM max_time 
-WHERE created_at = max_time.max_created;
+TRUNCATE monitor.pg_settings_checksum;
+
+SELECT monitor.pg_settings_checksum();
 
 $function$;
-
 
 DROP VIEW IF EXISTS monitor.pg_settings_hash;
 CREATE VIEW monitor.pg_settings_hash AS

@@ -132,7 +132,6 @@ WHERE (ROUND(used/slots*100)::int) > p_percent;
 
 $function$;
 
-
 /*
  * Tables and functions for monitoring changes to pg_settings and pg_hba_file_rules system catalogs.
  * Can't just do a raw check for the hash value since Prometheus only records numeric values for alerts
@@ -336,40 +335,30 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.pg_settings_checksum_set_valid();
 /*
- * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid  against the one stored in the history table after alerting on a change.
+ * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid after alerting on a change. Note that configuration history will be cleared.
  */
-CREATE FUNCTION monitor.pg_settings_checksum_set_valid() RETURNS void
+CREATE FUNCTION monitor.pg_settings_checksum_set_valid() RETURNS smallint
     LANGUAGE sql 
 AS $function$
 
--- Should also handle edge case of there being multiple timestamps with same value
--- All should be updated to ensure consistency in a weird state
-WITH max_time AS ( 
-    SELECT max(created_at) as max_created FROM monitor.pg_settings_checksum ) 
-UPDATE monitor.pg_settings_checksum 
-SET valid = 0 
-FROM max_time 
-WHERE created_at = max_time.max_created;
+TRUNCATE monitor.pg_settings_checksum;
+
+SELECT monitor.pg_settings_checksum();
 
 $function$;
 
 
 DROP FUNCTION IF EXISTS monitor.pg_hba_checksum_set_valid();
 /*
- * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid  against the one stored in the history table after alerting on a change.
+ * This function provides quick, clear interface for resetting the checksum monitor to treat the currently detected configuration as valid after alerting on a change. Note that configuration history will be cleared.
  */
-CREATE FUNCTION monitor.pg_hba_checksum_set_valid() RETURNS void
+CREATE FUNCTION monitor.pg_hba_checksum_set_valid() RETURNS smallint
     LANGUAGE sql 
 AS $function$
 
--- Should also handle edge case of there being multiple timestamps with same value
--- All should be updated to ensure consistency in a weird state
-WITH max_time AS ( 
-    SELECT max(created_at) as max_created FROM monitor.pg_hba_checksum ) 
-UPDATE monitor.pg_hba_checksum 
-SET valid = 0 
-FROM max_time 
-WHERE created_at = max_time.max_created;
+TRUNCATE monitor.pg_hba_checksum;
+
+SELECT monitor.pg_hba_checksum();
 
 $function$;
 
