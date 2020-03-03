@@ -21,7 +21,7 @@ ccp_backrest_last_info:
              , a.backup_data->>'type' AS backup_type
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
              , a.backup_data->'info'->'repository'->>'size' AS repo_total_size_bytes
-            , EXTRACT( epoch FROM (to_timestamp((a.backup_data->'timestamp'->>'stop')::bigint)) - to_timestamp((a.backup_data->'timestamp'->>'start')::bigint) ) AS backup_runtime_seconds
+             , (a.backup_data->'timestamp'->>'stop')::bigint - (a.backup_data->'timestamp'->>'start')::bigint AS backup_runtime_seconds
              FROM per_stanza a
              JOIN (
                     SELECT config_file

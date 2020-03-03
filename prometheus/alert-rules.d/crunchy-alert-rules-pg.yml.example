@@ -26,7 +26,7 @@ groups:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
 
-# Example to check for current version of PostgreSQL. Metric returns the version that the expoter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
+# Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
 #
 #  - alert: PGMinimumVersion
 #    expr:  ccp_postgresql_version_current < 110005
@@ -58,7 +58,7 @@ groups:
 
 # Absence alerts must be configured per named job, otherwise there's no way to know which job is down
 # Below is an example for a target job called "Prod"
-#  - alert: PGConnectionAbsent
+#  - alert: PGConnectionAbsent_Prod
 #    expr: absent(ccp_connection_stats_max_connections{job="Prod"})
 #    for: 10s
 #    labels:
@@ -69,6 +69,34 @@ groups:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
 
 
+# Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
+# A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum().
+# If metric returns 0, then NO settings have changed for either pg_settings since last known valid state 
+# If metric returns 1, then pg_settings have changed since last known valid state
+# To see what may have changed, check the monitor.pg_settings_checksum table for a history of config state.
+#  - alert: PGSettingsChecksum
+#    expr: ccp_pg_settings_checksum > 0
+#    for 60s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Configuration settings on {{ $labels.job }} have changed from previously known valid state. To reset current config to a valid state after alert fires, run monitor.pg_settings_checksum_set_valid().' 
+#      summary: 'PGSQL Instance settings checksum'
+
+
+# Monitor for data block checksum failures. Only works in PG12+
+#  - alert: PGDataChecksum
+#    expr: ccp_data_checksum_failure > 0
+#    for 60s
+#    labels:
+#      service: postgresql
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: '{{ $labels.job }} has at least one data checksum failure in database {{ $labels.dbname }}. See pg_stat_database system catalog for more information.'
+#      summary: 'PGSQL Data Checksum failure'
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 300
@@ -256,6 +284,15 @@ groups:
     annotations:
         description: 'Count of sequences on instance {{ $labels.job }} at over 75% usage: {{ $value }}. Run following query to see full sequence status: SELECT * FROM monitor.sequence_status() WHERE percent >= 75'
 
+  - alert: PGSettingsPendingRestart
+    exper: ccp_settings_pending_restart_count > 0
+    for: 60s
+    labels: 
+        service: postgresql
+        severity: critical
+        severity_num: 300
+    annotations:
+        description: 'One or more settings in the pg_settings system catalog on system {{ $labels.job }} are in a pending_restart state. Check the system catalog for which settings are pending and review postgresql.conf for changes.'
 
 ########## PGBACKREST RULES ##########
 #
@@ -265,7 +302,6 @@ groups:
 #   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
 # Stanza should also be set if different intervals are expected for each stanza. 
 #   Otherwise rule will be applied to all stanzas returned on target system if not set.
-# Otherwise, all backups returned by the pgbackrest info command run from where the database exists will be checked
 #
 # Relevant metric names are: 
 #   ccp_backrest_last_full_time_since_completion_seconds

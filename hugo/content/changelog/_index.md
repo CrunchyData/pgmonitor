@@ -8,6 +8,17 @@ weight: 5
 ### New Features
 
   * Add support for PostgreSQL 12
+  * Added new metrics (all PG versions):
+    * ccp_postmaster_uptime - time in seconds since last restart of PG instance. Useful for monitoring for unexpected restarts.
+    * ccp_pg_settings_checksum - monitors for changes in pg_settings 
+  * Added new metrics (PG 9.5+ only)
+    *  ccp_settings_pending_restart - monitors for any settings in pg_settings in a pending_restart state
+  * Added new metrics (PG 10+ only)
+    * ccp_pg_hba_checksum - monitors for changes in pg_hba.conf
+  * Added new metrics (PG 12+ only)
+    * ccp_data_checksum_failure - monitors for any errors encountered for databases that have data file checksums enabled
+  * (Bugfix) Use proper comparison operators in all Grafana dashboards that are using Multi-value variables. Ensures proper values in all dropdown menus are shown
+  * (Bugfix) Remove changing background color of the pgBackRest panel in the PG_Details Grafana dashboard
 
 ### Non-backward Compatible Changes
 
@@ -15,7 +26,9 @@ weight: 5
 
 ### Manual Intervention Changes
 
- * None
+ * In order to use the new metrics that are available, the setup_##.sql script must be run again for your relevant version of PostgreSQL. Then all postgres_exporters services must be restarted.
+ * The only new rule that has been enabled by default in the Crunchy provided Prometheus rules file is `ccp_settings_pending_restart`. All other new metrics have example rules in the same file but they are commented out. Please adjust them as needed before uncommenting and using them.
+
 
 ## 4.1
 
