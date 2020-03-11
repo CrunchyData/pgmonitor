@@ -36,7 +36,7 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 
 ### Non-RPM installs
 
-For non-package installations on Linux, the exporters & pg_bloat_check can be downloaded from their respective repositories:
+For non-package installations on Linux, applications can be downloaded from their respective repositories:
 
 | Library                       |                                                           |
 |-------------------------------|-----------------------------------------------------------|
@@ -165,7 +165,7 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
-| setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
+| setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.  |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
@@ -190,7 +190,7 @@ For example, to use just the common queries for PostgreSQL 9.6 modify the releva
 QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_pg96.yml"
 ```
 
-As an another example, to include queries for PostgreSQL 10 as well as pgbackrest modify the relevant sysconfig file and update `QUERY_FILE_LIST`:
+As an another example, to include queries for PostgreSQL 10 as well as pgbackrest, modify the relevant sysconfig file and update `QUERY_FILE_LIST`:
 
 ```bash
 QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml /etc/postgres_exporter/10/queries_backrest.yml"
@@ -259,7 +259,7 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 
 ### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS 7)
 
-Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases, so as long as you're using the same custom query file for all of them, only one additional exporter service is required and this comes with pgmonitor 4.0 and above by default. The queries_per_db.yml file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup_*.sql" file does not need to be run on these additional databases if using the queries that pgmonitor comes with.
+Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases. As long as you're using the same custom query file for all of those databases, only one additional exporter service is required and this comes with pgmonitor 4.0 and above by default. The queries_per_db.yml file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup_*.sql" file does not need to be run on these additional databases if using the queries that pgmonitor comes with.
 
 pgmonitor provides and recommends an example sysconfig file for this per-db exporter: `sysconfig.postgres_exporter_pg##_per_db`. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
 ```
