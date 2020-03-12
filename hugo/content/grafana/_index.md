@@ -49,7 +49,7 @@ Review the `crunchy_grafana_datasource.yml` file to ensure it is looking at your
 
 Review the `crunchy_grafana_dashboards.yml` file to ensure it's looking at where you stored the provided dashboards. By default it is looking in `/etc/grafana/crunchy_dashboards`. Save this file and rename it to `/etc/grafana/provisioning/dashboards/dashboards.yml`. Restart grafana so it picks up the new config.
 
-Save all of the .json dashboard files to the `/etc/grafana/crunchy_dashboards` folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
+Save all of the desired .json dashboard files to the `/etc/grafana/crunchy_dashboards` folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
 
 ### Windows Server 2012R2
 
