@@ -17,12 +17,15 @@ weight: 5
     * ccp_pg_hba_checksum - monitors for changes in pg_hba.conf
   * Added new metrics (PG 12+ only)
     * ccp_data_checksum_failure - monitors for any errors encountered for databases that have data file checksums enabled
-  * (Bugfix) Use proper comparison operators in all Grafana dashboards that are using Multi-value variables. Ensures proper values in all dropdown menus are shown
-  * (Bugfix) Remove changing background color of the pgBackRest panel in the PG_Details Grafana dashboard
+
+### Bug Fixes
+  * Use proper comparison operators in all Grafana dashboards that are using Multi-value variables. 
+  * Change to using label_values() function on Grafana dashboard template variables. Ensures proper values in all dropdown menus are shown
+  * Remove changing background color of the pgBackRest panel in the PG_Details Grafana dashboard
 
 ### Non-backward Compatible Changes
 
-  * None
+  * New minimum required version of Grafana is now 6.5. All Grafana dashboards have been re-exported to ensure their settings are consistent and compatable with that version.
 
 ### Manual Intervention Changes
 

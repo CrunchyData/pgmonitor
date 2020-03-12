@@ -36,7 +36,7 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 
 ### Non-RPM installs
 
-For non-package installations on Linux, the exporters & pg_bloat_check can be downloaded from their respective repositories:
+For non-package installations on Linux, applications can be downloaded from their respective repositories:
 
 | Library                       |                                                           |
 |-------------------------------|-----------------------------------------------------------|
@@ -80,7 +80,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 The following pgMonitor configuration files should be placed according to the following mapping:
 
-| pgmonitor Configuration File | System Location |
+| pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
 | crontab.txt | `/etc/postgres_exporter/##/crontab.txt`  |
 | postgres/crunchy_postgres_exporter@.service | `/usr/lib/systemd/system/crunchy_postgres_exporter@.service`  |
@@ -113,7 +113,7 @@ The client package is run on the PostgreSQL server(s) to be monitored. *This inc
 
 #### Service Configuration
 
-The following files contain defaults that should enable the exporters to run effectively on your system for the purposes of using pgmonitor.  You should take some time to review them.
+The following files contain defaults that should enable the exporters to run effectively on your system for the purposes of using pgMonitor.  You should take some time to review them.
 
 If you need to modify them, see the notes in the files for more details and recommendations:
 - `/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf`
@@ -121,7 +121,7 @@ If you need to modify them, see the notes in the files for more details and reco
 - `/etc/sysconfig/postgres_exporter_pg##`
 - `/etc/sysconfig/postgres_exporter_pg##_per_db`
 
-Note that `/etc/sysconfig/postgres_exporter_pg##` & `postgres_exporter_pg##_per_db` are the default sysconfig files for monitoring the database running on the local socket at /var/run/postgresql and connect to the "postgres" database. If you've installed the pgmonitor setup to a different database, modify these files accordingly or make new ones. If you make new ones, ensure the service name you enable references this file (see the Enable Services section below ).
+Note that `/etc/sysconfig/postgres_exporter_pg##` & `postgres_exporter_pg##_per_db` are the default sysconfig files for monitoring the database running on the local socket at /var/run/postgresql and connect to the "postgres" database. If you've installed the pgMonitor setup to a different database, modify these files accordingly or make new ones. If you make new ones, ensure the service name you enable references this file (see the Enable Services section below ).
 
 #### Database Configuration
 
@@ -165,16 +165,16 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
-| setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates any extra monitoring functions required.  |
+| setup_pg##.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.  |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_common.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
-| queries_backrest.yml | postgres_exporter query file for monitoring pgbackrest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
+| queries_backrest.yml | postgres_exporter query file for monitoring pgBackRest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
 | queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
 
 
-By default, there are two postgres_exporter services expected to be running as of pgmonitor 4.0 and higher. One connects to the default `postgres` database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance, for example connection and replication statistics. This service uses the sysconfig file postgres_exporter_pg##. Connect to this database and run the setup_pg##.sql script to install the required database objects for pgmonitor. 
+By default, there are two postgres_exporter services expected to be running as of pgMonitor 4.0 and higher. One connects to the default `postgres` database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance, for example connection and replication statistics. This service uses the sysconfig file postgres_exporter_pg##. Connect to this database and run the setup_pg##.sql script to install the required database objects for pgMonitor. 
 
 The second postgres_exporter service is used to collect per-database metrics and uses the sysconfig file postgres_exporter_pg##_per_db. By default it is set to also connect to the `postgres` database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multitple databases for how to do this.
 
@@ -190,7 +190,7 @@ For example, to use just the common queries for PostgreSQL 9.6 modify the releva
 QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_pg96.yml"
 ```
 
-As an another example, to include queries for PostgreSQL 10 as well as pgbackrest modify the relevant sysconfig file and update `QUERY_FILE_LIST`:
+As an another example, to include queries for PostgreSQL 10 as well as pgBackRest, modify the relevant sysconfig file and update `QUERY_FILE_LIST`:
 
 ```bash
 QUERY_FILE_LIST="/etc/postgres_exporter/10/queries_common.yml /etc/postgres_exporter/10/queries_pg10.yml /etc/postgres_exporter/10/queries_backrest.yml"
@@ -230,7 +230,7 @@ The script requires being run by a database superuser by default since it must b
 
 ##### PGBouncer
 
-In order to monitor pgbouncer with pgmonitor, the pgbouncer_fdw maintained by CrunchyData is required. Please see its repository for full installation instructions. A package for this is available for Crunchy customers.
+In order to monitor pgbouncer with pgMonitor, the pgbouncer_fdw maintained by CrunchyData is required. Please see its repository for full installation instructions. A package for this is available for Crunchy customers.
 
 https://github.com/CrunchyData/pgbouncer_fdw
 
@@ -259,9 +259,9 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 
 ### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS 7)
 
-Certain metrics are not cluster-wide, so in that case multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases, so as long as you're using the same custom query file for all of them, only one additional exporter service is required and this comes with pgmonitor 4.0 and above by default. The queries_per_db.yml file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup_*.sql" file does not need to be run on these additional databases if using the queries that pgmonitor comes with.
+Certain metrics are not cluster-wide, so multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases. As long as you're using the same custom query file for all of those databases, only one additional exporter service is required and this comes with pgMonitor 4.0 and above by default. The queries_per_db.yml file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (Ex. bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup_*.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.
 
-pgmonitor provides and recommends an example sysconfig file for this per-db exporter: `sysconfig.postgres_exporter_pg##_per_db`. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
+pgMonitor provides and recommends an example sysconfig file for this per-db exporter: `sysconfig.postgres_exporter_pg##_per_db`. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly being the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
 ```
 OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/11/queries_per_db.yml"
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb1?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb2?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
