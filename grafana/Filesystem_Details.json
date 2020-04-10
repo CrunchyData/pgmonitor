@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557419337785,
+  "id": 3,
+  "iteration": 1582574806450,
   "links": [],
   "panels": [
     {
@@ -25,6 +26,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -32,6 +34,7 @@
         "y": 0
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -46,6 +49,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -56,14 +62,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "100-(100*(node_filesystem_free_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "expr": "100-(100*(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
           "refId": "A"
         },
         {
-          "expr": "100-(100*(node_filesystem_free{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "expr": "100-(100*(node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
@@ -118,6 +124,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -125,6 +132,7 @@
         "y": 0
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 3,
       "legend": {
         "avg": false,
@@ -139,6 +147,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -149,14 +160,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "node_filesystem_size_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free_bytes{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
+          "expr": "node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
           "refId": "A"
         },
         {
-          "expr": "node_filesystem_size{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free{job=\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
+          "expr": "node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
@@ -211,6 +222,7 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
@@ -218,6 +230,7 @@
         "y": 7
       },
       "height": "250px",
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "avg": false,
@@ -232,6 +245,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -247,28 +263,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(node_disk_reads_completed_total{job=\"[[osnodes]]\"}[5m])",
+          "expr": "irate(node_disk_reads_completed_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_read",
           "refId": "A"
         },
         {
-          "expr": "irate(node_disk_writes_completed_total{job=\"[[osnodes]]\"}[5m])",
+          "expr": "irate(node_disk_writes_completed_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_write",
           "refId": "B"
         },
         {
-          "expr": "irate(node_disk_reads_completed{job=\"[[osnodes]]\"}[5m])",
+          "expr": "irate(node_disk_reads_completed{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_read",
           "refId": "C"
         },
         {
-          "expr": "irate(node_disk_writes_completed{job=\"[[osnodes]]\"}[5m])",
+          "expr": "irate(node_disk_writes_completed{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_write",
@@ -323,12 +339,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
@@ -343,6 +361,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -358,28 +379,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(node_disk_read_bytes_total{job=\"[[osnodes]]\"}[5m]) * 512",
+          "expr": "irate(node_disk_read_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_read",
           "refId": "A"
         },
         {
-          "expr": "irate(node_disk_written_bytes_total{job=\"[[osnodes]]\"}[5m]) * 512",
+          "expr": "irate(node_disk_written_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{device}}_write",
           "refId": "B"
         },
         {
-          "expr": "irate(node_disk_sectors_read{job=\"[[osnodes]]\"}[5m]) * 512",
+          "expr": "irate(node_disk_sectors_read{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
           "intervalFactor": 4,
           "legendFormat": "{{device}}_read",
           "refId": "C"
         },
         {
-          "expr": "irate(node_disk_sectors_written{job=\"[[osnodes]]\"}[5m]) * 512",
+          "expr": "irate(node_disk_sectors_written{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{device}}_write",
@@ -432,13 +453,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
@@ -453,6 +477,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -463,7 +490,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(node_disk_io_time_seconds_total{job=\"[[osnodes]]\"}[5m])",
+          "expr": "irate(node_disk_io_time_seconds_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{device}}",
@@ -513,7 +540,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -521,8 +548,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -532,9 +559,9 @@
         "multi": false,
         "name": "osnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'node' } )",
+        "query": "label_values(up{exp_type='node'}, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -575,5 +602,5 @@
   "timezone": "",
   "title": "Filesystem Details",
   "uid": "g8iVvnHmz",
-  "version": 1
+  "version": 2
 }

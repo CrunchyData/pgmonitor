@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557427341726,
+  "id": 1,
+  "iteration": 1582574962837,
   "links": [],
   "panels": [
     {
@@ -25,12 +26,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "avg": false,
@@ -45,6 +48,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -55,7 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_table_size_size_bytes{job=\"[[pgnodes]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
+          "expr": "ccp_table_size_size_bytes{job=~\"[[pgnodes]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}.{{schemaname}}.{{relname}}",
@@ -106,7 +112,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -114,8 +120,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -125,9 +131,9 @@
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "label_values(up{exp_type='pg'}, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -139,8 +145,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "postgres",
-          "value": "postgres"
+          "text": "sampledb",
+          "value": "sampledb"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -150,7 +156,7 @@
         "multi": false,
         "name": "dbname",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\"},dbname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\"},dbname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -175,7 +181,7 @@
         "multi": false,
         "name": "schemaname",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\"},schemaname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\",dbname=\"[[dbname]]\"},schemaname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -200,7 +206,7 @@
         "multi": false,
         "name": "tablename",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -243,5 +249,5 @@
   "timezone": "",
   "title": "TableSize Details",
   "uid": "Igh7D7Hmz",
-  "version": 1
+  "version": 2
 }

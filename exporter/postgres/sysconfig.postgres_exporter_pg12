@@ -1,0 +1,16 @@
+# This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/postgres_exporter)
+
+# --web.listen-address: change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.
+# --extend.query-path: location of file containing custom queries to run. Location below is one recommended by crunchy setup steps.
+# DATA_SOURCE_NAME: psql connection string. set the database that the exporter will connect to. Default is `postgres`.
+# QUERY_FILE_LIST: space delimitted yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
+
+PGBACKREST_INFO_THROTTLE_MINUTES=10
+OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/12/queries.yml --disable-default-metrics --disable-settings-metrics"
+DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
+
+# For global / cluster metric
+QUERY_FILE_LIST="/etc/postgres_exporter/12/queries_common.yml /etc/postgres_exporter/12/queries_pg12.yml"
+
+# Recommend running separate exporter service to collect per-db metrics, even if there is only one database in the instance. Allows easier expansion to support multiple databases at a later time. See postgres_exporter_pg##_per_db file.
+

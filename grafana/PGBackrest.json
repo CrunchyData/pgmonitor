@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565641192374,
+  "id": 6,
+  "iteration": 1582574864807,
   "links": [],
   "panels": [
     {
@@ -23,13 +24,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -44,7 +48,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -55,7 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -108,13 +114,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
@@ -129,7 +138,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -140,7 +151,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -193,13 +204,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": false,
@@ -214,7 +228,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -225,7 +241,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -278,13 +294,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 9,
       "legend": {
         "avg": false,
@@ -299,7 +318,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -310,7 +331,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
@@ -363,13 +384,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 16
       },
+      "hiddenSeries": false,
       "id": 5,
       "legend": {
         "avg": false,
@@ -384,7 +408,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -395,7 +421,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -448,13 +474,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 16
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
@@ -469,7 +498,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -480,7 +511,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
@@ -529,8 +560,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 18,
+  "refresh": "15m",
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -538,21 +569,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( up{ exp_type = 'pg' } )",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "label_values(up{exp_type='pg'}, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -564,20 +594,22 @@
       {
         "allValue": null,
         "current": {
-          "text": "main",
-          "value": "main"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "Stanza",
         "multi": false,
         "name": "backrest_stanza",
         "options": [],
-        "query": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\"}, stanza)",
         "refresh": 1,
-        "regex": "/.*stanza=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -589,7 +621,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-2w",
     "to": "now"
   },
   "timepicker": {
@@ -613,7 +645,7 @@
     ]
   },
   "timezone": "",
-  "title": "PGBackrest",
+  "title": "pgBackRest",
   "uid": "QtHwNCrik",
   "version": 2
 }

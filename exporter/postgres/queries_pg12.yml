@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: queries_pg10.yml
+# Begin File: queries_pg12.yml
 #
 ###
 
@@ -101,6 +101,24 @@ ccp_wal_activity:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
 
+
+ccp_data_checksum_failure:
+  query: "SELECT datname AS dbname
+            , checksum_failures AS count
+            , coalesce(extract(epoch from (now() - checksum_last_failure)), 0) AS time_since_last_failure_seconds 
+          FROM pg_catalog.pg_stat_database;"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - count:
+        usage: "GAUGE"
+        description: "Total number of checksum failures on this database"
+    - time_since_last_failure_seconds:
+        usage: "GAUGE"
+        description: "Time interval in seconds since the last checksum failure was encountered"
+
+
 ccp_pg_hba_checksum:
     query: "SELECT monitor.pg_hba_checksum() AS status" 
     metrics:
@@ -109,9 +127,8 @@ ccp_pg_hba_checksum:
             description: "Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid()."
 
 
-
 ###
 #
-# End File: queries_pg10.yml
+# End File: queries_pg12.yml
 #
 ###

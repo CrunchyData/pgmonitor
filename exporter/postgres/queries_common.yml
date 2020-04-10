@@ -204,6 +204,31 @@ ccp_sequence_exhaustion:
             usage: "GAUGE"
             description: "Count of sequences that have reached greater than or equal to 75% of their max available numbers. Function monitor.sequence_status() can provide more details if run directly on system."
 
+
+ccp_postmaster_uptime:
+    query: "SELECT extract(epoch from (now() - pg_postmaster_start_time() )) AS seconds;"
+    metrics:
+        - seconds:
+            usage: "GAUGE"
+            description: "Time interval in seconds since PostgreSQL database was last restarted"
+
+
+ccp_pg_settings_checksum:
+    query: "SELECT monitor.pg_settings_checksum() AS status" 
+    metrics:
+        - status:
+            usage: "GAUGE"
+            description: "Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. To reset current config to valid after alert, run monitor.pg_settings_checksum_set_valid()."
+
+
+ccp_settings_pending_restart:
+  query: "SELECT count(*) AS count FROM pg_catalog.pg_settings WHERE pending_restart = true"
+  metrics:
+    - count:
+        usage: "GAUGE"
+        description: "Number of settings from pg_settings catalog in a pending_restart state"
+
+
 ###
 #
 # End File: queries_common.yml

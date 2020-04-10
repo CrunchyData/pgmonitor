@@ -12,10 +12,11 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1574700489462,
+  "id": 12,
+  "iteration": 1582574901518,
   "links": [],
   "panels": [
     {
@@ -32,6 +33,7 @@
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "avg": false,
@@ -59,7 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_databases_db_conn_perc_used{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pgbouncer_databases_db_conn_perc_used{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool_db}}",
@@ -121,6 +123,7 @@
         "x": 8,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -148,35 +151,35 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_client_active{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "client_active",
           "refId": "A"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_client_waiting{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_client_waiting{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "client_waiting",
           "refId": "B"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_active{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_active{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_active",
           "refId": "C"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_idle{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_idle{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_idle",
           "refId": "D"
         },
         {
-          "expr": "sum(ccp_pgbouncer_pools_server_used{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_pgbouncer_pools_server_used{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "server_used",
@@ -238,6 +241,7 @@
         "x": 16,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "avg": false,
@@ -265,7 +269,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_lists_item_count{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pgbouncer_lists_item_count{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{item}}",
@@ -327,6 +331,7 @@
         "x": 0,
         "y": 10
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": false,
@@ -354,7 +359,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_clients_client_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
+          "expr": "ccp_pgbouncer_clients_client_state_count{job=~\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{client_state}}",
@@ -416,6 +421,7 @@
         "x": 12,
         "y": 10
       },
+      "hiddenSeries": false,
       "id": 10,
       "legend": {
         "avg": false,
@@ -443,7 +449,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_pgbouncer_servers_server_state_count{job=\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
+          "expr": "ccp_pgbouncer_servers_server_state_count{job=~\"[[pgnodes]]\", conn_pool=\"[[conn_pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{server_state}}",
@@ -493,7 +499,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 20,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -501,20 +507,22 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result(ccp_pgbouncer_pools_client_active)",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result(ccp_pgbouncer_pools_client_active)",
+        "query": "label_values(ccp_pgbouncer_pools_client_active, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*?)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -526,20 +534,22 @@
       {
         "allValue": null,
         "current": {
-          "text": "pgbouncer.ccp_monitoring",
-          "value": "pgbouncer.ccp_monitoring"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "Connection Pool",
         "multi": false,
         "name": "conn_pool",
         "options": [],
-        "query": "query_result(ccp_pgbouncer_pools_client_active{job=\"[[pgnodes]]\"})",
+        "query": "label_values(ccp_pgbouncer_pools_client_active{job=~\"[[pgnodes]]\"}, conn_pool)",
         "refresh": 1,
-        "regex": "/.*conn_pool=\"(.*?)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -551,7 +561,7 @@
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -579,5 +589,5 @@
   "timezone": "",
   "title": "PGBouncer",
   "uid": "H4OOvdVWz",
-  "version": 1
+  "version": 2
 }

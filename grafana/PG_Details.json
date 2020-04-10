@@ -15,12 +15,13 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565641555284,
+  "id": 13,
+  "iteration": 1582574919045,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
-      "colorBackground": true,
+      "colorBackground": false,
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
@@ -28,6 +29,7 @@
         "rgb(7, 6, 79)",
         "rgba(50, 172, 45, 0.9)"
       ],
+      "datasource": null,
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -46,13 +48,9 @@
       "interval": null,
       "links": [
         {
-          "dashboard": "PGBackrest",
-          "includeVars": true,
-          "params": "",
           "targetBlank": true,
           "title": "PGBackrest",
-          "type": "dashboard",
-          "url": "/d/QtHwNCrik/pgbackrest"
+          "url": "/d/QtHwNCrik/pgbackrest?$__all_variables"
         }
       ],
       "mappingType": 1,
@@ -90,7 +88,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=\"[[pgnodes]]\", stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\", stanza=\"[[backrest_stanza]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -119,12 +117,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 24,
         "x": 0,
         "y": 2
       },
+      "hiddenSeries": false,
       "id": 18,
       "legend": {
         "alignAsTable": true,
@@ -141,7 +141,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -152,7 +154,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_connections{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_max_connections{job=~\"[[pgnodes]]\"}",
           "hide": false,
           "intervalFactor": 2,
           "legendFormat": "Max",
@@ -161,7 +163,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_active{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_active{job=~\"[[pgnodes]]\"}",
           "intervalFactor": 2,
           "legendFormat": "Active",
           "metric": "",
@@ -169,7 +171,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle_in_txn{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_idle_in_txn{job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "IdleTrn",
@@ -178,7 +180,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_idle{job=~\"[[pgnodes]]\"}",
           "intervalFactor": 2,
           "legendFormat": "Idle",
           "metric": "",
@@ -236,12 +238,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 39,
       "legend": {
         "avg": false,
@@ -256,14 +260,14 @@
       "linewidth": 1,
       "links": [
         {
-          "dashboard": "TableSize Details",
           "title": "TableSize Details",
-          "type": "dashboard",
           "url": "/d/Igh7D7Hmz/tablesize-details"
         }
       ],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -274,14 +278,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_database_size_bytes{job=\"[[pgnodes]]\"})",
+          "expr": "sum(ccp_database_size_bytes{job=~\"[[pgnodes]]\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "total size",
           "refId": "A"
         },
         {
-          "expr": "ccp_database_size_bytes{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_database_size_bytes{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{dbname}}",
@@ -336,12 +340,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 41,
       "legend": {
         "avg": false,
@@ -356,7 +362,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -367,7 +375,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[pgnodes]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{job=\"[[pgnodes]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{job=~\"[[pgnodes]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{job=~\"[[pgnodes]]\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -423,12 +431,14 @@
       "datasource": "PROMETHEUS",
       "description": "Note that replica_port can change if replicas ever detach and re-attach",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
         "y": 17
       },
+      "hiddenSeries": false,
       "id": 35,
       "legend": {
         "avg": false,
@@ -443,7 +453,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -454,7 +466,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_replication_lag_size_bytes{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_replication_lag_size_bytes{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -510,12 +522,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
         "y": 17
       },
+      "hiddenSeries": false,
       "id": 37,
       "legend": {
         "avg": false,
@@ -530,7 +544,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -541,7 +557,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_replication_lag_replay_time{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_replication_lag_replay_time{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -596,12 +612,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 12,
       "legend": {
         "avg": false,
@@ -616,7 +634,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -627,7 +647,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_stat_database_blks_hit{ job=\"[[pgnodes]]\"}  / ( ccp_stat_database_blks_hit{job=\"[[pgnodes]]\"} + ccp_stat_database_blks_read{ job=\"[[pgnodes]]\"} ) * 100",
+          "expr": "ccp_stat_database_blks_hit{ job=~\"[[pgnodes]]\"}  / ( ccp_stat_database_blks_hit{job=~\"[[pgnodes]]\"} + ccp_stat_database_blks_read{ job=~\"[[pgnodes]]\"} ) * 100",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}",
@@ -684,12 +704,14 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 13,
       "legend": {
         "avg": false,
@@ -704,7 +726,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -715,7 +739,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Commit",
@@ -724,7 +748,7 @@
           "step": 120
         },
         {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Rollback",
@@ -802,13 +826,9 @@
       "linewidth": 1,
       "links": [
         {
-          "dashUri": "db/crud_details",
-          "dashboard": "CRUD Details",
-          "includeVars": true,
           "targetBlank": false,
           "title": "CRUD Details",
-          "type": "dashboard",
-          "url": "/d/ubhVvnNmk/crud-details"
+          "url": "/d/ubhVvnNmk/crud-details?$__all_variables"
         }
       ],
       "nullPointMode": "null",
@@ -823,7 +843,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_tup_fetched{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_fetched{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Fetched",
@@ -832,7 +852,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_inserted{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_inserted{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Inserted",
@@ -841,7 +861,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_updated{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_updated{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Updated",
@@ -850,7 +870,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_deleted{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_deleted{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Deleted",
@@ -859,7 +879,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_returned{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_returned{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Returned",
@@ -949,7 +969,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"accessexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"accessexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "accessexclusive",
@@ -957,7 +977,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"accesssharelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"accesssharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "accessshare",
@@ -965,7 +985,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"exclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"exclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "exclusive",
@@ -973,7 +993,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"rowexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"rowexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "rowexclusive",
@@ -981,7 +1001,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"rowsharelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"rowsharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "rowshare",
@@ -989,7 +1009,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"sharelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"sharelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "share",
@@ -997,7 +1017,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"sharerowexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"sharerowexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "sharerowexclusive",
@@ -1005,7 +1025,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{job=\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\"})",
+          "expr": "sum(ccp_locks_count{job=~\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "shareupdateexclusive",
@@ -1094,7 +1114,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_deadlocks{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Conflicts",
@@ -1103,7 +1123,7 @@
           "step": 240
         },
         {
-          "expr": "sum(rate(ccp_stat_database_conflicts{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_conflicts{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "DeadLocks",
@@ -1194,7 +1214,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{job=\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Allocated",
@@ -1203,7 +1223,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend{job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Backend",
@@ -1212,7 +1232,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "FSync",
@@ -1221,7 +1241,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "CheckPoint",
@@ -1230,7 +1250,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_clean{job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Clean",
@@ -1318,7 +1338,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1403,7 +1423,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1488,7 +1508,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_wal_activity_total_size_bytes{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_wal_activity_total_size_bytes{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -1575,7 +1595,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "AutoVacuum",
@@ -1584,7 +1604,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "AutoAnalyze",
@@ -1592,7 +1612,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Vacuum",
@@ -1600,7 +1620,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Analyze",
@@ -1651,7 +1671,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1659,8 +1679,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "Prod",
-          "value": "Prod"
+          "text": "pg1",
+          "value": "pg1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -1670,9 +1690,9 @@
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "query_result( up{ exp_type = 'pg' } )",
+        "query": "label_values(up{exp_type='pg'}, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -1684,21 +1704,22 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "main",
-          "value": "main"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "BackRest Stanza",
         "multi": false,
         "name": "backrest_stanza",
         "options": [],
-        "query": "query_result( ccp_backrest_last_info_backup_runtime_seconds{job=\"[[pgnodes]]\"} )",
+        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\"}, stanza)",
         "refresh": 1,
-        "regex": "/.*stanza=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -1710,7 +1731,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -1736,5 +1757,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 1
+  "version": 2
 }

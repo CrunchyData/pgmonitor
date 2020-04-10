@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1557780622564,
+  "id": 16,
+  "iteration": 1582670523422,
   "links": [],
   "panels": [
     {
@@ -46,13 +47,9 @@
       "interval": null,
       "links": [
         {
-          "dashUri": "db/osresourcedetails",
-          "dashboard": "OS Details",
-          "includeVars": true,
           "targetBlank": true,
           "title": "OS Details",
-          "type": "dashboard",
-          "url": "/d/4t6SO2Fik/os-details"
+          "url": "/d/4t6SO2Fik/os-details?$__all_variables"
         }
       ],
       "mappingType": 1,
@@ -70,6 +67,7 @@
       "maxPerRow": 8,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -83,13 +81,6 @@
       ],
       "repeat": "osnodes",
       "repeatDirection": "h",
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "Prod",
-          "value": "Prod"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -134,7 +125,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -142,20 +133,21 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
         "datasource": "PROMETHEUS",
-        "definition": "query_result( wmi_system_system_up_time{ exp_type = 'node' } )",
+        "definition": "",
         "hide": 2,
         "includeAll": true,
         "label": "Node",
         "multi": true,
         "name": "osnodes",
         "options": [],
-        "query": "query_result( wmi_system_system_up_time{ exp_type = 'node' } )",
+        "query": "label_values(wmi_system_system_up_time{exp_type='node'}, job)",
         "refresh": 1,
-        "regex": "/.*job=\"(.*)\"/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",

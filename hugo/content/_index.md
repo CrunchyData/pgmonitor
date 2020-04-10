@@ -53,7 +53,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 ### PostgreSQL
 
 - pgMonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgMonitor will cease supporting that major version.
-- 11, 10, 9.6, 9.5, 9.4
+- 12, 11, 10, 9.6, 9.5, 9.4
 
 #### Known issues
 
