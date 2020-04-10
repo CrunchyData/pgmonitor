@@ -285,7 +285,7 @@ groups:
         description: 'Count of sequences on instance {{ $labels.job }} at over 75% usage: {{ $value }}. Run following query to see full sequence status: SELECT * FROM monitor.sequence_status() WHERE percent >= 75'
 
   - alert: PGSettingsPendingRestart
-    exper: ccp_settings_pending_restart_count > 0
+    expr: ccp_settings_pending_restart_count > 0
     for: 60s
     labels: 
         service: postgresql
