@@ -89,13 +89,21 @@ ccp_replication_slots:
         usage: "GAUGE"
         description: "The amount of WAL (in bytes) being retained for this slot"
 
-
 ccp_wal_activity:
   query: "SELECT (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_segment_size') * 
     (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_block_size') * 
     (SELECT count(*) FROM monitor.pg_ls_waldir()) AS total_size_bytes;"
   metrics:
     - count:
+        usage: "GAUGE"
+        description: "Current size in bytes of the WAL directory. Note this metric has been deprecated as of pgMonitor 4.3 and will be removed in a future version. Use ccp_wal_activity_total_size_bytes instead."
+
+ccp_wal_activity:
+  query: "SELECT (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_segment_size') * 
+    (SELECT setting::int8 FROM pg_settings WHERE name = 'wal_block_size') * 
+    (SELECT count(*) FROM monitor.pg_ls_waldir()) AS total_size_bytes;"
+  metrics:
+    - total_size_bytes:
         usage: "GAUGE"
         description: "Current size in bytes of the WAL directory"
 
