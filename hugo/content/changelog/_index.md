@@ -9,6 +9,8 @@ weight: 5
 
 ### Bug Fixes
 
+ * Fixed syntax error in example prometheus alert rules file for postgresql for the pending restart rule.
+    
 ### Non-backward Compatible Changes
 
 ### Manual Intervention Changes
