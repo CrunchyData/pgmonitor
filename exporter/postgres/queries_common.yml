@@ -69,7 +69,7 @@ ccp_postmaster_runtime:
         usage: "GAUGE"
         description: "Time at which postmaster started"
 
-ccp_settings_guage:
+ccp_settings_gauge:
   query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_timeout') as checkpoint_timeout
             , (select setting::float from pg_catalog.pg_settings where name = 'checkpoint_completion_target') as checkpoint_completion_target
             , (select 8192*setting::bigint as bytes from pg_catalog.pg_settings where name = 'shared_buffers') as shared_buffers"
