@@ -26,7 +26,7 @@ ccp_bloat_check:
         description: "Size of object in bytes"
     - total_wasted_space_bytes: 
         usage: "GAUGE" 
-        description: "Total wasted space in bytes of current database" 
+        description: "Total wasted space in bytes of given object" 
 
 ###
 #
