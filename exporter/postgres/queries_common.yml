@@ -67,9 +67,9 @@ ccp_postmaster_runtime:
   metrics:
     - start_time_seconds:
         usage: "GAUGE"
-        description: "Time at which postmaster started"
+        description: "Time at which postmaster started. Note this metric has been deprecated as of pgMonitor 4.3 and will be removed in a future version. Use ccp_postmaster_uptime_seconds instead."
 
-ccp_settings_guage:
+ccp_settings_gauge:
   query: "select (select setting::int from pg_catalog.pg_settings where name = 'checkpoint_timeout') as checkpoint_timeout
             , (select setting::float from pg_catalog.pg_settings where name = 'checkpoint_completion_target') as checkpoint_completion_target
             , (select 8192*setting::bigint as bytes from pg_catalog.pg_settings where name = 'shared_buffers') as shared_buffers"
