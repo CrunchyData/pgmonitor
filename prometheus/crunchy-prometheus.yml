@@ -37,6 +37,33 @@ scrape_configs:
       target_label: server 
       replacement: ""
 
+  ## Monitoring for tcp services that don't have an associated exporter can be accomplished using the tcp probe 
+  ##   of the blackbox_exporter provided by the Prometheus developers.
+  ## Note this only provides a simple up/down that the service is listening on the given IP/port.
+  ## If an exporter is available, it is advised to use an Absence alert vs the blackbox probe.  
+  ## Below is an example to monitor the services indicated by the comment. 
+  ## The "targets" list is all that should need to be edited to customize to your setup assuming blackbox_exporter runs
+  ##   on same system as Prometheus.
+  # - job_name: 'blackbox_tcp_services'
+  #   metrics_path: /probe
+  #   params:
+  #     module: [tcp_connect]
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: __param_target
+  #     - source_labels: [__param_target]
+  #       target_label: instance
+  #     - target_label: __address__
+  #       replacement: 127.0.0.1:9115
+  #   static_configs:
+  #     - targets:
+  #       - 127.0.0.1:3000 # grafana
+  #       - 192.168.122.16:8009 # patroni
+  #       - 192.168.122.26:8009 # patroni
+  #       - 192.168.122.36:8009 # patroni
+  #       - 192.168.122.12:7000 # haproxy
+
+
 #### Uncomment below if using alertmanager ####        
 #
 rule_files:
