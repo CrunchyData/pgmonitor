@@ -20,17 +20,6 @@ ccp_is_in_recovery:
         description: "Return value of 1 means database is in recovery. Otherwise 2 it is a primary."
 
 
-ccp_database_size:
-  query: "SELECT datname as dbname, pg_database_size(datname) as bytes FROM pg_catalog.pg_database WHERE datistemplate = false"
-  metrics:
-    - dbname:
-        usage: "LABEL"
-        description: "Database name"
-    - bytes:
-        usage: "GAUGE"
-        description: "Database size in bytes"
-
-
 ccp_locks:
     query: "SELECT pg_database.datname as dbname, tmp.mode, COALESCE(count,0) as count
 			FROM

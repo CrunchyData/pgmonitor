@@ -3,6 +3,23 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.3
+
+### New Features
+
+### Bug Fixes
+
+ * Fixed syntax error in example prometheus alert rules file for postgresql for the pending restart rule.
+    
+### Non-backward Compatible Changes
+
+### Manual Intervention Changes
+
+ * Renamed metric `ccp_postmaster_runtime_start_time_seconds` to `ccp_postmaster_uptime_seconds`. Both metrics report the same value, so they are currently duplicates. Note the old metric name has not yet been dropped and will still work, but it will be dropped in an upcoming version of pgMonitor.
+
+ * For PostgreSQL 9.5 & 9.6, renamed metric `ccp_wal_activity_count` to `ccp_wal_activity_total_size_bytes`. The actual value being returned has always been the total size in bytes, so the previous name was misleading. PostgreSQL 10+ already had the metric with the proper bytes size name. Note the old metric name has not yet been dropped and will still work, but it will be dropped in an upcoming version of pgMonitor.
+
+
 ## 4.2
 
 ### New Features

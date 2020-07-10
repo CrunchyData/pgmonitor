@@ -15,7 +15,11 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
    - [RHEL / CentOS 7 (preferred)](#setup-on-rhel-centos-7-preferred)
    - [RHEL / CentOS 6](#installation-setup-on-rhel-centos-6)
    - [Windows Server 2012R2](#windows-server-2012r2)
+- [Metrics Collected](#metrics-collected)
+   - [PostgreSQL](#postgresql)
+   - [System](#system)
 
+  
 ## Installation
 
 ### RPM installs
@@ -393,3 +397,179 @@ Install the WMI and PostgreSQL exporters by:
 14. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
 
     ![client installer 13](/images/client_installer_13.png)
+
+## Metrics Collected
+
+The metrics collected by our exporters are outlined below. 
+
+### PostgreSQL
+
+PostgreSQL metrics are collected by the [postgres_exporter](https://github.com/wrouesnel/postgres_exporter). pgMonitor uses custom queries for its PG metrics. The default metrics that postgres_exporter comes with are all disabled except for the `pg_up` metric.
+
+#### General Metrics
+
+*pg_up* -  Database is up and connectable by metric collector. This is the only metrics that comes with postgres_exporter that is currently used
+
+#### Common Metrics
+
+Metrics contained in the `queries_common.yml` file. These metrics are common to all versions of PostgreSQL and are recommended as a minimum default for the global exporter.
+
+ * *ccp_archive_command_status_seconds_since_last_fail* - Seconds since the last `archive_command` run failed. If zero, the `archive_command` is succeeding without error.
+
+ * *ccp_database_size_bytes* - Total size of each database in PostgreSQL instance
+
+ * *ccp_is_in_recovery_status* - Current value of the pg_is_in_recovery() function expressed as 2 for true (instance is a replica) and 1 for false (instance is a primary)
+
+ * *ccp_locks_count* - Count of active lock types per database
+
+ * *ccp_pg_settings_checksum_status* -  Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_settings_checksum`. To reset current config to valid after alert, run monitor.pg_settings_checksum_set_valid(). Note this will clear the history table.
+
+ * *ccp_postmaster_uptime_seconds* - Time interval in seconds since PostgreSQL database was last restarted
+
+ * *ccp_postgresql_version_current* - Version of PostgreSQL that this exporter is monitoring. Value is the 6 digit integer returned by the `server_version_num` PostgreSQL configuration variable to allow easy monitoring for version changes.
+
+ * *ccp_sequence_exhaustion_count* - Checks for any sequences that may be close to exhaustion (by default greater than 75% usage). Note this checks the sequences themselves, not the values contained in the columns that use said sequences. Function `monitor.sequence_status()` can provide more details if run directly on database instance.
+
+ * *ccp_settings_pending_restart_count* - Number of settings from pg_settings catalog in a pending_restart state. This value is from the similarly named column found in pg_catalog.pg_settings.
+
+The meaning of the following `ccp_transaction_wraparound` metrics, and how to manage when they are triggered, is covered more extensively in this blog post: https://info.crunchydata.com/blog/managing-transaction-id-wraparound-in-postgresql 
+
+ * *ccp_transaction_wraparound_percent_towards_emergency_autovac* - Recommended thresholds set to 75%/95% when first evaluating vacuum settings on new systems. Once those have been reviewed and at least one instance-wide vacuum has been run, recommend thresholds of 110%/125%. Alerting above 100% for extended periods of time means that autovacuum is not able to keep up with current transaction rate and needs further tuning.
+
+ * *ccp_transaction_wraparound_percent_towards_wraparound* - Recommend thresholds set to 50%/75%. If any of these thresholds is tripped, current vacuum settings must be evaluated and tuned ASAP. If critical threshold is reached, it is vitally important that vacuum be run on tables with old transaction IDs to avoid the cluster being forced to shut down and only be able to run in single user mode.
+
+The following `ccp_stat_bgwriter` metrics are statistics collected from the [pg_stat_bgwriter](https://www.postgresql.org/docs/current/monitoring-stats.html#PG-STAT-BGWRITER-VIEW) view for monitoring performance. These metrics cover important performance information about flushing data out to disk. Please see the documentation for further details on these metrics.
+
+ * *ccp_stat_bgwriter_buffers_alloc*
+
+ * *ccp_stat_bgwriter_buffers_backend*
+
+ * *ccp_stat_bgwriter_buffers_backend_fsync*
+
+ * *ccp_stat_bgwriter_buffers_checkpoint*
+
+ * *ccp_stat_bgwriter_buffers_clean*
+
+The following `ccp_stat_database_*` metrics are statistics collected from the [pg_stat_database](https://www.postgresql.org/docs/current/monitoring-stats.html#PG-STAT-DATABASE-VIEW) view.
+
+ * *ccp_stat_database_blks_hit*
+
+ * *ccp_stat_database_blks_read*
+
+ * *ccp_stat_database_conflicts*
+
+ * *ccp_stat_database_deadlocks*
+
+ * *ccp_stat_database_tup_deleted*
+
+ * *ccp_stat_database_tup_fetched*
+
+ * *ccp_stat_database_tup_inserted*
+
+ * *ccp_stat_database_tup_returned*
+
+ * *ccp_stat_database_tup_updated*
+
+ * *ccp_stat_database_xact_commit*
+
+ * *ccp_stat_database_xact_rollback*
+
+#### PostgreSQL Version Specific Metrics
+
+The following metrics either require special considerations when monitoring specific versions of PostgreSQL, or are only available for specific versions. These metrics are found in the `queries_pg##.yml` files, where ## is the major version of PG. Unless otherwise noted, the below metrics are available for all versions of PG. These metrics are recommend as a minimum default for the global exporter.
+
+ * *ccp_connection_stats_active* - Count of active connections
+
+ * *ccp_connection_stats_idle* - Count of idle connections
+
+ * *ccp_connection_stats_idle_in_txn* - Count of idle in transaction connections
+
+ * *ccp_connection_stats_max_connections* - Current value of max_connections for reference
+
+ * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
+
+ * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT). 
+
+ * *ccp_replication_lag_replay_time* - Only provides values on replica instances. Time since replica received and replayed a WAL file. Note this is not the main way to determine if a replica is behind its primary. It only monitors the time the replica replayed the WAL vs what it has received. It is a secondary metric for monitoring WAL replay on the replica itself.
+
+ * *ccp_replication_lag_size_bytes* - Only provides values on instances that have attached replicas (primary, cascading replica). Tracks byte lag of every streaming replica connected to this database instance. This is the main way that replication lag is monitored. Note that if you have WAL replay only replicas, this will not be reflected here.
+
+ * *ccp_replication_slots_active* - Active state of given replication slot. 1 = true. 0 = false.
+
+ * *ccp_replication_slots_retained_bytes* - The amount of WAL (in bytes) being retained for given slot.
+
+ * *ccp_wal_activity_total_size_bytes* - Current size in bytes of the WAL directory
+
+ * *ccp_wal_activity_last_5_min_size_bytes* - PostgreSQL 10 and later only. Current size in bytes of the last 5 minutes of WAL generation. Includes recycled WALs.
+
+ * *ccp_pg_hba_checksum_status* - PostgreSQL 10 and later only.  Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_hba_checksum`. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid(). Note this will clear the history table.
+
+ * *ccp_data_checksum_failure_count* - PostgreSQL 12 and later only. Total number of checksum failures on this database.
+
+ * *ccp_data_checksum_failure_time_since_last_failure_seconds* - PostgreSQL 12 and later only. Time interval in seconds since the last checksum failure was encountered.
+
+#### Backup Metrics
+
+Backup monitoring only covers pgBackRest at this time. These metrics are found in the `queries_backrest.yml` file. These metrics only need to be collected once per database instance so should be collected by the global postgres_exporter.
+
+ * *ccp_backrest_last_full_backup_time_since_completion_seconds* - Time since completion of last pgBackRest FULL backup
+
+ * *ccp_backrest_last_diff_backup_time_since_completion_seconds* - Time since completion of last pgBackRest DIFFERENTIAL backup. Note that FULL backup counts as a successful DIFFERENTIAL for the given stanza.
+
+ * *ccp_backrest_last_incr_backup_time_since_completion_seconds* - Time since completion of last pgBackRest INCREMENTAL backup. Note that both FULL and DIFFERENTIAL backups count as a successful INCREMENTAL for the given stanza.
+
+ * *ccp_backrest_last_info_runtime_backup_runtime_seconds* - Last successful runtime of each backup type (full/diff/incr).
+
+ * *ccp_backrest_last_info_repo_backup_size_bytes* - Actual size of only this individual backup in the pgbackrest repository
+
+ * *ccp_backrest_last_info_repo_total_size_bytes* - Total size of this backup in the pgbackrest repository, including all required previous backups and WAL
+
+#### Per-Database Metrics
+
+These are metrics that are only available on a per-database level. These metrics are found in the `queries_per_db.yml` file. These metrics are optional and recommended for the non-global, per-db postgres_exporter. They can be included in the global exporter as well if the global database needs per-database metrics monitored. Please note that depending on the number of objects in your database, collecting these metrics can greatly increase the storage requirements for Prometheus since all of these metrics are being collected for each individual object.
+
+ * *ccp_table_size_size_bytes* - Table size inclusive of all indexes in that table
+
+The following `ccp_stat_user_tables_*` metrics are statistics collected from the [pg_stat_user_tables](https://www.postgresql.org/docs/current/monitoring-stats.html#PG-STAT-ALL-TABLES-VIEW). Please see the PG documentation for descriptions of these metrics.
+
+ * *ccp_stat_user_tables_analyze_count*
+
+ * *ccp_stat_user_tables_autoanalyze_count*
+
+ * *ccp_stat_user_tables_autovacuum_count*
+
+ * *ccp_stat_user_tables_n_tup_del*
+
+ * *ccp_stat_user_tables_n_tup_ins*
+
+ * *ccp_stat_user_tables_n_tup_upd*
+
+ * *ccp_stat_user_tables_vacuum_count*
+
+#### Bloat Metrics
+
+Bloat metrics are only available if the `pg_bloat_check` script has been setup to run. See instructions above. These metrics are found in the `queries_bloat.yml` file. These metrics are per-database so, should be used by the per-db postgres_exporter.
+
+ * *ccp_bloat_check_size_bytes* - Size of object in bytes
+
+ * *ccp_bloat_check_total_wasted_space_bytes* - Total wasted space in bytes of given object
+
+#### pgBouncer Metrics
+
+The following metric prefixes correspond to the SHOW command views found in the [pgBouncer documentation](https://www.pgbouncer.org/usage.html). Each column found in the SHOW view is a separate metric under the respective prefix. Ex: `ccp_pgbouncer_pools_client_active` corresponds to the `SHOW POOLS` view's `client_active` column. These metrics are found in the `queries_bouncer.yml` file. These metrics only need to be collected once per database instance so should be collected by the global postgres_exporter.
+
+ * *ccp_pgbouncer_pools* - SHOW POOLS
+
+ * *ccp_pgbouncer_databases* - SHOW DATABASES
+
+ * *ccp_pgbouncer_clients* - SHOW CLIENTS
+
+ * *ccp_pgbouncer_servers* - SHOW SERVERS
+
+ * *ccp_pgbouncer_lists* - SHOW LISTS
+
+### System
+
+\*NIX Operating System metrics (Linux, BSD, etc) are collected using the [node_exporter](https://github.com/prometheus/node_exporter) provided by the Prometheus team. pgMonitor only collects the default metrics provided by node_exporter, but many additional metrics are available if needed.
+
+Windows Operating System metrics are collected by the [wmi_exporter](https://github.com/martinlindhe/wmi_exporter). 
