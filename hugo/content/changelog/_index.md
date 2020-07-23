@@ -7,6 +7,12 @@ weight: 5
 
 ### New Features
 
+ * blackbox_exporter is now available for blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP. More info about this exporter is available via their github repo: https://github.com/prometheus/blackbox_exporter
+
+ * Example alert rules file for monitoring etcd is now available.
+
+ * Included a list explaining the custom metrics that pgMonitor uses with the postgres_exporter.
+
 ### Bug Fixes
 
  * Fixed syntax error in example prometheus alert rules file for postgresql for the pending restart rule.

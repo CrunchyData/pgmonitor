@@ -133,6 +133,14 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 | `/etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example` | Update rules as needed and remove `.example` suffix. Prometheus config provided by pgmonitor expects `.yml` files to be located in `/etc/prometheus/alert-rules.d/` |
 | `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to the target and be set appropriately (pg or node). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
+#### Blackbox Exporter
+
+By default, the blackbox exporter probes are commented out in the `crunchy-prometheus.yml` file. Please see the notes in that commented out section. For the default ipv4 tcp port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the `static_configs: targets` section of the `blackbox_tcp_services` job. Some examples for grafana & patroni are given there. It is also possible to create another auto scrape target directory similar to `auto.d` and manage your blackbox targets more dynamically.
+
+If you configure additional probes besides the one that pgMonitor comes with, you will need to create a different prometheus job_name for them for the given `params: module` name.
+
+An example rules file for monitoring blackbox probes is available in the alert-rules.d folder (`crunchy-alert-rules-blackbox.yml.example`).
+
 #### Enable Services
 
 To enable and start Prometheus as a service, execute the following commands:

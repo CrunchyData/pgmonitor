@@ -37,6 +37,7 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 | pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 | pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
+| blackbox_exporter              | Package for the blackbox_exporter                                         |
 
 ### Non-RPM installs
 
@@ -48,6 +49,7 @@ For non-package installations on Linux, applications can be downloaded from thei
 | postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases   |
 | pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
 | pgbouncer_fdw                 | https://github.com/CrunchyData/pgbouncer_fdw              |
+| blackbox_exporter             | https://github.com/prometheus/blackbox_exporter           |
 
 #### User and Configuration Directory Installation
 
@@ -62,6 +64,8 @@ sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 All executables installed via the above releases are expected to be in the `/usr/bin` directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
 
 https://github.com/lest/prometheus-rpm/tree/master/node_exporter
+
+A base blackbox_exporter systemd file is also expected to be in place. No examples are currently available.
 
 The files contained in this repository are assumed to be installed in the following locations with the following names. In the instructions below, you should replace a double-hash (`##`) with the two-digit major version of PostgreSQL you are running (ex: 95, 96, 10, etc.).
 
@@ -93,6 +97,15 @@ The following pgMonitor configuration files should be placed according to the fo
 | postgres/setup_pg##.sql | `/etc/postgres_exporter/##/setup_pg##.sql`  |
 | postgres/queries_*.yml | `/etc/postgres_exporter/##/queries_*.yml`  |
 | postgres/pgbackrest-info.sh | `/usr/bin/pgbackrest-info.sh` |
+
+##### blackbox_exporter
+
+The following pgMonitor configuration files should be placed according to the following mapping:
+
+| pgMonitor Configuration File | System Location |
+|------------------------------|-----------------|
+| blackbox/blackbox_exporter.sysconfig  | `/etc/sysconfig/blackbox_exporter`   |
+| blackbox/crunchy-blackbox.yml| `/etc/blackbox_exporter/crunchy-blackbox.yml` |
 
 ### Windows installs
 
@@ -232,6 +245,10 @@ The `/etc/postgres_exporter/##/crontab.txt` file is meant to be a guide for how 
 
 The script requires being run by a database superuser by default since it must be able to run a scan on every table. If you'd like to not run it as a superuser, you will have to create a new role that has read permissions on all tables in all schemas that are to be monitored for bloat. You can then change the user in the connection string option to the script.
 
+##### Blackbox Exporter
+
+The configuration file for the blackbox_exporter provided by pgMonitor (`/etc/blackbox_exporter/crunchy-blackbox.yml`) provides a probe for monitoring any ivp4 tcp port status. The actual target and port being monitored is controlled via the Prometheus target configuration system. Please see the pgMonitor Prometheus documentation for further details. If any additional blackbox probes are desired, please see the upstream documentation.
+
 ##### PGBouncer
 
 In order to monitor pgbouncer with pgMonitor, the pgbouncer_fdw maintained by CrunchyData is required. Please see its repository for full installation instructions. A package for this is available for Crunchy customers.
@@ -248,6 +265,13 @@ sudo systemctl start node_exporter
 sudo systemctl status node_exporter
 ```
 
+If you've installed the blackbox exporter:
+```
+sudo systemctl enable blackbox_exporter
+sudo systemctl start blackbox_exporter
+sudo systemctl status blackbox_exporter
+```
+
 To most easily allow the use of multiple postgres exporters, running multiple major versions of PostgreSQL, and to avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's sysconfig file is named "postgres_exporter_pg##" and tied to the major version of postgres that it was installed for. A similar EnvironmentFile exists for the per-db service. Be sure to replace the ## in the below commands first!
 
 ```bash
@@ -258,7 +282,6 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##
 sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
-
 ```
 
 ### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS 7)
