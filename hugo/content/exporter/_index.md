@@ -104,8 +104,8 @@ The following pgMonitor configuration files should be placed according to the fo
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
-| blackbox/blackbox_exporter.sysconfig  | {{ shell }}/etc/sysconfig/blackbox_exporter{{ /shell }}   |
-| blackbox/crunchy-blackbox.yml| {{ shell }}/etc/blackbox_exporter/crunchy-blackbox.yml{{ /shell }} |
+| blackbox/blackbox_exporter.sysconfig  | `/etc/sysconfig/blackbox_exporter`   |
+| blackbox/crunchy-blackbox.yml| `/etc/blackbox_exporter/crunchy-blackbox.yml` |
 
 ### Windows installs
 
@@ -247,7 +247,7 @@ The script requires being run by a database superuser by default since it must b
 
 ##### Blackbox Exporter
 
-The configuration file for the blackbox_exporter provided by pgMonitor ({{ shell }}/etc/blackbox_exporter/crunchy-blackbox.yml{{ /shell }}) provides a probe for monitoring any IPv4 TCP port status. The actual target and port being monitored are controlled via the Prometheus target configuration system. Please see the pgMonitor Prometheus documentation for further details. If any additional Blackbox probes are desired, please see the upstream documentation.
+The configuration file for the blackbox_exporter provided by pgMonitor (`/etc/blackbox_exporter/crunchy-blackbox.yml`) provides a probe for monitoring any IPv4 TCP port status. The actual target and port being monitored are controlled via the Prometheus target configuration system. Please see the pgMonitor Prometheus documentation for further details. If any additional Blackbox probes are desired, please see the upstream documentation.
 
 ##### PGBouncer
 
