@@ -135,7 +135,7 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 
 #### Blackbox Exporter
 
-By default, the blackbox exporter probes are commented out in the `crunchy-prometheus.yml` file. Please see the notes in that commented out section. For the default ipv4 tcp port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the `static_configs: targets` section of the `blackbox_tcp_services` job. Some examples for grafana & patroni are given there. It is also possible to create another auto scrape target directory similar to `auto.d` and manage your blackbox targets more dynamically.
+By default, the Blackbox exporter probes are commented out in the {{ shell }}crunchy-prometheus.yml{{ /shell }} file; please see the notes in that commented out section. For the default IPv4 TCP port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the {{ yaml }}static_configs: targets{{ /yaml }} section of the {{ yaml }}blackbox_tcp_services{{ /yaml }} job; some examples for Grafana & Patroni are given there. It is also possible to create another auto-scrape target directory similar to {{ shell }}auto.d{{ /shell }} and manage your blackbox targets more dynamically.
 
 If you configure additional probes besides the one that pgMonitor comes with, you will need to create a different prometheus job_name for them for the given `params: module` name.
 
