@@ -104,7 +104,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
-| blackbox/blackbox_exporter.sysconfig  | `/etc/sysconfig/blackbox_exporter`   |
+| blackbox/blackbox_exporter.sysconfig  | {{ shell }}/etc/sysconfig/blackbox_exporter{{ /shell }}   |
 | blackbox/crunchy-blackbox.yml| `/etc/blackbox_exporter/crunchy-blackbox.yml` |
 
 ### Windows installs
