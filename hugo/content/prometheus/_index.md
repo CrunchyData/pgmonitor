@@ -139,7 +139,7 @@ By default, the Blackbox exporter probes are commented out in the {{ shell }}cru
 
 If you configure additional probes beyond the one that pgMonitor comes with, you will need to create a different Prometheus {{ yaml }}job_name{{ /yaml }} for them for the given {{ yaml }}params: module{{ /yaml }} name.
 
-An example rules file for monitoring blackbox probes is available in the alert-rules.d folder (`crunchy-alert-rules-blackbox.yml.example`).
+An example rules file for monitoring Blackbox probes, {{ shell }}crunchy-alert-rules-blackbox.yml.example{{ /shell }}, is available in the {{ shell }}alert-rules.d{{ /shell }} folder.
 
 #### Enable Services
 
