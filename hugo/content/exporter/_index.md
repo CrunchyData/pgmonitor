@@ -247,7 +247,7 @@ The script requires being run by a database superuser by default since it must b
 
 ##### Blackbox Exporter
 
-The configuration file for the blackbox_exporter provided by pgMonitor (`/etc/blackbox_exporter/crunchy-blackbox.yml`) provides a probe for monitoring any ivp4 tcp port status. The actual target and port being monitored is controlled via the Prometheus target configuration system. Please see the pgMonitor Prometheus documentation for further details. If any additional blackbox probes are desired, please see the upstream documentation.
+The configuration file for the blackbox_exporter provided by pgMonitor ({{ shell }}/etc/blackbox_exporter/crunchy-blackbox.yml{{ /shell }}) provides a probe for monitoring any IPv4 TCP port status. The actual target and port being monitored are controlled via the Prometheus target configuration system. Please see the pgMonitor Prometheus documentation for further details. If any additional Blackbox probes are desired, please see the upstream documentation.
 
 ##### PGBouncer
 
