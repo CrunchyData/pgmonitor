@@ -133,6 +133,14 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 | `/etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example` | Update rules as needed and remove `.example` suffix. Prometheus config provided by pgmonitor expects `.yml` files to be located in `/etc/prometheus/alert-rules.d/` |
 | `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to the target and be set appropriately (pg or node). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
+#### Blackbox Exporter
+
+By default, the Blackbox exporter probes are commented out in the {{ shell }}crunchy-prometheus.yml{{ /shell }} file; please see the notes in that commented out section. For the default IPv4 TCP port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the {{ yaml }}static_configs: targets{{ /yaml }} section of the {{ yaml }}blackbox_tcp_services{{ /yaml }} job; some examples for Grafana & Patroni are given there. It is also possible to create another auto-scrape target directory similar to {{ shell }}auto.d{{ /shell }} and manage your blackbox targets more dynamically.
+
+If you configure additional probes beyond the one that pgMonitor comes with, you will need to create a different Prometheus {{ yaml }}job_name{{ /yaml }} for them for the given {{ yaml }}params: module{{ /yaml }} name.
+
+An example rules file for monitoring Blackbox probes, {{ shell }}crunchy-alert-rules-blackbox.yml.example{{ /shell }}, is available in the {{ shell }}alert-rules.d{{ /shell }} folder.
+
 #### Enable Services
 
 To enable and start Prometheus as a service, execute the following commands:
