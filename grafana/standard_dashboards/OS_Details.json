@@ -15,8 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1582574817208,
+  "id": 9,
+  "iteration": 1596489445314,
   "links": [],
   "panels": [
     {
@@ -571,10 +571,125 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [
+        {
+          "title": "Network Details",
+          "url": "/d/MBRTkBRZk/network-details?$__all_variables"
+        }
+      ],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeat": null,
+      "seriesOverrides": [
+        {
+          "alias": "/.*in/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(irate(node_network_receive_bytes_total{job=~\"$osnodes\"}[3m]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "in",
+          "metric": "",
+          "refId": "A",
+          "step": 60,
+          "target": ""
+        },
+        {
+          "expr": "sum(irate(node_network_transmit_bytes_total{job=~\"$osnodes\"}[3m]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "out",
+          "refId": "B",
+          "step": 60
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network Traffic",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "label": "bits in (-) / bits out (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 21,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -582,13 +697,14 @@
       {
         "allValue": null,
         "current": {
-          "text": "pgmonitor_cluster",
-          "value": "pgmonitor_cluster"
+          "text": "awx_etcd1",
+          "value": "awx_etcd1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "Node",
         "multi": false,
         "name": "osnodes",
@@ -634,5 +750,8 @@
   "timezone": "browser",
   "title": "OS Details",
   "uid": "4t6SO2Fik",
-  "version": 2
+  "variables": {
+    "list": []
+  },
+  "version": 6
 }
