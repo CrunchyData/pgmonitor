@@ -2,7 +2,7 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:143",
+        "$$hashKey": "object:270",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1596723533096,
+  "id": 23,
+  "iteration": 1596730628312,
   "links": [
     {
       "asDropdown": false,
@@ -77,23 +77,19 @@
         {
           "expr": "ccp_connection_stats_total{service=\"[[service_name]]\"}*100/ccp_connection_stats_max_connections{service=\"[[service_name]]\"}",
           "format": "time_series",
+          "instant": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "connections",
           "refId": "C"
         },
         {
-          "expr": "ccp_pvc_used{service=\"[[service_name]]\", mount=\"/pgdata\"}*100/ccp_pvc_size{service=\"[[service_name]]\",mount=\"/pgdata\"}",
+          "expr": "(ccp_container_data_disk_total_bytes{service=\"[[service_name]]\"}-ccp_container_data_disk_available_bytes{service=\"[[service_name]]\"})*100/ccp_container_data_disk_total_bytes{service=\"[[service_name]]\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "data disk",
+          "legendFormat": "Mount:{{mount_point}}",
           "refId": "A"
-        },
-        {
-          "expr": "ccp_pvc_used{service=\"[[service_name]]\", mount=\"/backrestrepo\"}*100/ccp_pvc_size{service=\"[[service_name]]\",mount=\"/backrestrepo\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "backup disk",
-          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -489,8 +485,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "dcsi",
-          "value": "dcsi"
+          "text": "democluster4",
+          "value": "democluster4"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(service)",
@@ -544,10 +540,10 @@
     ]
   },
   "timezone": "browser",
-  "title": "Golden Signals 4",
+  "title": "PostgreSQL Service Health Overview",
   "uid": "pRyvrRgGz",
   "variables": {
     "list": []
   },
-  "version": 1
+  "version": 5
 }
