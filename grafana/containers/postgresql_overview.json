@@ -1,205 +1,210 @@
 {
-  "dashboard": {
-    "annotations": {
-      "list": [
-	{
-	  "builtIn": 1,
-	  "datasource": "-- Grafana --",
-	  "enable": true,
-	  "hide": true,
-	  "iconColor": "rgba(0, 211, 255, 1)",
-	  "name": "Annotations & Alerts",
-	  "type": "dashboard"
-	}
-      ]
-    },
-    "overwrite": true,
-    "folderId": 0,
-    "editable": false,
-    "gnetId": null,
-    "graphTooltip": 0,
-    "iteration": 1559061209956,
-    "links": [],
-    "panels": [
+  "annotations": {
+    "list": [
       {
-	"cacheTimeout": null,
-	"colorBackground": true,
-	"colorPostfix": false,
-	"colorPrefix": false,
-	"colorValue": false,
-	"colors": [
-	  "#bf1b00",
-	  "#eab839",
-	  "#56A64B"
-	],
-	"datasource": "PROMETHEUS",
-	"format": "short",
-	"gauge": {
-	  "maxValue": 2,
-	  "minValue": 0,
-	  "show": false,
-	  "thresholdLabels": false,
-	  "thresholdMarkers": false
-	},
-	"id": 1,
-	"interval": null,
-	"links": [
-	  {
-	    "dashboard": "PostgreSQLDetails",
-	    "includeVars": true,
-	    "keepTime": true,
-	    "targetBlank": true,
-	    "title": "PostgreSQLDetails",
-	    "type": "dashboard"
-	  }
-	],
-	"mappingType": 2,
-	"mappingTypes": [
-	  {
-	    "$hashKey": "object:295",
-	    "name": "value to text",
-	    "value": 1
-	  },
-	  {
-	    "$hashKey": "object:296",
-	    "name": "range to text",
-	    "value": 2
-	  }
-	],
-	"maxDataPoints": 100,
-        "maxPerRow": 3,
-	"nullPointMode": "connected",
-	"nullText": null,
-        "options": {},
-	"postfix": "",
-	"postfixFontSize": "50%",
-	"prefix": "",
-	"prefixFontSize": "50%",
-	"rangeMaps": [
-	  {
-	    "from": "0",
-	    "text": "DOWN",
-	    "to": "99"
-	  },
-	  {
-	    "from": "100",
-	    "text": "Standalone Cluster",
-	    "to": "199"
-	  },
-	  {
-	    "from": "200",
-	    "text": "HA CLUSTER",
-	    "to": "1000"
-	  }
-	],
-	"repeat": "cluster",
-	"repeatDirection": "h",
-	"scopedVars": {
-	  "cluster": {
-	    "selected": false,
-	    "text": "resizetest",
-	    "value": "resizetest"
-	  }
-	},
-	"sparkline": {
-	  "fillColor": "rgba(31, 118, 189, 0.18)",
-	  "full": false,
-	  "lineColor": "rgb(31, 120, 193)",
-	  "show": false
-	},
-	"tableColumn": "",
-	"targets": [
-	  {
-	    "$hashKey": "object:243",
-	    "expr": "sum(pg_up{pg_cluster=\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=\"$cluster\"})",
-	    "format": "time_series",
-	    "interval": "",
-	    "intervalFactor": 1,
-	    "legendFormat": "{{cluster}}",
-	    "metric": "up",
-	    "refId": "A",
-	    "step": 2
-	  }
-	],
-	"thresholds": "10,100",
-	"title": "$cluster - Overview",
-	"transparent": false,
-	"type": "singlestat",
-	"valueFontSize": "70%",
-	"valueMaps": [],
-	"valueName": "current",
-        "gridPos": {
-          "x": 0,
-          "y": 0,
-          "h": 4,
-          "w": 7
-        }
+        "$$hashKey": "object:40",
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
       }
-    ],
-    "refresh": "30s",
-    "style": "dark",
-    "tags": [],
-    "templating": {
-      "list": [
-	{
-	  "allValue": null,
-	  "current": {
-	    "text": "All",
-	    "value": "$__all"
-	  },
-	  "datasource": "PROMETHEUS",
-	  "definition": "label_values(pg_cluster)",
-	  "hide": 2,
-	  "includeAll": true,
-	  "label": "cluster",
-	  "multi": true,
-	  "name": "cluster",
-	  "options": [],
-	  "query": "label_values(pg_cluster)",
-	  "refresh": 1,
-	  "regex": "",
-	  "skipUrlSync": false,
-	  "sort": 0,
-	  "tagValuesQuery": "",
-	  "tags": [],
-	  "tagsQuery": "",
-	  "type": "query",
-	  "useTags": false
-	}
-      ]
-    },
-    "time": {
-      "from": "now-5m",
-      "to": "now"
-    },
-    "timepicker": {
-      "refresh_intervals": [
-	"5s",
-	"10s",
-	"30s",
-	"1m",
-	"5m",
-	"15m",
-	"30m",
-	"1h",
-	"2h",
-	"1d"
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "iteration": 1596723388434,
+  "links": [],
+  "panels": [
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#bf1b00",
+        "#eab839",
+        "#56A64B"
       ],
-      "time_options": [
-	"5m",
-	"15m",
-	"1h",
-	"6h",
-	"12h",
-	"24h",
-	"2d",
-	"7d",
-	"30d"
-      ]
-    },
-    "timezone": "",
-    "title": "PostgreSQL Overview",
-    "Name": "PostgreSQL Overview",
-    "uid": "pgoverview"
-  }
+      "datasource": "PROMETHEUS",
+      "format": "short",
+      "gauge": {
+        "maxValue": 2,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": false
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "interval": null,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "PostgreSQLDetails",
+          "url": "dashboard/db/postgresqldetails?$__url_time_range&$__all_variables"
+        }
+      ],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:78",
+          "$hashKey": "object:295",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:79",
+          "$hashKey": "object:296",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "maxPerRow": 2,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "$$hashKey": "object:81",
+          "from": "0",
+          "text": "DOWN",
+          "to": "99"
+        },
+        {
+          "$$hashKey": "object:82",
+          "from": "100",
+          "text": "Standalone Cluster",
+          "to": "199"
+        },
+        {
+          "$$hashKey": "object:83",
+          "from": "200",
+          "text": "HA CLUSTER",
+          "to": "1000"
+        }
+      ],
+      "repeat": "cluster",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "cluster": {
+          "selected": false,
+          "text": "dcsi:dcsi",
+          "value": "dcsi:dcsi"
+        }
+      },
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$hashKey": "object:243",
+          "expr": "sum(pg_up{pg_cluster=\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=\"$cluster\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{cluster}}",
+          "metric": "up",
+          "refId": "A",
+          "step": 2
+        }
+      ],
+      "thresholds": "10,100",
+      "title": "$cluster - Overview",
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [],
+      "valueName": "current"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 22,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "PROMETHEUS",
+        "definition": "label_values(pg_cluster)",
+        "hide": 2,
+        "includeAll": true,
+        "index": -1,
+        "label": "cluster",
+        "multi": true,
+        "name": "cluster",
+        "options": [],
+        "query": "label_values(pg_cluster)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "PostgreSQL Overview",
+  "uid": "pgoverview",
+  "variables": {
+    "list": []
+  },
+  "version": 2
 }

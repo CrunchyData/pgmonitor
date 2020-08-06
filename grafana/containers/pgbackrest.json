@@ -1,8 +1,8 @@
 {
-  "dashboard": {
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:183",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -13,11 +13,11 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1590372766212,
+  "id": 4,
+  "iteration": 1596723551280,
   "links": [
     {
       "asDropdown": false,
@@ -36,6 +36,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -137,6 +138,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -238,7 +240,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 19,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -246,15 +248,14 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "tags": [],
-          "text": "psql: hac",
-          "value": "psql: hac"
+          "text": "dcsi:dcsi",
+          "value": "dcsi:dcsi"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(pg_cluster)",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "cluster",
         "multi": false,
         "name": "cluster",
@@ -273,7 +274,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -299,6 +300,8 @@
   "timezone": "",
   "title": "pgBackRest",
   "uid": "pgbackrest",
-  "version": 10
-}
+  "variables": {
+    "list": []
+  },
+  "version": 1
 }

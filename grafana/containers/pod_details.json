@@ -1,8 +1,8 @@
 {
-  "dashboard": {
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:43",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -13,11 +13,11 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1596222314867,
+  "id": 22,
+  "iteration": 1596723620872,
   "links": [],
   "panels": [
     {
@@ -759,7 +759,6 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
           "text": "postgres-operations:democluster5",
           "value": "postgres-operations:democluster5"
         },
@@ -819,8 +818,8 @@
     ]
   },
   "time": {
-    "from": "2020-07-31T17:10:44.108Z",
-    "to": "2020-07-31T17:29:07.975Z"
+    "from": "now-30m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -849,6 +848,5 @@
   "variables": {
     "list": []
   },
-  "version": 13
-}
+  "version": 1
 }

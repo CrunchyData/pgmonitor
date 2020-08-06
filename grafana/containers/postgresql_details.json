@@ -1,8 +1,8 @@
 {
-  "dashboard": {
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:48",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -13,11 +13,11 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1589083303594,
+  "id": 2,
+  "iteration": 1596723467858,
   "links": [
     {
       "asDropdown": false,
@@ -41,6 +41,7 @@
         "#FF9830",
         "#E02F44"
       ],
+      "datasource": null,
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -77,7 +78,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "Time Since Last Backup:",
@@ -98,8 +98,9 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{service=\"[[cluster]]\"} < ccp_backrest_last_diff_backup_time_since_completion_seconds{service=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{service=\"[[cluster]]\"} < ccp_backrest_last_full_backup_time_since_completion_seconds{service=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{service=\"[[cluster]]\"} ",
+          "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}) ",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
@@ -161,7 +162,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -246,7 +246,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -327,7 +326,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -383,6 +381,7 @@
         "x": 12,
         "y": 2
       },
+      "hiddenSeries": false,
       "id": 24,
       "legend": {
         "alignAsTable": true,
@@ -483,6 +482,7 @@
         "x": 18,
         "y": 2
       },
+      "hiddenSeries": false,
       "id": 26,
       "legend": {
         "alignAsTable": true,
@@ -599,6 +599,7 @@
         "x": 0,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 12,
       "legend": {
         "alignAsTable": true,
@@ -698,6 +699,7 @@
         "x": 12,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 30,
       "legend": {
         "alignAsTable": true,
@@ -790,6 +792,7 @@
         "x": 0,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 11,
       "legend": {
         "alignAsTable": true,
@@ -919,6 +922,7 @@
         "x": 12,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 29,
       "legend": {
         "alignAsTable": true,
@@ -1022,6 +1026,7 @@
         "x": 0,
         "y": 20
       },
+      "hiddenSeries": false,
       "id": 15,
       "legend": {
         "alignAsTable": true,
@@ -1125,6 +1130,7 @@
         "x": 12,
         "y": 20
       },
+      "hiddenSeries": false,
       "id": 28,
       "legend": {
         "alignAsTable": true,
@@ -1224,6 +1230,7 @@
         "x": 0,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 14,
       "legend": {
         "alignAsTable": true,
@@ -1353,6 +1360,7 @@
         "x": 12,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 13,
       "legend": {
         "alignAsTable": true,
@@ -1578,7 +1586,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 19,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1587,15 +1595,16 @@
         "allFormat": "glob",
         "allValue": null,
         "current": {
-          "text": "lala",
+          "text": "dcsi:dcsi",
           "value": [
-            "lala"
+            "dcsi:dcsi"
           ]
         },
         "datasource": "PROMETHEUS",
         "definition": "",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "cluster",
         "multi": true,
         "name": "cluster",
@@ -1615,15 +1624,15 @@
         "allFormat": "glob",
         "allValue": ".*",
         "current": {
-          "text": "lala-6cdc4b6f9c-8ggln",
-          "value": [
-            "lala-6cdc4b6f9c-8ggln"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "pod",
         "multi": true,
         "name": "pod",
@@ -1643,15 +1652,15 @@
         "allFormat": "glob",
         "allValue": ".*",
         "current": {
-          "text": "userdb",
-          "value": [
-            "userdb"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values({pg_cluster=\"[[cluster]]\" ,pod=\"[[pod]]\"},dbname)",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "datname",
@@ -1670,7 +1679,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1701,6 +1710,8 @@
   "timezone": "browser",
   "title": "PostgreSQLDetails",
   "uid": "3NfGQ_6Wk",
-  "version": 12
-  }
+  "variables": {
+    "list": []
+  },
+  "version": 2
 }

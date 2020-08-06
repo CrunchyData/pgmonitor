@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:143",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -12,11 +13,11 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1594346948355,
+  "id": 6,
+  "iteration": 1596723533096,
   "links": [
     {
       "asDropdown": false,
@@ -35,6 +36,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 5,
       "gridPos": {
@@ -43,6 +45,7 @@
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 6,
       "legend": {
         "alignAsTable": false,
@@ -141,6 +144,7 @@
       "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 5,
       "fillGradient": 5,
       "gridPos": {
@@ -149,6 +153,7 @@
         "x": 11,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 18,
       "legend": {
         "avg": false,
@@ -188,6 +193,14 @@
           "intervalFactor": 1,
           "legendFormat": "Queries per minute",
           "refId": "B"
+        },
+        {
+          "expr": "ccp_connection_stats_active{service=\"[[service_name]]\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Active connections",
+          "refId": "C"
         }
       ],
       "thresholds": [],
@@ -236,6 +249,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "description": "Errors",
       "fill": 1,
       "fillGradient": 5,
@@ -245,6 +259,7 @@
         "x": 0,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "alignAsTable": false,
@@ -361,6 +376,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 5,
       "gridPos": {
@@ -369,6 +385,7 @@
         "x": 11,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 10,
       "legend": {
         "alignAsTable": false,
@@ -400,19 +417,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_query_time{service_name=\"[[service_name]]\"}",
+          "expr": "ccp_connection_stats_max_query_time{service=\"[[service_name]]\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "Max - ({{dbname}})",
+          "legendFormat": "Max",
           "refId": "A"
         },
         {
           "expr": "ccp_query_avg_latency{service=\"[[service_name]]\"}",
           "format": "time_series",
-          "hide": false,
+          "hide": true,
           "instant": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Avg - ({{dbname}})",
           "refId": "B"
@@ -443,7 +462,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -462,7 +481,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 19,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -470,14 +489,14 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "pvcmetrics4",
-          "value": "pvcmetrics4"
+          "text": "dcsi",
+          "value": "dcsi"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(service)",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "service_name",
         "multi": false,
         "name": "service_name",
@@ -527,5 +546,8 @@
   "timezone": "browser",
   "title": "Golden Signals 4",
   "uid": "pRyvrRgGz",
-  "version": 49
+  "variables": {
+    "list": []
+  },
+  "version": 1
 }
