@@ -17,8 +17,15 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 22,
-  "iteration": 1596723620872,
-  "links": [],
+  "iteration": 1596723620874,
+  "links": [
+    {
+      "$$hashKey": "object:200",
+      "icon": "external link",
+      "tags": [],
+      "type": "dashboards"
+    }
+  ],
   "panels": [
     {
       "aliasColors": {},
@@ -599,7 +606,8 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
+          "$$hashKey": "object:121",
+          "format": "Bps",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -607,6 +615,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:122",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -759,8 +768,9 @@
       {
         "allValue": null,
         "current": {
-          "text": "postgres-operations:democluster5",
-          "value": "postgres-operations:democluster5"
+          "tags": [],
+          "text": "postgres-operations:democluster4",
+          "value": "postgres-operations:democluster4"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(pg_cluster)",
@@ -785,9 +795,8 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "democluster5-796c668c4d-56bm2",
-          "value": "democluster5-796c668c4d-56bm2"
+          "text": "democluster4-7875894786-kjm46",
+          "value": "democluster4-7875894786-kjm46"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
@@ -800,8 +809,8 @@
         "options": [
           {
             "selected": true,
-            "text": "democluster5-796c668c4d-56bm2",
-            "value": "democluster5-796c668c4d-56bm2"
+            "text": "democluster4-7875894786-kjm46",
+            "value": "democluster4-7875894786-kjm46"
           }
         ],
         "query": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
@@ -818,7 +827,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -848,5 +857,5 @@
   "variables": {
     "list": []
   },
-  "version": 1
+  "version": 2
 }
