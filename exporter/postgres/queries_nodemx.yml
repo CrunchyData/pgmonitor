@@ -26,7 +26,7 @@ ccp_nodemx_process:
   metrics:
     - count:
         usage: "GAUGE"
-        description: "Total number of processes on database container"
+        description: "Total number of database processes"
 
 
 ccp_nodemx_mem:
