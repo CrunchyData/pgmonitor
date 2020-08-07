@@ -1,7 +1,38 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "PROMETHEUS",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.7.4"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:111",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -15,8 +46,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1596814000168,
+  "id": null,
+  "iteration": 1596817489973,
   "links": [
     {
       "icon": "external link",
@@ -31,7 +62,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -145,11 +176,8 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "postgres-operations:democluster1",
-          "value": "postgres-operations:democluster1"
-        },
-        "datasource": "PROMETHEUS",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -171,13 +199,8 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "PROMETHEUS",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
         "hide": 0,
         "includeAll": true,
@@ -199,12 +222,8 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "PROMETHEUS",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\", instance=\"[[pod]]\"},dbname)",
         "hide": 0,
         "includeAll": true,
@@ -226,12 +245,8 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "PROMETHEUS",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -253,12 +268,8 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "PROMETHEUS",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "",
         "hide": 0,
         "includeAll": true,
