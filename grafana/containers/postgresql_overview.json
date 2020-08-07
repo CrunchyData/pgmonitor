@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:40",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1596723388434,
+  "iteration": 1596814059232,
   "links": [],
   "panels": [
     {
@@ -42,7 +41,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -58,13 +57,11 @@
       "mappingType": 2,
       "mappingTypes": [
         {
-          "$$hashKey": "object:78",
           "$hashKey": "object:295",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:79",
           "$hashKey": "object:296",
           "name": "range to text",
           "value": 2
@@ -80,19 +77,16 @@
       "prefixFontSize": "50%",
       "rangeMaps": [
         {
-          "$$hashKey": "object:81",
           "from": "0",
           "text": "DOWN",
           "to": "99"
         },
         {
-          "$$hashKey": "object:82",
           "from": "100",
           "text": "Standalone Cluster",
           "to": "199"
         },
         {
-          "$$hashKey": "object:83",
           "from": "200",
           "text": "HA CLUSTER",
           "to": "1000"
@@ -103,8 +97,119 @@
       "scopedVars": {
         "cluster": {
           "selected": false,
-          "text": "dcsi:dcsi",
-          "value": "dcsi:dcsi"
+          "text": "postgres-operations:democluster1",
+          "value": "postgres-operations:democluster1"
+        }
+      },
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "$hashKey": "object:243",
+          "expr": "sum(pg_up{pg_cluster=\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=\"$cluster\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{cluster}}",
+          "metric": "up",
+          "refId": "A",
+          "step": 2
+        }
+      ],
+      "thresholds": "10,100",
+      "title": "$cluster - Overview",
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#bf1b00",
+        "#eab839",
+        "#56A64B"
+      ],
+      "datasource": "PROMETHEUS",
+      "format": "short",
+      "gauge": {
+        "maxValue": 2,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": false
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "interval": null,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "PostgreSQLDetails",
+          "url": "dashboard/db/postgresqldetails?$__url_time_range&$__all_variables"
+        }
+      ],
+      "mappingType": 2,
+      "mappingTypes": [
+        {
+          "$hashKey": "object:295",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$hashKey": "object:296",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "maxPerRow": 2,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "0",
+          "text": "DOWN",
+          "to": "99"
+        },
+        {
+          "from": "100",
+          "text": "Standalone Cluster",
+          "to": "199"
+        },
+        {
+          "from": "200",
+          "text": "HA CLUSTER",
+          "to": "1000"
+        }
+      ],
+      "repeat": null,
+      "repeatDirection": "h",
+      "repeatIteration": 1596814059232,
+      "repeatPanelId": 1,
+      "scopedVars": {
+        "cluster": {
+          "selected": false,
+          "text": "postgres-operations:democluster2",
+          "value": "postgres-operations:democluster2"
         }
       },
       "sparkline": {
@@ -206,5 +311,5 @@
   "variables": {
     "list": []
   },
-  "version": 2
+  "version": 1
 }

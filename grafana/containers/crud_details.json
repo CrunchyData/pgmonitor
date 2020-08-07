@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:111",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1596723524049,
+  "iteration": 1596814000168,
   "links": [
     {
       "icon": "external link",
@@ -147,9 +146,8 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "dcsi:dcsi",
-          "value": "dcsi:dcsi"
+          "text": "postgres-operations:democluster1",
+          "value": "postgres-operations:democluster1"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
@@ -180,7 +178,7 @@
           ]
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
         "hide": 0,
         "includeAll": true,
         "index": -1,
@@ -188,7 +186,7 @@
         "multi": true,
         "name": "pod",
         "options": [],
-        "query": "label_values({pg_cluster=\"[[cluster]]\"},instance)",
+        "query": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -317,5 +315,5 @@
   "variables": {
     "list": []
   },
-  "version": 1
+  "version": 2
 }

@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:212",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -716,7 +715,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {

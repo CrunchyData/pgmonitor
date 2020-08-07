@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:270",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 23,
-  "iteration": 1596730628312,
+  "id": 6,
+  "iteration": 1596814193803,
   "links": [
     {
       "asDropdown": false,
@@ -84,7 +83,7 @@
           "refId": "C"
         },
         {
-          "expr": "(ccp_container_data_disk_total_bytes{service=\"[[service_name]]\"}-ccp_container_data_disk_available_bytes{service=\"[[service_name]]\"})*100/ccp_container_data_disk_total_bytes{service=\"[[service_name]]\"}",
+          "expr": "(ccp_nodemx_data_disk_total_bytes{service=\"[[service_name]]\"}-ccp_nodemx_data_disk_available_bytes{service=\"[[service_name]]\"})*100/ccp_nodemx_data_disk_total_bytes{service=\"[[service_name]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -485,8 +484,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "democluster4",
-          "value": "democluster4"
+          "text": "democluster1",
+          "value": "democluster1"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(service)",
@@ -511,7 +510,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -545,5 +544,5 @@
   "variables": {
     "list": []
   },
-  "version": 5
+  "version": 1
 }

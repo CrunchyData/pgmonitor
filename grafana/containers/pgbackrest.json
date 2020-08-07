@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:183",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1596723551280,
+  "iteration": 1596814171540,
   "links": [
     {
       "asDropdown": false,
@@ -248,8 +247,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "dcsi:dcsi",
-          "value": "dcsi:dcsi"
+          "text": "postgres-operations:democluster1",
+          "value": "postgres-operations:democluster1"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(pg_cluster)",
@@ -274,7 +273,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
