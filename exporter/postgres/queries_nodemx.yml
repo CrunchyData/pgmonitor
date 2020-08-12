@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: pod_metrics.yml
+# Begin File: queries_nodemx.yml
 #
 ###
 ccp_nodemx_network:
@@ -151,6 +151,6 @@ ccp_nodemx_data_disk:
 
 ###
 #
-# End File: pod_metrics.yml
+# End File: queries_nodemx.yml
 #
 ###
