@@ -63,4 +63,4 @@ scrape_configs:
     replacement: 'pg'
 
 rule_files:
-  - /conf/crunchy-alert-rules.yml
+  - /etc/prometheus/alert-rules.d/*.yml
