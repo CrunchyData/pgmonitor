@@ -30,11 +30,7 @@ scrape_configs:
     target_label: kubernetes_namespace
   - source_labels: [__meta_kubernetes_pod_name]
     target_label: pod
-  - source_labels: [__meta_kubernetes_pod_name]
-    regex: (^[^-]*).*
-    target_label: instance
-    replacement: '$1'
-  - source_labels: [__meta_kubernetes_namespace,instance]
+  - source_labels: [__meta_kubernetes_namespace,__meta_kubernetes_pod_label_pg_cluster]
     target_label: pg_cluster
     separator: ':'
     replacement: '$1$2'

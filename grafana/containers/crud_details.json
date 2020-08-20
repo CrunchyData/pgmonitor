@@ -102,7 +102,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\", instance=~\"[[pod]]\", dbname =~ \"[[dbname]]\", schemaname =~ \"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
+          "expr": "sum(rate(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\", pod=~\"[[pod]]\", dbname=~\"[[dbname]]\", schemaname=~\"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "inserts - [[dbname]].[[schemaname]].[[tablename]]",
@@ -110,7 +110,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_n_tup_upd{pg_cluster=\"[[cluster]]\", instance=~\"[[pod]]\", dbname =~ \"[[dbname]]\", schemaname =~ \"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
+          "expr": "sum(rate(ccp_stat_user_tables_n_tup_upd{pg_cluster=\"[[cluster]]\", pod=~\"[[pod]]\", dbname=~\"[[dbname]]\", schemaname=~\"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Updates - [[dbname]].[[schemaname]].[[tablename]]",
@@ -118,7 +118,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_n_tup_del{pg_cluster=\"[[cluster]]\", instance=~\"[[pod]]\", dbname =~ \"[[dbname]]\", schemaname =~ \"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
+          "expr": "sum(rate(ccp_stat_user_tables_n_tup_del{pg_cluster=\"[[cluster]]\", pod=~\"[[pod]]\", dbname=~\"[[dbname]]\", schemaname=~\"[[schemaname]]\", relname=~\"[[tablename]]\"}[60s]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Deletes - [[dbname]].[[schemaname]].[[tablename]]",
@@ -224,7 +224,7 @@
         "allValue": ".*",
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\", instance=\"[[pod]]\"},dbname)",
+        "definition": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\"},dbname)",
         "hide": 0,
         "includeAll": true,
         "index": -1,
@@ -232,7 +232,7 @@
         "multi": true,
         "name": "dbname",
         "options": [],
-        "query": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\", instance=\"[[pod]]\"},dbname)",
+        "query": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\"},dbname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -278,7 +278,7 @@
         "multi": true,
         "name": "tablename",
         "options": [],
-        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",instance=\"[[pod]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
