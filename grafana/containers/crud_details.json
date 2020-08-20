@@ -52,6 +52,7 @@
     {
       "icon": "external link",
       "includeVars": true,
+      "keepTime": true,
       "tags": [],
       "type": "dashboards"
     }
@@ -255,7 +256,7 @@
         "multi": true,
         "name": "schemaname",
         "options": [],
-        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",dbname=\"[[dbname]]\"},schemaname)",
+        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",dbname=~\"[[dbname]]\"},schemaname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -278,7 +279,7 @@
         "multi": true,
         "name": "tablename",
         "options": [],
-        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "query": "label_values(ccp_stat_user_tables_n_tup_ins{pg_cluster=\"[[cluster]]\",dbname=~\"[[dbname]]\",schemaname=~\"[[schemaname]]\"},relname)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
