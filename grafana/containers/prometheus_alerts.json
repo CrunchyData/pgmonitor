@@ -54,7 +54,6 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [],
-      "targetBlank": true,
       "title": "",
       "type": "dashboards"
     }
@@ -190,7 +189,7 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "crunchy_collect",
+          "pattern": "crunchy_postgres_exporter",
           "thresholds": [],
           "type": "hidden",
           "unit": "short"
@@ -377,23 +376,6 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "service",
-          "thresholds": [],
-          "type": "hidden",
-          "unit": "short"
-        },
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "mappingType": 1,
           "pattern": "pgo_pg_database",
           "thresholds": [],
           "type": "hidden",
@@ -545,7 +527,7 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "crunchy_collect",
+          "pattern": "crunchy_postgres_exporter",
           "thresholds": [],
           "type": "hidden",
           "unit": "short"

@@ -43,7 +43,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
@@ -55,7 +55,6 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [],
-      "targetBlank": true,
       "title": "",
       "type": "dashboards"
     }
