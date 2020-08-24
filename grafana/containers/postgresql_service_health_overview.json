@@ -43,7 +43,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
@@ -55,7 +55,6 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [],
-      "targetBlank": true,
       "title": "",
       "type": "dashboards"
     }
@@ -105,7 +104,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_total{service=\"[[service_name]]\"}*100/ccp_connection_stats_max_connections{service=\"[[service_name]]\"}",
+          "expr": "100 * ccp_connection_stats_total{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"} / ccp_connection_stats_max_connections{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -114,7 +113,7 @@
           "refId": "C"
         },
         {
-          "expr": "(ccp_nodemx_data_disk_total_bytes{service=\"[[service_name]]\"}-ccp_nodemx_data_disk_available_bytes{service=\"[[service_name]]\"})*100/ccp_nodemx_data_disk_total_bytes{service=\"[[service_name]]\"}",
+          "expr": "100 - 100 * ccp_nodemx_data_disk_available_bytes{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"} / ccp_nodemx_data_disk_total_bytes{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -207,21 +206,15 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{service=\"[[service_name]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{service=\"[[service_name]]\"}[1m]))",
+          "expr": "  sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}[1m]))\n+ sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}[1m]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Transactions per minute",
           "refId": "A"
         },
         {
-          "expr": "sum(irate(ccp_query_count{service=\"[[service_name]]\"}[1m])) + sum(irate(ccp_query_count{service=\"[[service_name]]\"}[1m]))",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Queries per minute",
-          "refId": "B"
-        },
-        {
-          "expr": "ccp_connection_stats_active{service=\"[[service_name]]\"}",
+          "expr": "ccp_connection_stats_active{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -315,41 +308,46 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{service=\"[[service_name]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}[1m]))",
           "format": "time_series",
           "hide": true,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Rollbacks",
           "refId": "A"
         },
         {
-          "expr": "sum(irate(ccp_stat_database_deadlocks{service=\"[[service_name]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_deadlocks{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}[1m]))",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Deadlock ",
           "refId": "D"
         },
         {
-          "expr": "sum(irate(ccp_stat_database_conflicts{service=\"[[service_name]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_conflicts{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}[1m]))",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Conflicts",
           "refId": "B"
         },
         {
-          "expr": "pg_exporter_last_scrape_error{service=\"[[service_name]]\"}",
+          "expr": "pg_exporter_last_scrape_error{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "scrape error",
           "refId": "C"
         },
         {
-          "expr": "clamp_max(ccp_archive_command_status_seconds_since_last_fail{service=\"[[service_name]]\"},1)",
+          "expr": "clamp_max(ccp_archive_command_status_seconds_since_last_fail{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"},1)",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "archive error",
           "refId": "E"
@@ -426,9 +424,7 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [
-        {}
-      ],
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -443,7 +439,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_query_time{service=\"[[service_name]]\"}",
+          "expr": "ccp_connection_stats_max_query_time{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -453,7 +449,7 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_query_avg_latency{service=\"[[service_name]]\"}",
+          "expr": "ccp_query_avg_latency{pg_cluster=\"[[cluster]]\",role=\"[[role]]\"}",
           "format": "time_series",
           "hide": true,
           "instant": false,
@@ -516,15 +512,38 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(service)",
+        "definition": "label_values(pg_cluster)",
         "hide": 0,
         "includeAll": false,
         "index": -1,
-        "label": "service_name",
+        "label": null,
         "multi": false,
-        "name": "service_name",
+        "name": "cluster",
         "options": [],
-        "query": "label_values(service)",
+        "query": "label_values(pg_cluster)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "label_values({pg_cluster=\"[[cluster]]\"},role)",
+        "hide": 0,
+        "includeAll": false,
+        "index": -1,
+        "label": null,
+        "multi": false,
+        "name": "role",
+        "options": [],
+        "query": "label_values({pg_cluster=\"[[cluster]]\"},role)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

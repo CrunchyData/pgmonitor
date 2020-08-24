@@ -43,7 +43,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
@@ -52,6 +52,8 @@
     {
       "$$hashKey": "object:200",
       "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
       "tags": [],
       "type": "dashboards"
     }
@@ -99,7 +101,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(ccp_nodemx_data_disk_total_bytes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}-ccp_nodemx_data_disk_available_bytes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"})*100/ccp_nodemx_data_disk_total_bytes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "(ccp_nodemx_data_disk_total_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}-ccp_nodemx_data_disk_available_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})*100/ccp_nodemx_data_disk_total_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -107,7 +109,7 @@
           "refId": "A"
         },
         {
-          "expr": "(ccp_nodemx_data_disk_total_file_nodes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}-ccp_nodemx_data_disk_free_file_nodes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"})*100/ccp_nodemx_data_disk_total_file_nodes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "(ccp_nodemx_data_disk_total_file_nodes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}-ccp_nodemx_data_disk_free_file_nodes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})*100/ccp_nodemx_data_disk_total_file_nodes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -200,7 +202,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(ccp_nodemx_data_disk_sectors_read{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])*512",
+          "expr": "rate(ccp_nodemx_data_disk_sectors_read{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])*512",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -208,7 +210,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(ccp_nodemx_data_disk_sectors_written{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])*512",
+          "expr": "rate(ccp_nodemx_data_disk_sectors_written{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])*512",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -303,7 +305,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_nodemx_mem_limit{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_limit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -311,7 +313,7 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_nodemx_mem_request{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_request{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -319,7 +321,7 @@
           "refId": "B"
         },
         {
-          "expr": "ccp_nodemx_mem_cache{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_cache{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -327,7 +329,7 @@
           "refId": "C"
         },
         {
-          "expr": "ccp_nodemx_mem_dirty{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_dirty{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -335,7 +337,7 @@
           "refId": "D"
         },
         {
-          "expr": "ccp_nodemx_mem_shmem{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_shmem{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -343,7 +345,7 @@
           "refId": "E"
         },
         {
-          "expr": "ccp_nodemx_mem_rss{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_rss{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -351,7 +353,7 @@
           "refId": "F"
         },
         {
-          "expr": "ccp_nodemx_mem_mapped_file{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_mapped_file{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -359,7 +361,7 @@
           "refId": "G"
         },
         {
-          "expr": "ccp_nodemx_mem_active_anon{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_active_anon{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -367,7 +369,7 @@
           "refId": "H"
         },
         {
-          "expr": "ccp_nodemx_mem_inactive_anon{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_inactive_anon{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -375,7 +377,7 @@
           "refId": "I"
         },
         {
-          "expr": "ccp_nodemx_mem_active_file{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_active_file{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -383,7 +385,7 @@
           "refId": "J"
         },
         {
-          "expr": "ccp_nodemx_mem_inactive_file{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_inactive_file{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -482,7 +484,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(((rate(ccp_nodemx_cpuacct_usage{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}[1m]))/1000)*100)/((ccp_nodemx_cpucfs_quota_us{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}/ccp_nodemx_cpucfs_period_us{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"})*1000*1000)",
+          "expr": "(((rate(ccp_nodemx_cpuacct_usage{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}[1m]))/1000)*100)/((ccp_nodemx_cpucfs_quota_us{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}/ccp_nodemx_cpucfs_period_us{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})*1000*1000)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -491,7 +493,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(ccp_nodemx_cpustat_nr_throttled{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}[1m])*100/rate(ccp_nodemx_cpustat_nr_periods{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}[1m])",
+          "expr": "rate(ccp_nodemx_cpustat_nr_throttled{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])*100/rate(ccp_nodemx_cpustat_nr_periods{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}[1m])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -500,7 +502,7 @@
           "refId": "B"
         },
         {
-          "expr": "ccp_nodemx_process_count{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}",
+          "expr": "ccp_nodemx_process_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -592,7 +594,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(ccp_nodemx_network_rx_bytes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\", interface!=\"tunl0\"}[1m])",
+          "expr": "rate(ccp_nodemx_network_rx_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", interface!=\"tunl0\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -600,7 +602,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(ccp_nodemx_network_tx_bytes{pg_cluster=~\"[[cluster]]\",pod=~\"[[pod]]\", interface!=\"tunl0\"}[1m])",
+          "expr": "rate(ccp_nodemx_network_tx_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", interface!=\"tunl0\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -707,7 +709,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_nodemx_cpu_limit{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}",
+          "expr": "ccp_nodemx_cpu_limit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -715,7 +717,7 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_nodemx_cpu_request{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}",
+          "expr": "ccp_nodemx_cpu_request{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -723,7 +725,7 @@
           "refId": "B"
         },
         {
-          "expr": "ccp_nodemx_mem_limit{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_limit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -731,7 +733,7 @@
           "refId": "C"
         },
         {
-          "expr": "ccp_nodemx_mem_request{pg_cluster=\"[[cluster]]\",pod=\"[[pod]]\"}",
+          "expr": "ccp_nodemx_mem_request{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -816,10 +818,10 @@
         "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "index": -1,
         "label": "pod",
-        "multi": false,
+        "multi": true,
         "name": "pod",
         "options": [],
         "query": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
