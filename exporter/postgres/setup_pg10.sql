@@ -3,6 +3,12 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN
         CREATE ROLE ccp_monitoring WITH LOGIN;
     END IF;
+
+    -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
+    -- and should be removed when upgrading to PostgreSQL 10 and above.
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'pgmonitor') THEN
+        DROP ROLE pgmonitor;
+    END IF;
 END
 $$;
  
