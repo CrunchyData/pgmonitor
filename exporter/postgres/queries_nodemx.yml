@@ -122,7 +122,7 @@ ccp_nodemx_data_disk:
         usage: "LABEL"
         description: "mount point"
     - fs_type:
-        usage: "GAUGE"
+        usage: "LABEL"
         description: "File system type"
     - reads:
         usage: "GAUGE"
