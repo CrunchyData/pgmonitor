@@ -1,7 +1,12 @@
 DO $$
 BEGIN
+    -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'pgmonitor') THEN
+        CREATE ROLE pgmonitor;
+    END IF;
+
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN
-        CREATE ROLE ccp_monitoring WITH LOGIN;
+        CREATE ROLE ccp_monitoring WITH LOGIN IN ROLE pgmonitor;
     END IF;
 END
 $$;
