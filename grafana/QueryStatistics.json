@@ -12,13 +12,237 @@
       }
     ]
   },
+  "description": "",
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1599055805429,
+  "iteration": 1599067369291,
   "links": [],
   "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.1.2",
+      "targets": [
+        {
+          "expr": "sum(ccp_pg_stat_statements_total_calls_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Queries Executed",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 5,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.1.2",
+      "targets": [
+        {
+          "expr": "sum(ccp_pg_stat_statements_total_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Query Runtime ",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 11,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.1.2",
+      "targets": [
+        {
+          "expr": "avg(ccp_pg_stat_statements_total_mean_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Query Mean Runtime",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 17,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.1.2",
+      "targets": [
+        {
+          "expr": "sum(ccp_pg_stat_statements_total_row_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Rows Retrieved or Affected",
+      "type": "stat"
+    },
     {
       "aliasColors": {},
       "bars": false,
@@ -37,7 +261,7 @@
         "h": 7,
         "w": 23,
         "x": 0,
-        "y": 0
+        "y": 3
       },
       "hiddenSeries": false,
       "id": 2,
@@ -74,7 +298,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Query Calls Per Minute",
+      "title": "Query Executions (Calls) Per Minute",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -173,7 +397,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 7
+        "y": 10
       },
       "id": 4,
       "options": {
@@ -198,7 +422,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Mean Query Runtime",
+      "title": "Query Mean Runtime (Top N)",
       "transformations": [
         {
           "id": "organize",
@@ -292,7 +516,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 15
+        "y": 18
       },
       "id": 6,
       "options": {
@@ -317,7 +541,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Max Query Runtime",
+      "title": "Query Max Runtime (Top N)",
       "transformations": [
         {
           "id": "organize",
@@ -410,7 +634,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 23
+        "y": 26
       },
       "id": 5,
       "options": {
@@ -435,7 +659,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Query Runtime",
+      "title": "Query Total Runtime (Top N)",
       "transformations": [
         {
           "id": "organize",
@@ -503,7 +727,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -531,7 +755,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -583,7 +807,7 @@
     ]
   },
   "timezone": "",
-  "title": "pg_stat_statements",
+  "title": "Query Statistics (pg_stat_statements)",
   "uid": "ZKoTOHDGk",
-  "version": 13
+  "version": 16
 }

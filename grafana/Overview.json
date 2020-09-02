@@ -16,12 +16,18 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 15,
   "links": [],
   "panels": [
     {
       "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnKik/os-overview\" target=\"_blank>\">OS</a></center>\n\n\n\n\n\n",
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -31,7 +37,11 @@
       "id": 7,
       "links": [],
       "mode": "html",
-      "options": {},
+      "options": {
+        "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:400%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnKik/os-overview\" target=\"_os>\">OS</a></center>\n\n\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -40,6 +50,12 @@
     {
       "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnNik/postgresql-overview\" target=\"_blank>\">PostgreSQL</a></center>\n\n\n\n\n\n",
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -49,7 +65,11 @@
       "id": 8,
       "links": [],
       "mode": "html",
-      "options": {},
+      "options": {
+        "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:400%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/pxinDnNik/postgresql-overview\" target=\"_pg>\">PostgreSQL</a></center>\n\n\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -58,6 +78,12 @@
     {
       "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/wsdkI9RZz/etcd-details\" target=\"_blank>\">etcd</a></center>\n\n\n\n\n\n",
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -67,7 +93,11 @@
       "id": 9,
       "links": [],
       "mode": "html",
-      "options": {},
+      "options": {
+        "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:400%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/wsdkI9RZz/etcd-details\" target=\"_etcd>\">etcd</a></center>\n\n\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -76,6 +106,12 @@
     {
       "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:550%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/QTsttxNmk/prometheus-alerts\" target=\"_blank>\">Prometheus</a></center>\n\n\n\n\n\n",
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -85,7 +121,11 @@
       "id": 10,
       "links": [],
       "mode": "html",
-      "options": {},
+      "options": {
+        "content": "\n</br>\n</br>\n</br>\n\n<center><a style=\"font-size:400%;text-decoration:none;font-weight:bold;color:white;\" href=\"/d/QTsttxNmk/prometheus-alerts\" target=\"_pa>\">Prometheus<br> Alerts</a></center>\n\n\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -93,7 +133,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 21,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -123,5 +163,5 @@
   "timezone": "",
   "title": "Overview",
   "uid": "VhzrGq2Wk",
-  "version": 1
+  "version": 1 
 }
