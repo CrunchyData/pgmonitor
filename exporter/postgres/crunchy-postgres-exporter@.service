@@ -10,7 +10,7 @@ After=network.target
 PermissionsStartOnly=true
 User=ccp_monitoring
 EnvironmentFile=/etc/sysconfig/%i
-ExecStartPre=/bin/bash -c "set -o pipefail; cat $QUERY_FILE_LIST | sed 's/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g'> $$(echo $OPT | sed 's/.*--extend.query-path=\(.*\.yml\).*/\1/')"
+ExecStartPre=/bin/bash -c "set -o pipefail; cat $QUERY_FILE_LIST | sed 's/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g' | sed 's/#PG_STAT_STATEMENTS_LIMIT#/${PG_STAT_STATEMENTS_LIMIT}/g' > $$(echo $OPT | sed 's/.*--extend.query-path=\(.*\.yml\).*/\1/')"
 ExecStart=/usr/bin/postgres_exporter $OPT
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Restart=always

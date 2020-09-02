@@ -4,8 +4,6 @@
 #
 ###
 
-### TODO Make the limits being returned configurable via sysconfig variables (similar to pgbackrest)
-
 ccp_pg_stat_statements_total_calls:
   query: "SELECT pg_get_userbyid(s.userid) as role,
               d.datname AS dbname,
@@ -37,7 +35,7 @@ ccp_pg_stat_statements_top_mean:
           ON d.oid = s.dbid
           GROUP BY 1,2,3,4
           ORDER BY 5 DESC
-          LIMIT 20"
+          LIMIT #PG_STAT_STATEMENTS_LIMIT#"
   metrics: 
     - role: 
         usage: "LABEL" 
@@ -67,7 +65,7 @@ ccp_pg_stat_statements_top_stddev:
           ON d.oid = s.dbid
           GROUP BY 1,2,3,4
           ORDER BY 5 DESC
-          LIMIT 20"
+          LIMIT #PG_STAT_STATEMENTS_LIMIT#"
   metrics: 
     - role: 
         usage: "LABEL" 
@@ -97,7 +95,7 @@ ccp_pg_stat_statements_top_total:
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           ORDER BY 5 DESC
-          LIMIT 20"
+          LIMIT #PG_STAT_STATEMENTS_LIMIT#"
   metrics: 
     - role: 
         usage: "LABEL" 
@@ -127,7 +125,7 @@ ccp_pg_stat_statements_top_max:
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           ORDER BY 5 DESC
-          LIMIT 20"
+          LIMIT #PG_STAT_STATEMENTS_LIMIT#"
   metrics: 
     - role: 
         usage: "LABEL" 

@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1598993120077,
+  "iteration": 1599055805429,
   "links": [],
   "panels": [
     {
@@ -64,7 +64,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\"}[1m])",
+          "expr": "irate(ccp_pg_stat_statements_total_calls_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}[1m])",
           "interval": "",
           "legendFormat": "db: {{dbname}}, user: {{role}}",
           "refId": "A"
@@ -188,7 +188,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_mean_time_ms{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pg_stat_statements_top_mean_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -307,7 +307,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_max_time_ms{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pg_stat_statements_top_max_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -425,7 +425,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_total_time_ms{job=\"[[pgnodes]]\"}",
+          "expr": "ccp_pg_stat_statements_top_total_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -482,7 +482,7 @@
           "value": "pg1_crunchy"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(up{exp_type='pg'}, job)",
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
@@ -491,6 +491,62 @@
         "options": [],
         "query": "label_values(up{exp_type='pg'}, job)",
         "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "PROMETHEUS",
+        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\"}, dbname) ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "dbname",
+        "multi": true,
+        "name": "dbname",
+        "options": [],
+        "query": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\"}, dbname) ",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "PROMETHEUS",
+        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\",dbname=~\"[[dbname]]\"}, role) ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "role",
+        "multi": true,
+        "name": "role",
+        "options": [],
+        "query": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\",dbname=~\"[[dbname]]\"}, role) ",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -529,5 +585,5 @@
   "timezone": "",
   "title": "pg_stat_statements",
   "uid": "ZKoTOHDGk",
-  "version": 8
+  "version": 13
 }
