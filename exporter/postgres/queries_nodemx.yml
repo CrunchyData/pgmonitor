@@ -112,6 +112,31 @@ ccp_nodemx_cpustat:
 
 
 ccp_nodemx_data_disk:
+  query: "SELECT mount_point, fs_type, total_bytes,available_bytes,total_file_nodes,free_file_nodes 
+          FROM monitor.proc_mountinfo() m JOIN monitor.fsinfo(m.mount_point) f 
+          USING (major_number, minor_number) 
+          WHERE m.mount_point like '/pg%' or m.mount_point like '/tablespace%'"
+  metrics:
+    - mount_point:
+        usage: "LABEL"
+        description: "mount point"
+    - fs_type:
+        usage: "LABEL"
+        description: "File system type"
+    - total_bytes:
+        usage: "GAUGE"
+        description: "Size in bytes"
+    - available_bytes:
+        usage: "GAUGE"
+        description: "Available size in bytes"
+    - total_file_nodes:
+        usage: "GAUGE"
+        description: "Total file nodes"
+    - free_file_nodes:
+        usage: "GAUGE"
+        description: "Available file nodes"
+
+ccp_nodemx_disk_activity:
   query: "SELECT mount_point, fs_type,reads_completed_successfully as reads, sectors_read, writes_completed as writes,sectors_written, total_bytes,available_bytes,total_file_nodes,free_file_nodes
           FROM monitor.proc_mountinfo() m
           JOIN monitor.proc_diskstats() d USING (major_number, minor_number)
