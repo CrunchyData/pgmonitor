@@ -208,7 +208,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{pg_cluster=\"[[cluster]]\", role=\"master\",backup_type=\"full\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{pg_cluster=\"[[cluster]]\", role=\"master\", backup_type=\"full\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -216,12 +216,12 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{pg_cluster=\"[[cluster]]\", role=\"master\",backup_type=\"diff\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{pg_cluster=\"[[cluster]]\", role=\"master\", backup_type=\"diff\"}",
           "legendFormat": "Diff",
           "refId": "B"
         },
         {
-          "expr": "ccp_backrest_last_runtime_backup_runtime_seconds{pg_cluster=\"[[cluster]]\",role=\"master\", backup_type=\"incr\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{pg_cluster=\"[[cluster]]\", role=\"master\", backup_type=\"incr\"}",
           "legendFormat": "Incr",
           "refId": "C"
         }
