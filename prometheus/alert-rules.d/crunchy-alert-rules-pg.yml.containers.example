@@ -164,7 +164,7 @@ groups:
       description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
 
-  - alert: PGDBSize
+  - alert: PGDiskSize
     expr: 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 75
     for: 60s
     labels:
@@ -373,5 +373,4 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
 
