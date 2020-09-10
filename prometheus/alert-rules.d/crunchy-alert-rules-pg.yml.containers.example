@@ -175,7 +175,7 @@ groups:
       description: 'PGSQL Instance {{ $labels.deployment }} over 75% disk usage at mount point "{{ $labels.mount_point }}": {{ $value }}%'
       summary: PGSQL Instance usage warning
 
-  - alert: PGDBSize
+  - alert: PGDiskSize
     expr: 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 90
     for: 60s
     labels:
@@ -373,4 +373,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
