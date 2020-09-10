@@ -112,11 +112,11 @@ ccp_nodemx_cpustat:
 
 
 ccp_nodemx_data_disk:
-  query: "SELECT mount_point, fs_type,reads_completed_successfully as reads, sectors_read, writes_completed as writes,sectors_written, total_bytes,available_bytes,total_file_nodes,free_file_nodes
+  query: "SELECT mount_point,fs_type,total_bytes,available_bytes,total_file_nodes,free_file_nodes
           FROM monitor.proc_mountinfo() m
-          JOIN monitor.proc_diskstats() d USING (major_number, minor_number)
-          JOIN monitor.fsinfo(m.mount_point) f USING (major_number, minor_number) 
-          WHERE m.mount_point like '/pg%' or m.mount_point like '/tablespace%'"
+          JOIN monitor.fsinfo(m.mount_point) f USING (major_number, minor_number)
+          WHERE m.mount_point IN ('/pgdata', '/pgwal') OR
+                m.mount_point like '/tablespaces/%'"
   metrics:
     - mount_point:
         usage: "LABEL"
@@ -124,18 +124,6 @@ ccp_nodemx_data_disk:
     - fs_type:
         usage: "LABEL"
         description: "File system type"
-    - reads:
-        usage: "GAUGE"
-        description: "Total reads"
-    - sectors_read:
-        usage: "GAUGE"
-        description: "Total sectors read"
-    - writes:
-        usage: "GAUGE"
-        description: "Total writes"
-    - sectors_written:
-        usage: "GAUGE"
-        description: "Total sectors writen"
     - total_bytes:
         usage: "GAUGE"
         description: "Size in bytes"
@@ -148,6 +136,23 @@ ccp_nodemx_data_disk:
     - free_file_nodes:
         usage: "GAUGE"
         description: "Available file nodes"
+
+ccp_nodemx_disk_activity:
+  query: "SELECT mount_point,sectors_read,sectors_written
+          FROM monitor.proc_mountinfo() m
+          JOIN monitor.proc_diskstats() d USING (major_number, minor_number)
+          WHERE m.mount_point IN ('/pgdata', '/pgwal') OR
+                m.mount_point like '/tablespaces/%'"
+  metrics:
+    - mount_point:
+        usage: "LABEL"
+        description: "mount point"
+    - sectors_read:
+        usage: "GAUGE"
+        description: "Total sectors read"
+    - sectors_written:
+        usage: "GAUGE"
+        description: "Total sectors writen"
 
 ###
 #
