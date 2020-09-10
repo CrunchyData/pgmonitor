@@ -96,7 +96,7 @@
       "links": [
         {
           "title": "pgBackRest",
-          "url": "/dashboard/db/pgBackRest"
+          "url": "/dashboard/db/pgbackrest?${__all_variables}"
         }
       ],
       "mappingType": 1,
