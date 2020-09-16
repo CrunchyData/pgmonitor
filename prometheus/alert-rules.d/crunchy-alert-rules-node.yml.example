@@ -1,13 +1,13 @@
 groups:
 - name: alert-rules
   rules:
-      
+
 ########## EXPORTER RULES ##########
   - alert: NodeExporterScrapeError
     expr: node_textfile_scrape_error > 0
     for: 60s
     labels:
-      service: system 
+      service: system
       severity: critical
       severity_num: 300
     annotations:
@@ -17,7 +17,7 @@ groups:
 ########## SYSTEM RULES ##########
   - alert: ExporterDown
     expr: avg_over_time(up[5m]) < 0.5
-    for: 10s 
+    for: 10s
     labels:
       service: system
       severity: critical
