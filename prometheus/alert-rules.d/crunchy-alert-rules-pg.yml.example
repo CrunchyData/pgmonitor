@@ -1,7 +1,7 @@
 groups:
 - name: alert-rules
   rules:
-      
+
 ########## EXPORTER RULES ##########
   - alert: PGExporterScrapeError
     expr: pg_exporter_last_scrape_error > 0
@@ -45,8 +45,8 @@ groups:
 # Set this alert for each system that you want to monitor a recovery status change
 # Below is an example for a target job called "Replica" and watches for the value to change above 1 which means it's no longer a replica
 #
-#  - alert: PGRecoveryStatusSwitch_Replica 
-#    expr: ccp_is_in_recovery_status{job="Replica"} > 1 
+#  - alert: PGRecoveryStatusSwitch_Replica
+#    expr: ccp_is_in_recovery_status{job="Replica"} > 1
 #    for: 60s
 #    labels:
 #      service: postgresql
@@ -71,7 +71,7 @@ groups:
 
 # Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
 # A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum().
-# If metric returns 0, then NO settings have changed for either pg_settings since last known valid state 
+# If metric returns 0, then NO settings have changed for either pg_settings since last known valid state
 # If metric returns 1, then pg_settings have changed since last known valid state
 # To see what may have changed, check the monitor.pg_settings_checksum table for a history of config state.
 #  - alert: PGSettingsChecksum
@@ -82,7 +82,7 @@ groups:
 #      severity: critical
 #      severity_num: 300
 #    annotations:
-#      description: 'Configuration settings on {{ $labels.job }} have changed from previously known valid state. To reset current config to a valid state after alert fires, run monitor.pg_settings_checksum_set_valid().' 
+#      description: 'Configuration settings on {{ $labels.job }} have changed from previously known valid state. To reset current config to a valid state after alert fires, run monitor.pg_settings_checksum_set_valid().'
 #      summary: 'PGSQL Instance settings checksum'
 
 
@@ -125,14 +125,14 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: warning 
+      severity: warning
       severity_num: 200
     annotations:
       description: '{{ $labels.job }} has at least one query running for over 12 hours.'
       summary: 'PGSQL Max Query Runtime'
 
   - alert: PGQueryTime
-    expr: ccp_connection_stats_max_query_time > 86400 
+    expr: ccp_connection_stats_max_query_time > 86400
     for: 60s
     labels:
       service: postgresql
@@ -154,7 +154,7 @@ groups:
       summary: 'PGSQL Instance connections'
 
   - alert: PGConnPerc
-    expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90 
+    expr: 100 * (ccp_connection_stats_total / ccp_connection_stats_max_connections) > 90
     for: 60s
     labels:
       service: postgresql
@@ -287,7 +287,7 @@ groups:
   - alert: PGSettingsPendingRestart
     expr: ccp_settings_pending_restart_count > 0
     for: 60s
-    labels: 
+    labels:
         service: postgresql
         severity: critical
         severity_num: 300
@@ -296,14 +296,14 @@ groups:
 
 ########## PGBACKREST RULES ##########
 #
-# Uncomment and customize one or more of these rules to monitor your pgbackrest backups. 
+# Uncomment and customize one or more of these rules to monitor your pgbackrest backups.
 # Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
 #   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
 #   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
-# Stanza should also be set if different intervals are expected for each stanza. 
+# Stanza should also be set if different intervals are expected for each stanza.
 #   Otherwise rule will be applied to all stanzas returned on target system if not set.
 #
-# Relevant metric names are: 
+# Relevant metric names are:
 #   ccp_backrest_last_full_time_since_completion_seconds
 #   ccp_backrest_last_incr_time_since_completion_seconds
 #   ccp_backrest_last_diff_time_since_completion_seconds
@@ -333,7 +333,7 @@ groups:
 #
 #   ccp_backrest_last_runtime_backup_runtime_seconds
 #
-# Runtime monitoring should have the "backup_type" label set. 
+# Runtime monitoring should have the "backup_type" label set.
 #   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
 # Stanza should also be set if runtimes per stanza have different expected times
 #
@@ -358,10 +358,10 @@ groups:
 #       summary: 'Expected runtime of diff backup for stanza [main] has exceeded 1 hour'
 ##
 #
-## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires. 
+## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires.
 ## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
 ## Checking for absence of just the full backup type should be sufficient (no need for diff/incr).
-## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this 
+## Note that while the backrest check command failing will likely also cause a scrape error alert, the addition of this
 ## check gives a clearer answer as to what is causing it and that something is wrong with the backups.
 #
 #  - alert: PGBackrestAbsentFull_Prod
