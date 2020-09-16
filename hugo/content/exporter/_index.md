@@ -512,6 +512,8 @@ The following metrics either require special considerations when monitoring spec
  * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
 
  * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT). 
+ 
+ * *ccp_connection_stats_max_blocked_query_time* - Runtime of the longest running query that has been blocked by a heavyweight lock
 
  * *ccp_replication_lag_replay_time* - Only provides values on replica instances. Time since replica received and replayed a WAL file. Note this is not the main way to determine if a replica is behind its primary. It only monitors the time the replica replayed the WAL vs what it has received. It is a secondary metric for monitoring WAL replay on the replica itself.
 

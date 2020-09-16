@@ -36,7 +36,7 @@ start() {
 
   echo -n $"Starting postgres_exporter: "
   set -o pipefail
-  cat $QUERY_FILE_LIST | sed "s/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g" | sed "s/#PG_STAT_STATEMENTS_LIMIT#/${PG_STAT_STATEMENTS_LIMIT}/g" > $(echo $OPT | sed 's/.*--extend.query-path=\(.*\.yml\).*/\1/')
+  cat $QUERY_FILE_LIST | sed -e "s/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g" -e "s/#PG_STAT_STATEMENTS_LIMIT#/${PG_STAT_STATEMENTS_LIMIT}/g" > $(echo $OPT | sed 's/.*--extend.query-path=\(.*\.yml\).*/\1/')
   echo  $DATA_SOURCE_NAME
   daemonize -u ${DAEMON_USER} -p ${PID_FILE} -l ${LOCK_FILE} -a -e ${LOG_FILE} -o ${LOG_FILE} ${DAEMON} $OPT
   RETVAL=$?
