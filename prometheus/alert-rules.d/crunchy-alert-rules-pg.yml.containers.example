@@ -164,26 +164,26 @@ groups:
       description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
 
-  - alert: PGDBSize
-    expr: ccp_database_size > 1.073741824e+11
+  - alert: PGDiskSize
+    expr: 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 75
     for: 60s
     labels:
       service: postgresql
       severity: warning
       severity_num: 200
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} over 100GB in size: {{ $value }} bytes'
-      summary: 'PGSQL Instance size warning'
+      description: 'PGSQL Instance {{ $labels.deployment }} over 75% disk usage at mount point "{{ $labels.mount_point }}": {{ $value }}%'
+      summary: PGSQL Instance usage warning
 
-  - alert: PGDBSize
-    expr: ccp_database_size > 2.68435456e+11
+  - alert: PGDiskSize
+    expr: 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 90
     for: 60s
     labels:
       service: postgresql
       severity: critical
       severity_num: 300
     annotations:
-      description: 'PGSQL Instance {{ $labels.job }} over 250GB in size: {{ $value }} bytes'
+      description: 'PGSQL Instance {{ $labels.deployment }} over 90% disk usage at mount point "{{ $labels.mount_point }}": {{ $value }}%'
       summary: 'PGSQL Instance size critical'
 
   - alert: PGReplicationByteLag
@@ -373,5 +373,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
-

@@ -3,12 +3,6 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN
         CREATE ROLE ccp_monitoring WITH LOGIN;
     END IF;
-
-    -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
-    -- and should be removed when upgrading to PostgreSQL 10 and above.
-    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'pgmonitor') THEN
-        DROP ROLE pgmonitor;
-    END IF;
 END
 $$;
  
@@ -64,7 +58,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  
-    LANGUAGE sql SECURITY DEFINER
+    LANGUAGE sql SECURITY DEFINER STABLE
 AS $function$
 
 /* 
@@ -121,7 +115,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
 CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
- LANGUAGE sql SECURITY DEFINER
+ LANGUAGE sql SECURITY DEFINER STABLE
 AS $function$
 
 /* 
