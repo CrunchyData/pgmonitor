@@ -3,6 +3,20 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.4
+
+### New Features
+
+  * Added support for PostgreSQL 13 
+  * Added queries and dashboards for pgnodemx/container support
+
+### Bug Fixes
+
+### Non-backward Compatible Changes
+
+### Manual Intervention Changes
+
+
 ## 4.3
 
 ### New Features
