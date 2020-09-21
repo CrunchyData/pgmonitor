@@ -48,12 +48,14 @@ pgMonitor combines multiple open-source software packages and necessary configur
 ### Operating Systems
 
 - Prometheus/Alertmanager & Grafana: CentOS/RHEL 7 or greater, Windows Server 2012R2 or later
-- Exporters (node, wmi, postgres): CentOS/RHEL 6 or greater (node), Windows Server 2012R2 or later (WMI & postgres)
+- Exporters (node, wmi, postgres): 
+    - CentOS/RHEL 6 (node, Supported PG Versions up to 12)
+    - CentOS/RHEL 7 or greater (node, See Below for Supported PG Versions)
+    - Windows Server 2012R2 or later (wmi, See Below for Supported PG Versions) 
 
 ### PostgreSQL
 
-- pgMonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgMonitor will cease supporting that major version.
-- 12, 11, 10, 9.6, 9.5, 9.4
+- pgMonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgMonitor will cease supporting that major version soon after. Please see the official PostgreSQL website for [community supported releases](https://www.postgresql.org/support/versioning/).
 
 #### Known issues
 

@@ -4,10 +4,10 @@ groups:
 
  ########## BLACKBOX EXPORTER RULES ##########
   - alert: BlackBoxProbe
-    expr: probe_success == 0  
+    expr: probe_success == 0
     for: 60s
     labels:
-      service: blackbox 
+      service: blackbox
       severity: critical
       severity_num: 300
     annotations:
