@@ -189,6 +189,7 @@ psql -d template1 -c "CREATE EXTENSION pg_stat_statements;"
 | queries_pg##.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL.           |
 | queries_backrest.yml | postgres_exporter query file for monitoring pgBackRest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
 | queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
+| queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. |
 
 
 By default, there are two postgres_exporter services expected to be running as of pgMonitor 4.0 and higher. One connects to the default `postgres` database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance, for example connection and replication statistics. This service uses the sysconfig file postgres_exporter_pg##. Connect to this database and run the setup_pg##.sql script to install the required database objects for pgMonitor. 
@@ -592,6 +593,24 @@ The following metric prefixes correspond to the SHOW command views found in the 
  * *ccp_pgbouncer_servers* - SHOW SERVERS
 
  * *ccp_pgbouncer_lists* - SHOW LISTS
+
+#### pg_stat_statements Metrics
+
+Collecting all per-query metrics into Prometheus could greatly increase storage requirements and heavily impact performance without sufficient resources. Therefore the metrics below give simplified numeric metrics on overall statistics and Top N queries. N can be set with the PG_STAT_STATEMENTS_LIMIT variable in the exporter sysconfig file (defaults to 20). Note that the statistics for individual queries can only be reset on PG12+. Prior to that, pg_stat_statements must have all statistics reset to redo the top N queries.
+
+ * *ccp_pg_stat_statements_top_max_time_ms* -  Maximum time spent in the statement in milliseconds per database/user/query for the top N queries
+
+ * *ccp_pg_stat_statements_top_mean_time_ms* - Average query runtime in milliseconds per database/user/query for the top N queries
+
+ * *ccp_pg_stat_statements_top_total_time_ms* - Total time spent in the statement in milliseconds per database/user/query for the top N queries
+
+ * *ccp_pg_stat_statements_total_calls_count* - Total number of queries run per user/database
+
+ * *ccp_pg_stat_statements_total_mean_time_ms* - Mean runtime of all queries per user/database
+
+ * *ccp_pg_stat_statements_total_row_count* - Total rows returned from all queries per user/database
+
+ * *ccp_pg_stat_statements_total_time_ms* - Total runtime of all queries per user/database
 
 ### System
 

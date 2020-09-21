@@ -63,7 +63,7 @@ ccp_pg_stat_statements_top_mean:
         description: "First 40 characters of query text"
     - time_ms: 
         usage: "GAUGE" 
-        description: "Query runtime in milliseconds"
+        description: "Average query runtime in milliseconds"
 
 
 # Note that individual query stats can only be reset in PG12
@@ -93,7 +93,7 @@ ccp_pg_stat_statements_top_total:
         description: "First 40 characters of query text"
     - time_ms: 
         usage: "GAUGE" 
-        description: "Total time spent in the statement, in milliseconds"
+        description: "Total time spent in the statement in milliseconds"
 
 
 # Note that individual query stats can only be reset in PG12
@@ -123,7 +123,7 @@ ccp_pg_stat_statements_top_max:
         description: "First 40 characters of query text"
     - time_ms: 
         usage: "GAUGE" 
-        description: "Maximum time spent in the statement, in milliseconds"
+        description: "Maximum time spent in the statement in milliseconds"
 
 
 ###

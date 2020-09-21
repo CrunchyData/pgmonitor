@@ -9,12 +9,16 @@ weight: 5
 
   * Added support for PostgreSQL 13 
   * Added queries and dashboards for pgnodemx/container support
+  * Added metrics and Grafana dashboard for pg_stat_statements 
 
 ### Bug Fixes
 
 ### Non-backward Compatible Changes
 
 ### Manual Intervention Changes
+  * To add pg_stat_statements metrics to an existing installation you will need to do the following:
+    * Add the queries_pg_stat_statements.yml file to the QUERY_FILE_LIST in the exporter sysconfig file
+    * Add a PG_STAT_STATEMENTS_LIMIT line to the exporter sysconfig file with a desired limit for the top N queries. Default for a new install is 20.
 
 
 ## 4.3
