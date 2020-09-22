@@ -6,6 +6,7 @@
 # QUERY_FILE_LIST: space delimitted yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
 
 PGBACKREST_INFO_THROTTLE_MINUTES=10
+PG_STAT_STATEMENTS_LIMIT=20
 OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/11/queries.yml --disable-default-metrics --disable-settings-metrics"
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 

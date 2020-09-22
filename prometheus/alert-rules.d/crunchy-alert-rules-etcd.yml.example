@@ -1,17 +1,17 @@
 groups:
 - name: alert-rules
   rules:
-      
+
 ########## ETCD EXPORTER RULES ##########
 
 # Absence alerts must be configured per named job, otherwise there's no way to know which job is down
 # Below is are some examples using the leader metric for a targets called "etcd#" for a 3 node etcd cluster
- 
+
 #  - alert: ECTDAbsent_etcd1
 #    expr: absent(etcd_server_has_leader{job="etcd1"})
 #    for: 10s
 #    labels:
-#      service: etcd 
+#      service: etcd
 #      severity: critical
 #      severity_num: 300
 #    annotations:
@@ -21,7 +21,7 @@ groups:
 #    expr: absent(etcd_server_has_leader{job="etcd2"})
 #    for: 10s
 #    labels:
-#      service: etcd 
+#      service: etcd
 #      severity: critical
 #      severity_num: 300
 #    annotations:
@@ -31,7 +31,7 @@ groups:
 #    expr: absent(etcd_server_has_leader{job="etcd3"})
 #    for: 10s
 #    labels:
-#      service: etcd 
+#      service: etcd
 #      severity: critical
 #      severity_num: 300
 #    annotations:

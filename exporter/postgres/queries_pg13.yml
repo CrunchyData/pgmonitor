@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: queries_pg11.yml
+# Begin File: queries_pg13.yml
 #
 ###
 
@@ -106,6 +106,23 @@ ccp_wal_activity:
         description: "Current size in bytes of the WAL directory"
 
 
+ccp_data_checksum_failure:
+  query: "SELECT datname AS dbname
+            , checksum_failures AS count
+            , coalesce(extract(epoch from (now() - checksum_last_failure)), 0) AS time_since_last_failure_seconds 
+          FROM pg_catalog.pg_stat_database;"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - count:
+        usage: "GAUGE"
+        description: "Total number of checksum failures on this database"
+    - time_since_last_failure_seconds:
+        usage: "GAUGE"
+        description: "Time interval in seconds since the last checksum failure was encountered"
+
+
 ccp_pg_hba_checksum:
     query: "SELECT monitor.pg_hba_checksum() AS status" 
     metrics:
@@ -116,6 +133,6 @@ ccp_pg_hba_checksum:
 
 ###
 #
-# End File: queries_pg11.yml
+# End File: queries_pg13.yml
 #
 ###
