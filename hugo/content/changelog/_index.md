@@ -10,6 +10,7 @@ weight: 5
   * Added support for PostgreSQL 13 
   * Added queries and dashboards for pgnodemx/container support
   * Added metrics and Grafana dashboard for pg_stat_statements 
+  * Added metrics for monitoring longest blocked query time
 
 ### Bug Fixes
 

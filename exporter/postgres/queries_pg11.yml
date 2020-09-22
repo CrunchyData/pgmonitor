@@ -11,6 +11,7 @@ ccp_connection_stats:
         , idle_in_txn
         , (select coalesce(extract(epoch from (max(now() - state_change))),0) from pg_catalog.pg_stat_activity where state = 'idle in transaction') as max_idle_in_txn_time
         , (select coalesce(extract(epoch from (max(now() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and state <> 'idle' ) as max_query_time
+        , (select coalesce(extract(epoch from (max(now() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and wait_event_type = 'Lock' ) as max_blocked_query_time
         , max_connections
         from (
                 select count(*) as total
@@ -36,6 +37,9 @@ ccp_connection_stats:
     - max_query_time:
         usage: "GAUGE"
         description: "Length of time in seconds of the longest running query"
+    - max_blocked_query_time:
+        usage: "GAUGE"
+        description: "Length of time in seconds of the longest running query that has been blocked by a heavyweight lock"
     - max_connections:
         usage: "GAUGE"
         description: "Value of max_connections for the monitored database"
