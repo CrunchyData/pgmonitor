@@ -507,6 +507,8 @@ The following metrics either require special considerations when monitoring spec
 
  * *ccp_connection_stats_idle_in_txn* - Count of idle in transaction connections
 
+ * *ccp_connection_stats_max_blocked_query_time* - Runtime of longest running query that has been blocked by a heavyweight lock
+
  * *ccp_connection_stats_max_connections* - Current value of max_connections for reference
 
  * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
