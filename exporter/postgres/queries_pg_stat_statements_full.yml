@@ -1,0 +1,108 @@
+###
+#
+# Begin File: queries_pg_stat_statements_full.yml
+#
+###
+
+# Gathers all metrics for per query monitoring. WARNING: This can greatly affect Prometheus storage and performance
+ccp_pg_stat_statements:
+  query: "SELECT
+                pg_get_userbyid(s.userid) as role,
+                d.datname AS dbname,
+                s.queryid,
+                s.calls,
+                s.total_time AS total_time_ms,
+                s.min_time AS min_time_ms,
+                s.max_time AS max_time_ms,
+                s.mean_time AS mean_time_ms,
+                s.stddev_time AS stddev_time_ms,
+                s.rows,
+                s.shared_blks_hit,
+                s.shared_blks_read,
+                s.shared_blks_dirtied,
+                s.shared_blks_written,
+                s.local_blks_hit,
+                s.local_blks_read,
+                s.local_blks_dirtied,
+                s.local_blks_written,
+                s.temp_blks_read,
+                s.temp_blks_written,
+                s.blk_read_time AS blk_read_time_ms,
+                s.blk_write_time AS blk_write_time_ms
+            FROM public.pg_stat_statements s
+            JOIN pg_catalog.pg_database d
+            ON d.oid = s.dbid"
+  metrics: 
+    - role: 
+        usage: "LABEL" 
+        description: "Role that executed the statement"
+    - dbname: 
+        usage: "LABEL" 
+        description: "Database in which the statement was executed"
+    - queryid: 
+        usage: "LABEL" 
+        description: "Internal hash code, computed from the statement's parse tree"
+    - calls: 
+        usage: "GAUGE" 
+        description: "Number of times executed"
+    - total_time_ms: 
+        usage: "GAUGE" 
+        description: "Total time spent in the statement, in milliseconds"
+    - min_time_ms: 
+        usage: "GAUGE" 
+        description: "Minimum time spent in the statement, in milliseconds"
+    - max_time_ms: 
+        usage: "GAUGE" 
+        description: "Maximum time spent in the statement, in milliseconds"
+    - mean_time_ms: 
+        usage: "GAUGE" 
+        description: "Mean time spent in the statement, in milliseconds"
+    - stddev_time_ms: 
+        usage: "GAUGE" 
+        description: "Population standard deviation of time spent in the statement, in milliseconds"
+    - rows: 
+        usage: "GAUGE" 
+        description: "Total number of rows retrieved or affected by the statement"
+    - shared_blks_hit: 
+        usage: "GAUGE" 
+        description: "Total number of shared block cache hits by the statement"
+    - shared_blks_read: 
+        usage: "GAUGE" 
+        description: "Total number of shared blocks read by the statement"
+    - shared_blks_dirtied: 
+        usage: "GAUGE" 
+        description: "Total number of shared blocks dirtied by the statement"
+    - shared_blks_written: 
+        usage: "GAUGE" 
+        description: "Total number of shared blocks written by the statement"
+    - local_blks_hit: 
+        usage: "GAUGE" 
+        description: "Total number of local block cache hits by the statement"
+    - local_blks_read: 
+        usage: "GAUGE" 
+        description: "Total number of local blocks read by the statement"
+    - local_blks_dirtied: 
+        usage: "GAUGE" 
+        description: "Total number of local blocks dirtied by the statement"
+    - local_blks_written: 
+        usage: "GAUGE" 
+        description: "Total number of local blocks written by the statement"
+    - temp_blks_read: 
+        usage: "GAUGE" 
+        description: "Total number of temp blocks read by the statement"
+    - temp_blks_written: 
+        usage: "GAUGE" 
+        description: "Total number of temp blocks written by the statement"
+    - blk_read_time_ms: 
+        usage: "GAUGE" 
+        description: "Total time the statement spent reading blocks, in milliseconds (if track_io_timing is enabled, otherwise zero)"
+    - blk_write_time_ms: 
+        usage: "GAUGE" 
+        description: "Total time the statement spent writing blocks, in milliseconds (if track_io_timing is enabled, otherwise zero)"
+
+###
+#
+# End File: queries_pg_stat_statements_full.yml
+#
+###
+
