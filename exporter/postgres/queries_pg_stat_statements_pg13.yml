@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: queries_pg_stat_statements.yml
+# Begin File: queries_pg_stat_statements_pg13.yml
 #
 ###
 
@@ -8,31 +8,31 @@ ccp_pg_stat_statements_total:
   query: "SELECT pg_get_userbyid(s.userid) as role,
               d.datname AS dbname,
               sum(s.calls) AS calls_count,
-              sum(s.total_time) AS time_ms,
-              avg(s.mean_time) AS mean_time_ms,
+              sum(s.total_exec_time) AS exec_time_ms,
+              avg(s.mean_exec_time) AS mean_exec_time_ms,
               sum(s.rows) AS row_count
           FROM public.pg_stat_statements s
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           GROUP BY 1,2"
-  metrics: 
-    - role: 
-        usage: "LABEL" 
+  metrics:
+    - role:
+        usage: "LABEL"
         description: "Role that executed the statement"
-    - dbname: 
-        usage: "LABEL" 
+    - dbname:
+        usage: "LABEL"
         description: "Database in which the statement was executed"
-    - calls_count: 
-        usage: "GAUGE" 
+    - calls_count:
+        usage: "GAUGE"
         description: "Total number of queries run per user/database"
-    - time_ms:
-        usage: "GAUGE" 
+    - exec_time_ms:
+        usage: "GAUGE"
         description: "Total runtime of all queries per user/database"
-    - mean_time_ms:
-        usage: "GAUGE" 
+    - mean_exec_time_ms:
+        usage: "GAUGE"
         description: "Mean runtime of all queries per user/database"
     - row_count:
-        usage: "GAUGE" 
+        usage: "GAUGE"
         description: "Total rows returned from all queries per user/database"
 
 
@@ -41,28 +41,28 @@ ccp_pg_stat_statements_top_mean:
               d.datname AS dbname,
               s.queryid,
               btrim(replace(left(s.query, 40), '\n', '')) AS query,
-              max(s.mean_time) time_ms
+              max(s.mean_exec_time) exec_time_ms
           FROM public.pg_stat_statements s
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           GROUP BY 1,2,3,4
           ORDER BY 5 DESC
           LIMIT #PG_STAT_STATEMENTS_LIMIT#"
-  metrics: 
-    - role: 
-        usage: "LABEL" 
+  metrics:
+    - role:
+        usage: "LABEL"
         description: "Role that executed the statement"
-    - dbname: 
-        usage: "LABEL" 
+    - dbname:
+        usage: "LABEL"
         description: "Database in which the statement was executed"
     - queryid:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "Internal hash code, computed from the statement's parse tree"
     - query:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "First 40 characters of query text"
-    - time_ms: 
-        usage: "GAUGE" 
+    - exec_time_ms:
+        usage: "GAUGE"
         description: "Average query runtime in milliseconds"
 
 
@@ -72,27 +72,27 @@ ccp_pg_stat_statements_top_total:
               d.datname AS dbname,
               s.queryid,
               btrim(replace(left(s.query, 40), '\n', '')) AS query,
-              s.total_time time_ms
+              s.total_exec_time exec_time_ms
           FROM public.pg_stat_statements s
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           ORDER BY 5 DESC
           LIMIT #PG_STAT_STATEMENTS_LIMIT#"
-  metrics: 
-    - role: 
-        usage: "LABEL" 
+  metrics:
+    - role:
+        usage: "LABEL"
         description: "Role that executed the statement"
-    - dbname: 
-        usage: "LABEL" 
+    - dbname:
+        usage: "LABEL"
         description: "Database in which the statement was executed"
     - queryid:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "Internal hash code, computed from the statement's parse tree"
     - query:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "First 40 characters of query text"
-    - time_ms: 
-        usage: "GAUGE" 
+    - exec_time_ms:
+        usage: "GAUGE"
         description: "Total time spent in the statement in milliseconds"
 
 
@@ -102,33 +102,32 @@ ccp_pg_stat_statements_top_max:
               d.datname AS dbname,
               s.queryid,
               btrim(replace(left(s.query, 40), '\n', '')) AS query,
-              s.max_time AS time_ms
+              s.max_exec_time AS exec_time_ms
           FROM public.pg_stat_statements s
           JOIN pg_catalog.pg_database d
           ON d.oid = s.dbid
           ORDER BY 5 DESC
           LIMIT #PG_STAT_STATEMENTS_LIMIT#"
-  metrics: 
-    - role: 
-        usage: "LABEL" 
+  metrics:
+    - role:
+        usage: "LABEL"
         description: "Role that executed the statement"
-    - dbname: 
-        usage: "LABEL" 
+    - dbname:
+        usage: "LABEL"
         description: "Database in which the statement was executed"
     - queryid:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "Internal hash code, computed from the statement's parse tree"
     - query:
-        usage: "LABEL" 
+        usage: "LABEL"
         description: "First 40 characters of query text"
-    - time_ms: 
-        usage: "GAUGE" 
+    - exec_time_ms:
+        usage: "GAUGE"
         description: "Maximum time spent in the statement in milliseconds"
 
 
 ###
 #
-# End File: queries_pg_stat_statements.yml
+# End File: queries_pg_stat_statements_pg13.yml
 #
 ###
-
