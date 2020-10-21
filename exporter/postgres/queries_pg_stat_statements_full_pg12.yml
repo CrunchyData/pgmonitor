@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: queries_pg_stat_statements_full.yml
+# Begin File: queries_pg_stat_statements_full_pg12.yml
 #
 ###
 
@@ -10,6 +10,7 @@ ccp_pg_stat_statements:
                 pg_get_userbyid(s.userid) as role,
                 d.datname AS dbname,
                 s.queryid,
+                btrim(replace(left(s.query, 40), '\n', '')) AS query,
                 s.calls,
                 s.total_time AS total_time_ms,
                 s.min_time AS min_time_ms,
@@ -42,6 +43,9 @@ ccp_pg_stat_statements:
     - queryid: 
         usage: "LABEL" 
         description: "Internal hash code, computed from the statement's parse tree"
+    - query:
+        usage: "LABEL"
+        description: "First 40 characters of query text"
     - calls: 
         usage: "GAUGE" 
         description: "Number of times executed"
@@ -102,7 +106,7 @@ ccp_pg_stat_statements:
 
 ###
 #
-# End File: queries_pg_stat_statements_full.yml
+# End File: queries_pg_stat_statements_full_pg12.yml
 #
 ###
 

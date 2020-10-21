@@ -118,7 +118,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "sum(ccp_pg_stat_statements_total_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -174,7 +174,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "avg(ccp_pg_stat_statements_total_mean_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -412,7 +412,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_mean_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -531,7 +531,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_max_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -649,7 +649,7 @@
       "pluginVersion": "7.1.2",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_total_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
