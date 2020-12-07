@@ -126,7 +126,7 @@ The client package is run on the PostgreSQL server(s) to be monitored. *This inc
 
 ## Setup
 
-### Setup on RHEL/CentOS 7 (preferred)
+### Setup on RHEL/CentOS 7+
 
 #### Service Configuration
 
@@ -285,7 +285,7 @@ sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 ```
 
-### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS 7)
+### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS)
 
 Certain metrics are not cluster-wide, so multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases. As long as you're using the same custom query file for all of those databases, only one additional exporter service is required and this comes with pgMonitor 4.0 and above by default. The queries_per_db.yml file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (Ex. bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup_*.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.
 
@@ -307,60 +307,6 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg11_per_db
 
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same job you already had running for this system
-
-### Installation / Setup on RHEL/CentOS 6
-
-The node_exporter and postgres_exporter services on RHEL6 require the "daemonize" package that is part of the EPEL repository. This can be turned on by running:
-
-    sudo yum install epel-release
-
-All setup for the exporters is the same on RHEL6 as it was for 7 with the exception of the base service files. Whereas RHEL7 uses systemd, RHEL6 uses init.d. The Crunchy RHEL6 packages will create the base service files for you
-
-    /etc/init.d/crunchy-node-exporter
-    /etc/init.d/crunchy-postgres-exporter
-
-Note that these service files are managed by the package and any changes you make to them could be overwritten by future updates. If you need to customize the service files for RHEL6, it's recommended making a copy and editing/using those.
-
-Or if you are setting this up manually, the repository file locations and expected directories are:
-
-```bash
-node/crunchy-node-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
-postgres/crunchy-postgres-exporter-el6.service -> /etc/init.d/crunchy-postgres-exporter
-
-/var/run/postgres_exporter/
-/var/log/postgres_exporter/ (owned by postgres_exporter service user)
-
-/var/run/node_exporter/
-/var/log/node_exporter/ (owned by node_exporter service user)
-```
-
-The same /etc/sysconfig files that are used in RHEL7 above are also used in RHEL6, so follow guidance above concerning them and the notes that are contained in the files themselves.
-
-Once the files are in place, set the service to start on boot, then manually start it
-
-```bash
-sudo chkconfig crunchy-node-exporter on
-sudo service crunchy-node-exporter start
-sudo service crunchy-node-exporter status
-
-sudo chkconfig crunchy-postgres-exporter on
-sudo service crunchy-postgres-exporter start
-sudo service crunchy-postgres-exporter status
-```
-
-#### Running multiple postgres exporters (RHEL / CentOS 6)
-If you need to run multiple postgres_exporter services, follow the same instructions as RHEL / CentOS 7 for making a new queries_XX.yml file to only gather database specific metrics. Then follow the steps below:
-
-    - Make a copy of the /etc/sysconfig file with a new name. If you need to collect per-db metrics, you can use the same per-db sysconfig file that CentOS7 uses.
-    - Update --web.listen-address in the new sysconfig file to use a new port number
-    - Update --extend.query-path in the new sysconfig file to point to the new query file generated
-    - Update the DATA_SOURCE_NAME in the new sysconfig file to point to the name of the database to be monitored
-    - Update the QUERY_FILE_LIST in the new sysconfig file to list all the name of yaml files used for metric collection
-    - Make a copy of the /etc/init.d/crunchy-postgres-exporter with a new name
-    - Update the SYSCONFIG variable in the new init.d file to match the new sysconfig file
-    - Update the Prometheus auto.d target file to include the new exporter in the same one you already had running for this system
-
-Remaining steps to initialize service at boot and start it up should be the same as above for the default service.
 
 ### Windows Server 2012R2
 
