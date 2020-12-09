@@ -18,7 +18,7 @@ weight: 5
 
 ### Manual Intervention Changes
   * To add pg_stat_statements metrics to an existing installation you will need to do the following:
-    * Add the queries_pg_stat_statements.yml file to the QUERY_FILE_LIST in the exporter sysconfig file
+    * Add the relevant queries_pg_stat_statements_pg##.yml file to the QUERY_FILE_LIST in the exporter sysconfig file
     * Add a PG_STAT_STATEMENTS_LIMIT line to the exporter sysconfig file with a desired limit for the top N queries. Default for a new install is 20.
 
 
