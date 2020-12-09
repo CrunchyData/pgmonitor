@@ -12,8 +12,7 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
    - [Windows installs](#windows-installs)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
-   - [RHEL / CentOS 7 (preferred)](#setup-on-rhel-centos-7-preferred)
-   - [RHEL / CentOS 6](#installation-setup-on-rhel-centos-6)
+   - [RHEL or CentOS 7+](#setup-on-rhel-or-centos-7)
    - [Windows Server 2012R2](#windows-server-2012r2)
 - [Metrics Collected](#metrics-collected)
    - [PostgreSQL](#postgresql)
@@ -126,7 +125,7 @@ The client package is run on the PostgreSQL server(s) to be monitored. *This inc
 
 ## Setup
 
-### Setup on RHEL/CentOS 7+
+### Setup on RHEL or CentOS 7+
 
 #### Service Configuration
 
