@@ -16,5 +16,5 @@ DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_moni
 # Ex: For per db metric
 # QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_per_db.yml"
 # QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_per_db.yml  /etc/postgres_exporter/96/queries_bloat.yml"
-QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_common.yml /etc/postgres_exporter/96/queries_pg96.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_global.yml /etc/postgres_exporter/96/queries_pg96.yml"
 
