@@ -38,7 +38,7 @@ groups:
 #    annotations:
 #      summary: '{{ $labels.job }} is not running at least version 11.5 of PostgreSQL'
 
-# Monitor for a failover event by watching for the recovery status value to change within specified time period
+# Monitor for a failover event by watching for the recovery status value to change within the specified time period
 # IMPORTANT NOTE: This alert will automatically resolve after the given offset time period has passed. 
 # If a permanent failover alert that requires manual intervention to resolve is required, see the commented out alert (beneath this one) for configuring failover monitoring per named job
 - alert: PGRecoveryStatusSwitch
@@ -385,4 +385,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
