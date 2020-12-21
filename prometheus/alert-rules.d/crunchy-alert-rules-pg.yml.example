@@ -308,8 +308,11 @@ groups:
 #   ccp_backrest_last_incr_time_since_completion_seconds
 #   ccp_backrest_last_diff_time_since_completion_seconds
 #
+# To avoid false positives on backup time alerts, 12 hours are added onto each threshold to allow a buffer if the backup runtime varies from day to day.
+#    Further adjustment may be needed depending on your backup runtimes/schedule.
+#
 #  - alert: PGBackRestLastCompletedFull_main
-#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 604800
+#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 648000
 #    for: 60s
 #    labels:
 #       service: postgresql
@@ -319,7 +322,7 @@ groups:
 #       summary: 'Full backup for stanza [main] on system {{ $labels.job }} has not completed in the last week.'
 #
 #  - alert: PGBackRestLastCompletedIncr_main
-#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 86400
+#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 129600
 #    for: 60s
 #    labels:
 #       service: postgresql
