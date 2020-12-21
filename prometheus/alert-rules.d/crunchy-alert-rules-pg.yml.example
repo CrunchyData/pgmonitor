@@ -38,9 +38,8 @@ groups:
 #    annotations:
 #      summary: '{{ $labels.job }} is not running at least version 11.5 of PostgreSQL'
 
-# Monitor for a failover event by watching for the recovery status value to change within specified time period
-# IMPORTANT NOTE: This alert will automatically resolve after the given offset time period has passed. 
-# If a permanent failover alert that requires manual intervention to resolve is required, see the commented out alert (beneath this one) for configuring failover monitoring per named job
+# Monitor for a failover event by checking if the recovery status value has changed within the specified time period
+# IMPORTANT NOTE: This alert will *automatically resolve* after the given offset time period has passed! If you desire to have an alert that must be manually resolved, see the commented out alert beneath this one
 - alert: PGRecoveryStatusSwitch
   expr: ccp_is_in_recovery_status != ccp_is_in_recovery_status offset 5m 
   for: 60s
