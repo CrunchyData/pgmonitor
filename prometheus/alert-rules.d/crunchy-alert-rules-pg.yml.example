@@ -38,6 +38,17 @@ groups:
 #    annotations:
 #      summary: '{{ $labels.job }} is not running at least version 11.5 of PostgreSQL'
 
+# Monitor for a failover event by checking if the recovery status value has changed within the specified time period
+# IMPORTANT NOTE: This alert will *automatically resolve* after the given offset time period has passed! If you desire to have an alert that must be manually resolved, see the commented out alert beneath this one
+- alert: PGRecoveryStatusSwitch
+  expr: ccp_is_in_recovery_status != ccp_is_in_recovery_status offset 5m 
+  for: 60s
+  labels:
+    service: postgresql
+    severity: critical
+    severity_num: 300
+  annotations:
+    summary: '{{ $labels.job }} has had a PostgreSQL failover event. Please check systems involved in this cluster for more details'
 
 # Whether a system switches from primary to replica or vice versa must be configured per named job.
 # No way to tell what value a system is supposed to be without a rule expression for that specific system
@@ -376,5 +387,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Backup Full status missing for Prod. Check that pgbackrest info command is working on target system.'
-
-
