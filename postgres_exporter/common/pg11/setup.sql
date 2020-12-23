@@ -1,3 +1,5 @@
+-- PG11 pgMonitor Setup
+
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN

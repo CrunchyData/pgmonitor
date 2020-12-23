@@ -1,3 +1,5 @@
+-- PG9.6 pgMonitor Setup
+
 DO $$
 BEGIN
     -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
