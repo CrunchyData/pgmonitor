@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
 
 # Additional metric option to monitor disk queue depth with node_exporter. Set the DISK variable to the disk system that is to be monitored
 

@@ -1,3 +1,9 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
 # Based on upstream example file found here: https://github.com/prometheus/alertmanager/blob/master/doc/examples/simple.yml
 global:
     smtp_smarthost: 'localhost: 25'

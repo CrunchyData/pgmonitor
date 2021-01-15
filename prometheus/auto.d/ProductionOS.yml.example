@@ -1,3 +1,9 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
 - targets: [ "DB_SERVER_IP:NODE_OR_WMI_EXPORTER_PORT" ]
   labels:
     job: "Prod"
