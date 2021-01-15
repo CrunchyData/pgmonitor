@@ -95,8 +95,3 @@ CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY
 
 Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
 
-Red Hat is trademarks of Red Hat, Inc.
-
-All other trademarks cited herein are the property of their respective owners.
-
-
