@@ -1,3 +1,7 @@
+--
+-- Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+--
+
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN

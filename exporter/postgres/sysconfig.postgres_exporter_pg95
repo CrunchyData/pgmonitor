@@ -1,3 +1,9 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/postgres_exporter_pg##)
 
 # --web.listen-address: change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.

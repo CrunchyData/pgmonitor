@@ -1,3 +1,7 @@
+--
+-- Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+--
+
 DO $$
 BEGIN
     -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
