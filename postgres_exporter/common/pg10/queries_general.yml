@@ -2,6 +2,8 @@
 #
 # Begin File: PG10 queries_general.yml
 #
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
 ###
 
 ccp_connection_stats:
@@ -116,6 +118,6 @@ ccp_pg_hba_checksum:
 
 ###
 #
-# End File: queries_pg10.yml
+# End File: PG10 queries_general.yml
 #
 ###

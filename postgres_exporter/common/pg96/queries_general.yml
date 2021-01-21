@@ -1,6 +1,9 @@
 ###
 #
-# Begin File: PG9.6 queries.yml
+# Begin File: PG9.6 queries_general.yml
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
 #
 ###
 
@@ -113,6 +116,6 @@ ccp_wal_activity:
 
 ###
 #
-# End File: queries_pg96.yml
+# End File: PG9.6 queries_general.yml
 #
 ###

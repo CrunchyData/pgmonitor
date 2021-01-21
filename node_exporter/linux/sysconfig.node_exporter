@@ -1,3 +1,9 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/node_exporter)
 #
 # --collector.textfile.directory: location that node_exporter will look for additional metric collection scripts to run

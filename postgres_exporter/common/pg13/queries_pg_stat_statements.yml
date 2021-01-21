@@ -2,6 +2,8 @@
 #
 # Begin File: PG13 queries_pg_stat_statements.yml
 #
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
 ###
 
 ccp_pg_stat_statements_total:
@@ -128,6 +130,6 @@ ccp_pg_stat_statements_top_max:
 
 ###
 #
-# End File: queries_pg_stat_statements_pg13.yml
+# End File: PG13 queries_pg_stat_statements.yml
 #
 ###

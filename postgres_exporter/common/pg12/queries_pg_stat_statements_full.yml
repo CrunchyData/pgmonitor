@@ -2,6 +2,8 @@
 #
 # Begin File: PG12 queries_pg_stat_statements_full.yml
 #
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
 ###
 
 # Gathers all metrics for per query monitoring. WARNING: This can greatly affect Prometheus storage and performance
@@ -106,7 +108,7 @@ ccp_pg_stat_statements:
 
 ###
 #
-# End File: queries_pg_stat_statements_full_pg12.yml
+# End File: PG12 queries_pg_stat_statements_full.yml
 #
 ###
 

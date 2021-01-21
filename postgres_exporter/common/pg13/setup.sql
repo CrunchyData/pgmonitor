@@ -1,4 +1,7 @@
 -- PG13 pgMonitor Setup
+--
+-- Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+--
 
 DO $$
 BEGIN

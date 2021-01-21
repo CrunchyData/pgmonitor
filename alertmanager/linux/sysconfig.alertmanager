@@ -1,3 +1,9 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
 # This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/alertmanager)
 #
 # --config.file: path to the alertmanager server configuration file
