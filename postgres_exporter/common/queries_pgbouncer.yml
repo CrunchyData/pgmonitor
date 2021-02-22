@@ -1,0 +1,113 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+# Begin File: queries_pgbouncer.yml
+#
+###
+
+ccp_pgbouncer_pools:
+  query: "SELECT database || '.' || user as conn_pool
+            , sum(cl_active) AS client_active
+            , sum(cl_waiting) AS client_waiting
+            , sum(sv_active) AS server_active
+            , sum(sv_idle) AS server_idle
+            , sum(sv_used) AS server_used
+            FROM pgbouncer_pools
+            GROUP BY 1"
+  metrics:
+    - conn_pool:
+          usage: "LABEL"
+          description: "Conection Pool"
+    - client_active:
+          usage: "GAUGE"
+          description: "Client connections that are linked to server connection and can process queries."
+    - client_waiting:
+          usage: "GAUGE"
+          description: "Client connections that have sent queries but have not yet gotten a server connection."
+    - server_active:
+          usage: "GAUGE"
+          description: "Server connections that are linked to a client."
+    - server_idle:
+          usage: "GAUGE"
+          description: "Server connections that unused and immediately usable for client queries."
+    - server_used:
+          usage: "GAUGE"
+          description: "Server connections that have been idle more than server_check_delay, so they need server_check_query to run on it before it can be used."
+
+ccp_pgbouncer_databases:
+  query: "SELECT name AS pool_db
+            , CASE WHEN max_connections != 0
+              THEN ((current_connections::float / max_connections::float) * 100)::int
+              ELSE ((current_connections::float / pool_size::float) * 100)::int
+              END AS db_conn_perc_used
+            , paused
+            , disabled
+            FROM pgbouncer_databases"
+  metrics:
+    - pool_db:
+          usage: "LABEL"
+          description: "Database as known to pgbouncer"
+    - db_conn_perc_used:
+          usage: "GAUGE"
+          description: "Percentage of available pooler connections for this database that are in use."
+    - paused:
+          usage: "GAUGE"
+          description: "Pooler connections to this database are currently paused."
+    - disabled:
+          usage: "GAUGE"
+          description: "Pooler connections to this database are currently disabled."
+
+ccp_pgbouncer_clients:
+  query: "SELECT database || '.' || user as conn_pool
+            , state AS client_state
+            , count(*) AS client_state_count
+            FROM pgbouncer_clients
+            GROUP BY 1,2"
+  metrics:
+    - conn_pool:
+          usage: "LABEL"
+          description: "Conection Pool"
+    - client_state:
+          usage: "LABEL"
+          description: "Client connection statuses per database"
+    - client_state_count:
+          usage: "GAUGE"
+          description: "Count of the client connections with this status."
+
+ccp_pgbouncer_servers:
+  query: "SELECT database || '.' || user as conn_pool
+            , state as server_state
+            , count(*) AS server_state_count
+            FROM pgbouncer_servers
+            GROUP BY 1,2"
+  metrics:
+    - conn_pool:
+          usage: "LABEL"
+          description: "Conection Pool"
+    - server_state:
+          usage: "LABEL"
+          description: "Server connection statuses per database"
+    - server_state_count:
+          usage: "GAUGE"
+          description: "Count of the server connections with this status."
+
+ccp_pgbouncer_lists:
+  query: "SELECT list AS item
+            , items AS item_count
+            FROM pgbouncer_lists
+            WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')"
+  metrics:
+    - item:
+          usage: "LABEL"
+          description: "Items that have registered with pgBouncer"
+    - item_count:
+          usage: "GAUGE"
+          description: "Count of said items registered with pgBouncer"
+
+
+###
+#
+# End File: queries_pgbouncer.yml
+#
+###

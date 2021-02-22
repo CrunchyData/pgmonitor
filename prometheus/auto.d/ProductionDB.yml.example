@@ -1,4 +1,0 @@
-- targets: [ "10.123.202.12:9187" ]
-  labels:
-    job: "Prod"
-    exp_type: "pg"
