@@ -5,6 +5,8 @@
 #
 ###
 
+SYSTEM_ID=$1
+
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
 
 if [ ${BACKREST_AUTOCONFIG_STANZAS:-0} -gt 0 ]; then
@@ -20,14 +22,20 @@ elif [ ! -z "$BACKREST_CONFIGS" ] && [ -z "$BACKREST_STANZAS" ]; then
     read -r -a config_array <<< "$BACKREST_CONFIGS"
     for conf in "${config_array[@]}"
     do
-      echo $(echo -n "$conf|" | tr '/' '_'; pgbackrest --config=$conf --output=json info | tr -d '\n')
+      echo $(echo -n "$conf|" | tr '/' '_'; pgbackrest --config=$conf --output=json info | tr -d '\n') | grep $SYSTEM_ID
+      if [ $? == 0 ]; then
+        break
+      fi
     done
 elif [ -z "$BACKREST_CONFIGS" ] && [ ! -z "$BACKREST_STANZAS" ]; then
     read -r -a stanza_array <<< "$BACKREST_STANZAS"
     for stanza in "${stanza_array[@]}"
     do
       export PGBACKREST_STANZA=$stanza
-      echo $(echo -n "$conf|" | tr '/' '_'; pgbackrest --output=json info | tr -d '\n')
+      echo $(echo -n "$conf|" | tr '/' '_'; pgbackrest --output=json info | tr -d '\n') | grep $SYSTEM_ID
+      if [ $? == 0 ]; then
+        break
+      fi
     done
 fi
 

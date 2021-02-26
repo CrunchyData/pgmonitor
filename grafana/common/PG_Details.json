@@ -15,114 +15,30 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 13,
-  "iteration": 1582574919045,
+  "id": 8,
+  "iteration": 1614123620619,
   "links": [],
   "panels": [
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "rgb(7, 6, 79)",
-        "rgba(50, 172, 45, 0.9)"
-      ],
-      "datasource": null,
-      "format": "dtdurations",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 52,
-      "interval": null,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "PGBackrest",
-          "url": "/d/QtHwNCrik/pgbackrest?$__all_variables"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "Time Since Last Backup:",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\", stanza=\"[[backrest_stanza]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "[[pgnodes]] - [[backrest_stanza]] Backup Details",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 0
       },
       "hiddenSeries": false,
       "id": 18,
@@ -142,9 +58,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -237,13 +154,20 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 39,
@@ -266,9 +190,10 @@
       ],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -339,13 +264,20 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 41,
@@ -363,9 +295,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -430,13 +363,20 @@
       "dashes": false,
       "datasource": "PROMETHEUS",
       "description": "Note that replica_port can change if replicas ever detach and re-attach",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 35,
@@ -454,9 +394,10 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -521,13 +462,20 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 37,
@@ -545,9 +493,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -611,13 +560,20 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 12,
@@ -635,9 +591,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -703,13 +660,20 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 23
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 13,
@@ -727,9 +691,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -803,13 +768,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 29
+        "y": 27
       },
+      "hiddenSeries": false,
       "id": 11,
       "legend": {
         "alignAsTable": true,
@@ -832,8 +805,11 @@
         }
       ],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -935,13 +911,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 29
+        "y": 27
       },
+      "hiddenSeries": false,
       "id": 17,
       "legend": {
         "alignAsTable": true,
@@ -958,8 +942,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1080,12 +1067,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 39
+        "y": 37
       },
       "id": 15,
       "legend": {
@@ -1103,8 +1096,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1179,12 +1172,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 39
+        "y": 37
       },
       "id": 14,
       "legend": {
@@ -1203,8 +1202,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1306,12 +1305,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 44
       },
       "id": 47,
       "legend": {
@@ -1327,8 +1332,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1391,12 +1396,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 44
       },
       "id": 45,
       "legend": {
@@ -1412,8 +1423,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1476,12 +1487,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 53
+        "y": 51
       },
       "id": 49,
       "legend": {
@@ -1497,8 +1514,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1561,12 +1578,18 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 53
+        "y": 51
       },
       "id": 16,
       "legend": {
@@ -1584,8 +1607,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1671,7 +1694,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 21,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1679,45 +1702,24 @@
       {
         "allValue": null,
         "current": {
-          "text": "pg1",
-          "value": "pg1"
+          "selected": false,
+          "text": "pg1_alpha",
+          "value": "pg1_alpha"
         },
         "datasource": "PROMETHEUS",
         "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "label_values(up{exp_type='pg'}, job)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
+        "query": {
+          "query": "label_values(up{exp_type='pg'}, job)",
+          "refId": "PROMETHEUS-pgnodes-Variable-Query"
         },
-        "datasource": "PROMETHEUS",
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "BackRest Stanza",
-        "multi": false,
-        "name": "backrest_stanza",
-        "options": [],
-        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\"}, stanza)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1731,7 +1733,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1757,5 +1759,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 2
+  "version": 1
 }

@@ -15,8 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1582574864807,
+  "id": 4,
+  "iteration": 1614244309467,
   "links": [],
   "panels": [
     {
@@ -25,6 +25,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -49,9 +56,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -61,8 +69,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
           "refId": "A"
@@ -115,6 +124,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -139,9 +155,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -151,8 +168,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
           "refId": "A"
@@ -205,6 +223,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -229,9 +254,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -241,8 +267,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_total_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_total_size_bytes{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
           "refId": "A"
@@ -295,6 +322,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -319,9 +353,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -331,8 +366,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{backup_type}}",
           "refId": "A"
@@ -385,6 +421,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -409,9 +452,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -421,8 +465,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
           "refId": "A"
@@ -475,6 +520,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -499,9 +551,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -511,8 +564,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{job=~\"[[pgnodes]]\",stanza=\"[[backrest_stanza]]\"}",
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{stanza}}",
           "refId": "A"
@@ -561,7 +615,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 21,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -569,45 +623,24 @@
       {
         "allValue": null,
         "current": {
-          "text": "pg1",
-          "value": "pg1"
-        },
-        "datasource": "PROMETHEUS",
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "PGCluster",
-        "multi": false,
-        "name": "pgnodes",
-        "options": [],
-        "query": "label_values(up{exp_type='pg'}, job)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "alpha",
+          "value": "alpha"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{}, stanza)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Stanza",
         "multi": false,
         "name": "backrest_stanza",
         "options": [],
-        "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{job=~\"[[pgnodes]]\"}, stanza)",
+        "query": {
+          "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{}, stanza)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -621,7 +654,7 @@
     ]
   },
   "time": {
-    "from": "now-2w",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -647,5 +680,5 @@
   "timezone": "",
   "title": "pgBackRest",
   "uid": "QtHwNCrik",
-  "version": 2
+  "version": 1
 }
