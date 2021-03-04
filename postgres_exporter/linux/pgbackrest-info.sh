@@ -5,6 +5,11 @@
 #
 ###
 
+if [ "$1" == "" ]; then
+  echo "Usage: $(basename $0) <PostgreSQL system identifier>"
+  exit 1
+fi
+
 SYSTEM_ID=$1
 
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
