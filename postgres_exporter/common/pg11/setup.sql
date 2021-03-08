@@ -37,6 +37,7 @@ DECLARE
 
 v_gather_timestamp      timestamptz;
 v_throttle              interval;
+v_system_identifier     bigint;
  
 BEGIN
 -- Get pgBackRest info in JSON format
@@ -51,8 +52,10 @@ IF pg_catalog.pg_is_in_recovery() = 'f' THEN
         -- Ensure table is empty 
         DELETE FROM monitor.pgbackrest_info;
 
+        SELECT system_identifier into v_system_identifier FROM pg_control_system();
+
         -- Copy data into the table directory from the pgBackRest into command
-        COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
+        EXECUTE format( $cmd$ COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh %s' WITH (format text,DELIMITER '|') $cmd$, v_system_identifier::text );
 
     END IF;
 END IF;
@@ -69,7 +72,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  
-    LANGUAGE sql SECURITY DEFINER
+    LANGUAGE sql SECURITY DEFINER STABLE
 AS $function$
 
 /* 
@@ -126,7 +129,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
 CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
- LANGUAGE sql SECURITY DEFINER
+ LANGUAGE sql SECURITY DEFINER STABLE
 AS $function$
 
 /* 

@@ -8,6 +8,12 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN
         CREATE ROLE ccp_monitoring WITH LOGIN;
     END IF;
+
+    -- The pgmonitor role is required by the pgnodemx extension in PostgreSQL versions 9.5 and 9.6
+    -- and should be removed when upgrading to PostgreSQL 10 and above.
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'pgmonitor') THEN
+        DROP ROLE pgmonitor;
+    END IF;
 END
 $$;
  
@@ -31,6 +37,7 @@ DECLARE
 
 v_gather_timestamp      timestamptz;
 v_throttle              interval;
+v_system_identifier     bigint;
  
 BEGIN
 -- Get pgBackRest info in JSON format
@@ -45,8 +52,10 @@ IF pg_catalog.pg_is_in_recovery() = 'f' THEN
         -- Ensure table is empty 
         DELETE FROM monitor.pgbackrest_info;
 
+        SELECT system_identifier into v_system_identifier FROM pg_control_system();
+
         -- Copy data into the table directory from the pgBackRest into command
-        COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh' WITH (format text,DELIMITER '|');
+        EXECUTE format( $cmd$ COPY monitor.pgbackrest_info (config_file, data) FROM program '/usr/bin/pgbackrest-info.sh %s' WITH (format text,DELIMITER '|') $cmd$, v_system_identifier::text );
 
     END IF;
 END IF;
