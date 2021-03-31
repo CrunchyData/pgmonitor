@@ -53,7 +53,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1614887757158,
+  "iteration": 1617217747489,
   "links": [
     {
       "asDropdown": false,
@@ -533,7 +533,7 @@
         },
         "overrides": []
       },
-      "fill": 1,
+      "fill": 3,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
@@ -569,19 +569,13 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:1409",
-          "alias": "Archive age",
-          "yaxis": 2
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "round(300*sum(rate(pg_stat_archiver_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[5m])))",
+          "expr": "round(60*sum(rate(pg_stat_archiver_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -590,7 +584,7 @@
           "refId": "A"
         },
         {
-          "expr": "round(300*sum(rate(pg_stat_archiver_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[5m])))",
+          "expr": "idelta(pg_stat_archiver_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
           "hide": false,
           "interval": "",
           "legendFormat": "Archive count",
@@ -601,7 +595,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "WAL stats (5 min avg)",
+      "title": "WAL Stats",
       "tooltip": {
         "shared": true,
         "sort": 0,
