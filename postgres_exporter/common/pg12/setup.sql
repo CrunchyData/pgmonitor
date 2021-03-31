@@ -407,5 +407,49 @@ CREATE VIEW monitor.pg_hba_hash AS
     FROM hba_ordered_list;
 
 
+
+DROP TABLE IF EXISTS monitor.pg_stat_statements_info;
+-- Table to store last reset time for pg_stat_statements
+CREATE TABLE monitor.pg_stat_statements_info(
+   reset_time timestamptz 
+);
+
+DROP FUNCTION IF EXISTS monitor.ccp_pg_stat_statements_reset(int);
+-- Function to reset pg_stat_statements periodically
+CREATE FUNCTION monitor.ccp_pg_stat_statements_reset(p_throttle_minutes integer DEFAULT 10)
+  RETURNS bigint
+  LANGUAGE plpgsql
+  SECURITY DEFINER
+AS $function$
+DECLARE
+
+  v_reset_timestamp      timestamptz;
+  v_throttle             interval;
+ 
+BEGIN
+
+  IF p_throttle_minutes < 0 THEN
+      RETURN 0;
+  END IF;
+
+  v_throttle := make_interval(mins := p_throttle_minutes);
+
+  SELECT COALESCE(max(reset_time), '1970-01-01'::timestamptz) INTO v_reset_timestamp FROM monitor.pg_stat_statements_info;
+
+  IF ((CURRENT_TIMESTAMP - v_reset_timestamp) > v_throttle) THEN
+      -- Ensure table is empty 
+      DELETE FROM monitor.pg_stat_statements_info;
+      PERFORM pg_stat_statements_reset();
+      INSERT INTO monitor.pg_stat_statements_info(reset_time) values (now());
+  END IF;
+
+  RETURN (SELECT extract(epoch from reset_time) FROM monitor.pg_stat_statements_info);
+
+EXCEPTION 
+   WHEN others then 
+       RETURN 0;
+END 
+$function$;
+
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;
 GRANT ALL ON ALL TABLES IN SCHEMA monitor TO ccp_monitoring;
