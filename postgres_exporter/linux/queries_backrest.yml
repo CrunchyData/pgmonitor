@@ -59,6 +59,27 @@ ccp_backrest_last_info:
             description: "Total runtime in seconds of this backup"
 
 
+ccp_backrest_oldest_full_backup:
+    query: "WITH all_backups AS (
+                SELECT config_file
+                 , jsonb_array_elements(data) AS stanza_data
+                FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
+            )
+            , per_stanza AS (
+                SELECT config_file
+                 , stanza_data->>'name' AS stanza
+                 , jsonb_array_elements(stanza_data->'backup') AS backup_data
+                FROM all_backups
+            )
+            select 
+		min((backup_data->'timestamp'->>'stop')::bigint)
+            from per_stanza where backup_data->>'type'::text = 'full' group by backup_data->>'type'::text"
+    metrics:
+        - time:
+            usage: "GAUGE"
+            description: "Seconds since the oldest completed full backup"
+
+
 ccp_backrest_last_full_backup:
     query: "WITH all_backups AS (
                 SELECT config_file

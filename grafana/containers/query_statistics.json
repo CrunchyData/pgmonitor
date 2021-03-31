@@ -55,7 +55,7 @@
     ]
   },
   "description": "",
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
@@ -112,7 +112,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod,dbname,exported_role)",
+          "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -121,7 +121,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Queries Executed",
+      "title": "Queries Executed",
       "type": "stat"
     },
     {
@@ -166,7 +166,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(irate(ccp_pg_stat_statements_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod,dbname,exported_role)",
+          "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -176,7 +176,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Query Runtime ",
+      "title": "Query Runtime ",
       "type": "stat"
     },
     {
@@ -223,7 +223,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg(avg_over_time(ccp_pg_stat_statements_total_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod,dbname,exported_role)",
+          "expr": "avg(sum_over_time(ccp_pg_stat_statements_total_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -233,7 +233,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Query Mean Runtime",
+      "title": "Query Mean Runtime",
       "type": "stat"
     },
     {
@@ -280,7 +280,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_row_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod,dbname,exported_role)",
+          "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_row_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment, pod,dbname,exported_role)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -290,7 +290,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Total Rows Retrieved or Affected",
+      "title": "Rows Retrieved or Affected",
       "type": "stat"
     },
     {
@@ -344,7 +344,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod)",
+          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment, pod)",
           "instant": false,
           "interval": "",
           "legendFormat": "db: {{dbname}}, user: {{exported_role}}",
@@ -522,7 +522,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg(avg_over_time(ccp_pg_stat_statements_top_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod)",
+          "expr": "avg(avg_over_time(ccp_pg_stat_statements_top_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -686,7 +686,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "max(max_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod)",
+          "expr": "max(max_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -849,7 +849,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(sum_over_time(ccp_pg_stat_statements_top_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, pod)",
+          "expr": "sum(irate(ccp_pg_stat_statements_top_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
           "format": "table",
           "instant": true,
           "interval": "",

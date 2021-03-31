@@ -522,7 +522,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Query Latency",
+      "title": "Query Duration",
       "tooltip": {
         "shared": true,
         "sort": 0,
