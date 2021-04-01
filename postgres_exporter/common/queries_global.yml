@@ -188,15 +188,27 @@ ccp_transaction_wraparound:
 
 ccp_archive_command_status:
     query: "SELECT CASE 
-        WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) IS NULL THEN 0
-        WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) < 0 THEN 0
-        ELSE EXTRACT(epoch from (last_failed_time - last_archived_time)) 
-END AS seconds_since_last_fail
-FROM pg_catalog.pg_stat_archiver"
+                WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) IS NULL THEN 0
+                WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) < 0 THEN 0
+                ELSE EXTRACT(epoch from (last_failed_time - last_archived_time)) 
+                END AS seconds_since_last_fail
+            , EXTRACT(epoch from (CURRENT_TIMESTAMP - last_archived_time)) AS seconds_since_last_archive
+            , archived_count
+            , failed_count
+            FROM pg_catalog.pg_stat_archiver"
     metrics:
         - seconds_since_last_fail:
             usage: "GAUGE"
             description: "Seconds since the last recorded failure of the archive_command"
+        - seconds_since_last_archive:
+            usage: "GAUGE"
+            description: "Seconds since the last successful archive operation"
+        - archived_count:
+            usage: "GAUGE"
+            description: "Number of WAL files that have been successfully archived"
+        - failed_count:
+            usage: "GAUGE"
+            description: "Number of failed attempts for archiving WAL files"
 
 
 ccp_sequence_exhaustion:
