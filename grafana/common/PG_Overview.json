@@ -15,86 +15,113 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1582574932240,
+  "iteration": 1617294517997,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(50, 172, 45, 0.9)",
-        "rgba(68, 126, 188, 0.9)"
-      ],
       "datasource": "PROMETHEUS",
-      "format": "none",
-      "gauge": {
-        "maxValue": 2,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "PG Details",
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "null"
+            },
+            {
+              "id": 1,
+              "op": "=",
+              "text": "PRIMARY",
+              "type": 1,
+              "value": ".5"
+            },
+            {
+              "id": 2,
+              "op": "=",
+              "text": "REPLICA",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": null
+              },
+              {
+                "color": "rgba(50, 172, 45, 0.9)",
+                "value": 0.5
+              },
+              {
+                "color": "rgba(68, 126, 188, 0.9)",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 0
       },
       "id": 1,
       "interval": null,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "PostgreSQL Details",
-          "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
+      "links": [],
       "maxDataPoints": 100,
-      "maxPerRow": 8,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 47
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.5",
       "repeat": "pgnodes",
       "repeatDirection": "h",
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "pg1",
-          "value": "pg1"
+          "text": "alpha_ip16_pg1",
+          "value": "alpha_ip16_pg1"
         }
       },
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
       "targets": [
         {
           "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
@@ -107,112 +134,114 @@
           "step": 2
         }
       ],
-      "thresholds": "0.5,1",
       "title": "[[pgnodes]]",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "DOWN",
-          "value": "null"
-        },
-        {
-          "op": "=",
-          "text": "PRIMARY",
-          "value": ".5"
-        },
-        {
-          "op": "=",
-          "text": "REPLICA",
-          "value": "1"
-        },
-        {
-          "op": "=",
-          "text": "DOWN",
-          "value": "0"
-        }
-      ],
-      "valueName": "current"
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(50, 172, 45, 0.9)",
-        "rgba(68, 126, 188, 0.9)"
-      ],
       "datasource": "PROMETHEUS",
-      "format": "none",
-      "gauge": {
-        "maxValue": 2,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "PG Details",
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "null"
+            },
+            {
+              "id": 1,
+              "op": "=",
+              "text": "PRIMARY",
+              "type": 1,
+              "value": ".5"
+            },
+            {
+              "id": 2,
+              "op": "=",
+              "text": "REPLICA",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": null
+              },
+              {
+                "color": "rgba(50, 172, 45, 0.9)",
+                "value": 0.5
+              },
+              {
+                "color": "rgba(68, 126, 188, 0.9)",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 0
       },
       "id": 2,
       "interval": null,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "PostgreSQL Details",
-          "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
-        }
-      ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
+      "links": [],
       "maxDataPoints": 100,
-      "maxPerRow": 8,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "repeat": null,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 47
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.5",
       "repeatDirection": "h",
-      "repeatIteration": 1582574932240,
+      "repeatIteration": 1617294517997,
       "repeatPanelId": 1,
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "pg2",
-          "value": "pg2"
+          "text": "alpha_ip26_pg2",
+          "value": "alpha_ip26_pg2"
         }
       },
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
       "targets": [
         {
           "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
@@ -225,37 +254,132 @@
           "step": 2
         }
       ],
-      "thresholds": "0.5,1",
       "title": "[[pgnodes]]",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "DOWN",
-          "value": "null"
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "PG Details",
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "null"
+            },
+            {
+              "id": 1,
+              "op": "=",
+              "text": "PRIMARY",
+              "type": 1,
+              "value": ".5"
+            },
+            {
+              "id": 2,
+              "op": "=",
+              "text": "REPLICA",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "op": "=",
+              "text": "DOWN",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": null
+              },
+              {
+                "color": "rgba(50, 172, 45, 0.9)",
+                "value": 0.5
+              },
+              {
+                "color": "rgba(68, 126, 188, 0.9)",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
         },
-        {
-          "op": "=",
-          "text": "PRIMARY",
-          "value": ".5"
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 3,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "op": "=",
-          "text": "REPLICA",
-          "value": "1"
+        "text": {
+          "valueSize": 47
         },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.5",
+      "repeatDirection": "h",
+      "repeatIteration": 1617294517997,
+      "repeatPanelId": 1,
+      "scopedVars": {
+        "pgnodes": {
+          "selected": false,
+          "text": "alpha_ip36_pg3",
+          "value": "alpha_ip36_pg3"
+        }
+      },
+      "targets": [
         {
-          "op": "=",
-          "text": "DOWN",
-          "value": "0"
+          "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "metric": "up",
+          "refId": "A",
+          "step": 2
         }
       ],
-      "valueName": "current"
+      "title": "[[pgnodes]]",
+      "type": "stat"
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 21,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -263,19 +387,28 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "PROMETHEUS",
         "definition": "",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "PGCluster",
         "multi": true,
         "name": "pgnodes",
         "options": [],
-        "query": "label_values(up{exp_type='pg'}, job)",
+        "query": {
+          "query": "label_values(up{exp_type='pg'}, job)",
+          "refId": "PROMETHEUS-pgnodes-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
