@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617144979477,
+  "iteration": 1617228994154,
   "links": [],
   "panels": [
     {
@@ -58,6 +58,33 @@
             "mode": "thresholds"
           },
           "custom": {},
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Cluster Details",
+              "url": "dashboard/db/postgresqldetails?$__url_time_range&$__all_variables"
+            },
+            {
+              "targetBlank": true,
+              "title": "Backup Details",
+              "url": "dashboard/db/pgbackrest?$__url_time_range&$__all_variables"
+            },
+            {
+              "targetBlank": true,
+              "title": "POD Details",
+              "url": "dashboard/db/pod-details?$__url_time_range&$__all_variables"
+            },
+            {
+              "targetBlank": true,
+              "title": "Query Statistics",
+              "url": "dashboard/db/query-statistics?$__url_time_range&$__all_variables"
+            },
+            {
+              "targetBlank": true,
+              "title": "Service Health",
+              "url": "dashboard/db/postgresql-service-health?$__url_time_range&$__all_variables"
+            }
+          ],
           "mappings": [
             {
               "from": "0",
@@ -110,13 +137,7 @@
       },
       "id": 1,
       "interval": null,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "PostgreSQL Details",
-          "url": "dashboard/db/postgresqldetails?$__url_time_range&$__all_variables"
-        }
-      ],
+      "links": [],
       "maxDataPoints": 100,
       "maxPerRow": 2,
       "options": {
@@ -220,6 +241,6 @@
   },
   "timezone": "",
   "title": "PostgreSQL Overview",
-  "uid": "S5JzMn_Gz",
+  "uid": "D2X39SlGk",
   "version": 1
 }

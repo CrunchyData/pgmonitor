@@ -49,7 +49,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
@@ -575,7 +575,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "round(60*sum(rate(pg_stat_archiver_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])))",
+          "expr": "idelta(pg_stat_archiver_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
           "format": "time_series",
           "instant": false,
           "interval": "",
