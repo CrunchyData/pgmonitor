@@ -71,11 +71,14 @@ ccp_backrest_oldest_full_backup:
                  , jsonb_array_elements(stanza_data->'backup') AS backup_data
                 FROM all_backups
             )
-            select 
-		min((backup_data->'timestamp'->>'stop')::bigint)
-            from per_stanza where backup_data->>'type'::text = 'full' group by backup_data->>'type'::text"
+            SELECT config_file
+              , stanza
+              , min((backup_data->'timestamp'->>'stop')::bigint) time_seconds
+            FROM per_stanza 
+            WHERE backup_data->>'type'::text = 'full' 
+            GROUP BY config_file, stanza, backup_data->>'type'::text"
     metrics:
-        - time:
+        - time_seconds:
             usage: "GAUGE"
             description: "Seconds since the oldest completed full backup"
 

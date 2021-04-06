@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617038874857,
+  "iteration": 1617404711963,
   "links": [
     {
       "icon": "external link",
@@ -329,7 +329,7 @@
       },
       "lines": true,
       "linewidth": 1,
-      "nullPointMode": "null as zero",
+      "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
@@ -664,6 +664,18 @@
                 "value": 310
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "queryid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 186
+              }
+            ]
           }
         ]
       },
@@ -827,6 +839,18 @@
                 "value": 309
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "queryid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 189
+              }
+            ]
           }
         ]
       },
@@ -895,7 +919,7 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": "15m",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -1018,20 +1042,6 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "10m",
-      "15m",
-      "30m",
-      "1h",
-      "4h",
-      "8h",
-      "1d"
-    ],
     "time_options": [
       "5m",
       "15m",

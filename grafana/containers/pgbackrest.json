@@ -117,7 +117,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "time()-ccp_backrest_oldest_full_backup_time{pg_cluster=\"[[cluster]]\", role=\"master\"}",
+          "expr": "time()-ccp_backrest_oldest_full_backup_time_seconds{pg_cluster=\"[[cluster]]\", role=\"master\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -211,7 +211,7 @@
           "refId": "C"
         },
         {
-          "expr": "min(pg_stat_archiver_last_archive_age{pg_cluster=\"[[cluster]]\", role=\"master\"}) without(deployment, instance,ip,pod)",
+          "expr": "min(ccp_archive_command_status_seconds_since_last_archive{pg_cluster=\"[[cluster]]\", role=\"master\"}) without(deployment, instance,ip,pod)",
           "hide": false,
           "interval": "",
           "legendFormat": "WAL Archive",
@@ -575,7 +575,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "idelta(pg_stat_archiver_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
+          "expr": "idelta(ccp_archive_command_status_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -584,7 +584,7 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(pg_stat_archiver_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
+          "expr": "idelta(ccp_archive_command_status_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
           "hide": false,
           "interval": "",
           "legendFormat": "Archive count",
@@ -635,7 +635,7 @@
       }
     }
   ],
-  "refresh": "5s",
+  "refresh": "5m",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -673,18 +673,10 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-2w",
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m"
-    ],
     "time_options": [
       "5m",
       "15m",
@@ -697,7 +689,7 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "pgBackRest",
   "uid": "2fcFZ6PGk",
   "version": 1
