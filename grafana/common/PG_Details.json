@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1617927488793,
+  "iteration": 1618011856280,
   "links": [],
   "panels": [
     {
@@ -71,14 +71,14 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "(ccp_connection_stats_total{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
+          "expr": "ccp_connection_stats_total{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": "5m",
-      "title": "Total Connections",
+      "title": "Connections - Total % Max",
       "type": "gauge"
     },
     {
@@ -99,11 +99,11 @@
               },
               {
                 "color": "orange",
-                "value": 75
+                "value": 95
               },
               {
                 "color": "red",
-                "value": 90
+                "value": 98
               }
             ]
           },
@@ -118,7 +118,7 @@
         "y": 0
       },
       "hideTimeOverride": true,
-      "id": 53,
+      "id": 54,
       "options": {
         "reduceOptions": {
           "calcs": [
@@ -128,20 +128,20 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true,
+        "showThresholdMarkers": false,
         "text": {}
       },
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "(ccp_connection_stats_active{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
+          "expr": "1 - (ccp_connection_stats_idle{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_total{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": "5m",
-      "title": "Active Connections",
+      "title": "Active % of Open Conn",
       "type": "gauge"
     },
     {
@@ -183,6 +183,73 @@
       "hideTimeOverride": true,
       "id": 52,
       "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.4.5",
+      "targets": [
+        {
+          "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "5m",
+      "title": "Idle In Txn Time",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 75
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 56,
+      "options": {
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -197,15 +264,135 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": "5m",
-      "title": "Idle In Txn Time",
+      "title": "% Toward Wraparound",
       "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 57,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.5",
+      "targets": [
+        {
+          "expr": "sum(ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})  / sum( ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "5m",
+      "title": "Cache Hit Ratio",
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 55,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.5",
+      "targets": [
+        {
+          "expr": "ccp_replication_lag_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}",
+          "interval": "",
+          "legendFormat": "{{replica}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "5m",
+      "title": "Streaming Byte Lag",
+      "type": "bargauge"
     },
     {
       "aliasColors": {},
@@ -225,13 +412,13 @@
       "gridPos": {
         "h": 6,
         "w": 12,
-        "x": 12,
-        "y": 0
+        "x": 0,
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 18,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
@@ -246,7 +433,7 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "7.4.5",
@@ -281,7 +468,7 @@
           "expr": "ccp_connection_stats_idle_in_txn{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "IdleTrn",
+          "legendFormat": "IdleTxn",
           "metric": "",
           "refId": "C",
           "step": 60
@@ -302,7 +489,7 @@
       "timeShift": null,
       "title": "Connections",
       "tooltip": {
-        "shared": false,
+        "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
@@ -347,6 +534,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -357,10 +545,129 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 35,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:675",
+          "alias": "/Time/",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Bytes {{replica}}",
+          "refId": "A"
+        },
+        {
+          "expr": "ccp_replication_lag_replay_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Time {{job}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Replication Lag",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:153",
+          "format": "bytes",
+          "label": "Lag Bytes",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:154",
+          "format": "dtdhms",
+          "label": "Lag Time (hh:mm:ss)",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 39,
@@ -369,6 +676,7 @@
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": false
@@ -471,18 +779,20 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 41,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": false
@@ -492,7 +802,7 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "7.4.5",
@@ -505,7 +815,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])) + sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -513,7 +823,7 @@
           "refId": "A"
         },
         {
-          "expr": "irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m]) + irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])",
+          "expr": "irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]) + irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{ dbname }}",
@@ -569,239 +879,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
-      "description": "Note that replica_port can change if replicas ever detach and re-attach",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 35,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": true,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.4.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:675",
-          "alias": "/Time/",
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Bytes {{job}}",
-          "refId": "A"
-        },
-        {
-          "expr": "ccp_replication_lag_replay_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Time {{job}}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Replication Lag",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:153",
-          "format": "bytes",
-          "label": "Lag Bytes",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:154",
-          "format": "dtdhms",
-          "label": "Lag Time (hh:mm:ss)",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 13,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.4.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "commit",
-          "metric": "pg_stat_database_xact_commit",
-          "refId": "A",
-          "step": 120
-        },
-        {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "rollback",
-          "refId": "B",
-          "step": 120
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Commit vs Rollback - [[pgdatabase]]",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:961",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:962",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -814,7 +892,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 47,
@@ -857,7 +935,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "% toward wraparound",
+      "title": "% Toward Wraparound",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -914,7 +992,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 45,
@@ -957,7 +1035,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "% towards emergency vacuum",
+      "title": "% Towards Emergency Vacuum",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1015,7 +1093,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 27
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 11,
@@ -1165,7 +1243,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 27
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 17,
@@ -1332,7 +1410,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 35
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1422,6 +1500,247 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 35
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "commit",
+          "metric": "pg_stat_database_xact_commit",
+          "refId": "A",
+          "step": 120
+        },
+        {
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "rollback",
+          "refId": "B",
+          "step": 120
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Commit vs Rollback - [[pgdatabase]]",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:961",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:962",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "hiddenSeries": false,
+      "id": 49,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.5",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:852",
+          "alias": "/Archive*/",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:859",
+          "alias": "/Fail*/",
+          "color": "#C4162A",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "ccp_wal_activity_total_size_bytes{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Total Size",
+          "refId": "A"
+        },
+        {
+          "expr": "idelta(ccp_archive_command_status_archived_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Archive Rate",
+          "refId": "B"
+        },
+        {
+          "expr": "idelta(ccp_archive_command_status_failed_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Fail Rate",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "WAL Activity",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1283",
+          "format": "bytes",
+          "label": "Total Size",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1284",
+          "format": "short",
+          "label": "Rate (5m)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -1434,7 +1753,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 14,
@@ -1579,16 +1898,18 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 49
       },
       "hiddenSeries": false,
-      "id": 49,
+      "id": 15,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -1610,19 +1931,31 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_wal_activity_total_size_bytes{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
+          "intervalFactor": 2,
+          "legendFormat": "Conflicts",
+          "metric": "pg_stat_database_conflicts",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "expr": "sum(rate(ccp_stat_database_conflicts{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "DeadLocks",
+          "metric": "pg_stat_database_deadlocks",
+          "refId": "B",
+          "step": 240
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Total WAL Size",
+      "title": "Conflicts/DeadLocks - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1638,8 +1971,8 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1283",
-          "format": "bytes",
+          "$$hashKey": "object:2099",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1647,7 +1980,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1284",
+          "$$hashKey": "object:2100",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1679,7 +2012,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 44
+        "y": 49
       },
       "hiddenSeries": false,
       "id": 16,
@@ -1790,120 +2123,6 @@
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 51
-      },
-      "hiddenSeries": false,
-      "id": 15,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.4.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "Conflicts",
-          "metric": "pg_stat_database_conflicts",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "sum(rate(ccp_stat_database_conflicts{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "DeadLocks",
-          "metric": "pg_stat_database_deadlocks",
-          "refId": "B",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Conflicts/DeadLocks - [[pgdatabase]]",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:2099",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:2100",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "refresh": "15m",
@@ -1915,7 +2134,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "alpha",
           "value": "alpha"
         },
@@ -1946,7 +2165,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "alpha_ip16_pg1",
           "value": "alpha_ip16_pg1"
         },
@@ -1978,7 +2197,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "All"
           ],
@@ -2032,5 +2250,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 5
+  "version": 8
 }
