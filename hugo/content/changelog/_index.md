@@ -3,6 +3,28 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.5
+
+### New Features
+  * Minimum required version of Grafana has been updated to 7.4.x
+  * Updated Grafana Overview dashboards to support new Stat panel
+  * Updated PostgreSQL Details Grafana dashboard with more information and to be able to present data grouped by clusters. The pgBackRest panel was removed from this dashboard.
+  * pgBackRest Grafana dashboard now presents data on a per-stanza basis
+  * Removed deprecated node_exporter metrics from Grafana OS Details dashboard. Reorganized panels.
+  * Added a basic Network Activity dashboard to Grafana using default metrics that come with node_exporter.
+  * pgMonitor repository has been reorganized to better delineate which platforms specific files apply to. Some files have also been renamed as part of this reorganization:
+  * Extended the default alert threshold for pgBackRest backups to give a buffer time and avoid false positives when backup runtimes vary.
+  * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert should the recovery status of a PostgreSQL database change (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occured on the systems involved.
+  * Added metric to monitor and alert on blocked queries
+  
+### Bug Fixes
+  * Fixed pgBackRest metrics not reporting all backups in all stanzas for a given repository in some configuration setups. Each database will now only report back monitoring for the stanzas that are part of its own instance. Previously all database instances reported back all stanzas in the target repository.
+  * Fixed incorrect metric name in warning alert for available memory in linux/node_exporter default alerts (node_memory_Available_bytes should be node_memory_MemAvailable_bytes)
+
+### Manual Intervention Changes
+  * pgBackRest monitoring has been expanded to better support more configuration layouts to address the above bug fix. The pgbackrest-info.sh script has been updated as part of this and this also requires re-running the setup SQL script to update the monitoring function within the database. Note again that the setup script name has changed from "setup_pg11.sql" to "setup.sql", so be sure you are running the setup script from the properly versioned folder.
+  * For the PostgreSQL Grafana dashboards to be able to choose data to present on a per-cluster basis, a new custom label must be added to all PostgreSQL targets in Prometheus. Note that this change will cause all PostgreSQL metrics to be displayed with different colors in Grafana and when displaying a time period before and after this change, data may appear to be duplicated according to the Legend.
+
 ## 4.4
 
 ### New Features

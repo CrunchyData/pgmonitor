@@ -73,7 +73,7 @@ groups:
       description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
 
   - alert: MemoryAvailable
-    expr: (100 * (node_memory_Available_bytes) / node_memory_MemTotal_bytes) < 25
+    expr: (100 * (node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) < 25
     for: 1m
     labels:
       service: system
