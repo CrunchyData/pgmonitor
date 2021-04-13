@@ -20,6 +20,7 @@ weight: 5
 ### Bug Fixes
   * Fixed pgBackRest metrics not reporting all backups in all stanzas for a given repository in some configuration setups. Each database will now only report back monitoring for the stanzas that are part of its own instance. Previously all database instances reported back all stanzas in the target repository.
   * Fixed incorrect metric name in warning alert for available memory in linux/node_exporter default alerts (node_memory_Available_bytes should be node_memory_MemAvailable_bytes)
+  * Fixed incorrect title of panel on Grafana PostgreSQL Details dashboard from "Transactions Per Minute" to "Transactions Per Second".
 
 ### Manual Intervention Changes
   * pgBackRest monitoring has been expanded to better support more configuration layouts to address the above bug fix. The pgbackrest-info.sh script has been updated as part of this and this also requires re-running the setup SQL script to update the monitoring function within the database. Note again that the setup script name has changed from "setup_pg11.sql" to "setup.sql", so be sure you are running the setup script from the properly versioned folder.
