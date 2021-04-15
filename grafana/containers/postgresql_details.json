@@ -11,6 +11,12 @@
   ],
   "__requires": [
     {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -53,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617037442656,
+  "iteration": 1618513099083,
   "links": [
     {
       "asDropdown": false,
@@ -166,30 +172,47 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 70
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 4,
         "x": 0,
         "y": 2
@@ -197,89 +220,81 @@
       "id": 8,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "tableColumn": "",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"active\"})*100/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\", state=\"active\"})*100 /sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "hide": false,
-          "intervalFactor": 2,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "",
           "metric": "pg_stat_activity_count",
           "refId": "A",
           "step": 10
         }
       ],
-      "thresholds": "70,90",
       "title": "Active Connections",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 10
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
         "overrides": []
       },
-      "format": "percentunit",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 4,
         "x": 4,
         "y": 2
@@ -287,146 +302,475 @@
       "id": 2,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "tableColumn": "",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
           "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
-          "intervalFactor": 2,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "B"
         }
       ],
-      "thresholds": "10,30",
       "title": "Idle In Transaction",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "${DS_PROMETHEUS}",
+      "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 1200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 300
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 900
+              }
+            ]
+          },
+          "unit": "s"
         },
         "overrides": []
       },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 4,
         "x": 8,
+        "y": 2
+      },
+      "id": 34,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "expr": "max(abs(ccp_connection_stats_max_idle_in_txn_time{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}))",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "Max Idle In Transaction Time",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 60
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 12,
         "y": 2
       },
       "id": 3,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "tableColumn": "",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
           "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})*100/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
-          "intervalFactor": 2,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
           "metric": "pg_stat_activity_count",
           "refId": "A",
           "step": 10
         }
       ],
-      "thresholds": "60,80",
       "title": "Idle",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 60
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 2
+      },
+      "id": 32,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
         {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
+          "expr": "max(ccp_transaction_wraparound_percent_towards_wraparound{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "metric": "pg_stat_activity_count",
+          "refId": "A",
+          "step": 10
         }
       ],
-      "valueName": "current"
+      "title": "% Toward Wraparound",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#E02F44",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 80
+              },
+              {
+                "color": "#56A64B",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 2
+      },
+      "id": 33,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "expr": "sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})*100/sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}+ccp_stat_database_blks_read{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "metric": "pg_stat_activity_count",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Cache Hit Ratio",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 24,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 150,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Transactions",
+          "metric": "ccp_stat_database_tup_fetched",
+          "refId": "A",
+          "step": 2
+        },
+        {
+          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Queries",
+          "metric": "ccp_stat_database_tup_fetched",
+          "refId": "B",
+          "step": 2
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Activity -  [[pod]]-[[datname]]",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:113",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:114",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "aliasColors": {},
@@ -447,7 +791,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 2
+        "y": 7
       },
       "hiddenSeries": false,
       "id": 26,
@@ -568,10 +912,10 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 13
       },
       "hiddenSeries": false,
-      "id": 24,
+      "id": 12,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -586,6 +930,7 @@
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
@@ -601,33 +946,26 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})/(1024*1024)",
           "format": "time_series",
           "hide": false,
-          "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Transactions",
-          "metric": "ccp_stat_database_tup_fetched",
-          "refId": "A",
-          "step": 2
+          "legendFormat": "Total : [[cluster]]-[[pod]]",
+          "refId": "B"
         },
         {
-          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "ccp_database_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}/(1024*1024)",
           "format": "time_series",
-          "hide": false,
-          "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Queries",
-          "metric": "ccp_stat_database_tup_fetched",
-          "refId": "B",
-          "step": 2
+          "legendFormat": "{{dbname}} ({{pod}})",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Activity -  [[pod]]-[[datname]]",
+      "title": "database size - [[pod]]-[[datname]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -643,16 +981,16 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:113",
-          "format": "short",
+          "$$hashKey": "object:401",
+          "format": "decmbytes",
           "label": null,
-          "logBase": 1,
+          "logBase": 2,
           "max": null,
-          "min": "0",
+          "min": null,
           "show": true
         },
         {
-          "$$hashKey": "object:114",
+          "$$hashKey": "object:402",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -688,7 +1026,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 13
       },
       "hiddenSeries": false,
       "id": 31,
@@ -816,222 +1154,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 12,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sideWidth": 150,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})/(1024*1024)",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "Total : [[cluster]]-[[pod]]",
-          "refId": "B"
-        },
-        {
-          "expr": "ccp_database_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}/(1024*1024)",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{dbname}} ({{pod}})",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "database size - [[pod]]-[[datname]]",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:401",
-          "format": "decmbytes",
-          "label": null,
-          "logBase": 2,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:402",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 30,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sideWidth": 150,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "ccp_wal_activity_total_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}/(1024*1024)",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{pod}}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "WAL size MB - [[cluster]]-[[pod]]",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:980",
-          "format": "decmbytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:981",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 0,
-        "y": 20
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 11,
@@ -1177,10 +1300,10 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 20
+        "y": 19
       },
       "hiddenSeries": false,
-      "id": 17,
+      "id": 30,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -1211,55 +1334,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accessexclusivelock\"})",
+          "expr": "ccp_wal_activity_total_size_bytes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}/(1024*1024)",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "A",
-          "step": 2
-        },
-        {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"exclusivelock\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "C",
-          "step": 2
-        },
-        {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"rowexclusivelock\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "D",
-          "step": 2
-        },
-        {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"sharerowexclusivelock\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "G",
-          "step": 2
-        },
-        {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"shareupdateexclusivelock\"})",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "H",
-          "step": 2
-        },
-        {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accesssharelock\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{mode}}",
+          "legendFormat": "{{pod}}",
           "refId": "B"
         }
       ],
@@ -1267,7 +1346,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Locks - [[pod]]-[[datname]]",
+      "title": "WAL size MB - [[cluster]]-[[pod]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1283,22 +1362,22 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:240",
-          "format": "short",
+          "$$hashKey": "object:980",
+          "format": "decmbytes",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": "0",
+          "min": null,
           "show": true
         },
         {
-          "$$hashKey": "object:241",
+          "$$hashKey": "object:981",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -1325,7 +1404,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 15,
@@ -1484,7 +1563,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 29,
@@ -1608,7 +1687,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 31
       },
       "hiddenSeries": false,
       "id": 14,
@@ -1749,7 +1828,156 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 31
+      },
+      "hiddenSeries": false,
+      "id": 17,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 150,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accessexclusivelock\"})",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{mode}}",
+          "refId": "A",
+          "step": 2
+        },
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"exclusivelock\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{mode}}",
+          "refId": "C",
+          "step": 2
+        },
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"rowexclusivelock\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{mode}}",
+          "refId": "D",
+          "step": 2
+        },
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"sharerowexclusivelock\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{mode}}",
+          "refId": "G",
+          "step": 2
+        },
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"shareupdateexclusivelock\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{mode}}",
+          "refId": "H",
+          "step": 2
+        },
+        {
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accesssharelock\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{mode}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Locks - [[pod]]-[[datname]]",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:240",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:241",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 37
       },
       "hiddenSeries": false,
       "id": 28,
@@ -1783,19 +2011,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", datid!=\"0\", datname!~\"template0\", datname!~\"template1\"}*100/(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", datname!~\"template0\", datname!~\"template1\"} + ccp_stat_database_blks_read{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname!~\"template0\", datname!~\"template1\"})",
+          "expr": "ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", dbname!~\"template0\", dbname!~\"template1\"}*100/(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\", dbname!~\"template0\", dbname!~\"template1\"} + ccp_stat_database_blks_read{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname!~\"template0\", dbname!~\"template1\"})",
           "format": "time_series",
+          "hide": false,
+          "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{datname}} - ({{pod}})",
+          "legendFormat": "{{dbname}} - ({{pod}})",
           "refId": "A"
-        },
-        {
-          "expr": "sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\"}*100/sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\"} + ccp_stat_database_blks_read{pg_cluster=\"[[cluster]]\"})",
-          "format": "time_series",
-          "hide": true,
-          "intervalFactor": 2,
-          "legendFormat": "Overall",
-          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -1843,7 +2065,7 @@
       }
     }
   ],
-  "refresh": "5m",
+  "refresh": "5s",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -1938,7 +2160,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1956,6 +2178,6 @@
   },
   "timezone": "browser",
   "title": "PostgreSQLDetails",
-  "uid": "3NfGQ_6WL",
+  "uid": "fMip0cuMk",
   "version": 1
 }
