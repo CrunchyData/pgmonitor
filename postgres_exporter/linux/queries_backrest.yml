@@ -78,6 +78,12 @@ ccp_backrest_oldest_full_backup:
             WHERE backup_data->>'type'::text = 'full' 
             GROUP BY config_file, stanza, backup_data->>'type'::text"
     metrics:
+        - config_file:
+            usage: "LABEL"
+            description: "Configuration file for this backup"
+        - stanza: 
+            usage: "LABEL"
+            description: "PGBackrest Stanza Name"
         - time_seconds:
             usage: "GAUGE"
             description: "Seconds since the oldest completed full backup"
