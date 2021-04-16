@@ -9,12 +9,12 @@ weight: 5
   * Minimum required version of Grafana has been updated to 7.4.x
   * Updated Grafana Overview dashboards to support new Stat panel
   * Updated PostgreSQL Details Grafana dashboard with more information and to be able to present data grouped by clusters. The pgBackRest panel was removed from this dashboard.
-  * pgBackRest Grafana dashboard now presents data on a per-stanza basis
+  * The pgBackRest Grafana dashboard now presents data on a per-stanza basis
   * Removed deprecated node_exporter metrics from Grafana OS Details dashboard. Reorganized panels.
   * Added a basic Network Activity dashboard to Grafana using default metrics that come with node_exporter.
-  * pgMonitor repository has been reorganized to better delineate which platforms specific files apply to. Some files have also been renamed as part of this reorganization:
+  * The pgMonitor repository has been reorganized to better delineate which platforms specific files apply to. Some files have also been renamed as part of this reorganization:
   * Extended the default alert threshold for pgBackRest backups to give a buffer time and avoid false positives when backup runtimes vary.
-  * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert should the recovery status of a PostgreSQL database change (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occured on the systems involved.
+  * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert when the recovery status of a PostgreSQL database change (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occured on the systems involved.
   * Added metric to monitor and alert on blocked queries
   
 ### Bug Fixes
