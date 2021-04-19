@@ -71,7 +71,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_connection_stats_total{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -134,7 +134,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "1 - (ccp_connection_stats_idle{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_total{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
+          "expr": "1 - (ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -200,7 +200,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -264,7 +264,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -328,7 +328,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})  / sum( ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
+          "expr": "sum(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})  / sum( ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -384,7 +384,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_replication_lag_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}",
+          "expr": "ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "{{replica}}",
           "refId": "A"
@@ -446,7 +446,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_connection_stats_max_connections{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
@@ -456,7 +456,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_active{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_active{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Active",
@@ -465,7 +465,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle_in_txn{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_idle_in_txn{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "IdleTxn",
@@ -474,7 +474,7 @@
           "step": 60
         },
         {
-          "expr": "ccp_connection_stats_idle{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Idle",
@@ -589,7 +589,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
+          "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -598,7 +598,7 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_replication_lag_replay_time{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_replication_lag_replay_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Time {{job}}",
@@ -704,7 +704,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_database_size_bytes{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -712,7 +712,7 @@
           "refId": "A"
         },
         {
-          "expr": "ccp_database_size_bytes{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}",
+          "expr": "ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -815,7 +815,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -823,7 +823,7 @@
           "refId": "A"
         },
         {
-          "expr": "irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]) + irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])",
+          "expr": "irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]) + irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{ dbname }}",
@@ -923,7 +923,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1023,7 +1023,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1132,7 +1132,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_tup_fetched{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_fetched{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1142,7 +1142,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_inserted{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_inserted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1152,7 +1152,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_updated{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_updated{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1162,7 +1162,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_deleted{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_deleted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1172,7 +1172,7 @@
           "step": 240
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_returned{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_returned{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1276,7 +1276,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accessexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accessexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1285,7 +1285,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accesssharelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accesssharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1294,7 +1294,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"exclusivelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"exclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1303,7 +1303,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1312,7 +1312,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowsharelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowsharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1321,7 +1321,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1330,7 +1330,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharerowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharerowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1339,7 +1339,7 @@
           "step": 240
         },
         {
-          "expr": "sum(ccp_locks_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
+          "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1441,7 +1441,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}  / ( ccp_stat_database_blks_hit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
+          "expr": "ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}  / ( ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1545,7 +1545,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1555,7 +1555,7 @@
           "step": 120
         },
         {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1669,7 +1669,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_wal_activity_total_size_bytes{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "expr": "ccp_wal_activity_total_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1678,14 +1678,14 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(ccp_archive_command_status_archived_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "idelta(ccp_archive_command_status_archived_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "Archive Rate",
           "refId": "B"
         },
         {
-          "expr": "idelta(ccp_archive_command_status_failed_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "idelta(ccp_archive_command_status_failed_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "Fail Rate",
@@ -1787,7 +1787,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_alloc{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1797,7 +1797,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1807,7 +1807,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1817,7 +1817,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1827,7 +1827,7 @@
           "step": 120
         },
         {
-          "expr": "irate(ccp_stat_bgwriter_buffers_clean{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_bgwriter_buffers_clean{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1931,7 +1931,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1941,7 +1941,7 @@
           "step": 240
         },
         {
-          "expr": "sum(rate(ccp_stat_database_conflicts{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_conflicts{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2045,7 +2045,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2064,7 +2064,7 @@
           "step": 120
         },
         {
-          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{cluster=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2170,7 +2170,7 @@
           "value": "alpha_ip16_pg1"
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(up{exp_type='pg', cluster=\"[[pgcluster]]\"}, job)",
+        "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -2180,7 +2180,7 @@
         "name": "pgnodes",
         "options": [],
         "query": {
-          "query": "label_values(up{exp_type='pg', cluster=\"[[pgcluster]]\"}, job)",
+          "query": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2205,7 +2205,7 @@
           ]
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(ccp_database_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
+        "definition": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -2215,7 +2215,7 @@
         "name": "pgdatabase",
         "options": [],
         "query": {
-          "query": "label_values(ccp_database_size_bytes{cluster=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
+          "query": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
