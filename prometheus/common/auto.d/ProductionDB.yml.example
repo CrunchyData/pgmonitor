@@ -13,4 +13,4 @@
   labels:
     job: "Prod"
     exp_type: "pg"
-    cluster: "crunchy"
+    cluster_name: "crunchy"

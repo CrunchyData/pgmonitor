@@ -15,7 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1618011856280,
+  "iteration": 1618856153917,
   "links": [],
   "panels": [
     {
@@ -686,7 +686,7 @@
       "links": [
         {
           "title": "TableSize Details",
-          "url": "/d/Igh7D7Hmz/tablesize-details"
+          "url": "/d/Igh7D7Hmz/tablesize-details?$__all_variables"
         }
       ],
       "nullPointMode": "null",
@@ -2135,8 +2135,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "alpha",
-          "value": "alpha"
+          "text": "crunchy",
+          "value": "crunchy"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(up{exp_type='pg'}, cluster_name)",
@@ -2166,8 +2166,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "alpha_ip16_pg1",
-          "value": "alpha_ip16_pg1"
+          "text": "crunchy_pg1_crunchy",
+          "value": "crunchy_pg1_crunchy"
         },
         "datasource": "PROMETHEUS",
         "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
@@ -2250,5 +2250,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 8
+  "version": 2
 }

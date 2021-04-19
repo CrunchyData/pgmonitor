@@ -13,4 +13,4 @@
   labels:
     job: "Replica"
     exp_type: "pg"
-    cluster: "crunchy"
+    cluster_name: "crunchy"
