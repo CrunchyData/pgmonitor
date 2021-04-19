@@ -2139,7 +2139,7 @@
           "value": "alpha"
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(up{exp_type='pg'}, cluster)",
+        "definition": "label_values(up{exp_type='pg'}, cluster_name)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -2149,7 +2149,7 @@
         "name": "pgcluster",
         "options": [],
         "query": {
-          "query": "label_values(up{exp_type='pg'}, cluster)",
+          "query": "label_values(up{exp_type='pg'}, cluster_name)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
