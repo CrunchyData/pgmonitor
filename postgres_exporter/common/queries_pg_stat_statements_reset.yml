@@ -6,7 +6,7 @@
 #
 ###
 ccp_pg_stat_statements_reset:
-  query: "select monitor.ccp_pg_stat_statements_reset(#PG_STAT_STATEMENTS_THROTTLE_MINUTES#) as time"
+  query: "select monitor.pg_stat_statements_reset_info(#PG_STAT_STATEMENTS_THROTTLE_MINUTES#) as time"
   metrics:
     - time:
         usage: "GAUGE"
