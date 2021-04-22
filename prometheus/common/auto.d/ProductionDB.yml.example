@@ -8,3 +8,9 @@
   labels:
     job: "Prod"
     exp_type: "pg"
+    cluster: "crunchy"
+- targets: [ "10.123.202.12:9188" ]
+  labels:
+    job: "mycluster_Prod"
+    exp_type: "pg"
+    cluster_name: "mycluster"

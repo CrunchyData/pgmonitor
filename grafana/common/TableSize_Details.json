@@ -15,8 +15,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1582574962837,
+  "iteration": 1618856334694,
   "links": [],
   "panels": [
     {
@@ -25,6 +24,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -49,9 +55,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -61,8 +68,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_table_size_size_bytes{job=~\"[[pgnodes]]\", dbname=\"[[dbname]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
+          "expr": "ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}.{{schemaname}}.{{relname}}",
           "refId": "A",
@@ -89,6 +97,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:138",
           "format": "decbytes",
           "label": null,
           "logBase": 1,
@@ -97,6 +106,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:139",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -112,7 +122,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 21,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -120,18 +130,24 @@
       {
         "allValue": null,
         "current": {
-          "text": "pg1",
-          "value": "pg1"
+          "selected": false,
+          "text": "crunchy",
+          "value": "crunchy"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(up{exp_type='pg'}, cluster_name)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
-        "name": "pgnodes",
+        "name": "pgcluster",
         "options": [],
-        "query": "label_values(up{exp_type='pg'}, job)",
+        "query": {
+          "query": "label_values(up{exp_type='pg'}, cluster_name)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -145,18 +161,24 @@
       {
         "allValue": null,
         "current": {
-          "text": "sampledb",
-          "value": "sampledb"
+          "selected": true,
+          "text": "crunchy_pg1_crunchy",
+          "value": "crunchy_pg1_crunchy"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
+        "label": "Node",
         "multi": false,
-        "name": "dbname",
+        "name": "pgnodes",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\"},dbname)",
+        "query": {
+          "query": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -170,18 +192,55 @@
       {
         "allValue": null,
         "current": {
-          "text": "information_schema",
-          "value": "information_schema"
+          "selected": true,
+          "text": "testdb",
+          "value": "testdb"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "PGDatabase",
+        "multi": false,
+        "name": "pgdatabase",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "public",
+          "value": "public"
+        },
+        "datasource": "PROMETHEUS",
+        "definition": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "schemaname",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\",dbname=\"[[dbname]]\"},schemaname)",
+        "query": {
+          "query": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -195,18 +254,24 @@
       {
         "allValue": null,
         "current": {
-          "text": "sql_features",
-          "value": "sql_features"
+          "selected": false,
+          "text": "bloat_indexes",
+          "value": "bloat_indexes"
         },
         "datasource": "PROMETHEUS",
-        "definition": "",
+        "definition": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "tablename",
         "options": [],
-        "query": "label_values(ccp_table_size_size_bytes{job=~\"[[pgnodes]]\",dbname=\"[[dbname]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "query": {
+          "query": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -224,16 +289,6 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
     "time_options": [
       "5m",
       "15m",

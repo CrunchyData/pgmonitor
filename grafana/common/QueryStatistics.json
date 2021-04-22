@@ -16,8 +16,7 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 14,
-  "iteration": 1599067369291,
+  "iteration": 1618858505673,
   "links": [],
   "panels": [
     {
@@ -58,12 +57,13 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(ccp_pg_stat_statements_total_calls_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -113,12 +113,13 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -169,12 +170,13 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -225,12 +227,13 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(ccp_pg_stat_statements_total_row_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"})",
+          "expr": "sum(ccp_pg_stat_statements_total_row_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -277,8 +280,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -288,7 +294,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(ccp_pg_stat_statements_total_calls_count{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}[1m])",
+          "expr": "irate(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}[1m])",
           "interval": "",
           "legendFormat": "db: {{dbname}}, user: {{role}}",
           "refId": "A"
@@ -314,6 +320,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:100",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -322,6 +329,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:101",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -341,7 +349,8 @@
         "defaults": {
           "custom": {
             "align": null,
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -409,10 +418,10 @@
           }
         ]
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -460,7 +469,8 @@
         "defaults": {
           "custom": {
             "align": null,
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -528,10 +538,10 @@
           }
         ]
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -578,7 +588,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null
+            "align": null,
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -646,10 +657,10 @@
           }
         ]
       },
-      "pluginVersion": "7.1.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{job=\"[[pgnodes]]\", dbname=~\"[[dbname]]\", role=~\"[[role]]\"}",
+          "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -693,7 +704,7 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -702,18 +713,60 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "pg1_crunchy",
-          "value": "pg1_crunchy"
+          "text": "crunchy",
+          "value": "crunchy"
         },
-        "datasource": "PROMETHEUS",
-        "definition": "label_values(up{exp_type='pg'}, job)",
+        "datasource": null,
+        "definition": "label_values(up{exp_type='pg'}, cluster_name)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
+        "name": "pgcluster",
+        "options": [
+          {
+            "selected": true,
+            "text": "crunchy",
+            "value": "crunchy"
+          }
+        ],
+        "query": {
+          "query": "label_values(up{exp_type='pg'}, cluster_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "crunchy_pg1_crunchy",
+          "value": "crunchy_pg1_crunchy"
+        },
+        "datasource": "PROMETHEUS",
+        "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Node",
+        "multi": false,
         "name": "pgnodes",
         "options": [],
-        "query": "label_values(up{exp_type='pg'}, job)",
+        "query": {
+          "query": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -728,20 +781,28 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "tags": [],
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\"}, dbname) ",
+        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname) ",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": "dbname",
+        "label": "PGDatabase",
         "multi": true,
-        "name": "dbname",
+        "name": "pgdatabase",
         "options": [],
-        "query": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\"}, dbname) ",
+        "query": {
+          "query": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname) ",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -756,20 +817,27 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\",dbname=~\"[[dbname]]\"}, role) ",
+        "definition": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=~\"[[pgdatabase]]\"}, role) ",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "role",
         "multi": true,
         "name": "role",
         "options": [],
-        "query": "label_values(ccp_pg_stat_statements_total_calls_count{job=~\"[[pgnodes]]\",dbname=~\"[[dbname]]\"}, role) ",
+        "query": {
+          "query": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=~\"[[pgdatabase]]\"}, role) ",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -783,17 +851,10 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
     "time_options": [
       "5m",
       "15m",
@@ -809,5 +870,5 @@
   "timezone": "",
   "title": "Query Statistics (pg_stat_statements)",
   "uid": "ZKoTOHDGk",
-  "version": 16
+  "version": 2
 }
