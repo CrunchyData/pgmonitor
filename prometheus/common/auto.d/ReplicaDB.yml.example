@@ -11,6 +11,6 @@
     cluster: "crunchy"
 - targets: [ "10.123.202.13:9188" ]
   labels:
-    job: "Replica"
+    job: "mycluster_Replica"
     exp_type: "pg"
-    cluster_name: "crunchy"
+    cluster_name: "mycluster"
