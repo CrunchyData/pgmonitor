@@ -8,6 +8,7 @@
 global:
     smtp_smarthost: 'localhost: 25'
     smtp_require_tls: false
+    smtp_from: 'Alertmanager <abc@yahoo.com>'
 #    smtp_smarthost: 'smtp.example.com:587'
 #    smtp_from: 'Alertmanager <abc@yahoo.com>'
 #    smtp_auth_username: '<username>'
