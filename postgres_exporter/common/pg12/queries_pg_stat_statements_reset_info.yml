@@ -1,6 +1,6 @@
 ###
 #
-# Begin File: queries_pg_stat_statements_reset.yml
+# Begin File: pg_stat_statements_reset_info.yml
 #
 # Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
@@ -14,7 +14,7 @@ ccp_pg_stat_statements_reset:
 
 ###
 #
-# End File: queries_pg_stat_statements_reset.yml
+# End File: pg_stat_statements_reset_info.yml
 #
 ###
 
