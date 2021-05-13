@@ -362,7 +362,7 @@
           "query": "label_values(up{exp_type='pg'}, cluster_name)",
           "refId": "StandardVariableQuery"
         },
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
