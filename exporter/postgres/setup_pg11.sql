@@ -13,6 +13,7 @@ END
 $$;
  
 GRANT pg_monitor to ccp_monitoring;
+GRANT pg_execute_server_program TO ccp_monitoring;
 
 ALTER ROLE ccp_monitoring SET lock_timeout TO '2min';
 
@@ -26,7 +27,8 @@ ALTER TABLE monitor.pgbackrest_info SET (autovacuum_analyze_scale_factor = 0, au
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
 CREATE OR REPLACE FUNCTION monitor.pgbackrest_info(p_throttle_minutes int DEFAULT 10) RETURNS SETOF monitor.pgbackrest_info
-    LANGUAGE plpgsql SECURITY DEFINER
+    LANGUAGE plpgsql
+    SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE
 
@@ -65,6 +67,7 @@ $function$;
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  
     LANGUAGE sql SECURITY DEFINER
+    SET search_path TO pg_catalog, pg_temp
 AS $function$
 
 /* 
@@ -121,7 +124,8 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
 CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
- LANGUAGE sql SECURITY DEFINER
+    LANGUAGE sql SECURITY DEFINER
+    SET search_path TO pg_catalog, pg_temp
 AS $function$
 
 /* 
@@ -179,6 +183,7 @@ DROP FUNCTION IF EXISTS monitor.pg_settings_checksum(text);
 CREATE FUNCTION monitor.pg_settings_checksum(p_known_settings_hash text DEFAULT NULL) 
     RETURNS smallint
     LANGUAGE plpgsql SECURITY DEFINER 
+    SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE
 
@@ -258,6 +263,7 @@ DROP FUNCTION IF EXISTS monitor.pg_hba_checksum(text);
 CREATE FUNCTION monitor.pg_hba_checksum(p_known_hba_hash text DEFAULT NULL) 
     RETURNS smallint
     LANGUAGE plpgsql SECURITY DEFINER 
+    SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE
 
