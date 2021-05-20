@@ -3,6 +3,18 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.4-1
+
+### New Features
+
+### Bug Fixes
+  * Limit SQL function's search_path to predefined list of schemas
+
+### Non-backward Compatible Changes
+
+### Manual Intervention Changes
+
+
 ## 4.4
 
 ### New Features
