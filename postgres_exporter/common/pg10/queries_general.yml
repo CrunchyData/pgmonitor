@@ -62,7 +62,7 @@ ccp_replication_lag:
         description: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL recieved equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
     - received_time:
         usage: "GAUGE"
-        description: "Length of time since the last WAL file was received and replayed on replica. Always increases, causing false positives if the primary stops writing. Monitors for replicas that stop receiving WAL all together."
+        description: "Length of time since the last WAL file was received and replayed on replica. Always increases, possibly causing false positives if the primary stops writing. Monitors for replicas that stop receiving WAL all together."
 
 
 ccp_replication_lag_size:

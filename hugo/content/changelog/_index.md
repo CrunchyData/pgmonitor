@@ -26,6 +26,18 @@ weight: 5
   * pgBackRest monitoring has been expanded to better support more configuration layouts to address the above bug fix. The pgbackrest-info.sh script has been updated as part of this and this also requires re-running the setup SQL script to update the monitoring function within the database. Note again that the setup script name has changed from "setup_pg11.sql" to "setup.sql", so be sure you are running the setup script from the properly versioned folder.
   * For the PostgreSQL Grafana dashboards to be able to choose data to present on a per-cluster basis, a new custom label (`cluster_name`) must be added to all PostgreSQL targets in Prometheus. Note that this change will cause all PostgreSQL metrics to change colors from the point of the change forward. Also when displaying a time period before and after this change, duplicated Legend items may appear.
 
+## 4.4-1
+
+### New Features
+
+### Bug Fixes
+  * Limit SQL function's search_path to predefined list of schemas
+
+### Non-backward Compatible Changes
+
+### Manual Intervention Changes
+
+
 ## 4.4
 
 ### New Features
