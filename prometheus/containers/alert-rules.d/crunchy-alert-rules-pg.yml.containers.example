@@ -193,7 +193,7 @@ groups:
       summary: 'PGSQL Instance size critical'
 
   - alert: PGReplicationByteLag
-    expr: ccp_replication_status_byte_lag > 5.24288e+07
+    expr: ccp_replication_lag_size_bytes > 5.24288e+07
     for: 60s
     labels:
       service: postgresql
@@ -204,7 +204,7 @@ groups:
       summary: 'PGSQL Instance replica lag warning'
 
   - alert: PGReplicationByteLag
-    expr: ccp_replication_status_byte_lag > 1.048576e+08
+    expr: ccp_replication_lag_size_bytes > 1.048576e+08
     for: 60s
     labels:
       service: postgresql
@@ -310,12 +310,15 @@ groups:
 #   Otherwise rule will be applied to all stanzas returned on target system if not set.
 #
 # Relevant metric names are:
-#   ccp_backrest_last_full_time_since_completion_seconds
-#   ccp_backrest_last_incr_time_since_completion_seconds
-#   ccp_backrest_last_diff_time_since_completion_seconds
+#   ccp_backrest_last_full_backup_time_since_completion_seconds
+#   ccp_backrest_last_incr_backup_time_since_completion_seconds
+#   ccp_backrest_last_diff_backup_time_since_completion_seconds
+#
+# To avoid false positives on backup time alerts, 12 hours are added onto each threshold to allow a buffer if the backup runtime varies from day to day.
+#    Further adjustment may be needed depending on your backup runtimes/schedule.
 #
 #  - alert: PGBackRestLastCompletedFull_main
-#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 604800
+#    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 648000
 #    for: 60s
 #    labels:
 #       service: postgresql
@@ -325,7 +328,7 @@ groups:
 #       summary: 'Full backup for stanza [main] on system {{ $labels.job }} has not completed in the last week.'
 #
 #  - alert: PGBackRestLastCompletedIncr_main
-#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 86400
+#    expr: ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza="main"} > 129600
 #    for: 60s
 #    labels:
 #       service: postgresql
@@ -337,14 +340,14 @@ groups:
 #
 # Runtime monitoring is handled with a single metric:
 #
-#   ccp_backrest_last_runtime_backup_runtime_seconds
+#   ccp_backrest_last_info_backup_runtime_seconds
 #
 # Runtime monitoring should have the "backup_type" label set.
 #   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
 # Stanza should also be set if runtimes per stanza have different expected times
 #
 #  - alert: PGBackRestLastRuntimeFull_main
-#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="full", stanza="main"} > 14400
+#    expr: ccp_backrest_last_info_backup_runtime_seconds{backup_type="full", stanza="main"} > 14400
 #    for: 60s
 #    labels:
 #       service: postgresql
@@ -354,7 +357,7 @@ groups:
 #       summary: 'Expected runtime of full backup for stanza [main] has exceeded 4 hours'
 #
 #  - alert: PGBackRestLastRuntimeDiff_main
-#    expr: ccp_backrest_last_runtime_backup_runtime_seconds{backup_type="diff", stanza="main"} > 3600
+#    expr: ccp_backrest_last_info_backup_runtime_seconds{backup_type="diff", stanza="main"} > 3600
 #    for: 60s
 #    labels:
 #       service: postgresql

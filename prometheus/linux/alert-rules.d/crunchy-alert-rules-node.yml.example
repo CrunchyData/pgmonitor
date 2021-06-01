@@ -103,7 +103,7 @@ groups:
       description: 'Swap usage for target {{ $labels.job }} is at {{ $value }}%'
 
   - alert: SwapUsage
-    expr: (100 - (100 * (node_memory_SwapFree_byte / node_memory_SwapTotal_bytes))) > 80
+    expr: (100 - (100 * (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))) > 80
     for: 1m
     labels:
       service: system
