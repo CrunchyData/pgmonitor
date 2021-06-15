@@ -4,15 +4,13 @@ draft: false
 weight: 2
 ---
 
-Prometheus can be set up on any Linux-based system, but pgMonitor currently only supports running it on RHEL/CentOS 7. Crunchy Data additionally makes Prometheus available on Windows Server 2012R2 for their customers.
+Prometheus can be set up on any Linux-based system, but pgMonitor currently only supports running it on RHEL/CentOS 7.
 
 - [Installation](#installation)
     - [RHEL / CentOS 7](#rhel-centos-7)
-    - [Windows Server 2012R2](#windows-server-2012r2)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
     - [RHEL / CentOS 7](#setup-on-rhel-centos-7)
-    - [Windows Server 2012R2](#setup-windows-server-2012r2)
 
 ## Installation
 
@@ -90,18 +88,6 @@ The following pgMonitor configuration files should be placed according to the fo
 | sysconfig.alertmanager | `/etc/sysconfig/alertmanager` |
 
 
-#### Windows Server 2012R2
-
-There are Windows Servfer 2012R2 packages available to [Crunchy Data](https://www.crunchydata.com) customers who contact Crunchy Data directly.
-
-If you install the below available packages, you can continue reading at the [Setup](#setup-windows-server-2012r2) section.
-
-##### Available Packages
-
-| Package Name                  | Description                                       |
-|-------------------------------|---------------------------------------------------|
-| pgMonitor_server_1.0_Crunchy.win.x86_64.exe | Installer package for the Prometheus, Alertmanager, and Grafana servers |
-
 ### Upgrading
 
 When upgrading from pgmonitor 1.x to 2.x, note that the alerting rules for node_exporter metrics have had many of their names changed. If you've changed the provided alerting rules file, installing the new package should create a file called `/etc/prometheus/crunchy-alert-rules.yml.rpmnew` and not overwrite your current file. You should be able to copy the new rules as needed from there.
@@ -158,53 +144,3 @@ sudo systemctl enable alertmanager
 sudo systemctl start alertmanager
 sudo systemctl status alertmanager
 ```
-
-### Setup Windows Server 2012R2
-
-Currently the Windows installers assume you are logged in as the local Administrator account, so please ensure to do so before attempting the following.
-
-Install the Prometheus, AlertManager, and Grafana servers by:
-
-1. Find and launch the `pgMonitor_server_1.0_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen. Choose your install path and click 'Install'.
-
-    ![server_installer_1.png](/images/server_installer_1.png)
-
-2. Once installation has finished, clicked 'Close':
-
-    ![server_installer_2.png](/images/server_installer_2.png)
-
-3. The installer will launch the Windows services that were just installed. Click 'OK' to proceed:
-
-    ![server_installer_3.png](/images/server_installer_3.png)
-
-4. You will now be prompted to launch the configuration tool. Select 'Yes' to continue:
-
-    ![server_installer_4.png](/images/server_installer_4.png)
-
-5. Select '1' to tell Prometheus about the exporters it should scrape metrics from:
-
-    ![server_installer_5.png](/images/server_installer_5.png)
-
-6. Enter the hostname (just the hostname, not the FQDN) of the PostgreSQL server that the exporters are running on. Next, enter the IP address of the PostgreSQL server, and the WMI port (default is 9182):
-
-    ![server_installer_6.png](/images/server_installer_6.png)
-
-7. Enter a cluster name. This should be something simple but meaningful to identify the PostgreSQL cluster in question, e.g. payroll. Then enter the port used for both the cluster/global `postgres_exporter` (9187 by default) and the per-db `postgres_exporter` (9188 in our directions):
-
-    ![server_installer_7.png](/images/server_installer_7.png)
-
-8. You can now choose '2' to exit the configuration tool:
-
-    ![server_installer_8.png](/images/server_installer_8.png)
-
-9. You can now verify that Prometheus is running by loading [http://localhost:9090](http://localhost:9090) in your browser:
-
-    ![server_installer_9.png](/images/server_installer_9.png)
-
-10. Finally, verify Prometheus can access the exporters by choosing 'Status' and then 'Targets':
-
-    ![server_installer_10.png](/images/server_installer_10.png)
-
-11. You should see all configured exporters (1 per PostgreWSQL server, and 2 more per PostgreSQL instance), all with a green 'Up' status:
-
-    ![server_installer_11.png](/images/server_installer_11.png)
