@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: 'STATUS: UNCONFIRMED'
+labels: 'UNCONFIRMED'
 assignees: ''
 
 ---
@@ -14,9 +14,9 @@ assignees: ''
 
 
 **Tell us about your environment:**  
-- pgMonitor Version:
-- PostgreSQL Version:  
 - Operating System:  
-- Exporter in use:  
-- Virtualization:  
-- Any customization:  
+- PostgreSQL Version:  
+- Ansible Version:  
+- Roles version or branch:  
+- Inventory and Playbook (names):  
+- Changes to stock Roles, Inventory, Playbook:
