@@ -14,9 +14,12 @@ assignees: ''
 
 
 **Tell us about your environment:**  
-- Operating System:  
+- pgMonitor version:  
+- Container or non-container:  
+- Container name / image:  
+- Operating System for non-container:  
 - PostgreSQL Version:  
-- Ansible Version:  
-- Roles version or branch:  
-- Inventory and Playbook (names):  
-- Changes to stock Roles, Inventory, Playbook:
+- Exporter in use:  
+- Prometheus version:  
+- AlertManager version:  
+- Grafana version:  
