@@ -18,6 +18,7 @@ Please check all options that are relevant
 - [ ] Ansible, Specify version(s):  
 - [ ] Specify Distro & version(s):  
 - [ ] Specify Package distro & version(s):  
+- [ ] Packages compiled from source & their version:  
 - [ ] PostgreSQL, Specify version(s):  
 - [ ] docs tested with hugo version(s):  
 
