@@ -17,7 +17,7 @@ Please check all options that are relevant
 **Tested Configuration**:  
 - [ ] Ansible, Specify version(s):  
 - [ ] Specify Distro & version(s):  
-- [ ] Specify Repo Distro & version(s):  
+- [ ] Specify Package distro & version(s):  
 - [ ] PostgreSQL, Specify version(s):  
 - [ ] docs tested with hugo version(s):  
 
