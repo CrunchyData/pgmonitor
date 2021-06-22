@@ -32,7 +32,24 @@ ccp_nodemx_process:
 
 
 ccp_nodemx_mem:
-  query: "SELECT monitor.kdapi_scalar_bigint('mem_request') as request, monitor.kdapi_scalar_bigint('mem_limit') as limit, (select val from monitor.cgroup_setof_kv('memory.stat') where key='cache') as cache, (select val from monitor.cgroup_setof_kv('memory.stat') where key='rss') as rss, (select val from monitor.cgroup_setof_kv('memory.stat') where key='shmem') as shmem, (select val from monitor.cgroup_setof_kv('memory.stat') where key='mapped_file') as mapped_file, (select val from monitor.cgroup_setof_kv('memory.stat') where key='dirty') as dirty, (select val from monitor.cgroup_setof_kv('memory.stat') where key='active_anon') as active_anon, (select val from monitor.cgroup_setof_kv('memory.stat') where key='inactive_anon') as inactive_anon, (select val from monitor.cgroup_setof_kv('memory.stat') where key='active_file') as active_file, (select val from monitor.cgroup_setof_kv('memory.stat') where key='inactive_file') as inactive_file"
+  query: "
+with d(key, val) as
+(select key, val from monitor.cgroup_setof_kv('memory.stat'))
+SELECT
+ monitor.kdapi_scalar_bigint('mem_request') as request,
+ monitor.cgroup_scalar_bigint('memory.limit_in_bytes') as limit,
+ (select val from d where key='cache') as cache,
+ (select val from d where key='rss') as rss,
+ (select val from d where key='shmem') as shmem,
+ (select val from d where key='mapped_file') as mapped_file,
+ (select val from d where key='dirty') as dirty,
+ (select val from d where key='active_anon') as active_anon,
+ (select val from d where key='inactive_anon') as inactive_anon,
+ (select val from d where key='active_file') as active_file,
+ (select val from d where key='inactive_file') as inactive_file,
+ monitor.cgroup_scalar_bigint('memory.usage_in_bytes') as usage_in_bytes,
+ monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes') as kmem_usage_in_bytes
+"
   metrics:
     - request:
         usage: "GAUGE"
@@ -52,9 +69,6 @@ ccp_nodemx_mem:
     - mapped_file:
         usage: "GAUGE"
         description: "Total bytes of mapped file (includes tmpfs/shmem)"
-    - mapped_file:
-        usage: "GAUGE"
-        description: "Total bytes of mapped file (includes tmpfs/shmem)"
     - dirty:
         usage: "GAUGE"
         description: "Total bytes that are waiting to get written back to the disk"
@@ -70,6 +84,12 @@ ccp_nodemx_mem:
     - inactive_file:
         usage: "GAUGE"
         description: "Total bytes of file-backed memory on inactive LRU list"
+    - usage_in_bytes:
+        usage: "GAUGE"
+        description: "Total usage in bytes"
+    - kmem_usage_in_bytes:
+        usage: "GAUGE"
+        description: "Total kernel memory usage in bytes"
 
 
 ccp_nodemx_cpu:
@@ -93,16 +113,24 @@ ccp_nodemx_cpucfs:
         description: "the length of a period (in microseconds)"
 
 ccp_nodemx_cpuacct:
-  query: "SELECT monitor.cgroup_scalar_bigint('cpuacct.usage') as usage"
+  query: "SELECT monitor.cgroup_scalar_bigint('cpuacct.usage') as usage, clock_timestamp() as usage_ts"
   metrics:
     - usage:
         usage: "GAUGE"
         description: "CPU usage in nanoseconds"
+    - usage_ts:
+        usage: "GAUGE"
+        description: "CPU usage snapshot timestamp"
 
 ccp_nodemx_cpustat:
-  query: "select (SELECT val as nr_periods FROM monitor.cgroup_setof_kv('cpu.stat') where key='nr_periods'), (SELECT val as nr_throttled FROM monitor.cgroup_setof_kv('cpu.stat') where key='nr_throttled'), (SELECT val as throttled_time FROM monitor.cgroup_setof_kv('cpu.stat') where key='throttled_time')"
+  query: "WITH d(key, val) AS
+(select key, val from monitor.cgroup_setof_kv('cpu.stat'))
+SELECT
+ (SELECT val FROM d WHERE key='nr_periods') AS nr_periods,
+ (SELECT val FROM d WHERE key='nr_throttled') AS nr_throttled,
+ (SELECT val FROM d WHERE key='throttled_time') AS throttled_time, clock_timestamp() as snap_ts"
   metrics:
-    - nr_threads:
+    - nr_periods:
         usage: "GAUGE"
         description: "number of periods that any thread was runnable"
     - nr_throttled:
@@ -111,7 +139,9 @@ ccp_nodemx_cpustat:
     - throttled_time:
         usage: "GAUGE"
         description: "sum total amount of time individual threads within the monitor.cgroup were throttled"
-
+    - snap_ts:
+        usage: "GAUGE"
+        description: "CPU stat snapshot timestamp"
 
 ccp_nodemx_data_disk:
   query: "SELECT mount_point,fs_type,total_bytes,available_bytes,total_file_nodes,free_file_nodes
