@@ -20,6 +20,19 @@ groups:
       summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
 
 
+########## SYSTEM RULES ##########
+  - alert: ExporterDown
+    expr: avg_over_time(up[5m]) < 0.5
+    for: 10s
+    labels:
+      service: system
+      severity: critical
+      severity_num: 300
+    annotations:
+      description: 'Metrics exporter service for {{ $labels.job }} running on {{ $labels.instance }} has been down at least 50% of the time for the last 5 minutes. Service may be flapping or down.'
+      summary: 'Prometheus Exporter Service Down'
+
+
 ########## POSTGRESQL RULES ##########
   - alert: PGIsUp
     expr: pg_up < 1
