@@ -16,13 +16,17 @@ Please check all options that are relevant
 # How Has This Been Tested?  
 **Tested Configuration**:  
 - [ ] Ansible, Specify version(s):  
-- [ ] Specify Distro & version(s):  
-- [ ] Specify Package distro & version(s):  
-- [ ] Packages compiled from source & their version:  
+- Installation method:  
+    - [ ] Binary install from source, version:  
+    - [ ] OS ackage repository, distro and version:  
+    - [ ] Local package session, version:  
+    - [ ] Custom-built package, version:  
+    - [ ] Other:  
 - [ ] PostgreSQL, Specify version(s):  
 - [ ] docs tested with hugo version(s):  
 
 Tested with playbook(s):  
+
 # Checklist:  
 - [ ] My changes generate no new lint warnings  
 - I have made corresponding changes to:  
