@@ -18,8 +18,8 @@ Please check all options that are relevant
 - [ ] Ansible, Specify version(s):  
 - Installation method:  
     - [ ] Binary install from source, version:  
-    - [ ] OS ackage repository, distro and version:  
-    - [ ] Local package session, version:  
+    - [ ] OS package repository, distro, and version:  
+    - [ ] Local package server, version:  
     - [ ] Custom-built package, version:  
     - [ ] Other:  
 - [ ] PostgreSQL, Specify version(s):  
