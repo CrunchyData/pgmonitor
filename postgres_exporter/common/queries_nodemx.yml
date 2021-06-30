@@ -37,7 +37,7 @@ with d(key, val) as
 (select key, val from monitor.cgroup_setof_kv('memory.stat'))
 SELECT
  monitor.kdapi_scalar_bigint('mem_request') as request,
- monitor.cgroup_scalar_bigint('memory.limit_in_bytes') as limit,
+case when monitor.cgroup_scalar_bigint('memory.limit_in_bytes') = 9223372036854771712 then 0 else monitor.cgroup_scalar_bigint('memory.limit_in_bytes') end as limit,
  (select val from d where key='cache') as cache,
  (select val from d where key='rss') as rss,
  (select val from d where key='shmem') as shmem,
