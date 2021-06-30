@@ -20,7 +20,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.4.2"
+      "version": "7.4.5"
     },
     {
       "type": "panel",
@@ -36,15 +36,14 @@
     },
     {
       "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
+      "id": "stat",
+      "name": "Stat",
       "version": ""
     }
   ],
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:48",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -59,7 +58,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1618513099083,
+  "iteration": 1625069813048,
   "links": [
     {
       "asDropdown": false,
@@ -76,28 +75,48 @@
   "panels": [
     {
       "cacheTimeout": null,
-      "colorBackground": true,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#56A64B",
-        "#FF9830",
-        "#E02F44"
-      ],
       "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "links": [
+            {
+              "title": "pgBackrest",
+              "url": "/dashboard/db/pgbackrest?${__all_variables}"
+            }
+          ],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#56A64B",
+                "value": null
+              },
+              {
+                "color": "#FF9830",
+                "value": 86400
+              },
+              {
+                "color": "#E02F44",
+                "value": 172800
+              }
+            ]
+          },
+          "unit": "dtdurations"
         },
         "overrides": []
-      },
-      "format": "dtdurations",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 2,
@@ -113,38 +132,23 @@
           "url": "/dashboard/db/pgbackrest?${__all_variables}"
         }
       ],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "null",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "Time Since Last Backup:",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}) ",
@@ -155,20 +159,10 @@
           "refId": "A"
         }
       ],
-      "thresholds": "86400,172800",
       "timeFrom": null,
       "timeShift": null,
       "title": "[[cluster]] : Backup Status",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "min"
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
@@ -234,7 +228,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\", state=\"active\"})*100 /sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
@@ -316,7 +310,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
@@ -396,7 +390,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "max(abs(ccp_connection_stats_max_idle_in_txn_time{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}))",
@@ -475,7 +469,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})*100/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
@@ -556,7 +550,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "max(ccp_transaction_wraparound_percent_towards_wraparound{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
@@ -638,7 +632,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})*100/sum(ccp_stat_database_blks_hit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}+ccp_stat_database_blks_read{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
@@ -697,7 +691,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -749,7 +743,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:113",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -758,7 +751,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:114",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -814,7 +806,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -870,7 +862,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:271",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -879,7 +870,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:272",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -936,7 +926,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -981,7 +971,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:401",
           "format": "decmbytes",
           "label": null,
           "logBase": 2,
@@ -990,7 +979,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:402",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1049,18 +1037,16 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:322",
           "alias": "/Max:/",
           "color": "#FF9830"
         },
         {
-          "$$hashKey": "object:330",
           "alias": "/Avg:/",
           "color": "#5794F2"
         }
@@ -1112,7 +1098,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:113",
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -1121,7 +1106,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:114",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1178,7 +1162,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1258,7 +1242,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:474",
           "format": "short",
           "label": null,
           "logBase": 2,
@@ -1267,7 +1250,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:475",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1324,7 +1306,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1362,7 +1344,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:980",
           "format": "decmbytes",
           "label": null,
           "logBase": 1,
@@ -1371,7 +1352,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:981",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1428,28 +1408,24 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:757",
           "alias": "Commits",
           "color": "#73BF69"
         },
         {
-          "$$hashKey": "object:765",
           "alias": "DeadLocks",
           "color": "#C4162A"
         },
         {
-          "$$hashKey": "object:775",
           "alias": "Conflicts",
           "color": "#FF9830"
         },
         {
-          "$$hashKey": "object:780",
           "alias": "Rollbacks",
           "color": "#FFCB7D"
         }
@@ -1520,7 +1496,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:547",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1529,7 +1504,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:548",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1589,13 +1563,12 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:280",
           "alias": "/Time/",
           "yaxis": 2
         }
@@ -1645,7 +1618,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:907",
           "format": "short",
           "label": "Lag bytes",
           "logBase": 1,
@@ -1654,7 +1626,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:908",
           "format": "dtdhms",
           "label": "Lag time (hh:mm:ss)",
           "logBase": 1,
@@ -1711,7 +1682,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1786,7 +1757,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:620",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1795,7 +1765,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:621",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1852,7 +1821,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1935,7 +1904,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:240",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1944,7 +1912,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:241",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2001,7 +1968,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2040,7 +2007,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:834",
           "decimals": null,
           "format": "percent",
           "label": null,
@@ -2050,7 +2016,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:835",
           "format": "short",
           "label": null,
           "logBase": 1,
