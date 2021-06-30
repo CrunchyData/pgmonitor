@@ -12,14 +12,20 @@ weight: 5
   * The pgBackRest Grafana dashboard now presents data on a per-stanza basis
   * Removed deprecated node_exporter metrics from Grafana OS Details dashboard. Reorganized panels.
   * Added a basic Network Activity dashboard to Grafana using default metrics that come with node_exporter.
-  * The pgMonitor repository has been reorganized to better delineate which platforms specific files apply to. Some files have also been renamed as part of this reorganization.
+  * The pgMonitor repository has been reorganized around which platforms files apply to. Some files have also been renamed as part of this reorganization.
   * Extended the default alert threshold for pgBackRest backups to give a buffer time and avoid false positives when backup runtimes vary.
   * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert when the recovery status of a PostgreSQL database changes (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occured on the systems involved.
   * Added metric to monitor and alert on blocked queries
   
 ### Bug Fixes
+  * Fixed several incorrect metric names in alert expressions for the example alert files. Please review all alerts to ensure your expressions are checking the correct metrics, making special note of the following:
+    * PGSettingsChecksum
+    * PGDBSize
+    * PGReplicationByteLag
+    * MemoryAvailable
+    * SwapUsage
+    * All pgBackRest alerts 
   * Fixed pgBackRest metrics not reporting all backups in all stanzas for a given repository in some configuration setups. Each database will now only report back monitoring for the stanzas that are part of its own instance. Previously all database instances reported back all stanzas in the target repository.
-  * Fixed incorrect metric name in warning alert for available memory in linux/node_exporter default alerts (node_memory_Available_bytes should be node_memory_MemAvailable_bytes)
   * Fixed incorrect title of panel on Grafana PostgreSQL Details dashboard from "Transactions Per Minute" to "Transactions Per Second".
 
 ### Manual Intervention Changes

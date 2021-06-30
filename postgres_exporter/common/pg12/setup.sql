@@ -74,7 +74,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  
-    LANGUAGE sql SECURITY DEFINER
+    LANGUAGE sql SECURITY DEFINER STABLE
     SET search_path TO pg_catalog, pg_temp
 AS $function$
 
@@ -132,7 +132,7 @@ $function$;
 
 DROP FUNCTION IF EXISTS monitor.sequence_exhaustion(int);
 CREATE FUNCTION monitor.sequence_exhaustion(p_percent integer DEFAULT 75, OUT count bigint)
-    LANGUAGE sql SECURITY DEFINER
+    LANGUAGE sql SECURITY DEFINER STABLE
     SET search_path TO pg_catalog, pg_temp
 AS $function$
 
@@ -426,6 +426,7 @@ CREATE FUNCTION monitor.pg_stat_statements_reset_info(p_throttle_minutes integer
   RETURNS bigint
   LANGUAGE plpgsql
   SECURITY DEFINER
+  SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE
 

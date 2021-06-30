@@ -736,7 +736,7 @@
           "query": "label_values(up{exp_type='pg'}, cluster_name)",
           "refId": "StandardVariableQuery"
         },
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -803,7 +803,7 @@
           "query": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname) ",
           "refId": "StandardVariableQuery"
         },
-        "refresh": 2,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -838,7 +838,7 @@
           "query": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=~\"[[pgdatabase]]\"}, role) ",
           "refId": "StandardVariableQuery"
         },
-        "refresh": 2,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,

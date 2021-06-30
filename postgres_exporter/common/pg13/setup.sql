@@ -426,6 +426,7 @@ CREATE FUNCTION monitor.pg_stat_statements_reset_info(p_throttle_minutes integer
   RETURNS bigint
   LANGUAGE plpgsql
   SECURITY DEFINER
+  SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE
 

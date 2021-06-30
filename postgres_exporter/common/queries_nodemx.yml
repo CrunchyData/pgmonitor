@@ -52,9 +52,6 @@ ccp_nodemx_mem:
     - mapped_file:
         usage: "GAUGE"
         description: "Total bytes of mapped file (includes tmpfs/shmem)"
-    - mapped_file:
-        usage: "GAUGE"
-        description: "Total bytes of mapped file (includes tmpfs/shmem)"
     - dirty:
         usage: "GAUGE"
         description: "Total bytes that are waiting to get written back to the disk"

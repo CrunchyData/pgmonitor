@@ -18,7 +18,6 @@ END
 $$;
  
 GRANT pg_monitor to ccp_monitoring;
-GRANT pg_execute_server_program TO ccp_monitoring;
 
 ALTER ROLE ccp_monitoring SET lock_timeout TO '2min';
 
@@ -32,7 +31,7 @@ ALTER TABLE monitor.pgbackrest_info SET (autovacuum_analyze_scale_factor = 0, au
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(); -- old version from 2.3
 DROP FUNCTION IF EXISTS monitor.pgbackrest_info(int);
 CREATE OR REPLACE FUNCTION monitor.pgbackrest_info(p_throttle_minutes int DEFAULT 10) RETURNS SETOF monitor.pgbackrest_info
-    LANGUAGE plpgsql
+    LANGUAGE plpgsql SECURITY DEFINER
     SET search_path TO pg_catalog, pg_temp
 AS $function$
 DECLARE

@@ -55,11 +55,16 @@ ccp_replication_lag:
            WHEN pg_last_xlog_receive_location() = pg_last_xlog_replay_location() THEN 0
            ELSE EXTRACT (EPOCH FROM now() - pg_last_xact_replay_timestamp())::INTEGER
            END
-        AS replay_time"
+        AS replay_time
+        , EXTRACT (EPOCH FROM now() - pg_last_xact_replay_timestamp())::INTEGER
+        AS received_time"
   metrics:
     - replay_time:
         usage: "GAUGE"
-        description: "Length of time since the last transaction was replayed on replica. Will always increase if no writes on primary."
+        description: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL recieved equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
+    - received_time:
+        usage: "GAUGE"
+        description: "Length of time since the last WAL file was received and replayed on replica. Always increases, possibly causing false positives if the primary stops writing. Monitors for replicas that stop receiving WAL all together."
 
 
 ccp_replication_lag_size:
