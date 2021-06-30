@@ -46,12 +46,12 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1624491413218,
+  "iteration": 1625069480601,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -187,7 +187,7 @@
         "allFormat": "glob",
         "allValue": null,
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(pg_cluster)",
         "description": null,
         "error": null,

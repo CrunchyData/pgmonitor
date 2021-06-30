@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1624501789811,
+  "iteration": 1625070004605,
   "links": [
     {
       "icon": "external link",
@@ -71,7 +71,7 @@
   ],
   "panels": [
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -125,7 +125,7 @@
       "type": "stat"
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -180,7 +180,7 @@
       "type": "stat"
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -237,7 +237,7 @@
       "type": "stat"
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -298,7 +298,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -393,7 +393,7 @@
       }
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -569,7 +569,7 @@
       "type": "table"
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -745,7 +745,7 @@
       "type": "table"
     },
     {
-      "datasource": "PROMETHEUS",
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -930,7 +930,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(pg_cluster)",
         "description": null,
         "error": null,
@@ -957,7 +957,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},role)",
         "description": null,
         "error": null,
@@ -984,7 +984,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\"},dbname)",
         "description": null,
         "error": null,
@@ -1011,7 +1011,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", dbname=~\"[[dbname]]\"},exported_role)",
         "description": null,
         "error": null,
