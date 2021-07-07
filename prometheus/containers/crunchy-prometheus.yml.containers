@@ -10,12 +10,22 @@ scrape_configs:
   - role: pod
 
   relabel_configs:
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_crunchy_postgres_exporter]
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_crunchy_postgres_exporter,__meta_kubernetes_pod_label_crunchy_postgres_exporter]
     action: keep
     regex: true
+    separator: ""
   - source_labels: [__meta_kubernetes_pod_container_port_number]
     action: drop
     regex: 5432
+  - source_labels: [__meta_kubernetes_pod_container_port_number]
+    action: drop
+    regex: 10000
+  - source_labels: [__meta_kubernetes_pod_container_port_number]
+    action: drop
+    regex: 8009
+  - source_labels: [__meta_kubernetes_pod_container_port_number]
+    action: drop
+    regex: 2022
   - source_labels: [__meta_kubernetes_pod_container_port_number]
     action: drop
     regex: ^$
@@ -24,19 +34,25 @@ scrape_configs:
     target_label: kubernetes_namespace
   - source_labels: [__meta_kubernetes_pod_name]
     target_label: pod
-  - source_labels: [__meta_kubernetes_namespace,__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster]
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster,__meta_kubernetes_pod_label_pg_cluster]
+    target_label: cluster
+    separator: ""
+    replacement: '$1'
+  - source_labels: [__meta_kubernetes_namespace,cluster]
     target_label: pg_cluster
-    separator: ':'
+    separator: ":"
     replacement: '$1$2'
   - source_labels: [__meta_kubernetes_pod_ip]
     target_label: ip
     replacement: '$1'
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_instance]
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_instance,__meta_kubernetes_pod_label_deployment_name]
     target_label: deployment
     replacement: '$1'
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role]
+    separator: ""
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role,__meta_kubernetes_pod_label_role]
     target_label: role
     replacement: '$1'
+    separator: ""
   - source_labels: [dbname]
     target_label: dbname
     replacement: '$1'
