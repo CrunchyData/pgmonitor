@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.4.2"
+      "version": "7.4.5"
     },
     {
       "type": "datasource",
@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617228994154,
+  "iteration": 1625069480601,
   "links": [],
   "panels": [
     {
@@ -157,7 +157,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "repeat": "cluster",
       "repeatDirection": "h",
       "targets": [

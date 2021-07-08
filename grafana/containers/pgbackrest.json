@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.4.2"
+      "version": "7.4.5"
     },
     {
       "type": "panel",
@@ -38,7 +38,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:183",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -53,7 +52,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617217747489,
+  "iteration": 1625069660860,
   "links": [
     {
       "asDropdown": false,
@@ -114,7 +113,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "time()-ccp_backrest_oldest_full_backup_time_seconds{pg_cluster=\"[[cluster]]\", role=\"master\"}",
@@ -178,7 +177,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -238,7 +237,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:76",
           "format": "s",
           "label": null,
           "logBase": 1,
@@ -247,7 +245,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:77",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -310,7 +307,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -363,7 +360,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:232",
           "format": "s",
           "label": null,
           "logBase": 1,
@@ -372,7 +368,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:233",
           "format": "short",
           "label": null,
           "logBase": 2,
@@ -436,7 +431,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -489,7 +484,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:232",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -498,7 +492,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:233",
           "format": "short",
           "label": null,
           "logBase": 2,
@@ -565,7 +558,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -575,7 +568,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "idelta(ccp_archive_command_status_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
+          "expr": "avg(idelta(ccp_archive_command_status_failed_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])) without (instance,ip)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -584,7 +577,7 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(ccp_archive_command_status_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])",
+          "expr": "avg(idelta(ccp_archive_command_status_archived_count{pg_cluster=\"[[cluster]]\", role=\"master\"}[1m])) without (instance,pod, ip)",
           "hide": false,
           "interval": "",
           "legendFormat": "Archive count",
@@ -611,7 +604,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:232",
           "format": "short",
           "label": "",
           "logBase": 1,
@@ -620,7 +612,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:233",
           "format": "short",
           "label": null,
           "logBase": 1,

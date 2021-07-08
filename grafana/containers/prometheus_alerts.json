@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.4.2"
+      "version": "7.4.5"
     },
     {
       "type": "datasource",
@@ -133,7 +133,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "count(count by (kubernetes_namespace) (pg_up))",
@@ -205,7 +205,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "count(count by (pg_cluster) (pg_up))",
@@ -277,7 +277,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "count(pg_up)",
@@ -370,7 +370,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "bucketAggs": [
@@ -458,7 +458,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(ALERTS{alertstate=\"firing\",severity=\"warning\"} > 0) OR on() vector(0)",
@@ -529,7 +529,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(ALERTS{alertstate=\"firing\",severity=\"info\"} > 0) OR on() vector(0)",
@@ -684,7 +684,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "ALERTS{alertstate='firing'} > 0",
@@ -876,7 +876,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "ALERTS{alertstate=\"pending\"}",

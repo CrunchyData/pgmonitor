@@ -1,7 +1,5 @@
 ###
 #
-# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
-#
 # Begin File: queries_nodemx.yml
 #
 ###
@@ -103,7 +101,8 @@ ccp_nodemx_cpu:
         description: "CPU limit value in milli cores"
 
 ccp_nodemx_cpucfs:
-  query: "SELECT  monitor.cgroup_scalar_bigint('cpu.cfs_period_us') as period_us, monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') as quota_us"
+  query: "SELECT  monitor.cgroup_scalar_bigint('cpu.cfs_period_us') as period_us, 
+                  case monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') < 0 then 0 else monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') end as quota_us"
   metrics:
     - period_us:
         usage: "GAUGE"

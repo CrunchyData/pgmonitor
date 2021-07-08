@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.4.2"
+      "version": "7.4.5"
     },
     {
       "type": "panel",
@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617404711963,
+  "iteration": 1625070004605,
   "links": [
     {
       "icon": "external link",
@@ -109,7 +109,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
@@ -163,7 +163,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
@@ -220,7 +220,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "avg(sum_over_time(ccp_pg_stat_statements_total_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod,dbname,exported_role)",
@@ -277,7 +277,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(sum_over_time(ccp_pg_stat_statements_total_row_count{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment, pod,dbname,exported_role)",
@@ -334,7 +334,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -519,7 +519,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "avg(avg_over_time(ccp_pg_stat_statements_top_mean_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
@@ -544,7 +544,7 @@
               "exp_type": true,
               "job": true,
               "kubernetes_namespace": true,
-              "queryid": true,
+              "queryid": false,
               "role": false,
               "server": true
             },
@@ -695,7 +695,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "max(max_over_time(ccp_pg_stat_statements_top_max_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
@@ -720,7 +720,7 @@
               "exp_type": true,
               "job": true,
               "kubernetes_namespace": true,
-              "queryid": true,
+              "queryid": false,
               "role": false,
               "server": true
             },
@@ -870,7 +870,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.5",
       "targets": [
         {
           "expr": "sum(irate(ccp_pg_stat_statements_top_total_exec_time_ms{pg_cluster=\"[[cluster]]\", role=\"[[role]]\",dbname=~\"[[dbname]]\",exported_role=~\"[[dbuser]]\"}[$__range])) without(instance, ip, deployment,pod)",
@@ -894,7 +894,7 @@
               "exp_type": true,
               "job": true,
               "kubernetes_namespace": true,
-              "queryid": true,
+              "queryid": false,
               "role": false,
               "server": true
             },
