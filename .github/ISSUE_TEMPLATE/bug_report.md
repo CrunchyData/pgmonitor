@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: 'STATUS: UNCONFIRMED'
+labels: 'UNCONFIRMED'
 assignees: ''
 
 ---
@@ -14,9 +14,12 @@ assignees: ''
 
 
 **Tell us about your environment:**  
-- pgMonitor Version:
+- pgMonitor version:  
+- Container or non-container:  
+- Container name / image:  
+- Operating System for non-container:  
 - PostgreSQL Version:  
-- Operating System:  
-- Exporter in use:  
-- Virtualization:  
-- Any customization:  
+- Exporter(s) in use (incl. version):  
+- Prometheus version:  
+- AlertManager version:  
+- Grafana version:  

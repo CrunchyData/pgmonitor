@@ -2,9 +2,9 @@
 
 Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-Fixes (issue) #  
+Fixes #  
 
-Depends on (issue) #  
+Depends on #  
 
 ## Type of change  
 Please check all options that are relevant  
@@ -14,16 +14,22 @@ Please check all options that are relevant
 - [ ] Documentation update only  
 
 # How Has This Been Tested?  
-
 **Tested Configuration**:  
-- [ ] CentOS, Specify version(s):  
-- [ ] PostgreQL, Specify version(s):  
-- [ ] docs tested with hugo <0.60  
+- [ ] Ansible, Specify version(s):  
+- Installation method:  
+    - [ ] Binary install from source, version:  
+    - [ ] OS package repository, distro, and version:  
+    - [ ] Local package server, version:  
+    - [ ] Custom-built package, version:  
+    - [ ] Other:  
+- [ ] PostgreSQL, Specify version(s):  
+- [ ] docs tested with hugo version(s):  
 
 Tested with playbook(s):  
+
 # Checklist:  
+- [ ] My changes generate no new lint warnings  
 - I have made corresponding changes to:  
     - [ ] the documentation  
     - [ ] the release notes  
     - [ ] the upgrade doc  
-
