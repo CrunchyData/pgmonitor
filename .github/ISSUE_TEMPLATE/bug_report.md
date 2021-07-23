@@ -19,7 +19,7 @@ assignees: ''
 - Container name / image:  
 - Operating System for non-container:  
 - PostgreSQL Version:  
-- Exporter in use:  
+- Exporter(s) in use (incl. version):  
 - Prometheus version:  
 - AlertManager version:  
 - Grafana version:  
