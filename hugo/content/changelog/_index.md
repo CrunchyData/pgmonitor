@@ -6,7 +6,8 @@ weight: 5
 ## 4.5
 
 ### New Features
-  * Minimum required version of Grafana has been updated to 7.4.x
+  * Add preliminary support for PostgreSQL 14
+  * Minimum required version of Grafana has been updated to 7.5.x
   * Updated Grafana Overview dashboards to support new Stat panel
   * Updated PostgreSQL Details Grafana dashboard with more information and to be able to present data grouped by clusters. The pgBackRest panel was removed from this dashboard.
   * The pgBackRest Grafana dashboard now presents data on a per-stanza basis
