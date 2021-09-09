@@ -12,9 +12,9 @@ There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) 
 - [Setup](#setup)
     - [Linux](#setup-on-linux)
 
-## Installation
+## Installation {#installation}
 
-### Linux
+### Linux {#linux}
 
 #### With RPM Packages
 
@@ -40,24 +40,24 @@ mkdir -p /etc/grafana/crunchy_dashboards
 
 | pgmonitor Configuration File              | System Location                                        |
 |-------------------------------------------|--------------------------------------------------------|
-| grafana/crunchy_grafana_datasource.yml    | `/etc/grafana/provisioning/datasources/datasource.yml` |  
-| grafana/crunchy_grafana_dashboards.yml    | `/etc/grafana/provisioning/dashboards/dashboards.yml` |  
+| grafana/crunchy_grafana_datasource.yml    | /etc/grafana/provisioning/datasources/datasource.yml |  
+| grafana/crunchy_grafana_dashboards.yml    | /etc/grafana/provisioning/dashboards/dashboards.yml |  
 
-Review the `crunchy_grafana_datasource.yml` file to ensure it is looking at your Prometheus database. The included file assumes Grafana and Prometheus are running on the same system. DO NOT CHANGE the datasource "name" if you will be using the dashboards provided in this repo. They assume that name and will not work otherwise. Any other options can be changed as needed. Save the `crunchy_grafana_datasource.yml` file and rename it to `/etc/grafana/provisioning/datasources/datasources.yml`. Restart grafana and confirm through the web interface that the datasource was provisioned and working.
+Review the {{< shell >}}crunchy_grafana_datasource.yml{{< /shell >}}} file to ensure it is looking at your Prometheus database. The included file assumes Grafana and Prometheus are running on the same system. DO NOT CHANGE the datasource {{< yaml >}}name{{< /yaml >}} if you will be using the dashboards provided in this repo. They assume that name and will not work otherwise. Any other options can be changed as needed. Save the {{< shell >}}crunchy_grafana_datasource.yml{{< /shell >}} file and rename it to {{< shell >}}/etc/grafana/provisioning/datasources/datasources.yml{{< /shell >}}. Restart grafana and confirm through the web interface that the datasource was provisioned and working.
 
-Review the `crunchy_grafana_dashboards.yml` file to ensure it's looking at where you stored the provided dashboards. By default it is looking in `/etc/grafana/crunchy_dashboards`. Save this file and rename it to `/etc/grafana/provisioning/dashboards/dashboards.yml`. Restart grafana so it picks up the new config.
+Review the {{< shell >}}crunchy_grafana_dashboards.yml{{< /shell >}} file to ensure it's looking at where you stored the provided dashboards. By default it is looking in {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}}. Save this file and rename it to {{< shell >}}/etc/grafana/provisioning/dashboards/dashboards.yml{{< /shell >}}. Restart grafana so it picks up the new config.
 
-Save all of the desired .json dashboard files to the `/etc/grafana/crunchy_dashboards` folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
+Save all of the desired .json dashboard files to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
 
-## Upgrading
+## Upgrading {#upgrading}
 
 If you'd like to take advantage of the new provisioning system in Grafana 5 provided by pgmonitor 2.x, we recommend either renaming or deleting your existing datasources and dashboards so there are no issues when the provisioned versions are imported.
 
-When upgrading from pgmonitor 1.x to 2.x, note that many of the system related metric names from node_exporter have had their names changed. The new graphs provided for Grafana 5+ have taken these new names into account. Also, the top level PostgreSQL Overview dashboard no longer uses the ccp_is_ready metric, so you will have to include some new postgres_exporter metrics for that dashboard to work.
+Please review the ChangeLog for pgMonitor and take note of any changes to metric names and/or dashboards. Note that if you are using the included dashboards that are managed via the provisioning system, they will automatically be updated. If you've made any changes to configuration files and kept they're default names, the package will not overwrite them and will instead make a new file with an {{< shell >}}*.rpmnew{{< /shell >}} extension. You can compare your file and the new one and incorporate any changes as needed or desired.
 
-## Setup
+## Setup {#setup}
 
-### Setup on Linux
+### Setup on Linux {#setup-on-linux}
 
 #### Configuration Database
 
@@ -98,9 +98,9 @@ Navigate to the web interface: https://&lt;ip-address&gt;:3000. Log in with admi
 
 ### Datasource & Dashboard Provisioning
 
-Grafana 5.x provides the ability to automatically provision datasources and dashboards via configuration files instead of having to manually import them either through the web interface or the API. Note that provisioned dashboards can no longer be directly edited and saved via the web interface. See the Grafana documentation for how to edit/save provisioned dashboards: http://docs.grafana.org/administration/provisioning/#making-changes-to-a-provisioned-dashboard. If you'd like to customize these dashboards, we recommend first adding them via provisioning then saving them with a new name. You can then either manage them via the web interface or add them to the provisioning system.
+Grafana provides the ability to automatically provision datasources and dashboards via configuration files instead of having to manually import them either through the web interface or the API. Note that provisioned dashboards can no longer be directly edited and saved via the web interface. See the Grafana documentation for how to edit/save provisioned dashboards: http://docs.grafana.org/administration/provisioning/#making-changes-to-a-provisioned-dashboard. If you'd like to customize these dashboards, we recommend first adding them via provisioning then saving them with a new name. You can then either manage them via the web interface or add them to the provisioning system.
 
-The extras package takes care of putting all these files in place. If you did not use the crunchy package to install grafana, see the additional instructions above. Once that is done, the only additional setup that needs to be done is to set the "provisioning" option in the `grafana.ini` to point to the top level directory if it hasn't been done already. If you're upgrading from Grafana 4.x to 5.x, you will have to add the "provisioning" option to the `[paths]` section of the `grafana.ini` file. Once that is done, just restart grafana and all datasources and dashboards should appear.
+The extras package takes care of putting all these files in place. If you did not use the crunchy package to install Grafana, see the additional instructions above. Once that is done, the only additional setup that needs to be done is to set the "provisioning" option in the `grafana.ini` to point to the top level directory if it hasn't been done already. If you're upgrading from Grafana 4.x to 5.x, you will have to add the "provisioning" option to the `[paths]` section of the `grafana.ini` file. Once that is done, just restart grafana and all datasources and dashboards should appear.
 
 ```ini
 [paths]

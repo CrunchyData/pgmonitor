@@ -9,7 +9,7 @@ title = "pgMonitor"
 theme = "crunchy-hugo-theme"
 
 pygmentsCodeFences = true
-pygmentsStyle = "monokailight"
+pygmentsStyle = "solarized"
 publishDir = "../docs"
 
 defaultContentLanguage = "current"
@@ -21,6 +21,12 @@ enableMissingTranslationPlaceholders = true
 title = "pgMonitor"
 weight = 1
 languageName = "current"
+
+[markup]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.tableOfContents]
+endLevel = 3
 
 [params]
 showVisitedLinks = false # default is false

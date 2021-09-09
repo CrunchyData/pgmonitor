@@ -4,17 +4,17 @@ draft: false
 weight: 2
 ---
 
-Prometheus can be set up on any Linux-based system, but pgMonitor currently only supports running it on RHEL/CentOS 7.
+Prometheus can be set up on any Linux-based system, but pgMonitor currently only supports running it on RHEL/CentOS 7 or later.
 
 - [Installation](#installation)
-    - [RHEL / CentOS 7](#rhel-centos-7)
+    - [RHEL / CentOS](#rhel-centos)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
-    - [RHEL / CentOS 7](#setup-on-rhel-centos-7)
+    - [RHEL / CentOS](#setup-on-rhel-centos)
 
-## Installation
+## Installation {#installation}
 
-### RHEL / CentOS 7
+### RHEL / CentOS {#rhel-centos}
 
 #### With RPM Packages
 
@@ -43,7 +43,7 @@ pgMonitor assumes to be using at least Prometheus 2.9.x. We recommend to always 
 
 ##### User and Configuration Directory Installation
 
-You will need to create a system user named `ccp_monitoring` which you can do with the following command:
+You will need to create a system user named {{< shell >}}ccp_monitoring{{< /shell >}} which you can do with the following command:
 
 ```bash
 sudo useradd -d /var/lib/ccp_monitoring ccp_monitoring
@@ -55,7 +55,7 @@ The files contained in this repository are assumed to be installed in the follow
 
 ###### Prometheus
 
-The Prometheus data directory should be `/var/lib/ccp_monitoring/prometheus` and owned by the `ccp_monitoring` user.  You can set it up with:
+The Prometheus data directory should be {{< shell >}}/var/lib/ccp_monitoring/prometheus{{< /shell >}} and owned by the {{< shell >}}ccp_monitoring{{< /shell >}} user.  You can set it up with:
 
 ```bash
 sudo install -d -m 0700 -u ccp_monitoring -g ccp_monitoring /var/lib/ccp_monitoring/prometheus
@@ -65,12 +65,13 @@ The following pgmonitor configuration files should be placed according to the fo
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
-| crunchy-prometheus-service-el7.conf | `/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf`  |
-| sysconfig.prometheus | `/etc/sysconfig/prometheus` |
-| crunchy-prometheus.yml | `/etc/prometheus/crunchy-prometheus.yml` |
-| auto.d/\*.yml.example | `/etc/prometheus/auto.d/*.yml.example` |
-| crunchy-alertmanager.yml | `/etc/prometheus/crunchy-alertmanager.yml` |
-| alert-rules.d/crunchy-alert-rules\*.yml.example | `/etc/prometheus/alert-rules.d/crunchy-alert-rules-\*.yml.example` |
+| prometheus/linux/crunchy-prometheus-service-rhel.conf | /etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf  |
+| prometheus/linux/sysconfig.prometheus | /etc/sysconfig/prometheus |
+| prometheus/linux/crunchy-prometheus.yml | /etc/prometheus/crunchy-prometheus.yml |
+| prometheus/linux/auto.d/\*.yml.example | /etc/prometheus/auto.d/*.yml.example |
+| prometheus/linux/alert-rules.d/crunchy-alert-rules\*.yml.example | /etc/prometheus/alert-rules.d/crunchy-alert-rules-\*.yml.example |
+| prometheus/common/auto.d/\*.yml.example | /etc/prometheus/auto.d/*.yml.example |
+| prometheus/common/alert-rules.d/crunchy-alert-rules\*.yml.example | /etc/prometheus/alert-rules.d/crunchy-alert-rules-\*.yml.example |
 
 ###### Alertmanager
 
@@ -84,17 +85,20 @@ The following pgMonitor configuration files should be placed according to the fo
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
-| crunchy-alertmanager-service-el7.conf | `/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf`  |
-| sysconfig.alertmanager | `/etc/sysconfig/alertmanager` |
+| alertmanager/linux/crunchy-alertmanager-service-rhel.conf | /etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf |
+| alertmanager/linux/sysconfig.alertmanager | /etc/sysconfig/alertmanager |
+| alertmanager/common/crunchy-alertmanager.yml | /etc/prometheus/crunchy-alertmanager.yml |
 
 
-### Upgrading
+### Upgrading {#upgrading}
 
-When upgrading from pgmonitor 1.x to 2.x, note that the alerting rules for node_exporter metrics have had many of their names changed. If you've changed the provided alerting rules file, installing the new package should create a file called `/etc/prometheus/crunchy-alert-rules.yml.rpmnew` and not overwrite your current file. You should be able to copy the new rules as needed from there.
+Please review the ChangeLog for any changes that may be relevant to your environment.
 
-## Setup
+Of note, items like the alert rules and configuration files often require user edits. The packages will install newer versions of these files, but if the user has changed their contents but kept the same file name, the package will not overwrite them. Instead it will make a file with an {{< shell >}}*.rpmnew{{< /shell >}} extension that contains the newer version of the file. These new files can be reviewed/compared to he user's file to incorporate any desired changes.
 
-### Setup on RHEL/CentOS 7
+## Setup {#setup}
+
+### Setup on RHEL/CentOS {#setup-on-rhel-centos}
 
 #### Service Configuration
 
@@ -102,30 +106,30 @@ The following files contain defaults that should enable Prometheus and Alertmana
 
 If you need to modify them, see the notes in the files for more details and recommendations:
 
-- `/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf`
-- `/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf`
+- {{< shell >}}/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf{{< /shell >}}
+- {{< shell >}}/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf{{< /shell >}}
 
 The below files contain startup properties for Prometheues and Alertmanager.  Please review and modify these files as you see fit:
 
-- `/etc/sysconfig/prometheus`
-- `/etc/sysconfig/alertmanager`
+- {{< shell >}}/etc/sysconfig/prometheus{{< /shell >}}
+- {{< shell >}}/etc/sysconfig/alertmanager{{< /shell >}}
 
-The below files dictate how Prometheus and Alertmanager will behave at runtime for the purposes of using pgmonitor.  Please review each file below and follow the instructions in order to set things up:
+The below files dictate how Prometheus and Alertmanager will behave at runtime for the purposes of using pgMonitor.  Please review each file below and follow the instructions in order to set things up:
 
 | File                                     | Instructions |
 |------------------------------------------|--------------|
-| `/etc/prometheus/crunchy-prometheus.yml` | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Service file provided by pgmonitor expects config file to be named `crunchy-prometheus.yml` |
-| `/etc/prometheus/crunchy-alertmanager.yml` | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgmonitor expects config file to be named `crunchy-alertmanager.yml` |
-| `/etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example` | Update rules as needed and remove `.example` suffix. Prometheus config provided by pgmonitor expects `.yml` files to be located in `/etc/prometheus/alert-rules.d/` |
-| `/etc/prometheus/auto.d/*.yml` | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to the target and be set appropriately (pg or node). See the example target files provided for how to set the labels for postgres or node exporter targets. |
+| /etc/prometheus/crunchy-prometheus.yml | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Activate blackbox_exporter monitoring if desired. Service file provided by pgMonitor expects config file to be named `crunchy-prometheus.yml` |
+| /etc/prometheus/crunchy-alertmanager.yml | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgMonitor expects config file to be named `crunchy-alertmanager.yml` |
+| /etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example | Update rules as needed and remove `.example` suffix. Prometheus config provided by pgmonitor expects `.yml` files to be located in `/etc/prometheus/alert-rules.d/` |
+| /etc/prometheus/auto.d/*.yml | You will need at least one file with a final `.yml` extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in `.yml.example` but only with `.yml`. Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to all targets and be set appropriately (pg or node). Also, PostgreSQL targets make use of the "cluster_name" variable and should be given a relevant value so all systems (primary & replicas) can be related to each other when needed (Grafana dashboards, etc). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
 #### Blackbox Exporter
 
-By default, the Blackbox exporter probes are commented out in the {{ shell }}crunchy-prometheus.yml{{ /shell }} file; please see the notes in that commented out section. For the default IPv4 TCP port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the {{ yaml }}static_configs: targets{{ /yaml }} section of the {{ yaml }}blackbox_tcp_services{{ /yaml }} job; some examples for Grafana & Patroni are given there. It is also possible to create another auto-scrape target directory similar to {{ shell }}auto.d{{ /shell }} and manage your blackbox targets more dynamically.
+By default, the Blackbox exporter probes are commented out in the {{< shell >}}crunchy-prometheus.yml{{< /shell >}} file; please see the notes in that commented out section. For the default IPv4 TCP port targets that pgMonitor configures the blackbox_exporter with, the desired monitoring targets can be configured under the {{ yaml }}static_configs: targets{{ /yaml }} section of the {{ yaml }}blackbox_tcp_services{{ /yaml }} job; some examples for Grafana & Patroni are given there. It is also possible to create another auto-scrape target directory similar to {{< shell >}}auto.d{{< /shell >}} and manage your blackbox targets more dynamically.
 
-If you configure additional probes beyond the one that pgMonitor comes with, you will need to create a different Prometheus {{ yaml }}job_name{{ /yaml }} for them for the given {{ yaml }}params: module{{ /yaml }} name.
+If you configure additional probes beyond the one that pgMonitor comes with, you will need to create a different Prometheus {{< yaml >}}job_name{{< /yaml >}} for them for the given {{< yaml >}}params: module{{< /yaml >}} name.
 
-An example rules file for monitoring Blackbox probes, {{ shell }}crunchy-alert-rules-blackbox.yml.example{{ /shell }}, is available in the {{ shell }}alert-rules.d{{ /shell }} folder.
+An example rules file for monitoring Blackbox probes, {{< shell >}}crunchy-alert-rules-blackbox.yml.example{{< /shell >}}, is available in the {{< shell >}}alert-rules.d{{< /shell >}} folder.
 
 #### Enable Services
 

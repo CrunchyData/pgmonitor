@@ -1,0 +1,124 @@
+* {
+    line-height: 1.75rem;
+}
+
+div.content nav#TableOfContents ul li {
+    list-style-type: none;
+}
+
+div.note {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background-color: #f0f7fb;
+    background-image: url(/images/Note-48.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    border: solid 1px #3498db;
+    border-radius: 6px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 1rem 4rem;
+    margin-bottom: 1rem;
+}
+
+div.warn {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background-color: #fffacd;
+    background-image: url(/images/Warn-48.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    border: solid 1px #ccc688;
+    border-radius: 6px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 1rem 4rem;
+    margin-bottom: 1rem;
+}
+
+img.logo {
+    max-height: 200px;
+    height: auto;
+    width: auto;
+}
+
+span {
+  padding: 0.25rem;
+}
+
+span.role {
+    background: #4d99d0;
+    color: ghostwhite;
+    font-family: monospace;
+}
+
+span.shell {
+    background: #085584;
+    color: white;
+    font-family: monospace;
+}
+
+span.yaml {
+    background: #edc606;
+    color: darkslategray;
+    font-family: monospace;
+    font-weight: bold;
+  }
+.notice {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  line-height: 18px;
+  overflow: hidden;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  display: inline-flex;
+  width: 100%;
+}
+
+.notice .content {
+  display: inline-block;
+  margin: auto 0;
+}
+
+.notice .content * {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.notice .icon {
+  display: flex;
+  justify-content: center;
+  margin: auto 2rem auto 0;
+}
+
+.notice.note {
+  background-color: #f0f7fb;
+  border: solid 1px #3498db;
+}
+
+.notice.note .icon {
+  color: #3498db;
+}
+
+.notice.warn {
+  background-color: #fffacd;
+  border: solid 1px #ff6347;
+}
+
+.notice.warn .icon {
+  color: #ff6347;
+}
+
+@media (min-width: 1200px) {
+  .notice i {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .notice i {
+    font-size: 2rem;
+  }
+}
