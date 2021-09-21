@@ -31,7 +31,7 @@
             {
               "targetBlank": true,
               "title": "PG Details",
-              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
             }
           ],
           "mappings": [
@@ -150,7 +150,7 @@
             {
               "targetBlank": true,
               "title": "PG Details",
-              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
             }
           ],
           "mappings": [
@@ -270,7 +270,7 @@
             {
               "targetBlank": true,
               "title": "PG Details",
-              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables"
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
             }
           ],
           "mappings": [
