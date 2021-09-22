@@ -4,16 +4,14 @@ draft: false
 weight: 1
 ---
 
-The Linux instructions below use RHEL, but any Linux-based system should work. [Crunchy Data](https://www.crunchydata.com) customers can obtain Linux packages through the [Crunchy Customer Portal](https://access.crunchydata.com/); for Windows packages, contact Crunchy Data directly.
+The Linux instructions below use RHEL, but any Linux-based system should work. [Crunchy Data](https://www.crunchydata.com) customers can obtain Linux packages through the [Crunchy Customer Portal](https://access.crunchydata.com/).
 
 - [Installation](#installation)
    - [RPM installs](#rpm-installs)
    - [Non-RPMs installs](#non-rpm-installs)
-   - [Windows installs](#windows-installs)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
    - [RHEL or CentOS 7+](#setup-on-rhel-or-centos-7)
-   - [Windows Server 2012R2](#windows-server-2012r2)
 - [Metrics Collected](#metrics-collected)
    - [PostgreSQL](#postgresql)
    - [System](#system)
@@ -106,9 +104,6 @@ The following pgMonitor configuration files should be placed according to the fo
 | blackbox/blackbox_exporter.sysconfig  | `/etc/sysconfig/blackbox_exporter`   |
 | blackbox/crunchy-blackbox.yml| `/etc/blackbox_exporter/crunchy-blackbox.yml` |
 
-### Windows installs
-
-The following Windows Server 2012R2 packages are available to [Crunchy Data](https://www.crunchydata.com) customers. *After installing via these packages, continue reading at the [Windows Server 2012R2](#in-server-2012R2) section.*
 
 ##### Available Packages
 
@@ -307,66 +302,6 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg11_per_db
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same job you already had running for this system
 
-### Windows Server 2012R2
-
-Currently the Windows installers assume you are logged in as the local Administrator account, so please ensure to do so before attempting the following.
-
-Install the WMI and PostgreSQL exporters by:
-
-1. Find and launch the `pgMonitor_client_#.#_Crunchy.win.x86_64.exe` file previously obtained from Crunchy Data. It will present you with the following screen:
-
-    ![client installer 1](/images/client_installer_1.png)
-
-2. Adjust the desired installation path and click 'Install'. The installer will run until you are eventually presented with this screen, where you can click 'Close':
-
-    ![client installer 2](/images/client_installer_2.png)
-
-3. The installer will then launch the configuration utility:
-
-    ![client installer 3](/images/client_installer_3.png)
-
-4. You will then be prompted to configure the `postgres_exporter`. Choose 'Yes' to do so:
-
-    ![client installer 4](/images/client_installer_4.png)
-
-5. The configuration window will open. It first prompts you for a name to be used to identify the services by. Keep the name simple, but informative. We use 'prod' as an example:
-
-    ![client installer 5](/images/client_installer_5.png)
-
-6. You will then be asked which exporter you're setting up: the cluster or the per-db. You will need one of each. We start with the global:
-
-    ![client installer 6](/images/client_installer_6.png)
-
-7. Choose '1' to configure the cluster exporter, then give it a meaningful name, e.g. payroll or whatever the main app is for this PostgreSQL cluster, enter your PostgreSQL version, and specify the default port of 9187:
-
-    ![client installer 7](/images/client_installer_7.png)
-
-8. Enter the PostgreSQL connection info. You will need the name of the database superuser account, its password, you can use 127.0.0.1 to connect, and finally enter the port PostgreSQL is listening on:
-
-    ![client installer 8](/images/client_installer_8.png)
-
-9. The script will set up the cluster exporter service and bring you back to the main menu. Choose '1' to add a service, name it the same you used in the previous step but append 'db' to the name, e.g. payrolldb, and choose '2' for the exporter type:
-
-    ![client installer 9](/images/client_installer_9.png)
-
-10. Enter your PostgreSQL version again, then enter '9188' as the port (two exporters cannot share the same port). Enter the same PostgreSQL connection info again. The script will setup the per-db exporter. You may now choose option '5' to exit the script:
-
-    ![client installer 10](/images/client_installer_10.png)
-
-11. Run `C:\Crunchy Data\pgMonitor\postgres_exporter\##\setup_pg##.sql` against your `postgres` database as your PostgreSQL super user replacing `##` with the major version of your PostgreSQL install (e.g. 96, 10, 11).
-
-12. Confirm that the WMI Exporter is functional by loading [http://localhost:9182/metrics](http://localhost:9182/metrics) in your browser:
-
-    ![client installer 11](/images/client_installer_11.png)
-
-13. Verify the cluster exporter is functional by loading [http://localhost:9187/metrics](http://localhost:9187/metrics) in your browser. You should see multiple metrics that begin with `ccp_`:
-
-    ![client installer 12](/images/client_installer_12.png)
-
-14. Finally, confirm the per-db eporter is functional by loading [http://localhost:9188/metrics](http://localhost:9188/metrics) in your browser:
-
-    ![client installer 13](/images/client_installer_13.png)
-
 ## Metrics Collected
 
 The metrics collected by our exporters are outlined below. 
@@ -463,7 +398,9 @@ The following metrics either require special considerations when monitoring spec
  
  * *ccp_connection_stats_max_blocked_query_time* - Runtime of the longest running query that has been blocked by a heavyweight lock
 
- * *ccp_replication_lag_replay_time* - Only provides values on replica instances. Time since replica received and replayed a WAL file. Note this is not the main way to determine if a replica is behind its primary. It only monitors the time the replica replayed the WAL vs what it has received. It is a secondary metric for monitoring WAL replay on the replica itself.
+ * *ccp_replication_lag_replay_time* - Time since a replica received and replayed a WAL file; only shown on replica instances. Note that this is not the main way to determine if a replica is behind its primary. This metric only monitors the time since the replica replayed the WAL vs when it was received. It also does not monitor when a WAL replay replica completely stops receiving WAL (see received_time metric). It is a secondary metric for monitoring WAL replay on the replica itself.
+
+ * *ccp_replication_lag_received_time* - Similar to *ccp_replication_lag_replay_time*, however this value always increases between replay of WAL files. Effective for monitoring that a WAL replay replica has actually received WAL files. Note this will cause false positives when used as an alert for replica lag if the primary receives no writes (which means there is no WAL to send).
 
  * *ccp_replication_lag_size_bytes* - Only provides values on instances that have attached replicas (primary, cascading replica). Tracks byte lag of every streaming replica connected to this database instance. This is the main way that replication lag is monitored. Note that if you have WAL replay only replicas, this will not be reflected here.
 

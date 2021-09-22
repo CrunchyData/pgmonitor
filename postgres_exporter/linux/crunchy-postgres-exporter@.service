@@ -1,0 +1,25 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+# Template systemd service file to allow multiple postgres exporters to run with 
+#   a simple variable in service name to distinguish the environment file
+# Ex: systemctl enable postgres_exporter@postgres_exporter_mydb.service
+
+[Unit]
+Description=Postgres Exporter Server - Service Instance: %I
+After=network.target
+
+[Service]
+PermissionsStartOnly=true
+User=ccp_monitoring
+EnvironmentFile=/etc/sysconfig/%i
+ExecStartPre=/bin/bash -c "set -o pipefail; cat $QUERY_FILE_LIST | sed -e 's/#PG_STAT_STATEMENTS_THROTTLE_MINUTES#/${PG_STAT_STATEMENTS_THROTTLE_MINUTES}/g' -e 's/#PGBACKREST_INFO_THROTTLE_MINUTES#/${PGBACKREST_INFO_THROTTLE_MINUTES}/g' -e 's/#PG_STAT_STATEMENTS_LIMIT#/${PG_STAT_STATEMENTS_LIMIT}/g' > $$(echo $OPT | sed 's/.*--extend.query-path=\(.*\.yml\).*/\1/')"
+ExecStart=/usr/bin/postgres_exporter $OPT
+ExecReload=/usr/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+DefaultInstance=postgres_exporter

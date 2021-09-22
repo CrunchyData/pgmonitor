@@ -1,6 +1,0 @@
-modules:
-  tcp_connect:
-    prober: tcp
-    tcp:
-      preferred_ip_protocol: "ip4"
-

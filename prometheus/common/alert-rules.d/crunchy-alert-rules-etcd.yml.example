@@ -1,0 +1,45 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+groups:
+- name: alert-rules
+  rules:
+
+########## ETCD EXPORTER RULES ##########
+
+# Absence alerts must be configured per named job, otherwise there's no way to know which job is down
+# Below is are some examples using the leader metric for a targets called "etcd#" for a 3 node etcd cluster
+
+#  - alert: ECTDAbsent_etcd1
+#    expr: absent(etcd_server_has_leader{job="etcd1"})
+#    for: 10s
+#    labels:
+#      service: etcd
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
+
+#  - alert: ECTDAbsent_etcd2
+#    expr: absent(etcd_server_has_leader{job="etcd2"})
+#    for: 10s
+#    labels:
+#      service: etcd
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
+
+#  - alert: ECTDAbsent_etcd3
+#    expr: absent(etcd_server_has_leader{job="etcd3"})
+#    for: 10s
+#    labels:
+#      service: etcd
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
+

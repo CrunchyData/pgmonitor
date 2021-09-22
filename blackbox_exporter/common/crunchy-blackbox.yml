@@ -1,0 +1,12 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+modules:
+  tcp_connect:
+    prober: tcp
+    tcp:
+      preferred_ip_protocol: "ip4"
+
