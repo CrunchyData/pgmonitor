@@ -43,10 +43,10 @@ For non-package installations on Linux, applications can be downloaded from thei
 | Application                   | Source Repository                                         |
 |-------------------------------|-----------------------------------------------------------|
 | blackbox_exporter             | https://github.com/prometheus/blackbox_exporter           |
-| node_exporter                 | https://github.com/prometheus/node_exporter/releases      |
+| node_exporter                 | https://github.com/prometheus/node_exporter      |
 | pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
 | pgbouncer_fdw                 | https://github.com/CrunchyData/pgbouncer_fdw              |
-| postgres_exporter             | https://github.com/wrouesnel/postgres_exporter/releases   |
+| postgres_exporter             | https://github.com/prometheus-community/postgres_exporter   |
 
 #### User and Configuration Directory Installation
 
@@ -166,7 +166,7 @@ CREATE EXTENSION pg_stat_statements;
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_global.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions and only need to be run once per database instance.    |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
-| queries_general.yml      | postgres_exporter query file for queries that are specific to the given version of PostgreSQL where this file is installed.   |
+| queries_general.yml      | postgres_exporter query file for queries that are specific to the version of PostgreSQL that is being monitored.   |
 | queries_backrest.yml | postgres_exporter query file for monitoring pgBackRest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
 | queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
 | queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. Only supported for PostgreSQL 10 and above.|
