@@ -31,9 +31,9 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 | node_exporter                  | Base package for node_exporter                                            |
 | pg_bloat_check                 | Package for pg_bloat_check script                                         |
 | pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
-| pgmonitor-node_exporter-extras | Crunchy optimized configurations for node_exporter                        |
-| pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of postgres |
-| pgmonitor-pg##-extras          | Crunchy optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) |
+| pgmonitor-node_exporter-extras | Crunchy-optimized configurations for node_exporter                        |
+| pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of PostgreSQL |
+| pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 
 ### Non-RPM installs {#non-rpm-installs}
@@ -196,7 +196,7 @@ For replica servers, the setup is the same except that the setup.sql file does n
 
 ##### Access Control: GRANT statements
 
-The {{< shell >}}ccp_monitoring{{< /shell >}} database role (created by running the "setup.sql" file above) must be allowed to connect to all databases in the cluster. Note that by default, all users are granted CONNECT on all new databases unless the system has been modified to disallow this, so this step can likely be skipped. Otherwise, if this must be done, run the following command to generate the necessary GRANT statements:
+The {{< shell >}}ccp_monitoring{{< /shell >}} database role (created by running the "setup.sql" file above) must be allowed to connect to all databases in the cluster. Note that by default, all users are granted CONNECT on all new databases, so this step can likely be skipped. Otherwise, run the following command to generate the necessary GRANT statements:
 
 ```sql
 SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;'
@@ -212,7 +212,7 @@ Run these grant statements to then allow monitoring to connect.
 
 ##### Bloat setup
 
-Run the script on the specific database(s) you will be for monitoring bloat in the cluster. See special note below or in crontab.txt concerning a superuser requirement for using this script
+Run the script on the specific database(s) you will be monitoring for bloat in the cluster. See the note below, or in crontab.txt, concerning a superuser requirement for using this script.
 
 ```bash
 psql -d postgres -c "CREATE EXTENSION pgstattuple;"
