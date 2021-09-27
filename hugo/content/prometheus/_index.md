@@ -46,7 +46,7 @@ pgMonitor assumes to be using at least Prometheus 2.9.x. We recommend to always 
 You will need to create a system user named {{< shell >}}ccp_monitoring{{< /shell >}} which you can do with the following command:
 
 ```bash
-sudo useradd -d /var/lib/ccp_monitoring ccp_monitoring
+sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 ```
 
 ##### Configuration File Installation
