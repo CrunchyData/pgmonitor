@@ -8,9 +8,9 @@
   labels:
     job: "Replica"
     exp_type: "pg"
-    cluster: "crunchy"
+    cluster_name: "crunchy"
 - targets: [ "10.123.202.13:9188" ]
   labels:
     job: "mycluster_Replica"
     exp_type: "pg"
-    cluster_name: "mycluster"
+    cluster_name: "crunchy"
