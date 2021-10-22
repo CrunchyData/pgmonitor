@@ -20,6 +20,7 @@ ccp_backrest_last_info:
             )
             SELECT a.config_file
              , a.stanza
+             , backup_data->'database'->>'repo-key' AS repo
              , a.backup_data->>'type' AS backup_type
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
              , a.backup_data->'info'->'repository'->>'size' AS repo_total_size_bytes
@@ -28,11 +29,12 @@ ccp_backrest_last_info:
              JOIN (
                     SELECT config_file
                         , stanza
+                        , backup_data->'database'->>'repo-key' AS repo
                         , backup_data->>'type' AS backup_type
                         , max(backup_data->'timestamp'->>'start') AS max_backup_start
                         , max(backup_data->'timestamp'->>'stop') AS max_backup_stop
                     FROM per_stanza
-                    GROUP BY 1,2,3) b
+                    GROUP BY 1,2,3,4) b
             ON a.config_file = b.config_file
             AND a.stanza = b.stanza
             AND a.backup_data->>'type' = b.backup_type
@@ -44,7 +46,10 @@ ccp_backrest_last_info:
             description: "Configuration file for this backup"
         - stanza:
             usage: "LABEL"
-            description: "PGBackrest Stanza Name"
+            description: "pgBackRest stanza name"
+        - repo:
+            usage: "LABEL"
+            description: "pgBackRest repository number"
         - backup_type:
             usage: "LABEL"
             description: "Backup type"
@@ -73,17 +78,21 @@ ccp_backrest_oldest_full_backup:
             )
             SELECT config_file
               , stanza
+              , backup_data->'database'->>'repo-key' AS repo
               , min((backup_data->'timestamp'->>'stop')::bigint) time_seconds
             FROM per_stanza 
-            WHERE backup_data->>'type'::text = 'full' 
-            GROUP BY config_file, stanza, backup_data->>'type'::text"
+            WHERE backup_data->>'type' IN ('full')
+            GROUP BY config_file, stanza, backup_data->'database'->>'repo-key'"
     metrics:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
-            description: "PGBackrest Stanza Name"
+            description: "pgBackRest stanza name"
+        - repo:
+            usage: "LABEL"
+            description: "pgBackRest repository number"
         - time_seconds:
             usage: "GAUGE"
             description: "Seconds since the oldest completed full backup"
@@ -103,17 +112,21 @@ ccp_backrest_last_full_backup:
             )
             SELECT config_file
              , stanza
+             , backup_data->'database'->>'repo-key' AS repo
              , extract(epoch from (CURRENT_TIMESTAMP - max(to_timestamp((backup_data->'timestamp'->>'stop')::bigint)))) AS time_since_completion_seconds
             FROM per_stanza
             WHERE backup_data->>'type' IN ('full')
-            GROUP BY config_file, stanza"
+            GROUP BY config_file, stanza, backup_data->'database'->>'repo-key'"
     metrics:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
-            description: "PGBackrest Stanza Name"
+            description: "pgBackRest stanza name"
+        - repo:
+            usage: "LABEL"
+            description: "pgBackRest repository number"
         - time_since_completion_seconds:
             usage: "GAUGE"
             description: "Seconds since the last completed full backup"
@@ -133,17 +146,21 @@ ccp_backrest_last_diff_backup:
             )
             SELECT config_file
              , stanza
+             , backup_data->'database'->>'repo-key' AS repo
              , extract(epoch from (CURRENT_TIMESTAMP - max(to_timestamp((backup_data->'timestamp'->>'stop')::bigint)))) AS time_since_completion_seconds
             FROM per_stanza
             WHERE backup_data->>'type' IN ('full', 'diff')
-            GROUP BY config_file, stanza"
+            GROUP BY config_file, stanza, backup_data->'database'->>'repo-key'"
     metrics:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
-            description: "PGBackrest Stanza Name"
+            description: "pgBackRest stanza name"
+        - repo:
+            usage: "LABEL"
+            description: "pgBackRest repository number"
         - time_since_completion_seconds:
             usage: "GAUGE"
             description: "Seconds since the last completed full or differential backup. Differential is always based off last full."
@@ -163,17 +180,21 @@ ccp_backrest_last_incr_backup:
             )
             SELECT config_file
              , stanza
+             , backup_data->'database'->>'repo-key' AS repo
              , extract(epoch from (CURRENT_TIMESTAMP - max(to_timestamp((backup_data->'timestamp'->>'stop')::bigint)))) AS time_since_completion_seconds
             FROM per_stanza
             WHERE backup_data->>'type' IN ('full', 'diff', 'incr')
-            GROUP BY config_file, stanza"
+            GROUP BY config_file, stanza, backup_data->'database'->>'repo-key'"
     metrics:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
         - stanza: 
             usage: "LABEL"
-            description: "PGBackrest Stanza Name"
+            description: "pgBackRest stanza name"
+        - repo:
+            usage: "LABEL"
+            description: "pgBackRest repository number"
         - time_since_completion_seconds:
             usage: "GAUGE"
             description: "Seconds since the last completed full, differential or incremental backup. Incremental is always based off last full or differential."
