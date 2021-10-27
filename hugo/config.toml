@@ -25,6 +25,8 @@ languageName = "current"
 [markup]
 [markup.goldmark.renderer]
 unsafe = true
+[markup.goldmark.extensions]
+typographer = false
 [markup.tableOfContents]
 endLevel = 3
 
