@@ -1,0 +1,192 @@
+###
+#
+# Begin File: queries_nodemx.yml
+#
+###
+ccp_nodemx_network:
+  query: "SELECT interface,tx_bytes,tx_packets, rx_bytes,rx_packets from monitor.proc_network_stats()"
+  metrics:
+    - interface:
+        usage: "LABEL"
+    - tx_bytes:
+        usage: "GAUGE"
+        description: "Number of bytes transmitted"
+    - tx_packets:
+        usage: "GAUGE"
+        description: "Number of packets transmitted"
+    - rx_bytes:
+        usage: "GAUGE"
+        description: "Number of bytes received"
+    - rx_packets:
+        usage: "GAUGE"
+        description: "Number of packets received"
+
+ccp_nodemx_process:
+  query: "SELECT monitor.cgroup_process_count() as count"
+  metrics:
+    - count:
+        usage: "GAUGE"
+        description: "Total number of database processes"
+
+
+ccp_nodemx_mem:
+  query: "
+with d(key, val) as
+(select key, val from monitor.cgroup_setof_kv('memory.stat'))
+SELECT
+ monitor.kdapi_scalar_bigint('mem_request') as request,
+case when monitor.cgroup_scalar_bigint('memory.limit_in_bytes') = 9223372036854771712 then 0 else monitor.cgroup_scalar_bigint('memory.limit_in_bytes') end as limit,
+ (select val from d where key='cache') as cache,
+ (select val from d where key='rss') as rss,
+ (select val from d where key='shmem') as shmem,
+ (select val from d where key='mapped_file') as mapped_file,
+ (select val from d where key='dirty') as dirty,
+ (select val from d where key='active_anon') as active_anon,
+ (select val from d where key='inactive_anon') as inactive_anon,
+ (select val from d where key='active_file') as active_file,
+ (select val from d where key='inactive_file') as inactive_file,
+ monitor.cgroup_scalar_bigint('memory.usage_in_bytes') as usage_in_bytes,
+ monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes') as kmem_usage_in_bytes
+"
+  metrics:
+    - request:
+        usage: "GAUGE"
+        description: "Memory request value in bytes"
+    - limit:
+        usage: "GAUGE"
+        description: "Memory limit value in bytes"
+    - cache:
+        usage: "GAUGE"
+        description: "Total bytes of page cache memory"
+    - rss:
+        usage: "GAUGE"
+        description: "Total bytes of anonymous and swap cache memory"
+    - shmem:
+        usage: "GAUGE"
+        description: "Total bytes of shared memory"
+    - mapped_file:
+        usage: "GAUGE"
+        description: "Total bytes of mapped file (includes tmpfs/shmem)"
+    - dirty:
+        usage: "GAUGE"
+        description: "Total bytes that are waiting to get written back to the disk"
+    - active_anon:
+        usage: "GAUGE"
+        description: "Total bytes of anonymous and swap cache memory on active LRU list"
+    - inactive_anon:
+        usage: "GAUGE"
+        description: "Total bytes of anonymous and swap cache memory on inactive LRU list"
+    - active_file:
+        usage: "GAUGE"
+        description: "Total bytes of file-backed memory on active LRU list"
+    - inactive_file:
+        usage: "GAUGE"
+        description: "Total bytes of file-backed memory on inactive LRU list"
+    - usage_in_bytes:
+        usage: "GAUGE"
+        description: "Total usage in bytes"
+    - kmem_usage_in_bytes:
+        usage: "GAUGE"
+        description: "Total kernel memory usage in bytes"
+
+
+ccp_nodemx_cpu:
+  query: "SELECT monitor.kdapi_scalar_bigint('cpu_request') as request, monitor.kdapi_scalar_bigint('cpu_limit') as limit"
+  metrics:
+    - request:
+        usage: "GAUGE"
+        description: "CPU request value in milli cores"
+    - limit:
+        usage: "GAUGE"
+        description: "CPU limit value in milli cores"
+
+ccp_nodemx_cpucfs:
+  query: "SELECT  monitor.cgroup_scalar_bigint('cpu.cfs_period_us') as period_us, 
+                  case when monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') < 0 then 0 else monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') end as quota_us"
+  metrics:
+    - period_us:
+        usage: "GAUGE"
+        description: "the total available run-time within a period (in microseconds)"
+    - quota_us:
+        usage: "GAUGE"
+        description: "the length of a period (in microseconds)"
+
+ccp_nodemx_cpuacct:
+  query: "SELECT monitor.cgroup_scalar_bigint('cpuacct.usage') as usage, clock_timestamp() as usage_ts"
+  metrics:
+    - usage:
+        usage: "GAUGE"
+        description: "CPU usage in nanoseconds"
+    - usage_ts:
+        usage: "GAUGE"
+        description: "CPU usage snapshot timestamp"
+
+ccp_nodemx_cpustat:
+  query: "WITH d(key, val) AS
+(select key, val from monitor.cgroup_setof_kv('cpu.stat'))
+SELECT
+ (SELECT val FROM d WHERE key='nr_periods') AS nr_periods,
+ (SELECT val FROM d WHERE key='nr_throttled') AS nr_throttled,
+ (SELECT val FROM d WHERE key='throttled_time') AS throttled_time, clock_timestamp() as snap_ts"
+  metrics:
+    - nr_periods:
+        usage: "GAUGE"
+        description: "number of periods that any thread was runnable"
+    - nr_throttled:
+        usage: "GAUGE"
+        description: "number of runnable periods in which the application used its entire quota and was throttled"
+    - throttled_time:
+        usage: "GAUGE"
+        description: "sum total amount of time individual threads within the monitor.cgroup were throttled"
+    - snap_ts:
+        usage: "GAUGE"
+        description: "CPU stat snapshot timestamp"
+
+ccp_nodemx_data_disk:
+  query: "SELECT mount_point,fs_type,total_bytes,available_bytes,total_file_nodes,free_file_nodes
+          FROM monitor.proc_mountinfo() m
+          JOIN monitor.fsinfo(m.mount_point) f USING (major_number, minor_number)
+          WHERE m.mount_point IN ('/pgdata', '/pgwal') OR
+                m.mount_point like '/tablespaces/%'"
+  metrics:
+    - mount_point:
+        usage: "LABEL"
+        description: "mount point"
+    - fs_type:
+        usage: "LABEL"
+        description: "File system type"
+    - total_bytes:
+        usage: "GAUGE"
+        description: "Size in bytes"
+    - available_bytes:
+        usage: "GAUGE"
+        description: "Available size in bytes"
+    - total_file_nodes:
+        usage: "GAUGE"
+        description: "Total file nodes"
+    - free_file_nodes:
+        usage: "GAUGE"
+        description: "Available file nodes"
+
+ccp_nodemx_disk_activity:
+  query: "SELECT mount_point,sectors_read,sectors_written
+          FROM monitor.proc_mountinfo() m
+          JOIN monitor.proc_diskstats() d USING (major_number, minor_number)
+          WHERE m.mount_point IN ('/pgdata', '/pgwal') OR
+                m.mount_point like '/tablespaces/%'"
+  metrics:
+    - mount_point:
+        usage: "LABEL"
+        description: "mount point"
+    - sectors_read:
+        usage: "GAUGE"
+        description: "Total sectors read"
+    - sectors_written:
+        usage: "GAUGE"
+        description: "Total sectors writen"
+
+###
+#
+# End File: queries_nodemx.yml
+#
+###

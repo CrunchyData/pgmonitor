@@ -1,0 +1,8 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+# The below script must be run as a database superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file
+# By default only scans and stores statistics for objects that are at least 1GB in size. Adjust as needed. Set --quiet twice to suppress all output.
+# 08 03 * * 0 /usr/bin/pg_bloat_check.py --quiet --quiet -c "dbname=postgres user=postgres" --min_size=1073741824

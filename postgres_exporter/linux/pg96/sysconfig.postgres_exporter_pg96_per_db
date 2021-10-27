@@ -1,0 +1,23 @@
+###
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+# This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/postgres_exporter)
+
+# --web.listen-address: change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.
+# --extend.query-path: location of file containing custom queries to run. Location below is one recommended by crunchy setup steps.
+# DATA_SOURCE_NAME: psql connection string. set the database that the exporter will connect to. Default is `postgres`.
+# QUERY_FILE_LIST: space delimitted yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
+
+# Ensure that listening port is different than global postgres_exporter (9188 below). Also ensure that query-path file is different from global one (queries_all_db_stats.yml below).
+OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/96/queries_all_db_stats.yml --disable-default-metrics --disable-settings-metrics"
+DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
+# As of v0.5.x of postgres_exporter, multiple DSN's can be given to connect to multiple databases with a single exporter. Separate DSNs with a comma and no spaces. Database name in example below is first the value after the "///" before the "?". Additional connection options can be given after "?", separated by "&".
+#DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb1?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb2?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
+
+# Ex: For per db metric. DO NOT add queries that return the same labels/values on all databases otherwise the exporter will throw errors. The queries that pgmonitor provides for per-db metrics all include a "dbname" label to distinguish them.
+QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_per_db.yml"
+# QUERY_FILE_LIST="/etc/postgres_exporter/96/queries_per_db.yml  /etc/postgres_exporter/96/queries_bloat.yml"
+

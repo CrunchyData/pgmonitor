@@ -1,4 +1,0 @@
-# This file must be in a pathname that matches the EnvironmentFile entry in the service file (Default: /etc/sysconfig/blackbox_exporter)
-#
-OPT="--config.file=/etc/blackbox_exporter/crunchy-blackbox.yml"
-

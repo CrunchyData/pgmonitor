@@ -1,4 +1,0 @@
-- targets: [ "10.123.202.13:9187" ]
-  labels:
-    job: "Replica"
-    exp_type: "pg"

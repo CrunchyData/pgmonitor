@@ -1,0 +1,2 @@
+{{ $file := .Get "file"  }}
+{{- with .Site.GetPage $file -}}{{ .Content }}{{- end -}}

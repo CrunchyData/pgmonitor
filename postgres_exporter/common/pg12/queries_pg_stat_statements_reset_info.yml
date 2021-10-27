@@ -1,0 +1,20 @@
+###
+#
+# Begin File: pg_stat_statements_reset_info.yml
+#
+# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+ccp_pg_stat_statements_reset:
+  query: "select monitor.pg_stat_statements_reset_info(#PG_STAT_STATEMENTS_THROTTLE_MINUTES#) as time"
+  metrics:
+    - time:
+        usage: "GAUGE"
+        description: "Epoch time when stats were reset"
+
+###
+#
+# End File: pg_stat_statements_reset_info.yml
+#
+###
+
