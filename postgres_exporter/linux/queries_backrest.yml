@@ -20,6 +20,7 @@ ccp_backrest_last_info:
             )
             SELECT a.config_file
              , a.stanza
+             , a.backup_data->'backrest'->>'version' AS backrest_version
              , backup_data->'database'->>'repo-key' AS repo
              , a.backup_data->>'type' AS backup_type
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
@@ -53,6 +54,9 @@ ccp_backrest_last_info:
         - backup_type:
             usage: "LABEL"
             description: "Backup type"
+        - backrest_version:
+            usage: "GAUGE"
+            description: "pgBackRest version number"
         - repo_backup_size_bytes:
             usage: "GAUGE"
             description: "Actual size of only this individual backup in the pgbackrest repository"
