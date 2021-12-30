@@ -14,7 +14,9 @@ if [ ! -d ${OUTPUTDIR} ]; then
   mkdir ${OUTPUTDIR}
 fi
 rm -f ${OUTPUTDIR}/${VERTMP}
-echo "HELP ccp_backrest_version The version of pgBackRest installed on this system"
-echo "TYPE ccp_backrest_version gauge"
-echo "ccp_backrest_version{} $(pgbackrest version | cut -d ' ' -f 2)" >${OUTPUTDIR}/${VERTMP}
+cat <<EOF >${OUTPUTDIR}/${VERTMP}
+HELP ccp_backrest_version The version of pgBackRest installed on this system
+TYPE ccp_backrest_version gauge
+ccp_backrest_version{} $(pgbackrest version | cut -d ' ' -f 2)
+EOF
 mv ${OUTPUTDIR}/${VERTMP} ${OUTPUTDIR}/${VERFILE}
