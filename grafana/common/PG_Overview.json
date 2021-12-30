@@ -15,7 +15,8 @@
   "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1617294517997,
+  "id": 13,
+  "iteration": 1640878867114,
   "links": [],
   "panels": [
     {
@@ -26,7 +27,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "links": [
             {
               "targetBlank": true,
@@ -47,7 +47,7 @@
               "op": "=",
               "text": "PRIMARY",
               "type": 1,
-              "value": ".5"
+              "value": "0.5"
             },
             {
               "id": 2,
@@ -112,14 +112,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.12",
       "repeat": "pgnodes",
       "repeatDirection": "h",
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "alpha_ip16_pg1",
-          "value": "alpha_ip16_pg1"
+          "text": "golf_ip16_pg1",
+          "value": "golf_ip16_pg1"
         }
       },
       "targets": [
@@ -145,7 +145,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "links": [
             {
               "targetBlank": true,
@@ -231,15 +230,15 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.12",
       "repeatDirection": "h",
-      "repeatIteration": 1617294517997,
+      "repeatIteration": 1640878867114,
       "repeatPanelId": 1,
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "alpha_ip26_pg2",
-          "value": "alpha_ip26_pg2"
+          "text": "golf_ip26_pg2",
+          "value": "golf_ip26_pg2"
         }
       },
       "targets": [
@@ -265,7 +264,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "links": [
             {
               "targetBlank": true,
@@ -351,15 +349,15 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "7.5.12",
       "repeatDirection": "h",
-      "repeatIteration": 1617294517997,
+      "repeatIteration": 1640878867114,
       "repeatPanelId": 1,
       "scopedVars": {
         "pgnodes": {
           "selected": false,
-          "text": "alpha_ip36_pg3",
-          "value": "alpha_ip36_pg3"
+          "text": "golf_ip36_pg3",
+          "value": "golf_ip36_pg3"
         }
       },
       "targets": [
@@ -441,5 +439,5 @@
   "timezone": "browser",
   "title": "PostgreSQL Overview",
   "uid": "pxinDnNik",
-  "version": 2
+  "version": 1
 }
