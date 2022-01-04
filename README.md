@@ -35,8 +35,8 @@ Please view the official Crunchy Data pgMonitor documentation [here](https://acc
 
 ## Legal Notices
 
-Copyright © 2017-2021 Crunchy Data Solutions, Inc.
+Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 
 CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
+Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc. All Rights Reserved.

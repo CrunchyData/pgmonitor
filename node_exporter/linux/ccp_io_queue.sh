@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 ###
 #
-# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 ###
 
