@@ -71,6 +71,7 @@ END IF;
 END 
 $function$;
 
+
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  
     LANGUAGE sql SECURITY DEFINER STABLE
