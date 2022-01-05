@@ -71,6 +71,29 @@ END IF;
 END 
 $function$;
 
+DROP TABLE IF EXISTS monitor.pgbackrest_version CASCADE;
+CREATE TABLE IF NOT EXISTS monitor.pgbackrest_version (system_version_number numeric NOT NULL, gather_timestamp timestamptz DEFAULT now() NOT NULL);
+-- Force more aggressive autovacuum to avoid table bloat over time
+ALTER TABLE monitor.pgbackrest_version SET (autovacuum_analyze_scale_factor = 0, autovacuum_vacuum_scale_factor = 0, autovacuum_vacuum_threshold = 10, autovacuum_analyze_threshold = 10);
+
+DROP FUNCTION IF EXISTS monitor.pgbackrest_version();
+CREATE FUNCTION monitor.pgbackrest_version() RETURNS SETOF monitor.pgbackrest_version
+    LANGUAGE plpgsql
+    SET search_path TO pg_catalog, pg_temp
+AS $function$
+DECLARE
+
+BEGIN
+
+DELETE FROM monitor.pgbackrest_version;
+
+EXECUTE format( $cmd$ COPY monitor.pgbackrest_version (system_version_number) FROM program 'pgbackrest version | cut -s -d '' '' -f 2' WITH (format text) $cmd$);
+
+RETURN QUERY SELECT * FROM monitor.pgbackrest_version;
+
+END
+$function$;
+
 
 DROP FUNCTION IF EXISTS monitor.sequence_status();
 CREATE FUNCTION monitor.sequence_status() RETURNS TABLE (sequence_name text, last_value bigint, slots numeric, used numeric, percent int, cycle boolean, numleft numeric, table_usage text)  

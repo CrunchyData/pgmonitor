@@ -20,7 +20,7 @@ ccp_backrest_last_info:
             )
             SELECT a.config_file
              , a.stanza
-             , a.backup_data->'backrest'->>'version' AS backrest_version
+             , a.backup_data->'backrest'->>'version' AS backrest_repo_version
              , a.backup_data->'database'->>'repo-key' AS repo
              , a.backup_data->>'type' AS backup_type
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
@@ -54,7 +54,7 @@ ccp_backrest_last_info:
         - backup_type:
             usage: "LABEL"
             description: "Backup type"
-        - backrest_version:
+        - backrest_repo_version:
             usage: "GAUGE"
             description: "pgBackRest version number"
         - repo_backup_size_bytes:
@@ -67,6 +67,12 @@ ccp_backrest_last_info:
             usage: "GAUGE"
             description: "Total runtime in seconds of this backup"
 
+ccp_backrest_system_version:
+    query: "SELECT system_version_number AS number FROM monitor.pgbackrest_version()"
+    metrics:
+        - number:
+            usage: "GAUGE"
+            description: "Version of pgbackrest that is installed on this system"
 
 ccp_backrest_oldest_full_backup:
     query: "WITH all_backups AS (
