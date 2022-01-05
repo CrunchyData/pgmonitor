@@ -67,13 +67,6 @@ ccp_backrest_last_info:
             usage: "GAUGE"
             description: "Total runtime in seconds of this backup"
 
-ccp_backrest_system_version:
-    query: "SELECT system_version_number AS number FROM monitor.pgbackrest_version()"
-    metrics:
-        - number:
-            usage: "GAUGE"
-            description: "Version of pgbackrest that is installed on this system"
-
 ccp_backrest_oldest_full_backup:
     query: "WITH all_backups AS (
                 SELECT config_file
