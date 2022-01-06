@@ -56,7 +56,7 @@ ccp_backrest_last_info:
             description: "Backup type"
         - backrest_repo_version:
             usage: "GAUGE"
-            description: "pgBackRest version number"
+            description: "pgBackRest version number when this backup was performed"
         - repo_backup_size_bytes:
             usage: "GAUGE"
             description: "Actual size of only this individual backup in the pgbackrest repository"
