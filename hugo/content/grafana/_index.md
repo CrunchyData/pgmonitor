@@ -11,6 +11,7 @@ There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) 
 - [Upgrading](#upgrading)
 - [Setup](#setup)
     - [Linux](#setup-on-linux)
+- [Included Dashboards](#dashboards)
 
 ## Installation {#installation}
 
@@ -106,3 +107,44 @@ The extras package takes care of putting all these files in place. If you did no
 [paths]
 provisioning = /etc/grafana/provisioning
 ```
+
+### Included Dashboards {#dashboards}
+
+pgMonitor comes with several dashboards ready to be used with automatic provisioning. They provide examples of using the metrics from the postgres_exporter and node_exporter. Since provisioned dashboards cannot be edited directly in the web interface, if any custom changes are desired, it is recommmended to make a copy of them and make your changes there.
+
+#### PostgreSQL Dashboards
+
+ * *Bloat Details* - Provides details on database bloat (wasted space). Provides overview and top-n statistics.
+
+ * *CRUD Details* - Provides details on Create, Read, Update, Delete (CRUD) statistics on a per-table basis.
+
+ * *pgBackRest* - Provides details on backups performed with pgBackRest. Also provides recovery window to show timeframe available for PITR.
+
+ * *PGBouncer* - Provides details from the PgBouncer statistics views
+
+ * *PostgreSQL Details* - Provides detailed information for each PostgreSQL instance (connections, replication, wraparound, etc)
+
+ * *PostgreSQL Overview* - Provides an overview of all PostgreSQL systems being monitored. Indicates whether a system is a Primary or Replica. Can click on each panel to open up the PostgreSQL Details for that system.
+
+ * *Query Statistics (pg_stat_statements)* - Provides an overview of statistics collected by the pg_stat_statements extension.
+
+ * *TableSize Details* - Provides size details on a per-table basis for the given database.
+
+#### System Dashboards
+
+ * *Filesystem Details* - Provides details on the filesystem metrics (disk usage, IO, etc)
+
+ * *Network Details* - Provides details on network usage (utilization, traffic in/out, netstat, etc)
+
+ * *Overview* - The top level overview dashboard that provides links to the OS Overview, PostgreSQL Overview, ETCD, and Prometheus Alerts dashboards
+
+ * *OS Details* - Provides details on operating system metrics (cpu, memory, swap, disk usage). Links to Filesystem Details dashboard.
+
+ * *OS Overview* - Provides an overview that shows the up status of each system monitored by pgMonitor
+
+ * *Prometheus Alerts* - Provides a summary list of current and recent alerts that have fired in Prometheus
+
+#### High Availability Dashboards
+
+ * *ETCD Details* - Provides details on the status of the ETCD cluster monitored by pgMonitor.
+
