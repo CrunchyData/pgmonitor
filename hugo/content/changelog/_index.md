@@ -3,6 +3,16 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.6
+
+### New Features
+  * Support for pgBackRest multiple repositories in metrics and Grafana dashboards. Minumum requirement of pgBackRest is now 2.33.
+
+### Bug Fixes
+  * Allow PostgreSQL Overview Grafana dashboard to work with Grafana 8.x
+  * Fix queries to use clock_timestamp() vs now() to avoid negative values in some query results
+
+
 ## 4.5
 
 ### New Features
