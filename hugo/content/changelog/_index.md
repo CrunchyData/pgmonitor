@@ -11,7 +11,7 @@ weight: 5
 ### Bug Fixes
   * Allow PostgreSQL Overview Grafana dashboard to work with Grafana 8.x
   * Fix queries to use clock_timestamp() vs now() to avoid negative values in some query results
-
+  * Fix postgres_exporter sysconfig to properly support multiple options that have .yml files as values (allows tls support).
 
 ## 4.5
 
