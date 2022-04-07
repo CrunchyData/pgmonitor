@@ -1,6 +1,6 @@
 ###
 #
-# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 ###
 
@@ -182,6 +182,27 @@ groups:
     annotations:
       description: '{{ $labels.job }} is using 90% or more of available connections ({{ $value }}%)'
       summary: 'PGSQL Instance connections'
+
+  - alert: DiskFillPredict
+    expr: predict_linear(ccp_nodemx_data_disk_available_bytes{mount_point!~"tmpfs"}[1h], 24 * 3600) < 0 and 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 70
+    for: 5m
+    labels:
+      service: postgresql
+      severity: warning
+      severity_num: 200
+    annotations:
+      summary: 'Disk predicted to be full in 24 hours'
+      description: 'Disk on {{ $labels.pg_cluster }}:{{ $labels.kubernetes_pod_name }} is predicted to fill in 24 hrs based on current usage'
+
+  - alert: PGClusterRoleChange
+    expr: count by (pg_cluster) (ccp_is_in_recovery_status != ignoring(instance,ip,pod,role) (ccp_is_in_recovery_status offset 5m)) >= 1
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: '{{ $labels.pg_cluster }} has had a switchover/failover event. Please check this cluster for more details'
 
   - alert: PGDiskSize
     expr: 100 * ((ccp_nodemx_data_disk_total_bytes - ccp_nodemx_data_disk_available_bytes) / ccp_nodemx_data_disk_total_bytes) > 75

@@ -1,5 +1,7 @@
 # pgMonitor
 
+{{< logo src="/images/pgmonitor_logo.svg" text="Crunchy Monitoring" >}}
+
 ### [pgMonitor](https://github.com/CrunchyData/pgMonitor) is your all-in-one tool to easily create an environment to visualize the health and performance of your [PostgreSQL](http://www.postgresql.org/) cluster.
 
 ![pgMonitor](/images/PGMonitor.gif)
@@ -43,6 +45,8 @@ pgMonitor combines multiple open-source software packages and necessary configur
 - [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
 - [PostgreSQL Exporter](https://github.com/wrouesnel/postgres_exporter) - an open-source data export to Prometheus that supports collecting metrics from any PostgreSQL server version 9.1 and above.
 
+![pgMonitor](/images/crunchy-monitoring-arch.png)
+
 ## Supported Platforms
 
 ### Operating Systems
@@ -83,15 +87,15 @@ For the [full history](/changelog) of pgMonitor, please see the [CHANGELOG](/cha
 
 ## Sponsors
 
-[![Crunchy Data](/images/crunchy_logo.png)](https://www.crunchydata.com/)
+[{{< logo src="/images/crunchy_logo.png" text="Crunchy Data" >}}](https://www.crunchydata.com/)
 
 [Crunchy Data](https://www.crunchydata.com/) is pleased to sponsor pgMonitor and many other [open-source projects](https://github.com/CrunchyData/) to help promote support the PostgreSQL community and software ecosystem.
 
 ## Legal Notices
 
-Copyright © 2017-2021 Crunchy Data Solutions, Inc.
+Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 
 CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc.
+Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc. All Rights Reserved.
 

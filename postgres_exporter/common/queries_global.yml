@@ -1,6 +1,6 @@
 ###
 #
-# Copyright 2017-2021 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 # Begin File: queries_common.yml
 #
@@ -220,7 +220,7 @@ ccp_sequence_exhaustion:
 
 
 ccp_postmaster_uptime:
-    query: "SELECT extract(epoch from (now() - pg_postmaster_start_time() )) AS seconds;"
+    query: "SELECT extract(epoch from (clock_timestamp() - pg_postmaster_start_time() )) AS seconds;"
     metrics:
         - seconds:
             usage: "GAUGE"

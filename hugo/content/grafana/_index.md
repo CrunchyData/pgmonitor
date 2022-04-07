@@ -6,11 +6,36 @@ weight: 3
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). Otherwise the Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download. There is no difference between the Crunchy provided package and the one directly from Grafana.
 
+- [Included Dashboards](#dashboards)
 - [Installation](#installation)
     - [Linux](#linux)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
     - [Linux](#setup-on-linux)
+
+### Included Dashboards {#dashboards}
+
+pgMonitor comes with several dashboards ready to be used with automatic provisioning. They provide examples of using the metrics from the postgres_exporter and node_exporter. Since provisioned dashboards cannot be edited directly in the web interface, if any custom changes are desired, it is recommmended to make a copy of them and make your changes there.
+
+| Dashboard Name        | Filename              | Description                                       |
+|-----------------------|-----------------------|---------------------------------------------------|
+| Bloat Details         | Bloat_Details.json    | Provides details on database bloat (wasted space). Provides overview and top-n statistics.|
+| CRUD Details          | CRUD_Details.json | Provides details on Create, Read, Update, Delete (CRUD) statistics on a per-table basis.  |
+| pgBackRest            | PGBackrest.json | Provides details on backups performed with pgBackRest. Also provides recovery window to show timeframe available for PITR. |
+| PGBouncer             | PGBouncer.json | Provides details from the PgBouncer statistics views. |
+| PostgreSQL Details    | PG_Details.json | Provides detailed information for each PostgreSQL instance (connections, replication, wraparound, etc). |
+| PostgreSQL Overview   | PG_Overview.json| Provides an overview of all PostgreSQL systems being monitored. Indicates whether a system is a Primary or Replica. Can click on each panel to open up the PostgreSQL Details for that system. |
+| Query Statistics      | QueryStatistics.json| Provides an overview of statistics collected by the pg_stat_statements extension. |
+| TableSize Details     | TableSize_Details.json | Provides size details on a per-table basis for the given database. |
+|||
+|Filesystem Details     | Filesystem_Details.json | Provides details on the filesystem metrics (disk usage, IO, etc). |
+|Network Details        | Network_Details.json | Provides details on network usage (utilization, traffic in/out, netstat, etc). | 
+|Overview               | Overview.json | The top level overview dashboard that provides links to the OS Overview, PostgreSQL Overview, ETCD, and Prometheus Alerts dashboards. |
+|OS Details             | OS_Details.json | Provides details on operating system metrics (cpu, memory, swap, disk usage). Links to Filesystem Details dashboard. |
+|OS Overview            | Overview.json| Provides an overview that shows the up status of each system monitored by pgMonitor. |
+|||
+|ETCD Details           | ETCD_Details.json | Provides details on the status of the ETCD cluster monitored by pgMonitor. |
+|Prometheus Alerts      | Prometheus_Alerts.json| Provides a summary list of current and recent alerts that have fired in Prometheus. |
 
 ## Installation {#installation}
 
@@ -106,3 +131,5 @@ The extras package takes care of putting all these files in place. If you did no
 [paths]
 provisioning = /etc/grafana/provisioning
 ```
+
+

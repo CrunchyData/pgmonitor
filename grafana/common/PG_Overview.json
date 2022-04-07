@@ -47,7 +47,7 @@
               "op": "=",
               "text": "PRIMARY",
               "type": 1,
-              "value": ".5"
+              "value": "0.5"
             },
             {
               "id": 2,
@@ -166,7 +166,7 @@
               "op": "=",
               "text": "PRIMARY",
               "type": 1,
-              "value": ".5"
+              "value": "0.5"
             },
             {
               "id": 2,
@@ -286,7 +286,7 @@
               "op": "=",
               "text": "PRIMARY",
               "type": 1,
-              "value": ".5"
+              "value": "0.5"
             },
             {
               "id": 2,
