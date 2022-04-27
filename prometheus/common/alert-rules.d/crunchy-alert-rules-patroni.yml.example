@@ -1,0 +1,73 @@
+###
+#
+# Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+groups:
+- name: alert-rules
+  rules:
+
+########## PATRONI RULES ##########
+
+  - alert: PatroniPGIsRunning
+    expr: patroni_postgres_running != 1
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting that PostgreSQL is not running on {{ $labels.job }}'
+
+  - alert: PatroniPendingRestart
+    expr: patroni_pending_restart != 0
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting a pending restart on {{ $labels.job }}'
+
+  - alert: PatroniIsPaused
+    expr: patroni_is_paused != 0
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting that it is in maintenance mode (paused) on {{ $labels.job }}'
+
+  - alert: PatroniDCSLastSeen
+    expr: (time() - patroni_dcs_last_seen) > 300
+    for: 60s
+    labels:
+      service: patroni 
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 5 minutes'
+
+  - alert: PatroniDCSLastSeen
+    expr: (time() - patroni_dcs_last_seen) > 1800
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 30 minutes'
+
+  - alert: PatroniTimelineSwitchDetected
+    expr: patroni_postgres_timeline != patroni_postgres_timeline offset 5m 
+    for: 60s
+    labels:
+      service: patroni 
+      severity: warning
+      severity_num: 200
+    annotations:
+      summary: 'Patroni detected a PostgreSQL timeline switch on {{ $labels.job }}. This alert will auto-resolve in 5 minutes if no further timeline switches occur.'
+
+
