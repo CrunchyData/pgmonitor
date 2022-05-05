@@ -26,6 +26,10 @@ ccp_backrest_last_info:
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
              , a.backup_data->'info'->'repository'->>'size' AS repo_total_size_bytes
              , (a.backup_data->'timestamp'->>'stop')::bigint - (a.backup_data->'timestamp'->>'start')::bigint AS backup_runtime_seconds
+             , CASE
+                 WHEN a.backup_data->>'error' = 'true' THEN 1
+                 ELSE 0
+               END AS backup_error
              FROM per_stanza a
              JOIN (
                     SELECT config_file
@@ -66,6 +70,9 @@ ccp_backrest_last_info:
         - backup_runtime_seconds:
             usage: "GAUGE"
             description: "Total runtime in seconds of this backup"
+        - backup_error:
+            usage: "GAUGE"
+            description: "An error has been encountered in the backup. Check logs for more information."
 
 ccp_backrest_oldest_full_backup:
     query: "WITH all_backups AS (
