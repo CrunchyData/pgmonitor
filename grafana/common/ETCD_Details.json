@@ -23,8 +23,8 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 15308,
   "graphTooltip": 0,
-  "id": 22,
-  "iteration": 1651853043845,
+  "id": 17,
+  "iteration": 1652279079766,
   "links": [
     {
       "asDropdown": true,
@@ -134,7 +134,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "max(etcd_server_has_leader{instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "max(etcd_server_has_leader{exp_type=\"etcd\",job=~\"$job\"})",
           "hide": false,
           "instant": true,
           "interval": "",
@@ -526,7 +526,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "(etcd_mvcc_db_total_size_in_bytes{instance=~\"$instance\",job=~\"$job\"} / etcd_server_quota_backend_bytes{instance=~\"$instance\",job=~\"$job\"})*100",
+          "expr": "(etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"} / etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"})*100",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -540,7 +540,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "process_resident_memory_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "process_resident_memory_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -554,7 +554,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "sum(etcd_debugging_mvcc_keys_total{instance=~\"$instance\",job=~\"$job\"}) by (instance)",
+          "expr": "sum(etcd_debugging_mvcc_keys_total{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -568,7 +568,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance, le))",
+          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -582,7 +582,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance, le))",
+          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -596,7 +596,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "sum(etcd_server_is_leader{instance=~\"$instance\",job=~\"$job\"}) by (instance)",
+          "expr": "sum(etcd_server_is_leader{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -610,7 +610,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "sum(etcd_debugging_mvcc_db_compaction_keys_total{instance=~\"$instance\",job=~\"$job\"}) by (instance)",
+          "expr": "sum(etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -624,7 +624,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "(etcd_mvcc_db_total_size_in_bytes{instance=~\"$instance\",job=~\"$job\"} / etcd_server_quota_backend_bytes{instance=~\"$instance\",job=~\"$job\"})*100",
+          "expr": "(etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"} / etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"})*100",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -638,7 +638,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "etcd_server_quota_backend_bytes{instance=~\"$instance\",job=~\"$job\"} - etcd_mvcc_db_total_size_in_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"} - etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -652,7 +652,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": false,
-          "expr": "etcd_server_quota_backend_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -689,7 +689,6 @@
               "Value #H": 13,
               "Value #I": 4,
               "__name__": 7,
-              "etcd_server_quota_backend_bytes{instance=\"poller01.tylephony.com:2379\", job=\"etcd\"}": 5,
               "instance": 1,
               "job": 3
             },
@@ -705,7 +704,6 @@
               "Value #H": "Urgent Defragmentation",
               "Value #I": "DB Capacity",
               "__name__": "",
-              "etcd_server_quota_backend_bytes{instance=\"poller01.tylephony.com:2379\", job=\"etcd\"}": "DB Quota",
               "instance": "Instance",
               "job": ""
             }
@@ -794,7 +792,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "max(etcd_server_leader_changes_seen_total{instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "max(etcd_server_leader_changes_seen_total{exp_type=\"etcd\",job=~\"$job\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Leader Changes",
@@ -885,7 +883,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "max(etcd_server_leader_changes_seen_total{instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "sum(etcd_server_leader_changes_seen_total{exp_type=\"etcd\",job=~\"$job\"})",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -988,11 +986,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "rate(etcd_network_client_grpc_received_bytes_total{instance=~\"$instance\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_network_client_grpc_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "etcd_network_client_grpc_received_bytes_total",
           "refId": "A",
           "step": 120
@@ -1079,11 +1077,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "rate(etcd_network_client_grpc_sent_bytes_total{instance=~\"$instance\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_network_client_grpc_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "etcd_network_client_grpc_sent_bytes_total",
           "refId": "A",
           "step": 120
@@ -1170,11 +1168,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "sum(rate(etcd_network_peer_received_bytes_total{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance)",
+          "expr": "sum(rate(etcd_network_peer_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (job)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "etcd_network_peer_received_bytes_total",
           "refId": "A",
           "step": 120
@@ -1261,12 +1259,12 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "sum(rate(etcd_network_peer_sent_bytes_total{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance)",
+          "expr": "sum(rate(etcd_network_peer_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (job)",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "etcd_network_peer_sent_bytes_total",
           "refId": "A",
           "step": 120
@@ -1368,11 +1366,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "etcd_debugging_mvcc_keys_total{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_debugging_mvcc_keys_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "refId": "A"
         }
       ],
@@ -1456,10 +1454,10 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "rate(etcd_debugging_mvcc_put_total{instance=~\"$instance\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_debugging_mvcc_put_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} puts/s",
+          "legendFormat": "{{ job }} puts/s",
           "refId": "A"
         },
         {
@@ -1467,10 +1465,10 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "rate(etcd_debugging_mvcc_delete_total{instance=~\"$instance\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_debugging_mvcc_delete_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} deletes/s",
+          "legendFormat": "{{ job }} deletes/s",
           "refId": "B"
         }
       ],
@@ -1555,7 +1553,7 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "etcd_debugging_mvcc_db_compaction_keys_total{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1657,11 +1655,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "process_resident_memory_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "process_resident_memory_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "process_resident_memory_bytes",
           "refId": "A",
           "step": 120
@@ -1750,12 +1748,12 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "etcd_mvcc_db_total_size_in_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }} Total Size",
+          "legendFormat": "{{ job }} Total Size",
           "metric": "",
           "refId": "A",
           "step": 120
@@ -1766,11 +1764,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "etcd_mvcc_db_total_size_in_use_in_bytes{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_mvcc_db_total_size_in_use_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} In Use",
+          "legendFormat": "{{ job }} In Use",
           "refId": "B"
         }
       ],
@@ -1856,11 +1854,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "rate(etcd_disk_wal_fsync_duration_seconds_sum{instance=~\"$instance\",job=~\"$job\"}[1m])",
+          "expr": "rate(etcd_disk_wal_fsync_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }} WAL fsync",
+          "legendFormat": "{{ job }} WAL fsync",
           "refId": "A",
           "step": 30
         },
@@ -1870,11 +1868,11 @@
             "uid": "PDC1078F23EBDF0E5"
           },
           "exemplar": true,
-          "expr": "rate(etcd_disk_backend_commit_duration_seconds_sum{instance=~\"$instance\",job=~\"$job\"}[1m])",
+          "expr": "rate(etcd_disk_backend_commit_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }} backend commit",
+          "legendFormat": "{{ job }} backend commit",
           "refId": "B",
           "step": 30
         }
@@ -1961,11 +1959,11 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance, le))",
+          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }} WAL fsync",
+          "legendFormat": "{{ job }} WAL fsync",
           "metric": "etcd_disk_wal_fsync_duration_seconds_bucket",
           "refId": "A",
           "step": 120
@@ -1975,10 +1973,10 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{instance=~\"$instance\",job=~\"$job\"}[5m])) by (instance, le))",
+          "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }} DB fsync",
+          "legendFormat": "{{ job }} DB fsync",
           "metric": "etcd_disk_backend_commit_duration_seconds_bucket",
           "refId": "B",
           "step": 120
@@ -2066,10 +2064,10 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "etcd_server_heartbeat_send_failures_total{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_heartbeat_send_failures_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} heartbeat  failures",
+          "legendFormat": "{{ job }} heartbeat  failures",
           "refId": "A"
         },
         {
@@ -2077,10 +2075,10 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "etcd_server_health_failures{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_health_failures{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} health failures",
+          "legendFormat": "{{ job }} health failures",
           "refId": "B"
         }
       ],
@@ -2167,20 +2165,20 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "etcd_server_slow_apply_total{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_slow_apply_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} Slow Applies",
+          "legendFormat": "{{ job }} Slow Applies",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "etcd_server_slow_read_indexes_total{instance=~\"$instance\",job=~\"$job\"}",
+          "expr": "etcd_server_slow_read_indexes_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} Slow Read Indexes",
+          "legendFormat": "{{ job }} Slow Read Indexes",
           "refId": "B"
         }
       ],
@@ -2265,11 +2263,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(etcd_disk_backend_defrag_duration_seconds_sum{instance=~\"$instance\",job=~\"$job\"}[1m])",
+          "expr": "rate(etcd_disk_backend_defrag_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "refId": "A"
         }
       ],
@@ -2355,7 +2353,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(etcd_debugging_snap_save_total_duration_seconds_sum{instance=~\"$instance\",job=~\"$job\"}[1m]))",
+          "expr": "sum(rate(etcd_debugging_snap_save_total_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2444,7 +2442,7 @@
       "pluginVersion": "8.2.5",
       "targets": [
         {
-          "expr": "sum(rate(etcd_server_proposals_failed_total{instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(etcd_server_proposals_failed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Proposal Failure Rate",
@@ -2453,7 +2451,7 @@
           "step": 60
         },
         {
-          "expr": "sum(etcd_server_proposals_pending{instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "sum(etcd_server_proposals_pending{exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Proposal Pending Total",
@@ -2462,7 +2460,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(etcd_server_proposals_committed_total{instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(etcd_server_proposals_committed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Proposal Commit Rate",
@@ -2471,7 +2469,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(etcd_server_proposals_applied_total{instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(etcd_server_proposals_applied_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Proposal Apply Rate",
@@ -2559,7 +2557,7 @@
       "pluginVersion": "8.2.5",
       "targets": [
         {
-          "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",instance=~\"$instance\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Watch Streams",
@@ -2568,7 +2566,7 @@
           "step": 60
         },
         {
-          "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",instance=~\"$instance\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Lease Streams",
@@ -2658,11 +2656,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(etcd_debugging_mvcc_db_compaction_keys_total{instance=~\"$instance\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ instance }} compact/s",
+          "legendFormat": "{{ job }} compact/s",
           "refId": "A"
         }
       ],
@@ -2747,11 +2745,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "changes(etcd_server_leader_changes_seen_total{instance=~\"$instance\",job=~\"$job\"}[1d])",
+          "expr": "changes(etcd_server_leader_changes_seen_total{exp_type=\"etcd\",job=~\"$job\"}[1d])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ job }}",
           "metric": "etcd_server_leader_changes_seen_total",
           "refId": "A",
           "step": 60
@@ -2839,7 +2837,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(etcd_server_proposals_pending{instance=~\"$instance\",job=~\"$job\"})",
+          "expr": "sum(etcd_server_proposals_pending{exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2934,7 +2932,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(etcd_server_proposals_committed_total{instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(etcd_server_proposals_committed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2945,7 +2943,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(etcd_server_proposals_applied_total{instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(etcd_server_proposals_applied_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3035,7 +3033,7 @@
       "pluginVersion": "8.2.5",
       "targets": [
         {
-          "expr": "sum(rate(grpc_server_started_total{grpc_type=\"unary\",instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(grpc_server_started_total{grpc_type=\"unary\",exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "RPC Rate",
@@ -3044,7 +3042,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(grpc_server_handled_total{grpc_type=\"unary\",grpc_code!=\"OK\",instance=~\"$instance\",job=~\"$job\"}[5m]))",
+          "expr": "sum(rate(grpc_server_handled_total{grpc_type=\"unary\",grpc_code!=\"OK\",exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "RPC Failed Rate",
@@ -3134,7 +3132,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(etcd_network_client_grpc_received_bytes_total{instance=~\"$instance\",job=~\"$job\"}[1m]))",
+          "expr": "sum(rate(etcd_network_client_grpc_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3144,7 +3142,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(etcd_network_client_grpc_sent_bytes_total{instance=~\"$instance\",job=~\"$job\"}[1m]))",
+          "expr": "sum(rate(etcd_network_client_grpc_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3168,50 +3166,23 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "ip11_etcd1",
-          "value": "ip11_etcd1"
+          "selected": true,
+          "text": [
+            "ip11_etcd1"
+          ],
+          "value": [
+            "ip11_etcd1"
+          ]
         },
         "definition": "label_values(up{exp_type='etcd'},job)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Job",
-        "multi": false,
+        "multi": true,
         "name": "job",
         "options": [],
         "query": {
           "query": "label_values(up{exp_type='etcd'},job)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "definition": "label_values({job=\"$job\", exp_type='etcd'}, instance)",
-        "description": "Only obtain the etcd instance exporter. Ignore all other exporters that may be running on same host as etcd (node, etc)",
-        "hide": 2,
-        "includeAll": true,
-        "label": "Instance",
-        "multi": true,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values({job=\"$job\", exp_type='etcd'}, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -3254,6 +3225,6 @@
   "timezone": "browser",
   "title": "ETCD Details",
   "uid": "wsdkI9RZz",
-  "version": 21,
+  "version": 4,
   "weekStart": ""
 }
