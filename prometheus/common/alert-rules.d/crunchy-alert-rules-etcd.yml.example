@@ -10,11 +10,58 @@ groups:
 
 ########## ETCD EXPORTER RULES ##########
 
+#### IMPORTANT NOTE: These alerts only support monitoring a single etcd cluster per promemtheus instance ####
+
+# Ensure there is at least one etcd node reporting metrics
+  - alert: ECTDAbsent
+    expr: absent(etcd_server_id)
+    for: 10s
+    labels:
+      service: etcd
+      severity: critical
+      severity_num: 300
+    annotations:
+      description: 'No etcd metric endpoints found'
+
+# Ensure there are an odd number of etcd nodes providing metrics
+  - alert: ECTDOddCount
+    expr: (count(etcd_server_id) % 2) != 1
+    for: 10s
+    labels:
+      service: etcd
+      severity: critical
+      severity_num: 300
+    annotations:
+      description: 'An odd number of etcd nodes has not been found.'
+
+# Ensure there is a leader in the etcd cluster
+  - alert: ECTDLeader
+    expr: max(etcd_server_has_leader) < 1
+    for: 10s
+    labels:
+      service: etcd
+      severity: critical
+      severity_num: 300
+    annotations:
+      description: 'An etcd leader node has not been elected'
+
+# Ensure an expected amount of etcd nodes are running and providing metrics. Set this threshold to the amount of nodes in your cluster
+#
+#  - alert: ECTDMinimumNodeCount
+#    expr: count(etcd_server_id) < 3
+#    for: 10s
+#    labels:
+#      service: etcd
+#      severity: critical
+#      severity_num: 300
+#    annotations:
+#      description: 'The expected minimum count of etcd nodes was not found. Current count {{ $value }}'
+
 # Absence alerts must be configured per named job, otherwise there's no way to know which job is down
 # Below is are some examples using the leader metric for a targets called "etcd#" for a 3 node etcd cluster
 
 #  - alert: ECTDAbsent_etcd1
-#    expr: absent(etcd_server_has_leader{job="etcd1"})
+#    expr: absent(etcd_server_has_leader{job="ip11_etcd1"})
 #    for: 10s
 #    labels:
 #      service: etcd
@@ -24,7 +71,7 @@ groups:
 #      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
 
 #  - alert: ECTDAbsent_etcd2
-#    expr: absent(etcd_server_has_leader{job="etcd2"})
+#    expr: absent(etcd_server_has_leader{job="ip21_etcd2"})
 #    for: 10s
 #    labels:
 #      service: etcd
@@ -34,7 +81,7 @@ groups:
 #      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
 
 #  - alert: ECTDAbsent_etcd3
-#    expr: absent(etcd_server_has_leader{job="etcd3"})
+#    expr: absent(etcd_server_has_leader{job="ip31_etcd3"})
 #    for: 10s
 #    labels:
 #      service: etcd

@@ -85,4 +85,15 @@ groups:
     annotations:
       summary: 'Patroni detected a PostgreSQL timeline switch on {{ $labels.job }}. This alert will auto-resolve in 5 minutes if no further timeline switches occur.'
 
+# Detect that no leader node exists on either the primary DC nor the standby DC
+# NOTE: This alert only triggers as expected if prometheus is only monitoring a single datacenter at a time or if all monitored datacenters are down
+  - alert: PatroniNoLeader
+    expr: (max by (cluster) (patroni_master) < 1) and (max by (cluster) (patroni_standby_leader) < 1)
+    for: 60s
+    labels:
+      service: patroni
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'A leader node (neither primary nor standby) cannot be found for cluster {{ $labels.cluster }}.'
 
