@@ -312,7 +312,7 @@ groups:
         description: 'One or more settings in the pg_settings system catalog on system {{ $labels.job }} are in a pending_restart state. Check the system catalog for which settings are pending and review postgresql.conf for changes.'
 
 ########## PGBACKREST RULES ##########
-#
+##
 ## Uncomment and customize one or more of these rules to monitor your pgbackrest backups.
 ## Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
 ##   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
