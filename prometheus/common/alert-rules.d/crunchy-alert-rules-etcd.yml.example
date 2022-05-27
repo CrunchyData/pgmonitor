@@ -14,7 +14,7 @@ groups:
 
 # Ensure there is at least one etcd node reporting metrics
   - alert: ETCDAbsent
-    expr: absent(etcd_server_id)
+    expr: absent(etcd_server_has_leader)
     for: 10s
     labels:
       service: etcd
@@ -25,7 +25,7 @@ groups:
 
 # Ensure there are an odd number of etcd nodes providing metrics
   - alert: ETCDOddCount
-    expr: (count(etcd_server_id) % 2) != 1
+    expr: (count(etcd_server_has_leader) % 2) != 1
     for: 10s
     labels:
       service: etcd
@@ -48,7 +48,7 @@ groups:
 # Ensure an expected amount of etcd nodes are running and providing metrics. Set this threshold to the amount of nodes in your cluster
 #
 #  - alert: ETCDMinimumNodeCount
-#    expr: count(etcd_server_id) < 3
+#    expr: count(etcd_server_has_leader) < 3
 #    for: 10s
 #    labels:
 #      service: etcd
