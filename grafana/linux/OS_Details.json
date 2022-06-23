@@ -12,7 +12,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 0,
   "iteration": 1618265425340,
@@ -710,7 +710,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "100 - 100 * sum(node_filesystem_avail_bytes{device!~\"tmpfs|by-uuid\",fstype=~\"xfs|ext[234]\", job=~\"[[osnodes]]\"} / node_filesystem_size_bytes{device!~\"tmpfs|by-uuid\",fstype=~\"xfs|ext[234]\", job=~\"[[osnodes]]\"}) BY (job,device,mountpoint)",
+          "expr": "100 - 100 * sum(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}) BY (job,device,mountpoint)",
           "interval": "",
           "legendFormat": "{{mountpoint}}",
           "refId": "A"
