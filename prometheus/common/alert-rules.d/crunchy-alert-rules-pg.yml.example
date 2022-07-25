@@ -32,7 +32,7 @@ groups:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
 
-# Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
+## Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
 #
 #  - alert: PGMinimumVersion
 #    expr:  ccp_postgresql_version_current < 110005
@@ -44,8 +44,8 @@ groups:
 #    annotations:
 #      summary: '{{ $labels.job }} is not running at least version 11.5 of PostgreSQL'
 
-# Monitor for a failover event by checking if the recovery status value has changed within the specified time period
-# IMPORTANT NOTE: This alert will *automatically resolve* after the given offset time period has passed! If you desire to have an alert that must be manually resolved, see the commented out alert beneath this one
+## Monitor for a failover event by checking if the recovery status value has changed within the specified time period
+## IMPORTANT NOTE: This alert will *automatically resolve* after the given offset time period has passed! If you desire to have an alert that must be manually resolved, see the commented out alert beneath this one
   - alert: PGRecoveryStatusSwitch
     expr: ccp_is_in_recovery_status != ccp_is_in_recovery_status offset 5m 
     for: 60s
@@ -56,11 +56,11 @@ groups:
     annotations:
       summary: '{{ $labels.job }} has had a PostgreSQL failover event. Please check systems involved in this cluster for more details'
 
-# Whether a system switches from primary to replica or vice versa must be configured per named job.
-# No way to tell what value a system is supposed to be without a rule expression for that specific system
-# 2 to 1 means it changed from primary to replica. 1 to 2 means it changed from replica to primary
-# Set this alert for each system that you want to monitor a recovery status change
-# Below is an example for a target job called "Replica" and watches for the value to change above 1 which means it's no longer a replica
+## Whether a system switches from primary to replica or vice versa must be configured per named job.
+## No way to tell what value a system is supposed to be without a rule expression for that specific system
+## 2 to 1 means it changed from primary to replica. 1 to 2 means it changed from replica to primary
+## Set this alert for each system that you want to monitor a recovery status change
+## Below is an example for a target job called "Replica" and watches for the value to change above 1 which means it's no longer a replica
 #
 #  - alert: PGRecoveryStatusSwitch_Replica
 #    expr: ccp_is_in_recovery_status{job="Replica"} > 1
@@ -73,8 +73,8 @@ groups:
 #      summary: '{{ $labels.job }} has changed from replica to primary'
 
 
-# Absence alerts must be configured per named job, otherwise there's no way to know which job is down
-# Below is an example for a target job called "Prod"
+## Absence alerts must be configured per named job, otherwise there's no way to know which job is down
+## Below is an example for a target job called "Prod"
 #  - alert: PGConnectionAbsent_Prod
 #    expr: absent(ccp_connection_stats_max_connections{job="Prod"})
 #    for: 10s
@@ -86,11 +86,11 @@ groups:
 #      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
 
 
-# Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
-# A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum().
-# If metric returns 0, then NO settings have changed for either pg_settings since last known valid state
-# If metric returns 1, then pg_settings have changed since last known valid state
-# To see what may have changed, check the monitor.pg_settings_checksum table for a history of config state.
+## Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
+## A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum().
+## If metric returns 0, then NO settings have changed for either pg_settings since last known valid state
+## If metric returns 1, then pg_settings have changed since last known valid state
+## To see what may have changed, check the monitor.pg_settings_checksum table for a history of config state.
 #  - alert: PGSettingsChecksum
 #    expr: ccp_pg_settings_checksum_status > 0
 #    for 60s
@@ -103,7 +103,7 @@ groups:
 #      summary: 'PGSQL Instance settings checksum'
 
 
-# Monitor for data block checksum failures. Only works in PG12+
+## Monitor for data block checksum failures. Only works in PG12+
 #  - alert: PGDataChecksum
 #    expr: ccp_data_checksum_failure_count > 0
 #    for 60s
@@ -312,21 +312,21 @@ groups:
         description: 'One or more settings in the pg_settings system catalog on system {{ $labels.job }} are in a pending_restart state. Check the system catalog for which settings are pending and review postgresql.conf for changes.'
 
 ########## PGBACKREST RULES ##########
-#
-# Uncomment and customize one or more of these rules to monitor your pgbackrest backups.
-# Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
-#   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
-#   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
-# Stanza should also be set if different intervals are expected for each stanza.
-#   Otherwise rule will be applied to all stanzas returned on target system if not set.
-#
-# Relevant metric names are:
-#   ccp_backrest_last_full_backup_time_since_completion_seconds
-#   ccp_backrest_last_incr_backup_time_since_completion_seconds
-#   ccp_backrest_last_diff_backup_time_since_completion_seconds
-#
-# To avoid false positives on backup time alerts, 12 hours are added onto each threshold to allow a buffer if the backup runtime varies from day to day.
-#    Further adjustment may be needed depending on your backup runtimes/schedule.
+##
+## Uncomment and customize one or more of these rules to monitor your pgbackrest backups.
+## Full backups are considered the equivalent of both differentials and incrementals since both are based on the last full
+##   And differentials are considered incrementals since incrementals will be based off the last diff if one exists
+##   This avoid false alerts, for example when you don't run diff/incr backups on the days that you run a full
+## Stanza should also be set if different intervals are expected for each stanza.
+##   Otherwise rule will be applied to all stanzas returned on target system if not set.
+##
+## Relevant metric names are:
+##   ccp_backrest_last_full_backup_time_since_completion_seconds
+##   ccp_backrest_last_incr_backup_time_since_completion_seconds
+##   ccp_backrest_last_diff_backup_time_since_completion_seconds
+##
+## To avoid false positives on backup time alerts, 12 hours are added onto each threshold to allow a buffer if the backup runtime varies from day to day.
+##    Further adjustment may be needed depending on your backup runtimes/schedule.
 #
 #  - alert: PGBackRestLastCompletedFull_main
 #    expr: ccp_backrest_last_full_backup_time_since_completion_seconds{stanza="main"} > 648000
@@ -349,13 +349,13 @@ groups:
 #       summary: 'Incremental backup for stanza [main] on system {{ $labels.job }} has not completed in the last 24 hours.'
 #
 #
-# Runtime monitoring is handled with a single metric:
-#
-#   ccp_backrest_last_info_backup_runtime_seconds
-#
-# Runtime monitoring should have the "backup_type" label set.
-#   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
-# Stanza should also be set if runtimes per stanza have different expected times
+## Runtime monitoring is handled with a single metric:
+##
+##   ccp_backrest_last_info_backup_runtime_seconds
+##
+## Runtime monitoring should have the "backup_type" label set.
+##   Otherwise the rule will apply to the last run of all backup types returned (full, diff, incr)
+## Stanza should also be set if runtimes per stanza have different expected times
 #
 #  - alert: PGBackRestLastRuntimeFull_main
 #    expr: ccp_backrest_last_info_backup_runtime_seconds{backup_type="full", stanza="main"} > 14400
@@ -376,7 +376,19 @@ groups:
 #       severity_num: 300
 #    annotations:
 #       summary: 'Expected runtime of diff backup for stanza [main] has exceeded 1 hour'
-##
+#
+## As of pgBackRest version 2.36 errors encountered during a completed backup run (checksum failure, file truncation,
+## invalid header, etc) can be detected and are reported in the info.
+#
+#  - alert: PGBackRestErrorDuringBackup
+#    expr: ccp_backrest_last_info_backup_error > 0
+#    for: 60s
+#    labels:
+#       service: postgresql
+#       severity: critical
+#       severity_num: 300
+#    annotations:
+#       summary: 'Error encountered during pgBackRest backup operation. See logs for more information.'
 #
 ## If the pgbackrest command fails to run, the metric disappears from the exporter output and the alert never fires.
 ## An absence alert must be configured explicitly for each target (job) that backups are being monitored.
