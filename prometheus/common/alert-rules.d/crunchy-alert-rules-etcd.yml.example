@@ -10,7 +10,7 @@ groups:
 
 ########## ETCD EXPORTER RULES ##########
 
-#### IMPORTANT NOTE: These alerts only support monitoring a single etcd cluster per promemtheus instance ####
+#### IMPORTANT NOTE: These alerts only support monitoring a single etcd cluster per prometheus instance ####
 
 # Ensure there is at least one etcd node reporting metrics
   - alert: ETCDAbsent

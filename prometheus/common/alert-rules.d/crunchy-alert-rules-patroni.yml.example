@@ -62,9 +62,9 @@ groups:
     annotations:
       summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 30 minutes'
 
-# Detects a given amount of timeline switches in a given time period
+# Detects a given amount of timeline switches in a given time period. Default example is 5 switches within an hour.
   - alert: PatroniRapidTimelineSwitch
-    expr: (patroni_postgres_timeline - (patroni_postgres_timeline offset 15m)) > 5
+    expr: (patroni_postgres_timeline - (patroni_postgres_timeline offset 60m)) > 5
     for: 60s
     labels:
       service: patroni
