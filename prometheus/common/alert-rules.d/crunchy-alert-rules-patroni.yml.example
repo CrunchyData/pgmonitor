@@ -1,0 +1,99 @@
+###
+#
+# Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+groups:
+- name: alert-rules
+  rules:
+
+########## PATRONI RULES ##########
+
+  - alert: PatroniPGIsRunning
+    expr: patroni_postgres_running != 1
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting that PostgreSQL is not running on {{ $labels.job }}'
+
+  - alert: PatroniPendingRestart
+    expr: patroni_pending_restart != 0
+    for: 1800s
+    labels:
+      service: patroni 
+      severity: warning
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting a pending restart on {{ $labels.job }}'
+
+  - alert: PatroniIsPaused
+    expr: patroni_is_paused != 0
+    for: 900s
+    labels:
+      service: patroni 
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'Patroni is reporting that it is in maintenance mode (paused) on {{ $labels.job }}'
+
+# Threshold value here should be based on Patroni timeout values to its DCS target
+  - alert: PatroniDCSLastSeen
+    expr: (time() - patroni_dcs_last_seen) > 300
+    for: 60s
+    labels:
+      service: patroni 
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 5 minutes'
+
+# Threshold value here should be based on Patroni timeout values to its DCS target
+  - alert: PatroniDCSLastSeen
+    expr: (time() - patroni_dcs_last_seen) > 1800
+    for: 60s
+    labels:
+      service: patroni 
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 30 minutes'
+
+# Detects a given amount of timeline switches in a given time period. Default example is 5 switches within an hour.
+  - alert: PatroniRapidTimelineSwitch
+    expr: (patroni_postgres_timeline - (patroni_postgres_timeline offset 60m)) > 5
+    for: 60s
+    labels:
+      service: patroni
+      severity: critical
+      severity_num: 200
+    annotations:
+      summary: 'Patroni detected multiple timeline switches in a short period of time on {{ $labels.job }}. This alert will auto-resolve if timeline switching stops.'
+
+
+# Detects one or more timeline switches in a given time
+  - alert: PatroniTimelineSwitch
+    expr: patroni_postgres_timeline != patroni_postgres_timeline offset 5m 
+    for: 60s
+    labels:
+      service: patroni 
+      severity: warning
+      severity_num: 200
+    annotations:
+      summary: 'Patroni detected a PostgreSQL timeline switch on {{ $labels.job }}. This alert will auto-resolve in 5 minutes if no further timeline switches occur.'
+
+# Detect that no leader node exists on either the primary DC nor the standby DC
+# NOTE: This alert only triggers as expected if prometheus is only monitoring a single datacenter at a time or if all monitored datacenters are down
+  - alert: PatroniNoLeader
+    expr: (max by (cluster) (patroni_master) < 1) and (max by (cluster) (patroni_standby_leader) < 1)
+    for: 60s
+    labels:
+      service: patroni
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'A leader node (neither primary nor standby) cannot be found for cluster {{ $labels.cluster }}.'
+
