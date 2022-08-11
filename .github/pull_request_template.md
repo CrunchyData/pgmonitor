@@ -8,10 +8,10 @@ Please describe the changes made by your PR. This description should be at a hig
 
 Please indicate what kind of change your PR includes (multiple selections are acceptable):
 
-[ ] Bugfix
-[ ] Enhancement
-[ ] Breaking Change
-[ ] Documentation
+- [ ] Bugfix
+- [ ] Enhancement
+- [ ] Breaking Change
+- [ ] Documentation
 
 PRs should be against existing issues, so please list each issue using a separate 'closes' line:
 
