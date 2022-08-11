@@ -5,6 +5,8 @@ weight: 5
 ---
 ## 4.7
 
+NOTE: This is the last version of pgMonitor that will contain support for PostgreSQL 9.6.
+
 ### New Features
   * Added metric to monitor for errors encountered in pgBackRest (ccp_backrest_last_info_backup_error). Also added example Prometheus alert.
   * New, more detailed etcd dashboard for Grafana
