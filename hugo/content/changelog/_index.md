@@ -3,6 +3,18 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.7
+
+### New Features
+  * Added metric to monitor for errors encountered in pgBackRest (ccp_backrest_last_info_backup_error). Also added example Prometheus alert.
+  * New, more detailed etcd dashboard for Grafana
+  * Added Prometheus alerts for monitoring Patroni and etcd
+
+### Bug Fixes
+  * Fixed inconsistency in the OS Details Grafana dashboard between the small left panel for the filesystem and the other filesystem panels.
+  * Fixed postgres_exporter queries for pgBouncer to select the proper "user" column.
+
+
 ## 4.6
 
 ### New Features

@@ -87,7 +87,7 @@ ccp_replication_lag_size:
 
 
 ccp_replication_slots:
-  query: "SELECT slot_name, active::int, pg_wal_lsn_diff(pg_current_wal_insert_lsn(), restart_lsn) AS retained_bytes FROM pg_catalog.pg_replication_slots"
+  query: "SELECT slot_name, active::int, pg_wal_lsn_diff(CASE WHEN pg_is_in_recovery() THEN pg_last_wal_replay_lsn() ELSE pg_current_wal_insert_lsn() END, restart_lsn) AS retained_bytes"
   metrics:
     - slot_name:
         usage: "LABEL"
