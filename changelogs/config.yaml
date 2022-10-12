@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: Project
+title: pgMonitor
 trivial_section_name: trivial
 use_fqcn: true
 use_semantic_versioning: true
