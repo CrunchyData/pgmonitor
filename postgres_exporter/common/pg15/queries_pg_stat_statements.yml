@@ -98,7 +98,7 @@ ccp_pg_stat_statements_top_total:
         description: "Total time spent in the statement in milliseconds"
 
 
-# Note that individual query stats can only be reset in PG12
+# Note that individual query stats can only be reset in PG12 or later
 ccp_pg_stat_statements_top_max:
   query: "SELECT pg_get_userbyid(s.userid) as role,
               d.datname AS dbname,
