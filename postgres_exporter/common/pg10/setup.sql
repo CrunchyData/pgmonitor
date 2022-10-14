@@ -20,7 +20,6 @@ $$;
 GRANT pg_monitor to ccp_monitoring;
 
 ALTER ROLE ccp_monitoring SET lock_timeout TO '2min';
-ALTER ROLE ccp_monitoring SET jit TO 'off';
 
 CREATE SCHEMA IF NOT EXISTS monitor AUTHORIZATION ccp_monitoring;
 
