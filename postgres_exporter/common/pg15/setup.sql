@@ -1,4 +1,4 @@
--- PG14 pgMonitor Setup
+-- PG15 pgMonitor Setup
 --
 -- Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 --
