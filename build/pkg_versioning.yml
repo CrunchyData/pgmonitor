@@ -53,13 +53,29 @@ pgmonitor_package_details:
     pkg_dependency:
       - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 1.10.2 }
     files:
-      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+      - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
 
   - pkg_name: "pgmonitor-prometheus-extras"
     pkg_dependency:
       - { pkg_name: "prometheus2", greater_than: 2.38.0 , less_than: 2.39.0 }
     files:
-      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+      - { target: "/etc/prometheus/auto.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { target: "/etc/prometheus/alert-rules.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { target: "/etc/prometheus/auto.tls.d/", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { target: "/var/lib/ccp_monitoring/prometheus", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/common/auto.d/*.example", target: "/etc/prometheus/auto.d/", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/linux/auto.d/*.example", target: "/etc/prometheus/auto.d/", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/common/alert-rules.d/*.example", target: "/etc/prometheus/alert-rules.d/*", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/linux/alert-rules.d/*.example", target: "/etc/prometheus/alert-rules.d/*", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/linux/crunchy-prometheus-service-rhel.conf", target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/linux/sysconfig.prometheus", target: "/etc/sysconfig/prometheus", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "prometheus/linux/crunchy-prometheus.yml", target: "/etc/prometheus/crunchy-prometheus.yml", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+    pkg_conflict:
+      - { pkg_name: "pgmonitor-prometheus-containers" }
+    remove_files:
+      - { target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf" }
 
   - pkg_name: "pgmonitor-alertmanager-extras"
     pkg_dependency:
