@@ -30,24 +30,34 @@ ccp_nodemx_process:
 
 
 ccp_nodemx_mem:
-  query: "
-with d(key, val) as
-(select key, val from monitor.cgroup_setof_kv('memory.stat'))
+  query: "WITH d(key, val) as (SELECT key, val FROM monitor.cgroup_setof_kv('memory.stat'))
 SELECT
- monitor.kdapi_scalar_bigint('mem_request') as request,
-case when monitor.cgroup_scalar_bigint('memory.limit_in_bytes') = 9223372036854771712 then 0 else monitor.cgroup_scalar_bigint('memory.limit_in_bytes') end as limit,
- (select val from d where key='cache') as cache,
- (select val from d where key='rss') as rss,
- (select val from d where key='shmem') as shmem,
- (select val from d where key='mapped_file') as mapped_file,
- (select val from d where key='dirty') as dirty,
- (select val from d where key='active_anon') as active_anon,
- (select val from d where key='inactive_anon') as inactive_anon,
- (select val from d where key='active_file') as active_file,
- (select val from d where key='inactive_file') as inactive_file,
- monitor.cgroup_scalar_bigint('memory.usage_in_bytes') as usage_in_bytes,
- monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes') as kmem_usage_in_bytes
-"
+  monitor.kdapi_scalar_bigint('mem_request') AS request,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy' THEN
+        (CASE WHEN monitor.cgroup_scalar_bigint('memory.limit_in_bytes') = 9223372036854771712 THEN 0 ELSE monitor.cgroup_scalar_bigint('memory.limit_in_bytes') END)
+    ELSE
+        (CASE WHEN monitor.cgroup_scalar_bigint('memory.max') = 9223372036854775807 THEN 0 ELSE monitor.cgroup_scalar_bigint('memory.max') END)
+  END AS limit,
+  (SELECT val FROM d WHERE key='cache') as cache,
+  (SELECT val FROM d WHERE key='rss') as rss,
+  (SELECT val FROM d WHERE key='shmem') as shmem,
+  (SELECT val FROM d WHERE key='mapped_file') as mapped_file,
+  (SELECT val FROM d WHERE key='dirty') as dirty,
+  (SELECT val FROM d WHERE key='active_anon') as active_anon,
+  (SELECT val FROM d WHERE key='inactive_anon') as inactive_anon,
+  (SELECT val FROM d WHERE key='active_file') as active_file,
+  (SELECT val FROM d WHERE key='inactive_file') as inactive_file,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN monitor.cgroup_scalar_bigint('memory.usage_in_bytes')
+    ELSE monitor.cgroup_scalar_bigint('memory.current')
+  END as usage_in_bytes,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes') 
+    ELSE 0
+  END as kmem_usage_in_byte"
   metrics:
     - request:
         usage: "GAUGE"
@@ -101,8 +111,19 @@ ccp_nodemx_cpu:
         description: "CPU limit value in milli cores"
 
 ccp_nodemx_cpucfs:
-  query: "SELECT  monitor.cgroup_scalar_bigint('cpu.cfs_period_us') as period_us, 
-                  case when monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') < 0 then 0 else monitor.cgroup_scalar_bigint('cpu.cfs_quota_us') end as quota_us"
+  query: "SELECT
+  CASE
+  WHEN monitor.cgroup_mode() = 'legacy' THEN
+    monitor.cgroup_scalar_bigint('cpu.cfs_period_us')
+  ELSE
+    (SELECT (monitor.cgroup_array_bigint('cpu.max'))[2])
+  END AS period_us, 
+  CASE
+  WHEN monitor.cgroup_mode() = 'legacy' THEN
+    GREATEST(monitor.cgroup_scalar_bigint('cpu.cfs_quota_us'), 0)
+  ELSE
+    GREATEST((SELECT (monitor.cgroup_array_bigint('cpu.max'))[1]), 0)
+  END AS quota_us"
   metrics:
     - period_us:
         usage: "GAUGE"
@@ -112,7 +133,11 @@ ccp_nodemx_cpucfs:
         description: "the length of a period (in microseconds)"
 
 ccp_nodemx_cpuacct:
-  query: "SELECT monitor.cgroup_scalar_bigint('cpuacct.usage') as usage, clock_timestamp() as usage_ts"
+  query: "SELECT CASE WHEN monitor.cgroup_mode() = 'legacy'
+  THEN monitor.cgroup_scalar_bigint('cpuacct.usage')
+  ELSE (SELECT val FROM monitor.cgroup_setof_kv('cpu.stat') where key = 'usage_usec') * 1000
+  END AS usage,
+  clock_timestamp() AS usage_ts"
   metrics:
     - usage:
         usage: "GAUGE"
