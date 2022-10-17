@@ -1,0 +1,80 @@
+---
+pgmonitor_package_details:
+  - pkg_name: "prometheus2"
+    repo: "https://github.com/prometheus/prometheus"
+    files:
+      - { target: "upstream", owner: "prometheus", group: "prometheus" }
+
+  - pkg_name: "alertmanager"
+    repo: "https://github.com/prometheus/alertmanager"
+    files:
+      - { target: "upstream", owner: "prometheus", group: "prometheus" }
+
+  - pkg_name: "node-exporter"
+    repo: "https://github.com/prometheus/node_exporter"
+    files:
+      - { target: "upstream", owner: "root", group: "root" }
+    pkg_dependency:
+      - { pkg_name: "shadow-utils" }
+      - { pkg_name: "sysstat" }
+
+  - pkg_name: "postgres-exporter"
+    repo: "https://github.com/prometheus-community/postgres_exporter"
+    files:
+      - { target: "/usr/bin/postgres_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
+      - { target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
+      - { target: "/etc/postgres_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
+
+  - pkg_name: "blackbox-exporter"
+    repo: "https://github.com/prometheus/blackbox_exporter"
+    files:
+      - { target: "/etc/default/blackbox_exporter", mode: "0644", type: "file", owner: "root", group: "root" }
+      - { target: "/usr/bin/blackbox_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
+      - { target: "/usr/lib/systemd/system/blackbox_exporter.service", mode: "0755", type: "file", owner: "root", group: "root" }
+
+  - pkg_name: "pgmonitor-blackbox-exporter-extras"
+    pkg_dependency:
+      - { pkg_name: "blackbox-exporter", greater_than: 0.22.0, less_than: 0.23.0 }
+    files:
+      - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
+      - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
+
+  - pkg_name: "pgmonitor-node-exporter-extras"
+    pkg_dependency:
+      - { pkg_name: "node-exporter", greater_than: 1.3.0, less_than: 1.4.0 }
+    files:
+      - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+      - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+    remove_files:
+      - { target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf" }
+
+  - pkg_name: "pgmonitor-pg-common"
+    pkg_dependency:
+      - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 1.10.2 }
+    files:
+      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+
+  - pkg_name: "pgmonitor-prometheus-extras"
+    pkg_dependency:
+      - { pkg_name: "prometheus2", greater_than: 2.38.0 , less_than: 2.39.0 }
+    files:
+      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+
+  - pkg_name: "pgmonitor-alertmanager-extras"
+    pkg_dependency:
+      - { pkg_name: "alertmanager", greater_than: 0.23.0, less_than: 0.24.0 }
+    files:
+      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+
+  - pkg_name: "pgmonitor-grafana-extras"
+    pkg_dependency:
+      - { pkg_name: "grafana", greater_than: 8.3.0 , less_than: 8.6.0 }
+    files:
+      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
+
+#  - pkg_name: ""
+#    pkg_dependency:
+#      - { pkg_name: "", greater_than: , less_than:  }
+#    files:
+#      - { source: "", target: "", mode: "", type: "", rpm_new:, owner: "", group: "" }
