@@ -68,7 +68,7 @@ ccp_pg_stat_statements_top_mean:
         description: "Average query runtime in milliseconds"
 
 
-# Note that individual query stats can only be reset in PG12
+# Note that individual query stats can only be reset in PG12 or later
 ccp_pg_stat_statements_top_total:
   query: "SELECT pg_get_userbyid(s.userid) as role,
               d.datname AS dbname,
