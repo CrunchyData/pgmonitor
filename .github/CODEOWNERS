@@ -1,1 +1,16 @@
-*   @hunleyd @jchancojr @keithf4 @pgguru
+# Each line is a file pattern followed by one or more owners.
+# Order is important; the last matching pattern takes the most
+# precedence.
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# all members of the @crunchydata/solutionsengineering
+# team will be added for review when someone opens a pull request.
+
+* @crunchydata/solutionsengineering
+
+# The @crunchydata/build-release owns any files in the build
+# directory at the root of the repository and any of its
+# subdirectories.
+
+/build/ @crunchydata/build-release
