@@ -116,13 +116,13 @@ ccp_nodemx_cpucfs:
   WHEN monitor.cgroup_mode() = 'legacy' THEN
     monitor.cgroup_scalar_bigint('cpu.cfs_period_us')
   ELSE
-    (SELECT (monitor.cgroup_array_bigint('cpu.max'))[2])
+    (monitor.cgroup_array_bigint('cpu.max'))[2]
   END AS period_us, 
   CASE
   WHEN monitor.cgroup_mode() = 'legacy' THEN
     GREATEST(monitor.cgroup_scalar_bigint('cpu.cfs_quota_us'), 0)
   ELSE
-    GREATEST((SELECT (monitor.cgroup_array_bigint('cpu.max'))[1]), 0)
+    GREATEST((monitor.cgroup_array_bigint('cpu.max'))[1], 0)
   END AS quota_us"
   metrics:
     - period_us:
