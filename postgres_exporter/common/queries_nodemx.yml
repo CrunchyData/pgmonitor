@@ -39,8 +39,16 @@ SELECT
     ELSE
         (CASE WHEN monitor.cgroup_scalar_bigint('memory.max') = 9223372036854775807 THEN 0 ELSE monitor.cgroup_scalar_bigint('memory.max') END)
   END AS limit,
-  (SELECT val FROM d WHERE key='cache') as cache,
-  (SELECT val FROM d WHERE key='rss') as rss,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN (SELECT val FROM d WHERE key='cache')
+    ELSE 0
+  END as cache,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN (SELECT val FROM d WHERE key='rss')
+    ELSE 0
+  END as RSS,
   (SELECT val FROM d WHERE key='shmem') as shmem,
   CASE
     WHEN monitor.cgroup_mode() = 'legacy'
