@@ -42,8 +42,16 @@ SELECT
   (SELECT val FROM d WHERE key='cache') as cache,
   (SELECT val FROM d WHERE key='rss') as rss,
   (SELECT val FROM d WHERE key='shmem') as shmem,
-  (SELECT val FROM d WHERE key='mapped_file') as mapped_file,
-  (SELECT val FROM d WHERE key='dirty') as dirty,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN (SELECT val FROM d WHERE key='mapped_file')
+    ELSE 0 
+  END as mapped_file,
+  CASE
+    WHEN monitor.cgroup_mode() = 'legacy'
+    THEN (SELECT val FROM d WHERE key='dirty')
+    ELSE (SELECT val FROM d WHERE key='file_dirty')
+  END as dirty,
   (SELECT val FROM d WHERE key='active_anon') as active_anon,
   (SELECT val FROM d WHERE key='inactive_anon') as inactive_anon,
   (SELECT val FROM d WHERE key='active_file') as active_file,
