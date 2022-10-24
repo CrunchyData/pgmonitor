@@ -54,7 +54,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 - RHEL 7/8 (Build/Run Testing, Setup Instructions)
 - CentOS 7 (Build/Run Testing, Setup Instructions)
 - Ubuntu 20 (Build/Run Testing)
-- SLES 14 (Build/Run Testing)
+- SLES 15.4 (Build/Run Testing)
 
 ### PostgreSQL
 
