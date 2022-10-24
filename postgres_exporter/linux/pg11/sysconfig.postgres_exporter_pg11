@@ -18,7 +18,7 @@ OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporte
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 
 # For global / cluster metric
-QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_global.yml /etc/postgres_exporter/11/queries_pg11.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_global.yml /etc/postgres_exporter/11/queries_general.yml"
 
 # Recommend running separate exporter service to collect per-db metrics, even if there is only one database in the instance. Allows easier expansion to support multiple databases at a later time. See postgres_exporter_pg##_per_db file.
 

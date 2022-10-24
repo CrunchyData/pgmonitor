@@ -1,4 +1,4 @@
--- PG11 pgMonitor Setup
+-- PG15 pgMonitor Setup
 --
 -- Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
 --
@@ -413,6 +413,51 @@ CREATE VIEW monitor.pg_hba_hash AS
         , string_agg(type||database||user_name||address||netmask||auth_method||options, ',') AS hba_string
     FROM hba_ordered_list;
 
+
+
+DROP TABLE IF EXISTS monitor.pg_stat_statements_reset_info;
+-- Table to store last reset time for pg_stat_statements
+CREATE TABLE monitor.pg_stat_statements_reset_info(
+   reset_time timestamptz 
+);
+
+DROP FUNCTION IF EXISTS monitor.pg_stat_statements_reset_info(int);
+-- Function to reset pg_stat_statements periodically
+CREATE FUNCTION monitor.pg_stat_statements_reset_info(p_throttle_minutes integer DEFAULT 1440)
+  RETURNS bigint
+  LANGUAGE plpgsql
+  SECURITY DEFINER
+  SET search_path TO pg_catalog, pg_temp
+AS $function$
+DECLARE
+
+  v_reset_timestamp      timestamptz;
+  v_throttle             interval;
+ 
+BEGIN
+
+  IF p_throttle_minutes < 0 THEN
+      RETURN 0;
+  END IF;
+
+  v_throttle := make_interval(mins := p_throttle_minutes);
+
+  SELECT COALESCE(max(reset_time), '1970-01-01'::timestamptz) INTO v_reset_timestamp FROM monitor.pg_stat_statements_reset_info;
+
+  IF ((CURRENT_TIMESTAMP - v_reset_timestamp) > v_throttle) THEN
+      -- Ensure table is empty 
+      DELETE FROM monitor.pg_stat_statements_reset_info;
+      PERFORM pg_stat_statements_reset();
+      INSERT INTO monitor.pg_stat_statements_reset_info(reset_time) values (now());
+  END IF;
+
+  RETURN (SELECT extract(epoch from reset_time) FROM monitor.pg_stat_statements_reset_info);
+
+EXCEPTION 
+   WHEN others then 
+       RETURN 0;
+END 
+$function$;
 
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA monitor TO ccp_monitoring;
 GRANT ALL ON ALL TABLES IN SCHEMA monitor TO ccp_monitoring;
