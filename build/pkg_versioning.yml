@@ -54,7 +54,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-pg-common"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 1.12.0 }
+      - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 0.12.0 }
     files:
       - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
