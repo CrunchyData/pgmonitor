@@ -1,0 +1,130 @@
+#!/usr/bin/perl -l
+
+use strict;
+use warnings;
+
+my $mode = $ARGV[0] // 'output';
+@ARGV = ();
+
+if ($mode eq 'output') {
+    # reads an input file of the form:
+
+    # Foo: abs
+    # Bar: fasdf
+    # Baz: `
+    # adf
+    # asdf
+    # f`
+    # Free form notes
+
+    # and outputs a corresponding {{< variable >}} block for the individual fields. The big "trick" is handling the multiline strings correctly
+
+    my $done = 0;
+    my $inquote = 0;
+
+    # print our saluation
+    print "{{< variable";
+
+    while (<>) {
+        chomp;
+
+        # shortcut case; we've already processed headers and on to the next one so just outputting our lines
+        print, next if $done;
+
+        if ($inquote) {
+            print;
+            $inquote = 0 if /`$/;   # close our quote via final backtick in the line
+            next;
+        }
+
+        if (/^\s*(\w+):\s*(.*)\s*$/) {
+            # got our keyword so transform to appropriate output field
+
+            my $fld = lc $1;
+            my $line = $2;
+
+            # check for "`"-quoting, which doesn't use external quotes in the field value and needs a balanced quote
+            if ($line =~ /^`/) {
+                # if we end in a quote as well then it's self-closing; not a full parser so invalid
+                # input could sneak through, but good enough
+                $inquote = length($line) > 1 && $line !~ /`$/;
+                print "    $fld=$line";
+                next;
+            }
+
+            # output our header line, keep processing headers
+            print "    $fld=\"$line\"";
+            next;
+        }
+
+        # not a keyword line, so finish it up
+        $done = 1;
+        # this is probably an error, but let's close a quote if we need
+        print (($inquote ? "`" : "") . ">}}");
+
+        # skip leading blank line on output
+        print unless /^\s*$/;
+    }
+
+    # if we get here and $done is not set then there are no notes so close differently
+    my $prefix = $done ? "" : ($inquote ? "`" : "") . ">}}";
+
+    print "${prefix}{{< /variable >}}";
+}
+else {
+    # other direction; transform a {{< variable >}} block into something to edit
+
+    my $done = 0;
+    my $opened;
+    my $len = 11;               # how long to pad our field names with leading spaces
+    my $inquote = 0;
+
+    while (<>) {
+        chomp;
+        if (!$opened) {
+            # skip any lines before our opening variable block
+            if (/\{\{< variable/) {
+                $opened = 1;
+            }
+            next;
+        }
+        if ($done) {
+            print, last if s/\{\{< \/variable >}}//;
+            print, next;
+        }
+        if ($inquote) {
+            print;
+            $inquote = ! /`$/;  # is last char closing quote?
+            next;
+        }
+        if (/^\s*(\w+)=(.*)/) {
+            # we have a key=val pair
+            my $key = $1;
+            my $line = $2;
+            # if opening char is a quote then set inquote, just print; multiline support
+            if ($line =~ /^`/) {
+                $inquote = 1;
+                printf("% ${len}s: %s\n", ucfirst $key, $line);
+                next;
+            }
+            # remove quotes from the value since it's a single line
+            $line =~ s/^"//;
+            $line =~ s/"$//;
+            printf("% ${len}s: %s\n", ucfirst $key, $line);
+            next;
+        }
+        else {
+            # first non-matching line after our = pairs
+            # likely chance it's just `>}}`
+            if (!/^\s*>}}/) {
+                die "missing expected closing marker";
+            }
+            s/^\s*>}}//;        # remove closing prefix
+            my $self_closed = s/\{\{< \/variable >}}//; # remove potential self-close
+
+            print if /\S/;      # print a non-blank remainder
+            $done = 1;
+            last if $self_closed;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+---
+---
+
+{% if pgver == 'common' %}
+The following defaults are applied to all currently supported PostgreSQL versions:
+{% else %}
+The following defaults are additionally applied to PostgreSQL {{ pgver }}:
+{% endif %}
+
+{% for k in pg_role_defaults['guc_pg_' ~ pgver] %}
+{% if k == 'log_line_prefix' %}
+- {{ k }}: '{{ pg_role_defaults['guc_pg_' ~ pgver][k] }}'
+{% else %}
+- {{ k }}: {{ pg_role_defaults['guc_pg_' ~ pgver][k] }}
+{% endif %}
+{% endfor %}
+
+{% if pgver == 'common' %}
+{% for k in documented_pg_versions %}
+{% raw %}{{< include-file{% endraw %} file="include/roles/postgresql/guc_pg_{{ k }}.md" {% raw %}>}}{% endraw %}
+
+{% endfor %}
+{% endif %}
