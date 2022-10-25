@@ -43,7 +43,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-node-exporter-extras"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "node-exporter", greater_than: 1.3.0, less_than: 1.4.0 }
+      - { pkg_name: "node-exporter", greater_than: 1.3.0, less_than: 1.5.0 }
     files:
       - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -54,7 +54,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-pg-common"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 1.10.2 }
+      - { pkg_name: "postgres-exporter", greater_than: 1.10.1, less_than: 1.12.0 }
     files:
       - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -63,7 +63,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-prometheus-extras"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "prometheus2", greater_than: 2.38.0 , less_than: 2.39.0 }
+      - { pkg_name: "prometheus2", greater_than: 2.38.0 , less_than: 2.40.0 }
     files:
       - { target: "/etc/prometheus/auto.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { target: "/etc/prometheus/alert-rules.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -84,7 +84,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-alertmanager-extras"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "alertmanager", greater_than: 0.23.0, less_than: 0.24.0 }
+      - { pkg_name: "alertmanager", greater_than: 0.23.0, less_than: 0.25.0 }
     files:
       - { source: "alertmanager/common/crunchy-alertmanager.yml", target: "/etc/prometheus/crunchy-alertmanager.yml ", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -96,7 +96,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-grafana-extras"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "grafana", greater_than: 8.3.0 , less_than: 8.6.0 }
+      - { pkg_name: "grafana", greater_than: 8.3.0 , less_than: 9.3.0 }
     files:
       - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
       - { source: "grafana/common/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
