@@ -43,7 +43,7 @@ pgmonitor_package_details:
   - pkg_name: "pgmonitor-node-exporter-extras"
     repo: "https://github.com/CrunchyData/pgmonitor"
     pkg_dependency:
-      - { pkg_name: "node-exporter", greater_than: 1.3.0, less_than: 1.5.0 }
+      - { pkg_name: "node-exporter", greater_than: 1.4.0, less_than: 1.5.0 }
     files:
       - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
       - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
