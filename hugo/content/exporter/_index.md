@@ -264,7 +264,9 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 
 ### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS)
 
-Certain metrics are not cluster-wide, so multiple exporters must be run to collect all relevant metrics. As long as you're using the same custom query file for all monitored databases, only one additional exporter service is required and pgMonitor does this for collecting its per-database metrics ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus you can then define the global and per-db exporter targets for a single job so that all the metrics are collected together for a single database instance. Note that the "setup.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.
+Certain metrics are not cluster-wide, so multiple exporters must be run to avoid duplication when monitoring multiple databases in a single PostgreSQL instance. To collect these per-database metrics, an additional exporter service is required and pgMonitor provides this using the following query file: ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus, you can then define the global and per-db exporter targets for a single job. This will place all the metrics that are collected for a single database instance together.
+
+{{< note >}}The "setup.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.{{< /note >}}
 
 pgMonitor provides and recommends an example sysconfig file for this per-db exporter: {{< shell >}}sysconfig.postgres_exporter_pg##_per_db{{< /shell >}}. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
 ```
