@@ -38,6 +38,7 @@ pgmonitor_package_details:
       - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
     pkg_dependency:
       - { pkg_name: "blackbox-exporter", greater_than: 0.22.0, less_than: 0.23.0 }
+    upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
   - pkg_name: "pgmonitor-node-exporter-extras"
     upstream_repo: "https://github.com/CrunchyData/pgmonitor"
