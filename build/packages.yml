@@ -24,7 +24,7 @@ packages:
           - { target: "/usr/bin/postgres_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
           - { target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
           - { target: "/etc/postgres_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
-        upstream_repo: "https://github.com/prometheus-community/postgres_exporter"
+        upstream_repo: "https://github.com/CrunchyData/postgres_exporter"
 
     - blackbox-exporter:
         files:
