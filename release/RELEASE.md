@@ -87,11 +87,11 @@ gitGraph
 
 ## Making changes to back branches
 
-A "back branch" is considered any branch which belongs to an already-released version of pgMonitor, so effectively anything which is not currently in development.  Note: at this time back branches are currently only supported for HA 4.8.0 and later.
+A "back branch" is considered any branch which belongs to an already-released version of pgMonitor, so effectively anything which is not currently in development.  Note: at this time back branches are currently only supported for pgMonitor 4.8 and later.
 
 If a bug fix in the code or documentation for a given release is required, you should follow the following procedures:
 
-1. Checkout a new branch based on the appropriate upstream branch.  For instance if you were patching pgMonitor release 4.9.0, you would use `upstream/v4.9.0-STABLE` as the base.
+1. Checkout a new branch based on the appropriate upstream branch.  For instance if you were patching pgMonitor release 4.9.0, you would use `upstream/v4.9-STABLE` as the base.
 2. Make your local changes and test appropriately.  Depending on which version you are adjusting there may or may not be automated testing support.
 3. Create a new PR with the base of the target branch. Go through the normal PR review/acceptance process.  Merge the PR into the appropriate upstream branch.
 4. Checkout the upstream primary branch.
@@ -101,5 +101,5 @@ If a bug fix in the code or documentation for a given release is required, you s
    a. tag a new specific doc release revision; i.e., `d4.9.0-N`. This corresponds to an immutable "docs have been released" version and allows us to track.
    b. ensure that the docs changes are what are expected; `git diff d4.9.0-2 d4.9.0-3 -- hugo` (using the appropriate current release and previous release).  If you notice something wrong at this point and you have not pushed this tag you can correct locally and re-tag with the same release version.  If this tag has already been pushed, correct and increment the docs release number, repeating step 5.
    c. update this release's main documentation build tag: i.e., `git tag -f d4.9.0 d4.9.0-3` to force the current 4.9.0 docs to be updated with this contents of this tag.  This is required for the build team's website generation.
-   d. push the new tags to upstream via `git push upstream -f d4.9.0-N d4.9.0` (substitute appropriate upstream remote name and tags here).  The `-f` is required here because we are overwriting the upstream docs build tag (`d4.9.0`).  Note that doing so will require that downstream repos will also need to specify `-f` when doing a `git fetch` or `git pull`, so this should be done infrequently and the team should be notified on internal channels when this occurs.
+   d. push the new tag to upstream via `git push upstream d4.9.0-N` (substitute appropriate upstream remote name and tag here). 
 7. Inform the build team of the availability of the new code and/or doc tags.
