@@ -9,4 +9,4 @@
 # --collector.textfile.directory: location that node_exporter will look for additional metric collection scripts to run
 # --collector.diskstats.ignored-devices: regex string of devices to ignore
 
-OPT="--collector.textfile.directory=/var/lib/ccp_monitoring/node_exporter --collector.diskstats.ignored-devices=^(ram|loop|fd)\\d+$"
+OPT="--collector.textfile.directory=/var/lib/ccp_monitoring/node_exporter --collector.diskstats.device-exclude=^(ram|loop|fd)\\d+$"
