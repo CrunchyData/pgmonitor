@@ -100,6 +100,5 @@ If a bug fix in the code or documentation for a given release is required, you s
 6. If the changes involve any documentation updates, you will need to:
    a. tag a new specific doc release revision; i.e., `d4.9.0-N`. This corresponds to an immutable "docs have been released" version and allows us to track.
    b. ensure that the docs changes are what are expected; `git diff d4.9.0-2 d4.9.0-3 -- hugo` (using the appropriate current release and previous release).  If you notice something wrong at this point and you have not pushed this tag you can correct locally and re-tag with the same release version.  If this tag has already been pushed, correct and increment the docs release number, repeating step 5.
-   c. update this release's main documentation build tag: i.e., `git tag -f d4.9.0 d4.9.0-3` to force the current 4.9.0 docs to be updated with this contents of this tag.  This is required for the build team's website generation.
-   d. push the new tag to upstream via `git push upstream d4.9.0-N` (substitute appropriate upstream remote name and tag here). 
+   c. push the new tag to upstream via `git push upstream d4.9.0-N` (substitute appropriate upstream remote name and tag here). 
 7. Inform the build team of the availability of the new code and/or doc tags.
