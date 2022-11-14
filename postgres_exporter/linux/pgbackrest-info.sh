@@ -15,7 +15,7 @@ SYSTEM_ID=$1
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
 
 if [ ${BACKREST_AUTOCONFIG_STANZAS:-0} -gt 0 ]; then
-  BACKREST_STANZAS=$(grep '^\[' /etc/pgbackrest.conf /etc/pgbackrest/  -srh |sort -u |grep -v ':\|global' |sed 's/\[\|\]//g' | tr '\n' ' ' )```
+  BACKREST_STANZAS=$(grep '^\[' /etc/pgbackrest.conf /etc/pgbackrest/  -srh |sort -u |grep -v ':\|global' |sed 's/\[\|\]//g' | tr '\n' ' ' )
   BACKREST_CONFIGS=""
 fi
 
