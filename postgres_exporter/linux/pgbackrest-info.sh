@@ -15,12 +15,7 @@ SYSTEM_ID=$1
 [ -f /etc/pgmonitor.conf ] && . /etc/pgmonitor.conf
 
 if [ ${BACKREST_AUTOCONFIG_STANZAS:-0} -gt 0 ]; then
-  if [ -f "/etc/pgbackrest.conf" ]; then
-    # Account for old default config file location
-    BACKREST_STANZAS=$(grep '^\[' /etc/pgbackrest.conf /etc/pgbackrest/  -rh |sort -u |grep -v ':\|global' |sed 's/\[\|\]//g' | tr '\n' ' ' )
-  else
-    BACKREST_STANZAS=$(grep '^\[' /etc/pgbackrest/  -rh |sort -u |grep -v ':\|global' |sed 's/\[\|\]//g' | tr '\n' ' ' )
-  fi
+  BACKREST_STANZAS=$(grep '^\[' /etc/pgbackrest.conf /etc/pgbackrest/  -srh |sort -u |grep -v ':\|global' |sed 's/\[\|\]//g' | tr '\n' ' ' )```
   BACKREST_CONFIGS=""
 fi
 
