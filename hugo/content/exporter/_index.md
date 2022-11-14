@@ -264,23 +264,25 @@ sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
 
 ### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS)
 
-Certain metrics are not cluster-wide, so multiple exporters must be run to collect all relevant metrics. As of v0.5.x of postgres_exporter, a single service can connect to multiple databases. As long as you're using the same custom query file for all of those databases, only one additional exporter service is required and this comes with pgMonitor 4.0 and above by default. The {{< shell >}}queries_per_db.yml{{< /shell >}} file contains these queries and the secondary exporter can use this file to collect those metrics and avoid duplicating cluster-wide metrics. Note that some other metrics are per database as well (Ex. bloat). You can then define multiple targets for that one job in Prometheus so that all the metrics are collected together for a single database instance. Note that the "setup.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.
+Certain metrics are not cluster-wide, so multiple exporters must be run to avoid duplication when monitoring multiple databases in a single PostgreSQL instance. To collect these per-database metrics, an additional exporter service is required and pgMonitor provides this using the following query file: ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus, you can then define the global and per-db exporter targets for a single job. This will place all the metrics that are collected for a single database instance together.
+
+{{< note >}}The "setup.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.{{< /note >}}
 
 pgMonitor provides and recommends an example sysconfig file for this per-db exporter: {{< shell >}}sysconfig.postgres_exporter_pg##_per_db{{< /shell >}}. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
 ```
-OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/11/queries_per_db.yml"
+OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/14/queries_per_db.yml"
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb1?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb2?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 ```
 As was done with the exporter service that is collecting the global metrics, also modify the {{< yaml >}}QUERY_LIST_FILE{{< /yaml >}} in the new sysconfig file to only collect per-db metrics
 ```
-QUERY_FILE_LIST="/etc/postgres_exporter/11/queries_per_db.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/14/queries_per_db.yml"
 ```
 
 Since a systemd template is used for the postgres_exporter services, all you need to do is pass the sysconfig file name as part of the new service name.
 ```
-sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg11_per_db
-sudo systemctl start cruncy-postgres-exporter@postgres_exporter_pg11_per_db
-sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg11_per_db
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg14_per_db
+sudo systemctl start cruncy-postgres-exporter@postgres_exporter_pg14_per_db
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg14_per_db
 
 ```
 Lastly, update the Prometheus auto.d target file to include the new exporter in the same job you already had running for this system
