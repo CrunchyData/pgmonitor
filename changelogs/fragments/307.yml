@@ -1,2 +1,0 @@
-bugfixes:
-- postgres_exporter - fixed pgbackrest-info.sh script to account for old default pgBackRest config file not existing
