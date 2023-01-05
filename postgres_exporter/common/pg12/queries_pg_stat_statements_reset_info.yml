@@ -2,7 +2,7 @@
 #
 # Begin File: pg_stat_statements_reset_info.yml
 #
-# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017 - 2023 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 ###
 ccp_pg_stat_statements_reset:

@@ -1,6 +1,6 @@
 -- PG15 pgMonitor Setup
 --
--- Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+-- Copyright © 2017 - 2023 Crunchy Data Solutions, Inc. All Rights Reserved.
 --
 
 DO $$

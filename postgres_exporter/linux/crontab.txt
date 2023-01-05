@@ -1,6 +1,6 @@
 ###
 #
-# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017 - 2023 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 ###
 # The below script must be run as a database superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file
