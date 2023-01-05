@@ -53,24 +53,24 @@ groups:
       description: 'Disk usage on target {{ $labels.job }} at {{ $value }}%'
 
   - alert: SystemLoad5m
-    expr: node_load5 > 5
+    expr: node_load5 > (count(count(node_cpu_seconds_total) without (mode)) without (cpu)) * 2
     for: 10m
     labels:
       service: system
       severity: warning
       severity_num: 200
     annotations:
-      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
+      description: 'System load for target {{ $labels.job }} is high ({{ $value }}) based on cpu count'
 
   - alert: SystemLoad5m
-    expr: node_load5 > 10
+    expr: node_load5 > (count(count(node_cpu_seconds_total) without (mode)) without (cpu)) * 4
     for: 10m
     labels:
       service: system
       severity: critical
       severity_num: 300
     annotations:
-      description: 'System load for target {{ $labels.job }} is high ({{ $value }})'
+      description: 'System load for target {{ $labels.job }} is high ({{ $value }}) based on cpu count'
 
   - alert: MemoryAvailable
     expr: (100 * (node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) < 25
