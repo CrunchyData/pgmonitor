@@ -1,0 +1,2 @@
+minor_change:
+  - prometheus - Allow node_exporter's load alert to be based on the CPU count. Allows lowering of default thresholds and more accurate alerting.
