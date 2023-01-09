@@ -3,27 +3,39 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "",
-  "editable": false,
-  "gnetId": null,
+  "editable": true,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1618858505673,
+  "iteration": 1673302404559,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -60,7 +72,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -70,16 +82,16 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Queries Executed",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -116,7 +128,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -127,16 +139,16 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Query Runtime ",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -173,7 +185,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -184,16 +196,16 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Query Mean Runtime",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -230,7 +242,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_row_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -241,8 +253,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Total Rows Retrieved or Affected",
       "type": "stat"
     },
@@ -251,12 +261,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -284,7 +291,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -301,9 +308,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Query Executions (Calls) Per Minute",
       "tooltip": {
         "shared": true,
@@ -312,9 +317,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -322,35 +325,31 @@
         {
           "$$hashKey": "object:100",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:101",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -410,6 +409,13 @@
       },
       "id": 4,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -418,7 +424,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -429,8 +435,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Query Mean Runtime (Top N)",
       "transformations": [
         {
@@ -464,13 +468,16 @@
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -530,6 +537,13 @@
       },
       "id": 6,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -538,7 +552,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -549,8 +563,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Query Max Runtime (Top N)",
       "transformations": [
         {
@@ -584,12 +596,16 @@
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -649,6 +665,13 @@
       },
       "id": 5,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -657,7 +680,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -668,8 +691,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Query Total Runtime (Top N)",
       "transformations": [
         {
@@ -701,37 +722,147 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WAL Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 34
+      },
+      "id": 12,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "WAL Size"
+          }
+        ]
+      },
+      "pluginVersion": "8.5.15",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "expr": "ccp_pg_stat_statements_top_wal_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Query Total WAL Genterated (Bytes)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "exp_type": true,
+              "job": true,
+              "role": false
+            },
+            "indexByName": {
+              "Time": 6,
+              "Value": 5,
+              "__name__": 7,
+              "dbname": 0,
+              "exp_type": 8,
+              "instance": 2,
+              "job": 9,
+              "query": 3,
+              "queryid": 4,
+              "role": 1
+            },
+            "renameByName": {
+              "Value": "WAL Size"
+            }
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 27,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "crunchy",
-          "value": "crunchy"
+          "text": "golf",
+          "value": "golf"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(up{exp_type='pg'}, cluster_name)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
         "multi": false,
         "name": "pgcluster",
-        "options": [
-          {
-            "selected": true,
-            "text": "crunchy",
-            "value": "crunchy"
-          }
-        ],
+        "options": [],
         "query": {
           "query": "label_values(up{exp_type='pg'}, cluster_name)",
           "refId": "StandardVariableQuery"
@@ -741,22 +872,21 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "crunchy_pg1_crunchy",
-          "value": "crunchy_pg1_crunchy"
+          "text": "golf_ip16_pg1",
+          "value": "golf_ip16_pg1"
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -772,16 +902,13 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "All"
           ],
@@ -789,10 +916,11 @@
             "$__all"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname) ",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "PGDatabase",
@@ -808,13 +936,11 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
@@ -824,10 +950,11 @@
             "$__all"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=~\"[[pgdatabase]]\"}, role) ",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "role",
@@ -843,7 +970,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -870,5 +996,6 @@
   "timezone": "",
   "title": "Query Statistics (pg_stat_statements)",
   "uid": "ZKoTOHDGk",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }
