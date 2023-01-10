@@ -92,7 +92,7 @@ For the [full history](/changelog) of pgMonitor, please see the [CHANGELOG](/cha
 
 ## Legal Notices
 
-Copyright © 2017-2022 Crunchy Data Solutions, Inc. All Rights Reserved.
+Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
 
 CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
