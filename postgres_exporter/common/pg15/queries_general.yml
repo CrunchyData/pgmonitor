@@ -12,7 +12,7 @@ ccp_connection_stats:
         , idle
         , idle_in_txn
         , (select coalesce(extract(epoch from (max(clock_timestamp() - state_change))),0) from pg_catalog.pg_stat_activity where state = 'idle in transaction') as max_idle_in_txn_time
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and state <> 'idle' ) as max_query_time
+        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and state not like 'idle%' ) as max_query_time
         , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and wait_event_type = 'Lock' ) as max_blocked_query_time
         , max_connections
         from (
