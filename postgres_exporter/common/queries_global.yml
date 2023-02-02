@@ -2,7 +2,7 @@
 #
 # Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
-# Begin File: queries_common.yml
+# Begin File: queries_global.yml
 #
 ###
 
@@ -363,6 +363,6 @@ ccp_pg_hba_checksum:
 
 ###
 #
-# End File: queries_common.yml
+# End File: queries_global.yml
 #
 ###
