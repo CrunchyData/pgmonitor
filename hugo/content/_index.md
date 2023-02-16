@@ -26,7 +26,7 @@ Running pgMonitor will give you confidence in understanding how well your Postgr
 - [Purpose](#purpose)
 - [Supported Platforms](#supported-platforms)
   - [Operating Systems](#operating-systems)
-  - [PostgreSQL](#postgesql)
+  - [PostgreSQL](#postgresql)
 - [Installation](#installation)
 - [Roadmap](#roadmap)
 - [Version History](#version-history)
