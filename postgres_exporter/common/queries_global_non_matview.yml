@@ -1,0 +1,24 @@
+###
+#
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+# Begin File: queries_global_non_matview.yml
+#
+###
+
+ccp_database_size:
+  query: "SELECT datname as dbname, pg_database_size(datname) as bytes FROM pg_catalog.pg_database WHERE datistemplate = false"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - bytes:
+        usage: "GAUGE"
+        description: "Database size in bytes"
+
+
+###
+#
+# End File: queries_global_non_matview.yml
+#
+###
