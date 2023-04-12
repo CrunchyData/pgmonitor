@@ -26,7 +26,7 @@ args = parser.parse_args()
 
 if not os.path.exists(args.output):
     print "Path given by --output (-o) does not exist: " + str(args.output)
-    sys.exit(2)	
+    sys.exit(2)
 
 def get_databases():
     conn = psycopg2.connect(args.connection)
@@ -124,8 +124,8 @@ if __name__ == "__main__":
         call_pgbadger += " -j " + str(args.jobs)
         call_pgbadger += " -J " + str(args.Jobs)
         call_pgbadger += " -p \"" + args.log_line_prefix + "\""
-	if args.exclude_query is not None:
-	    call_pgbadger += " --exclude-query=\"" + args.exclude_query + "\""
+        if args.exclude_query is not None:
+            call_pgbadger += " --exclude-query=\"" + args.exclude_query + "\""
         if args.verbose == True:
             print call_pgbadger 
         os.system(call_pgbadger)
