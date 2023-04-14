@@ -4,7 +4,7 @@
 
 CREATE SCHEMA IF NOT EXISTS monitor;
 
--- Preserve existing data if users added more matviews or changed schedule. Allows setup call to be indempodent.
+-- Preserve existing data if users added more matviews or changed schedule. Allows setup call to be idempodent.
 DO $pgmonitor$
 DECLARE
 v_exists    smallint;
