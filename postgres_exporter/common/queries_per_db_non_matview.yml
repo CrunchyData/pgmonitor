@@ -63,7 +63,7 @@ ccp_stat_user_tables:
 
 
 ccp_table_size:
-  query: "SELECT current_database() as dbname, n.nspname as schemaname, c.relname, pg_total_relation_size(c.oid) as size_bytes FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid WHERE NOT pg_is_other_temp_schema(n.oid) AND relkind IN ('r', 'm', 'f')"
+  query: "SELECT current_database() as dbname, relnamespace::regnamespace as schemaname, relname, pg_total_relation_size(oid) as size_bytes FROM pg_class WHERE NOT pg_is_other_temp_schema(relnamespace) AND relkind IN ('r', 'm', 'f')"
   metrics:
     - dbname:
         usage: "LABEL"
