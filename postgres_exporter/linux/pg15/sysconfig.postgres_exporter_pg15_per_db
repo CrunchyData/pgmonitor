@@ -18,5 +18,5 @@ DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_moni
 #DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb1?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb2?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 
 # Ex: For per db metric. DO NOT add queries that return the same labels/values on all databases otherwise the exporter will throw errors. The queries that pgmonitor provides for per-db metrics all include a "dbname" label to distinguish them.
-QUERY_FILE_LIST="/etc/postgres_exporter/15/queries_per_db_non_matview.yml"
+QUERY_FILE_LIST="/etc/postgres_exporter/15/queries_per_db.yml"
 
