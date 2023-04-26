@@ -46,9 +46,16 @@ DECLARE
 
 v_loop_sql           text;
 v_refresh_sql        text;
+v_recovery           boolean;
 v_row                record;
 
 BEGIN
+
+SELECT pg_is_in_recovery() INTO v_recovery;
+IF v_recovery THEN
+    RAISE DEBUG 'Database instance in recovery mode. Exiting without matview refresh';
+    RETURN;
+END IF;
 
 v_loop_sql := format('SELECT matview_schema, matview_name, concurrent_refresh, run_interval, last_run 
                         FROM monitor.matview_metrics
@@ -78,7 +85,6 @@ FOR v_row IN EXECUTE v_loop_sql LOOP
         COMMIT;
 
     END IF;
-            
 
 END LOOP;
 
@@ -136,7 +142,7 @@ ALTER MATERIALIZED VIEW monitor.ccp_database_size OWNER TO ccp_monitoring;
 GRANT EXECUTE ON ALL PROCEDURES IN SCHEMA monitor TO ccp_monitoring;
 GRANT ALL ON ALL TABLES IN SCHEMA monitor TO ccp_monitoring;
 
--- Don't alter any existing data that may already exist in the table
+-- Don't alter any existing data that is already there for any given view
 INSERT INTO monitor.matview_metrics (
     matview_name 
     , run_interval

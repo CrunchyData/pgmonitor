@@ -16,7 +16,6 @@ ccp_database_size:
         usage: "GAUGE"
         description: "Database size in bytes"
 
-
 ###
 #
 # End File: queries_global_dbsize.yml
