@@ -176,7 +176,7 @@ CREATE EXTENSION pg_stat_statements;
 | queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. |
 
 
-By default, there are two postgres_exporter services expected to be running. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor. 
+By default, there are two postgres_exporter services expected to be running. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most PostgreSQL instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor. 
 
 The second postgres_exporter service is used to collect per-database metrics and uses the sysconfig file {{< shell >}}postgres_exporter_pg##_per_db{{< /shell >}}. By default it is set to also connect to the {{< shell >}}postgres{{< /shell >}} database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multiple databases for how to do this.
 
@@ -216,7 +216,7 @@ Run these grant statements to then allow monitoring to connect.
 
 ##### Materialized View Metrics {#mat-view-metrics}
 
-Certain metrics can cause excessive load as the size of the database grows (database & table size) or for other unforeseen reasons. For those cases, materialized views and alternative metric queries have been made available. The materialized views are refreshed on their own schedule independent of the Prometheus data scrape, so any load that may be associated with gathering the underlying data is mitigated. A configuration table, seen below, contains options for how often these materialized views should be refreshed. And a single procedure can be called to refresh all materialized views relevant to monitoring.
+With large databases/tables and some other conditions, certain metrics can cause excessive load. For those cases, materialized views and alternative metric queries have been made available. The materialized views are refreshed on their own schedule independent of the Prometheus data scrape, so any load that may be associated with gathering the underlying data is mitigated. A configuration table, seen below, contains options for how often these materialized views should be refreshed. And a single procedure can be called to refresh all materialized views relevant to monitoring.
 
 For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_metric_views.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first. 
 ```
@@ -231,7 +231,7 @@ Configuration table {{< shell >}}monitor.metric_views{{< /shell >}}:
 |--------------------|------------------------------------------------------------------|
 | view_schema     | Schema containing the materialized view |
 | view_name       | Name of the materialized view |
-| concurrent_refresh | Boolean that sets whether this materialzed view can be refreshed concurrently. Requires a unique index |
+| concurrent_refresh | Boolean that sets whether this materialized view can be refreshed concurrently (requires a unique index) |
 | run_interval       | How often this materialized view should have its data refreshed. Must be a value compatible with the PG interval type   |
 | last_run           | Timestamp of the last time this view was refreshed |
 | active             | Boolean that sets whether this view should be refreshed when the procedure is called |
@@ -248,9 +248,9 @@ psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 /usr/bin/pg_bloat_check.py -c "host=localhost dbname=postgres user=postgres" --create_stats_table
 psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
-The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file has an example entry for how to run a bloat check cronjob. You should modify this to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
+The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file has an example bloat check crontab entry. Modify this example to schedule bloat checking weekly during your 'off-peak' hours; alternatively, scheduling it monthly is usually good enough for most databases as long as the results are acted upon quickly.
 
-{{< note >}}Bloat monitoring requires the user running the check to be able to read all possible tables that will ever exist. PostgreSQL 14 introduced the built-in role {{< shell >}}pg_read_all_data{{< /shell >}} that can be granted to any role to allow it to read all possible data for the entire cluster. It is recommended to grant this role vs running the bloat check as a superuser. If you are running a version of PostgreSQL less than 14, then a superuser is required and you will have to adjust the crontab accordingly to run as that user.
+{{< note >}}Bloat monitoring requires the user running the check to be able to read all possible tables that will ever exist. PostgreSQL 14 introduced the built-in role {{< shell >}}pg_read_all_data{{< /shell >}} that can be granted to any role to allow it to read all possible data for the entire cluster. It is recommended to grant this role vs running the bloat check as a superuser. If you are running a version of PostgreSQL less than 14, a superuser is required and you will have to adjust the crontab accordingly to run as that user.
 ```
 GRANT pg_read_all_data TO ccp_monitoring;
 ```
