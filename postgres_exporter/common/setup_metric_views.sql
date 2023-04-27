@@ -1,45 +1,45 @@
 -- #########################
--- Materialized View Objects
+-- Metric View Objects
 -- #########################
 
 CREATE SCHEMA IF NOT EXISTS monitor;
 
--- Preserve existing data if users added more matviews or changed schedule. Allows setup call to be idempodent.
+-- Preserve existing data if users added more views or changed schedule. Allows setup call to be idempodent.
 DO $pgmonitor$
 DECLARE
 v_exists    smallint;
 BEGIN
 
-    SELECT count(*) INTO v_exists FROM information_schema.tables WHERE table_schema = 'monitor' AND table_name = 'matview_metrics';
+    SELECT count(*) INTO v_exists FROM information_schema.tables WHERE table_schema = 'monitor' AND table_name = 'metric_views';
     IF v_exists > 0 THEN
-        CREATE TEMPORARY TABLE matview_metrics_preserve_temp (LIKE monitor.matview_metrics);
-        INSERT INTO matview_metrics_preserve_temp SELECT * FROM monitor.matview_metrics;
-        DROP TABLE monitor.matview_metrics;
+        CREATE TEMPORARY TABLE metric_views_preserve_temp (LIKE monitor.metric_views);
+        INSERT INTO metric_views_preserve_temp SELECT * FROM monitor.metric_views;
+        DROP TABLE monitor.metric_views;
     END IF;
 
-    CREATE TABLE IF NOT EXISTS monitor.matview_metrics (
-        matview_schema text NOT NULL DEFAULT 'monitor'
-        , matview_name text NOT NULL
+    CREATE TABLE IF NOT EXISTS monitor.metric_views (
+        view_schema text NOT NULL DEFAULT 'monitor'
+        , view_name text NOT NULL
         , concurrent_refresh boolean NOT NULL DEFAULT true
         , run_interval interval NOT NULL
         , last_run timestamptz
         , active boolean NOT NULL DEFAULT true
         , scope text NOT NULL default 'global'
-        , CONSTRAINT matview_metrics_pk PRIMARY KEY (matview_schema, matview_name)
-        , CONSTRAINT matview_metrics_scope_ck CHECK (scope IN ('global', 'database'))
+        , CONSTRAINT metric_views_pk PRIMARY KEY (view_schema, view_name)
+        , CONSTRAINT metric_views_scope_ck CHECK (scope IN ('global', 'database'))
     );
 
     IF v_exists > 0 THEN
-        INSERT INTO monitor.matview_metrics SELECT * FROM matview_metrics_preserve_temp;
-        DROP TABLE matview_metrics_preserve_temp;
+        INSERT INTO monitor.metric_views SELECT * FROM metric_views_preserve_temp;
+        DROP TABLE metric_views_preserve_temp;
     END IF;
 
 END
 $pgmonitor$;
 
 
-DROP PROCEDURE IF EXISTS monitor.matview_refresh_metrics (text, text);
-CREATE PROCEDURE monitor.matview_refresh_metrics (p_matview_schema text DEFAULT 'monitor', p_matview_name text DEFAULT NULL)
+DROP PROCEDURE IF EXISTS monitor.refresh_metric_views (text, text);
+CREATE PROCEDURE monitor.refresh_metric_views (p_view_schema text DEFAULT 'monitor', p_view_name text DEFAULT NULL)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -53,16 +53,16 @@ BEGIN
 
 SELECT pg_is_in_recovery() INTO v_recovery;
 IF v_recovery THEN
-    RAISE DEBUG 'Database instance in recovery mode. Exiting without matview refresh';
+    RAISE DEBUG 'Database instance in recovery mode. Exiting without view refresh';
     RETURN;
 END IF;
 
-v_loop_sql := format('SELECT matview_schema, matview_name, concurrent_refresh, run_interval, last_run 
-                        FROM monitor.matview_metrics
+v_loop_sql := format('SELECT view_schema, view_name, concurrent_refresh, run_interval, last_run 
+                        FROM monitor.metric_views
                         WHERE active');
 
-IF p_matview_name IS NOT NULL THEN
-    v_loop_sql := format('%s AND matview_schema = %L AND matview_name = %L', v_loop_sql, p_matview_schema, p_matview_name);
+IF p_view_name IS NOT NULL THEN
+    v_loop_sql := format('%s AND view_schema = %L AND view_name = %L', v_loop_sql, p_view_schema, p_view_name);
 END IF;
 
 FOR v_row IN EXECUTE v_loop_sql LOOP
@@ -73,14 +73,14 @@ FOR v_row IN EXECUTE v_loop_sql LOOP
         IF v_row.concurrent_refresh THEN
             v_refresh_sql := v_refresh_sql || 'CONCURRENTLY ';
         END IF;
-        v_refresh_sql := format('%s %I.%I', v_refresh_sql, v_row.matview_schema, v_row.matview_name);
-        RAISE DEBUG 'pgmonitor matview refresh: %s', v_refresh_sql;
+        v_refresh_sql := format('%s %I.%I', v_refresh_sql, v_row.view_schema, v_row.view_name);
+        RAISE DEBUG 'pgmonitor view refresh: %s', v_refresh_sql;
         EXECUTE v_refresh_sql;
 
-        UPDATE monitor.matview_metrics 
+        UPDATE monitor.metric_views 
         SET last_run = CURRENT_TIMESTAMP 
-        WHERE matview_schema = v_row.matview_schema
-        AND matview_name = v_row.matview_name;
+        WHERE view_schema = v_row.view_schema
+        AND view_name = v_row.view_name;
 
         COMMIT;
 
@@ -143,8 +143,8 @@ GRANT EXECUTE ON ALL PROCEDURES IN SCHEMA monitor TO ccp_monitoring;
 GRANT ALL ON ALL TABLES IN SCHEMA monitor TO ccp_monitoring;
 
 -- Don't alter any existing data that is already there for any given view
-INSERT INTO monitor.matview_metrics (
-    matview_name 
+INSERT INTO monitor.metric_views (
+    view_name 
     , run_interval
     , scope )
 VALUES (
@@ -153,8 +153,8 @@ VALUES (
     , 'database')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO monitor.matview_metrics (
-    matview_name 
+INSERT INTO monitor.metric_views (
+    view_name 
     , run_interval
     , scope )
 VALUES (
@@ -163,8 +163,8 @@ VALUES (
     , 'database')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO monitor.matview_metrics (
-    matview_name 
+INSERT INTO monitor.metric_views (
+    view_name 
     , run_interval
     , scope )
 VALUES (

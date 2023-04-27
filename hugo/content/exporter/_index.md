@@ -163,7 +163,7 @@ CREATE EXTENSION pg_stat_statements;
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
 | setup.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.  |
-| setup_matview_metrics.sql | Creates materialized views and maintenance objects for them. This feature is optional. See additional info below. |
+| setup_metric_views.sql | Creates materialized views and maintenance objects for them. This feature is optional. See [Materialized View Metrics](#mat-view-metrics). |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_global.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions and only need to be run once per database instance.    |
 | queries_global_dbsize.yml | postgres_exporter query file that contains metrics for monitoring database size. This is a separate file to allow the option to use a materialized view for very large databases |
@@ -214,23 +214,23 @@ GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 ```
 Run these grant statements to then allow monitoring to connect. 
 
-##### Materialized View Metrics
+##### Materialized View Metrics {#mat-view-metrics}
 
 Certain metrics can cause excessive load as the size of the database grows (database & table size) or for other unforeseen reasons. For those cases, materialized views and alternative metric queries have been made available. The materialized views are refreshed on their own schedule independent of the Prometheus data scrape, so any load that may be associated with gathering the underlying data is mitigated. A configuration table, seen below, contains options for how often these materialized views should be refreshed. And a single procedure can be called to refresh all materialized views relevant to monitoring.
 
-For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_matview_metrics.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first. 
+For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_metric_views.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first. 
 ```
-psql -U postgres -d alphadb -f setup_matview_metrics.sql
-psql -U postgres -d betadb -f setup_matview_metrics.sql
+psql -U postgres -d alphadb -f setup_metric_views.sql
+psql -U postgres -d betadb -f setup_metric_views.sql
 ```
 The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file has an example entry for how to call the refresh procedure. You should modify this to run as often as you need depending on how recent you need your metric data to be. This procedure is safe to run on the primary or replicas and will safely exit if the database is in recovery mode.
 
-Configuration table {{< shell >}}monitor.matview_metrics{{< /shell >}}:
+Configuration table {{< shell >}}monitor.metric_views{{< /shell >}}:
 
 |       Column       |       Description                                                |
 |--------------------|------------------------------------------------------------------|
-| matview_schema     | Schema containing the materialized view |
-| matview_name       | Name of the materialized view |
+| view_schema     | Schema containing the materialized view |
+| view_name       | Name of the materialized view |
 | concurrent_refresh | Boolean that sets whether this materialzed view can be refreshed concurrently. Requires a unique index |
 | run_interval       | How often this materialized view should have its data refreshed. Must be a value compatible with the PG interval type   |
 | last_run           | Timestamp of the last time this view was refreshed |
