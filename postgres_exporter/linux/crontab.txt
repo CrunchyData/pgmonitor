@@ -9,4 +9,4 @@
 
 # If using the materialized views for certain metrics, set the below cronjob to run at least as often as the lowest configured refresh interval
 # If collecting per-database metrics, additional entries, one per database, will be needed
-# */06 * * * * psql -h localhost -U ccp_monitoring -d postgres -c "CALL monitor.refresh_metric_views()"
+# */06 * * * * psql -h localhost -U ccp_monitoring -d postgres -q -c "CALL monitor.refresh_metric_views()"

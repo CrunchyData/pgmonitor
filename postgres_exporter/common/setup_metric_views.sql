@@ -57,9 +57,10 @@ IF v_recovery THEN
     RETURN;
 END IF;
 
-v_loop_sql := format('SELECT view_schema, view_name, concurrent_refresh, run_interval, last_run 
+v_loop_sql := format('SELECT view_schema, view_name, concurrent_refresh
                         FROM monitor.metric_views
-                        WHERE active');
+                        WHERE active
+                        AND ( last_run IS NULL OR (CURRENT_TIMESTAMP - last_run) > run_interval )');
 
 IF p_view_name IS NOT NULL THEN
     v_loop_sql := format('%s AND view_schema = %L AND view_name = %L', v_loop_sql, p_view_schema, p_view_name);
@@ -67,24 +68,20 @@ END IF;
 
 FOR v_row IN EXECUTE v_loop_sql LOOP
 
-    IF ((CURRENT_TIMESTAMP - v_row.last_run) > v_row.run_interval) OR (v_row.last_run IS NULL) THEN
-
-        v_refresh_sql := 'REFRESH MATERIALIZED VIEW ';
-        IF v_row.concurrent_refresh THEN
-            v_refresh_sql := v_refresh_sql || 'CONCURRENTLY ';
-        END IF;
-        v_refresh_sql := format('%s %I.%I', v_refresh_sql, v_row.view_schema, v_row.view_name);
-        RAISE DEBUG 'pgmonitor view refresh: %s', v_refresh_sql;
-        EXECUTE v_refresh_sql;
-
-        UPDATE monitor.metric_views 
-        SET last_run = CURRENT_TIMESTAMP 
-        WHERE view_schema = v_row.view_schema
-        AND view_name = v_row.view_name;
-
-        COMMIT;
-
+    v_refresh_sql := 'REFRESH MATERIALIZED VIEW ';
+    IF v_row.concurrent_refresh THEN
+        v_refresh_sql := v_refresh_sql || 'CONCURRENTLY ';
     END IF;
+    v_refresh_sql := format('%s %I.%I', v_refresh_sql, v_row.view_schema, v_row.view_name);
+    RAISE DEBUG 'pgmonitor view refresh: %s', v_refresh_sql;
+    EXECUTE v_refresh_sql;
+
+    UPDATE monitor.metric_views
+    SET last_run = CURRENT_TIMESTAMP
+    WHERE view_schema = v_row.view_schema
+    AND view_name = v_row.view_name;
+
+    COMMIT;
 
 END LOOP;
 
