@@ -9,4 +9,8 @@ modules:
     prober: tcp
     tcp:
       preferred_ip_protocol: "ip4"
-
+  tcp_connect_tls:
+    prober: tcp
+    tcp:
+      preferred_ip_protocol: "ip4"
+      tls: true
