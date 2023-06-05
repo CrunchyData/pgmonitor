@@ -104,16 +104,17 @@ groups:
 
 
 ## Monitor for data block checksum failures. Only works in PG12+
-#  - alert: PGDataChecksum
-#    expr: ccp_data_checksum_failure_count > 0
-#    for 60s
-#    labels:
-#      service: postgresql
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: '{{ $labels.job }} has at least one data checksum failure in database {{ $labels.dbname }}. See pg_stat_database system catalog for more information.'
-#      summary: 'PGSQL Data Checksum failure'
+  - alert: PGDataChecksum
+    expr: ccp_postgresql_version_current >= 120000 and ccp_data_checksum_failure_count > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      description: '{{ $labels.job }} has at least one data checksum failure in database {{ $labels.dbname }}. See pg_stat_database system catalog for more information.'
+      summary: 'PGSQL Data Checksum failure'
+
 
   - alert: PGIdleTxn
     expr: ccp_connection_stats_max_idle_in_txn_time > 300
