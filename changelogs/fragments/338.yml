@@ -1,0 +1,2 @@
+bugfixes:
+  - grafana - fixed dashboard links that broke when Grafana removed support for the `/dashboard/db/:slug` endpoint in v8
