@@ -1,11 +1,13 @@
 ###
 #
-# Begin File: queries_per_db.yml
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+# Begin File: queries_per_db_matview.yml
 #
 ###
 
 ccp_stat_user_tables:
-  query: "SELECT current_database() as dbname, schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, vacuum_count, autovacuum_count, analyze_count, autoanalyze_count FROM pg_catalog.pg_stat_user_tables"
+  query: "SELECT current_database() as dbname, schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, vacuum_count, autovacuum_count, analyze_count, autoanalyze_count FROM monitor.ccp_stat_user_tables"
   metrics:
     - dbname:
         usage: "LABEL"
@@ -59,8 +61,25 @@ ccp_stat_user_tables:
         usage: "COUNTER"
         description: "Number of times this table has been analyzed by the autovacuum daemon"
 
+
+ccp_table_size:
+  query: "SELECT dbname, schemaname, relname, size_bytes FROM monitor.ccp_table_size"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - schemaname:
+        usage: "LABEL"
+        description: "Schema name"
+    - relname:
+        usage: "LABEL"
+        description: "Table name"
+    - size_bytes:
+        usage: "GAUGE"
+        description: "Table size including indexes"
+
 ###
 #
-# End File: queries_per_db.yml
+# End File: queries_per_db_matview.yml
 #
 ###
