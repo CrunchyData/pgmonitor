@@ -6,46 +6,6 @@
 #
 ###
 
-ccp_connection_stats:
-  query: "select ((total - idle) - idle_in_txn) as active
-        , total
-        , idle
-        , idle_in_txn
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - state_change))),0) from pg_catalog.pg_stat_activity where state = 'idle in transaction') as max_idle_in_txn_time
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and state not like 'idle%' ) as max_query_time
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and wait_event_type = 'Lock' ) as max_blocked_query_time
-        , max_connections
-        from (
-                select count(*) as total
-                        , coalesce(sum(case when state = 'idle' then 1 else 0 end),0) as idle
-                        , coalesce(sum(case when state = 'idle in transaction' then 1 else 0 end),0) as idle_in_txn from pg_catalog.pg_stat_activity) x
-        join (select setting::float AS max_connections FROM pg_settings WHERE name = 'max_connections') xx ON (true);"
-  metrics:
-    - active:
-        usage: "GAUGE"
-        description: "Total non-idle connections"
-    - total:
-        usage: "GAUGE"
-        description: "Total idle and non-idle connections"
-    - idle:
-        usage: "GAUGE"
-        description: "Total idle connections"
-    - idle_in_txn:
-        usage: "GAUGE"
-        description: "Total idle in transaction connections"
-    - max_idle_in_txn_time:
-        usage: "GAUGE"
-        description: "Length of time in seconds of the longest idle in transaction session"
-    - max_query_time:
-        usage: "GAUGE"
-        description: "Length of time in seconds of the longest running query"
-    - max_blocked_query_time:
-        usage: "GAUGE"
-        description: "Length of time in seconds of the longest running query that has been blocked by a heavyweight lock"
-    - max_connections:
-        usage: "GAUGE"
-        description: "Value of max_connections for the monitored database"
-
 
 ccp_replication_lag:
   query: "SELECT
