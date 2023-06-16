@@ -31,6 +31,15 @@ groups:
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
+  - alert: NoPrimary
+    expr: max by (cluster_name) (ccp_is_in_recovery_status) < 2
+    for: 30s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'cluster {{ $labels.cluster_name }} does not have a primary instance'
 
 ## Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
 #
