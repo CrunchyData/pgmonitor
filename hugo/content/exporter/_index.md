@@ -33,7 +33,7 @@ The following RPM packages are available to [Crunchy Data](https://www.crunchyda
 | pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
 | pgmonitor-node_exporter-extras | Crunchy-optimized configurations for node_exporter                        |
 | pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of PostgreSQL |
-| pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg96-extras, pgmonitor-pg10-extras, etc) |
+| pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg13-extras, pgmonitor-pg14-extras, etc) |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 
 ### Non-RPM installs {#non-rpm-installs}
@@ -64,7 +64,7 @@ https://github.com/lest/prometheus-rpm/tree/master/node_exporter
 
 A base blackbox_exporter systemd file is also expected to be in place. No examples are currently available.
 
-The files contained in this repository are assumed to be installed in the following locations with the following names. In the instructions below, you should replace a double-hash (`##`) with the two-digit major version of PostgreSQL you are running (ex: 95, 96, 10, etc.).
+The files contained in this repository are assumed to be installed in the following locations with the following names. In the instructions below, you should replace a double-hash (`##`) with the two-digit major version of PostgreSQL you are running (ex: 12, 13, 14, etc.).
 
 ##### node_exporter
 
@@ -163,16 +163,20 @@ CREATE EXTENSION pg_stat_statements;
 | Query File            | Description                                                                                              |
 |-----------------------|----------------------------------------------------------------------------------------------------------|
 | setup.sql    | Creates `ccp_monitoring` role with all necessary grants. Creates all necessary database objects (functions, tables, etc) required for monitoring.  |
+| setup_metric_views.sql | Creates materialized views and maintenance objects for them. This feature is optional. See [Materialized View Metrics](#mat-view-metrics). |
 | queries_bloat.yml     | postgres_exporter query file to allow bloat monitoring.                                                  |
 | queries_global.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions and only need to be run once per database instance.    |
+| queries_global_dbsize.yml | postgres_exporter query file that contains metrics for monitoring database size. This is a separate file to allow the option to use a materialized view for very large databases |
+| queries_global_matview.yml | postgres_exporter query file that contains alternative metrics that use materialized views of common metrics across all PG versions |
 | queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
+| queries_per_db_matview.yml | postgres_exporter query files that contains alternative metrics that use materialized views of per database stats |
 | queries_general.yml      | postgres_exporter query file for queries that are specific to the version of PostgreSQL that is being monitored.   |
 | queries_backrest.yml | postgres_exporter query file for monitoring pgBackRest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
 | queries_pgbouncer.yml | postgres_exporter query file for monitoring pgbouncer. |
-| queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. Only supported for PostgreSQL 10 and above.|
+| queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. |
 
 
-By default, there are two postgres_exporter services expected to be running as of pgMonitor 4.0 and higher. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most postgresql instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor. 
+By default, there are two postgres_exporter services expected to be running. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most PostgreSQL instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor. 
 
 The second postgres_exporter service is used to collect per-database metrics and uses the sysconfig file {{< shell >}}postgres_exporter_pg##_per_db{{< /shell >}}. By default it is set to also connect to the {{< shell >}}postgres{{< /shell >}} database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multiple databases for how to do this.
 
@@ -210,6 +214,31 @@ GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 ```
 Run these grant statements to then allow monitoring to connect. 
 
+##### Materialized View Metrics {#mat-view-metrics}
+
+With large databases/tables and some other conditions, certain metrics can cause excessive load. For those cases, materialized views and alternative metric queries have been made available. The materialized views are refreshed on their own schedule independent of the Prometheus data scrape, so any load that may be associated with gathering the underlying data is mitigated. A configuration table, seen below, contains options for how often these materialized views should be refreshed. And a single procedure can be called to refresh all materialized views relevant to monitoring.
+
+For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_metric_views.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first. 
+```
+psql -U postgres -d alphadb -f setup_metric_views.sql
+psql -U postgres -d betadb -f setup_metric_views.sql
+```
+The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file has an example entry for how to call the refresh procedure. You should modify this to run as often as you need depending on how recent you need your metric data to be. This procedure is safe to run on the primary or replicas and will safely exit if the database is in recovery mode.
+
+Configuration table {{< shell >}}monitor.metric_views{{< /shell >}}:
+
+|       Column       |       Description                                                |
+|--------------------|------------------------------------------------------------------|
+| view_schema     | Schema containing the materialized view |
+| view_name       | Name of the materialized view |
+| concurrent_refresh | Boolean that sets whether this materialized view can be refreshed concurrently (requires a unique index) |
+| run_interval       | How often this materialized view should have its data refreshed. Must be a value compatible with the PG interval type   |
+| last_run           | Timestamp of the last time this view was refreshed |
+| active             | Boolean that sets whether this view should be refreshed when the procedure is called |
+| scope              | Whether the data contained in the view is per-database or instance-wide. Currently unused |
+
+You are also free to use this materialized view system for your own custom metrics as well. Simply make a materialized view, add its name to the configuration table and ensure the user running the refresh has permissions to do so for your view(s).
+
 ##### Bloat setup
 
 Run the script on the specific database(s) you will be monitoring for bloat in the cluster. See the note below, or in crontab.txt, concerning a superuser requirement for using this script.
@@ -219,9 +248,13 @@ psql -d postgres -c "CREATE EXTENSION pgstattuple;"
 /usr/bin/pg_bloat_check.py -c "host=localhost dbname=postgres user=postgres" --create_stats_table
 psql -d postgres -c "GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE ON bloat_indexes, bloat_stats, bloat_tables TO ccp_monitoring;"
 ```
-The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file is meant to be a guide for how you setup the {{< shell >}}ccp_monitoring{{< /shell >}} _crontab_. You should modify crontab entries to schedule your bloat check for off-peak hours. This script is meant to be run at most, once a week. Once a month is usually good enough for most databases as long as the results are acted upon quickly.
+The {{< shell >}}/etc/postgres_exporter/##/crontab.txt{{< /shell >}} file has an example bloat check crontab entry. Modify this example to schedule bloat checking weekly during your 'off-peak' hours; alternatively, scheduling it monthly is usually good enough for most databases as long as the results are acted upon quickly.
 
-{{< note >}}The script requires being run by a database superuser by default since it must be able to run a scan on every table. If you'd like to not run it as a superuser, you will have to create a new role that has read permissions on all tables in all schemas that are to be monitored for bloat. You can then change the user in the connection string option to the script. {{< /note >}}
+{{< note >}}Bloat monitoring requires the user running the check to be able to read all possible tables that will ever exist. PostgreSQL 14 introduced the built-in role {{< shell >}}pg_read_all_data{{< /shell >}} that can be granted to any role to allow it to read all possible data for the entire cluster. It is recommended to grant this role vs running the bloat check as a superuser. If you are running a version of PostgreSQL less than 14, a superuser is required and you will have to adjust the crontab accordingly to run as that user.
+```
+GRANT pg_read_all_data TO ccp_monitoring;
+```
+{{< /note >}}
 
 ##### Blackbox Exporter
 
@@ -301,7 +334,7 @@ PostgreSQL metrics are collected by the [postgres_exporter](https://github.com/w
 
 #### Common Metrics
 
-Metrics contained in the `queries_common.yml` file. These metrics are common to all versions of PostgreSQL and are recommended as a minimum default for the global exporter.
+Metrics contained in the `queries_global.yml` file. These metrics are common to all versions of PostgreSQL and are recommended as a minimum default for the global exporter.
 
  * *ccp_archive_command_status_seconds_since_last_fail* - Seconds since the last `archive_command` run failed. If zero, the `archive_command` is succeeding without error.
 
@@ -309,7 +342,25 @@ Metrics contained in the `queries_common.yml` file. These metrics are common to 
 
  * *ccp_is_in_recovery_status* - Current value of the pg_is_in_recovery() function expressed as 2 for true (instance is a replica) and 1 for false (instance is a primary)
 
+ * *ccp_connection_stats_active* - Count of active connections
+
+ * *ccp_connection_stats_idle* - Count of idle connections
+
+ * *ccp_connection_stats_idle_in_txn* - Count of idle in transaction connections
+
+ * *ccp_connection_stats_max_blocked_query_time* - Runtime of longest running query that has been blocked by a heavyweight lock
+
+ * *ccp_connection_stats_max_connections* - Current value of max_connections for reference
+
+ * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
+
+ * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT). 
+ 
+ * *ccp_connection_stats_max_blocked_query_time* - Runtime of the longest running query that has been blocked by a heavyweight lock
+
  * *ccp_locks_count* - Count of active lock types per database
+
+ * *ccp_pg_hba_checksum_status* - Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_hba_checksum`. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid(). Note this will clear the history table.
 
  * *ccp_pg_settings_checksum_status* -  Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_settings_checksum`. To reset current config to valid after alert, run monitor.pg_settings_checksum_set_valid(). Note this will clear the history table.
 
@@ -317,15 +368,30 @@ Metrics contained in the `queries_common.yml` file. These metrics are common to 
 
  * *ccp_postgresql_version_current* - Version of PostgreSQL that this exporter is monitoring. Value is the 6 digit integer returned by the `server_version_num` PostgreSQL configuration variable to allow easy monitoring for version changes.
 
+ * *ccp_replication_lag_replay_time* - Time since a replica received and replayed a WAL file; only shown on replica instances. Note that this is not the main way to determine if a replica is behind its primary. This metric only monitors the time since the replica replayed the WAL vs when it was received. It also does not monitor when a WAL replay replica completely stops receiving WAL (see received_time metric). It is a secondary metric for monitoring WAL replay on the replica itself. This metric always returns zero on a primary.
+
+ * *ccp_replication_lag_received_time* - Similar to *ccp_replication_lag_replay_time*, however this value always increases between replay of WAL files. Effective for monitoring that a WAL replay replica has actually received WAL files. Note this will cause false positives when used as an alert for replica lag if the primary receives little to no writes (which means there is no WAL to send). This metric always returns zero on a primary.
+
+ * *ccp_replication_lag_size_bytes* - Only provides values on instances that have attached replicas (primary, cascading replica). Tracks byte lag of every streaming replica connected to this database instance. This is the main way that replication lag is monitored. Note that if you have WAL replay only replicas, this will not be reflected here.
+
+ * *ccp_replication_slots_active* - Active state of given replication slot. 1 = true. 0 = false.
+
+ * *ccp_replication_slots_retained_bytes* - The amount of WAL (in bytes) being retained for given slot.
+
  * *ccp_sequence_exhaustion_count* - Checks for any sequences that may be close to exhaustion (by default greater than 75% usage). Note this checks the sequences themselves, not the values contained in the columns that use said sequences. Function `monitor.sequence_status()` can provide more details if run directly on database instance.
 
  * *ccp_settings_pending_restart_count* - Number of settings from pg_settings catalog in a pending_restart state. This value is from the similarly named column found in pg_catalog.pg_settings.
 
+ * *ccp_wal_activity_total_size_bytes* - Current size in bytes of the WAL directory
+
+ * *ccp_wal_activity_last_5_min_size_bytes* - Current size in bytes of the last 5 minutes of WAL generation. Includes recycled WALs.
+
 The meaning of the following `ccp_transaction_wraparound` metrics, and how to manage when they are triggered, is covered more extensively in this blog post: https://info.crunchydata.com/blog/managing-transaction-id-wraparound-in-postgresql 
 
- * *ccp_transaction_wraparound_percent_towards_emergency_autovac* - Recommended thresholds set to 75%/95% when first evaluating vacuum settings on new systems. Once those have been reviewed and at least one instance-wide vacuum has been run, recommend thresholds of 110%/125%. Alerting above 100% for extended periods of time means that autovacuum is not able to keep up with current transaction rate and needs further tuning.
+ * *ccp_transaction_wraparound_percent_towards_emergency_autovac* - Recommended thresholds set to 75%/95% when first evaluating vacuum settings on new systems. Once those have been reviewed and at least one instance-wide vacuum has been run, recommend thresholds of 110%/125%. Reaching 100% is not a cause for immediate concern, but alerting above 100% for extended periods of time means that autovacuum is not able to keep up with current transaction rate and needs further tuning.
 
- * *ccp_transaction_wraparound_percent_towards_wraparound* - Recommend thresholds set to 50%/75%. If any of these thresholds is tripped, current vacuum settings must be evaluated and tuned ASAP. If critical threshold is reached, it is vitally important that vacuum be run on tables with old transaction IDs to avoid the cluster being forced to shut down and only be able to run in single user mode.
+ * *ccp_transaction_wraparound_percent_towards_wraparound* - Recommend thresholds set to 50%/75%. If any of these thresholds is tripped, current vacuum settings must be evaluated and tuned ASAP. If critical threshold is reached, it is vitally important that vacuum be run on tables with old transaction IDs to avoid the cluster being forced to shut down for extended offline maintenance.
+
 
 The following `ccp_stat_bgwriter` metrics are statistics collected from the [pg_stat_bgwriter](https://www.postgresql.org/docs/current/monitoring-stats.html#PG-STAT-BGWRITER-VIEW) view for monitoring performance. These metrics cover important performance information about flushing data out to disk. Please see the documentation for further details on these metrics.
 
@@ -366,38 +432,6 @@ The following `ccp_stat_database_*` metrics are statistics collected from the [p
 #### PostgreSQL Version Specific Metrics
 
 The following metrics either require special considerations when monitoring specific versions of PostgreSQL, or are only available for specific versions. These metrics are found in the `queries_pg##.yml` files, where ## is the major version of PG. Unless otherwise noted, the below metrics are available for all versions of PG. These metrics are recommend as a minimum default for the global exporter.
-
- * *ccp_connection_stats_active* - Count of active connections
-
- * *ccp_connection_stats_idle* - Count of idle connections
-
- * *ccp_connection_stats_idle_in_txn* - Count of idle in transaction connections
-
- * *ccp_connection_stats_max_blocked_query_time* - Runtime of longest running query that has been blocked by a heavyweight lock
-
- * *ccp_connection_stats_max_connections* - Current value of max_connections for reference
-
- * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
-
- * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT). 
- 
- * *ccp_connection_stats_max_blocked_query_time* - Runtime of the longest running query that has been blocked by a heavyweight lock
-
- * *ccp_replication_lag_replay_time* - Time since a replica received and replayed a WAL file; only shown on replica instances. Note that this is not the main way to determine if a replica is behind its primary. This metric only monitors the time since the replica replayed the WAL vs when it was received. It also does not monitor when a WAL replay replica completely stops receiving WAL (see received_time metric). It is a secondary metric for monitoring WAL replay on the replica itself.
-
- * *ccp_replication_lag_received_time* - Similar to *ccp_replication_lag_replay_time*, however this value always increases between replay of WAL files. Effective for monitoring that a WAL replay replica has actually received WAL files. Note this will cause false positives when used as an alert for replica lag if the primary receives no writes (which means there is no WAL to send).
-
- * *ccp_replication_lag_size_bytes* - Only provides values on instances that have attached replicas (primary, cascading replica). Tracks byte lag of every streaming replica connected to this database instance. This is the main way that replication lag is monitored. Note that if you have WAL replay only replicas, this will not be reflected here.
-
- * *ccp_replication_slots_active* - Active state of given replication slot. 1 = true. 0 = false.
-
- * *ccp_replication_slots_retained_bytes* - The amount of WAL (in bytes) being retained for given slot.
-
- * *ccp_wal_activity_total_size_bytes* - Current size in bytes of the WAL directory
-
- * *ccp_wal_activity_last_5_min_size_bytes* - PostgreSQL 10 and later only. Current size in bytes of the last 5 minutes of WAL generation. Includes recycled WALs.
-
- * *ccp_pg_hba_checksum_status* - PostgreSQL 10 and later only.  Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_hba_checksum`. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid(). Note this will clear the history table.
 
  * *ccp_data_checksum_failure_count* - PostgreSQL 12 and later only. Total number of checksum failures on this database.
 
@@ -467,7 +501,7 @@ The following metric prefixes correspond to the SHOW command views found in the 
 
 #### pg_stat_statements Metrics
 
-Collecting all per-query metrics into Prometheus could greatly increase storage requirements and heavily impact performance without sufficient resources. Therefore the metrics below give simplified numeric metrics on overall statistics and Top N queries. N can be set with the PG_STAT_STATEMENTS_LIMIT variable in the exporter sysconfig file (defaults to 20). Note that the statistics for individual queries can only be reset on PG12+. Prior to that, pg_stat_statements must have all statistics reset to redo the top N queries. Due to privileges only available in more recent versions of PostgreSQL, collection of these metrics is only supported in PG10+.
+Collecting all per-query metrics into Prometheus could greatly increase storage requirements and heavily impact performance without sufficient resources. Therefore the metrics below give simplified numeric metrics on overall statistics and Top N queries. N can be set with the PG_STAT_STATEMENTS_LIMIT variable in the exporter sysconfig file (defaults to 20). Note that the statistics for individual queries can only be reset on PG12+. Prior to that, pg_stat_statements must have all statistics reset to redo the top N queries.
 
  * *ccp_pg_stat_statements_top_max_time_ms* -  Maximum time spent in the statement in milliseconds per database/user/query for the top N queries
 

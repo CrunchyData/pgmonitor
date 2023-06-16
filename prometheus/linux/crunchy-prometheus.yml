@@ -68,6 +68,24 @@ scrape_configs:
   #       - 192.168.122.26:8009 # patroni
   #       - 192.168.122.36:8009 # patroni
   #       - 192.168.122.12:7000 # haproxy
+  ## Some services require tls probes. Note that not all TLS services need this (Ex. pgbouncer)
+  # - job_name: 'blackbox_tcp_tls_services'
+  #   metrics_path: /probe
+  #   params:
+  #     module: [tcp_connect_tls]
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: __param_target
+  #     - source_labels: [__param_target]
+  #       target_label: instance
+  #     - target_label: __address__
+  #       replacement: 127.0.0.1:9115
+  #    static_configs:
+  #      - targets:
+  #        - 127.0.0.1:3000 # grafana
+  #        - 192.168.122.11:8009 # etcd
+  #        - 192.168.122.21:8009 # etcd
+  #        - 192.168.122.31:8009 # etcd
 
 
 #### Uncomment below if using alertmanager ####        
