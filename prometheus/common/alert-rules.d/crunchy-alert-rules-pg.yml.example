@@ -31,7 +31,7 @@ groups:
     annotations:
       summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
 
-  - alert: NoPrimary
+  - alert: PGNoPrimary
     expr: max by (cluster_name) (ccp_is_in_recovery_status) < 2
     for: 30s
     labels:
