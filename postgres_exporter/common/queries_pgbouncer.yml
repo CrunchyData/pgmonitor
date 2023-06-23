@@ -15,7 +15,7 @@ ccp_pgbouncer_pools:
             , sum(sv_idle) AS server_idle
             , sum(sv_used) AS server_used
             FROM pgbouncer_pools as p
-            GROUP BY 1"
+            GROUP BY 1,2"
   metrics:
     - pgbouncer_target_host:
           usage: "LABEL"
@@ -72,7 +72,7 @@ ccp_pgbouncer_clients:
             , state AS client_state
             , count(*) AS client_state_count
             FROM pgbouncer_clients as p
-            GROUP BY 1,2"
+            GROUP BY 1,2,3"
   metrics:
     - pgbouncer_target_host:
           usage: "LABEL"
@@ -93,7 +93,7 @@ ccp_pgbouncer_servers:
             , state as server_state
             , count(*) AS server_state_count
             FROM pgbouncer_servers as p
-            GROUP BY 1,2"
+            GROUP BY 1,2,3"
   metrics:
     - pgbouncer_target_host:
           usage: "LABEL"
