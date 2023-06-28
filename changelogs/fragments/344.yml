@@ -1,0 +1,2 @@
+minor_changes:
+  - postgres_exporter - Filter out idle-in-transaction sessions from general max query runtime metrics.
