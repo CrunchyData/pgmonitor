@@ -7,15 +7,19 @@
 ###
 
 ccp_pgbouncer_pools:
-  query: "SELECT database || '.' || p.user as conn_pool
+  query: "SELECT pgbouncer_target_host
+            , database || '.' || p.user as conn_pool
             , sum(cl_active) AS client_active
             , sum(cl_waiting) AS client_waiting
             , sum(sv_active) AS server_active
             , sum(sv_idle) AS server_idle
             , sum(sv_used) AS server_used
             FROM pgbouncer_pools as p
-            GROUP BY 1"
+            GROUP BY 1,2"
   metrics:
+    - pgbouncer_target_host:
+          usage: "LABEL"
+          description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
           description: "Conection Pool"
@@ -36,7 +40,8 @@ ccp_pgbouncer_pools:
           description: "Server connections that have been idle more than server_check_delay, so they need server_check_query to run on it before it can be used."
 
 ccp_pgbouncer_databases:
-  query: "SELECT name AS pool_db
+  query: "SELECT pgbouncer_target_host
+            ,  name AS pool_db
             , CASE WHEN max_connections != 0
               THEN ((current_connections::float / max_connections::float) * 100)::int
               ELSE ((current_connections::float / pool_size::float) * 100)::int
@@ -45,6 +50,9 @@ ccp_pgbouncer_databases:
             , disabled
             FROM pgbouncer_databases"
   metrics:
+    - pgbouncer_target_host:
+          usage: "LABEL"
+          description: "FDW server name for the target PgBouncer host"
     - pool_db:
           usage: "LABEL"
           description: "Database as known to pgbouncer"
@@ -59,12 +67,16 @@ ccp_pgbouncer_databases:
           description: "Pooler connections to this database are currently disabled."
 
 ccp_pgbouncer_clients:
-  query: "SELECT database || '.' || p.user as conn_pool
+  query: "SELECT pgbouncer_target_host
+            ,  database || '.' || p.user as conn_pool
             , state AS client_state
             , count(*) AS client_state_count
             FROM pgbouncer_clients as p
-            GROUP BY 1,2"
+            GROUP BY 1,2,3"
   metrics:
+    - pgbouncer_target_host:
+          usage: "LABEL"
+          description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
           description: "Conection Pool"
@@ -76,12 +88,16 @@ ccp_pgbouncer_clients:
           description: "Count of the client connections with this status."
 
 ccp_pgbouncer_servers:
-  query: "SELECT database || '.' || p.user as conn_pool
+  query: "SELECT pgbouncer_target_host
+            ,  database || '.' || p.user as conn_pool
             , state as server_state
             , count(*) AS server_state_count
             FROM pgbouncer_servers as p
-            GROUP BY 1,2"
+            GROUP BY 1,2,3"
   metrics:
+    - pgbouncer_target_host:
+          usage: "LABEL"
+          description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
           description: "Conection Pool"
@@ -93,11 +109,15 @@ ccp_pgbouncer_servers:
           description: "Count of the server connections with this status."
 
 ccp_pgbouncer_lists:
-  query: "SELECT list AS item
+  query: "SELECT pgbouncer_target_host
+            ,  list AS item
             , items AS item_count
             FROM pgbouncer_lists
             WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')"
   metrics:
+    - pgbouncer_target_host:
+          usage: "LABEL"
+          description: "FDW server name for the target PgBouncer host"
     - item:
           usage: "LABEL"
           description: "Items that have registered with pgBouncer"

@@ -64,6 +64,11 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 - PostgreSQL 10+ SCRAM-SHA-256 encrypted passwords are supported on the Linux version of pgMonitor 4.0 or later only.
 
+### PgBouncer
+
+- PgBouncer 1.17
+- pgbouncer_fdw 1.0.0
+
 ## Installation
 
 Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
@@ -73,12 +78,6 @@ Installation instructions for each package are provided in that packages subfold
 ### 2. [Prometheus](/prometheus)
 
 ### 3. [Grafana](/grafana)
-
-## Roadmap
-
-- Additional monitoring metrics out-of-the-box
-- Improved visualizations
-- Project build testing
 
 ## Version History
 

@@ -1,0 +1,4 @@
+minor_change:
+  - postgres_exporter - Update query file to support pgbouncer_fdw 1.0.0
+  - grafana - Update dashboard to support multiple pgbouncer targets exported by new pgbouncer_fdw
+  - grafana - Minimum version of Grafana is now 9.2.19
