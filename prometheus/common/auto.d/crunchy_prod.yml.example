@@ -1,0 +1,29 @@
+###
+#
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+# Each pair of global and per-db exporters for each PostgreSQL instance should be given a matching "job" name so that Prometheus properly groups them together
+# Example below is a primary and its replica in production. Failover can make either one primary at any time.
+- targets: [ "10.123.202.12:9187" ]
+  labels:
+    job: "proddb1"
+    exp_type: "pg"
+    cluster_name: "crunchy_prod"
+- targets: [ "10.123.202.12:9188" ]
+  labels:
+    job: "proddb1"
+    exp_type: "pg"
+    cluster_name: "crunchy_prod"
+
+- targets: [ "10.123.202.13:9187" ]
+  labels:
+    job: "proddb2"
+    exp_type: "pg"
+    cluster_name: "crunchy_prod"
+- targets: [ "10.123.202.13:9188" ]
+  labels:
+    job: "proddb2"
+    exp_type: "pg"
+    cluster_name: "crunchy_prod"
