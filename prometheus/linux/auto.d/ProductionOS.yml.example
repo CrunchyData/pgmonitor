@@ -4,7 +4,7 @@
 #
 ###
 
-- targets: [ "DB_SERVER_IP:NODE_OR_WMI_EXPORTER_PORT" ]
+- targets: [ "DB_SERVER_IP:NODE_EXPORTER_PORT" ]
   labels:
     job: "Prod"
     exp_type: "node"
