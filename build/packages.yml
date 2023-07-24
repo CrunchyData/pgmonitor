@@ -127,9 +127,10 @@ packages:
           - { source: "postgres_exporter/common/queries_*.yml", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/common/*.sql", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/common/pg##/*", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "postgres_exporter/linux/queries_backrest.yml", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/queries_*.yml", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##", target: "/etc/sysconfig/postgres_exporter_pg##", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##_per_db", target: "/etc/sysconfig/postgres_exporter_pg##_per_db", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/crontab.txt", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "pgmonitor-pg-common" }
           - { pkg_name: "postgresql##-contrib" }
