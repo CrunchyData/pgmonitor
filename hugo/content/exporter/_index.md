@@ -91,7 +91,7 @@ The following pgMonitor configuration files should be placed according to the fo
 | postgres_exporter/common/pg##/queries*.yml | /etc/postgres_exporter/##/queries*.yml  |
 | postgres_exporter/common/queries*.yml | /etc/postgres_exporter/##/queries*.yml  |
 | postgres_exporter/linux/crontab.txt | /etc/postgres_exporter/##/crontab.txt  |
-| postgres_exporter/linux/crunchy_postgres_exporter@.service | /usr/lib/systemd/system/crunchy_postgres_exporter@.service  |
+| postgres_exporter/linux/crunchy-postgres-exporter@.service | /usr/lib/systemd/system/crunchy-postgres-exporter@.service  |
 | postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg## | /etc/sysconfig/postgres_exporter_pg##  |
 | postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##_per_db | /etc/sysconfig/postgres_exporter_pg##_per_db  |
 | postgres_exporter/linux/queries_*.yml | /etc/postgres_exporter/##/queries_*.yml  |
