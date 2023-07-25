@@ -1,2 +1,0 @@
-minor_changes:
-  - prometheus - Add alert for cases where a PostgreSQL cluster does not have an instance that is the leader/primary.

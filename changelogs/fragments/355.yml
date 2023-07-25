@@ -1,2 +1,0 @@
-trivial:
-  - packaging - update build file to include all sql files in the common folder for postgres_exporter

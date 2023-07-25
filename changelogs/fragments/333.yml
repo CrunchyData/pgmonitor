@@ -1,3 +1,0 @@
-minor_changes:
-  - blackbox_exporter -  added additional probe for TCP with TLS enabled
-  - prometheus - added additional job example to scan TCP probes with TLS
