@@ -1,2 +1,0 @@
-minor_changes:
-  - prometheus - Enable the PGDataChecksum alert by default for PG12+

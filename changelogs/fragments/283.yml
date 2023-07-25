@@ -1,4 +1,0 @@
-minor_change:
-  - postgres_exporter - Add WAL statistics for pg_stat_statements
-  - grafana - Add panel to Query Statistics dashboard for top WAL stats by bytes
-  - grafana - Minimum version of Grafana is now 8.5.15

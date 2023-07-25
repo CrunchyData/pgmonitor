@@ -1,3 +1,0 @@
-major_changes:
- - postgres_exporter - Added options for using materialized views to collect metrics that may cause longer query runtimes (object sizing, statistic, etc)
- - postgres_exporter - Moved the database size metric out of the 'queries_global.yml' file and into the 'queries_global_dbsize.yml' file to allow an optional materialized view metric. Ensure query file configuration list is updated to account for this change
