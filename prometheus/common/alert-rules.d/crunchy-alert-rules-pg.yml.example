@@ -59,8 +59,7 @@ groups:
 ## Role switch from Replica to Primary
 
   - alert: PGRecoveryStatusSwitch
-    expr: increase(ccp_is_in_recovery_status[60s]) > 1
-    for: 10s
+    expr: increase(ccp_is_in_recovery_status[60s]) > 1    
     labels:
       service: postgresql
       severity: critical
