@@ -63,7 +63,7 @@ groups:
     labels:
       service: postgresql
       severity: critical
-      severity_num: 300
+      severity_num: 200
     annotations:
       summary: '{{ $labels.job }} has changed from replica to primary'
 
