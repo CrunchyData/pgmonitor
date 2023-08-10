@@ -56,21 +56,17 @@ groups:
     annotations:
       summary: '{{ $labels.job }} has had a PostgreSQL failover event. Please check systems involved in this cluster for more details'
 
-## Whether a system switches from primary to replica or vice versa must be configured per named job.
-## No way to tell what value a system is supposed to be without a rule expression for that specific system
-## 2 to 1 means it changed from primary to replica. 1 to 2 means it changed from replica to primary
-## Set this alert for each system that you want to monitor a recovery status change
-## Below is an example for a target job called "Replica" and watches for the value to change above 1 which means it's no longer a replica
-#
-#  - alert: PGRecoveryStatusSwitch_Replica
-#    expr: ccp_is_in_recovery_status{job="Replica"} > 1
-#    for: 60s
-#    labels:
-#      service: postgresql
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      summary: '{{ $labels.job }} has changed from replica to primary'
+## Role switch from Replica to Primary
+
+  - alert: PGRecoveryStatusSwitch
+    expr: increase(ccp_is_in_recovery_status[60s]) > 1
+    for: 10s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: '{{ $labels.job }} has changed from replica to primary'
 
 
 ## Absence alerts must be configured per named job, otherwise there's no way to know which job is down
