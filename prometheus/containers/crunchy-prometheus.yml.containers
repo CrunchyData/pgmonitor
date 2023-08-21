@@ -58,15 +58,13 @@ scrape_configs:
     target_label: role
     replacement: '$1'
     separator: ""
-  - source_labels: [dbname]
-    target_label: dbname
-    replacement: '$1'
-  - source_labels: [relname]
-    target_label: relname
-    replacement: '$1'
-  - source_labels: [schemaname]
-    target_label: schemaname
-    replacement: '$1'
 
 rule_files:
   - /etc/prometheus/alert-rules.d/*.yml
+
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "crunchy-alertmanager:9093"
