@@ -1,0 +1,36 @@
+# Global settings and defaults.
+global:
+  # Subtracted from Prometheus' scrape_timeout to give us some headroom and prevent Prometheus from
+  # timing out first.
+  scrape_timeout_offset: 500ms
+  # Minimum interval between collector runs: by default (0s) collectors are executed on every scrape.
+  min_interval: 0s
+  # Maximum number of open connections to any one target. Metric queries will run concurrently on
+  # multiple connections.
+  max_connections: 3
+  # Maximum number of idle connections to any one target.
+  max_idle_connections: 3
+  # Maximum amount of time a connection may be reused to any one target. Infinite by default.
+  max_connection_lifetime: 10m
+
+# The target(s) to monitor and the list of collectors to execute
+#
+jobs:
+  - job_name: global_targets
+    collectors: [crunchy_global]
+    static_configs:
+        - targets:
+            pg1: 'pg://ccp_monitoring@127.0.0.1:5432/postgres?sslmode=disable'
+  - job_name: per_db_targets
+    collectors: [crunchy_per_db]
+    static_configs:
+        - targets:
+            pg1: 'pg://ccp_monitoring@127.0.0.1:5432/postgres?sslmode=disable'
+#            pg2: 'pg://ccp_monitoring@127.0.0.1:5432/testdb?sslmode=disable'
+
+# Collector definition files.
+# Glob patterns are supported (see <https://pkg.go.dev/path/filepath#Match> for syntax).
+collector_files:
+  - "/etc/sql_exporter/crunchy_global_collector.yml"
+  - "/etc/sql_exporter/crunchy_per_db_collector.yml"
+
