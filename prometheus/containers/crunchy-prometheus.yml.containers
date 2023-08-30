@@ -13,58 +13,73 @@ scrape_configs:
 - job_name: 'crunchy-postgres-exporter'
   kubernetes_sd_configs:
   - role: pod
-
+    selectors:
+    - role: pod
+      label: postgres-operator.crunchydata.com/crunchy-postgres-exporter=true
   relabel_configs:
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_crunchy_postgres_exporter,__meta_kubernetes_pod_label_crunchy_postgres_exporter]
+  # Keep exporter port and drop all others
+  - source_labels: [__meta_kubernetes_pod_container_port_number]
     action: keep
-    regex: true
-    separator: ""
-  - source_labels: [__meta_kubernetes_pod_container_port_number]
-    action: drop
-    regex: 5432
-  - source_labels: [__meta_kubernetes_pod_container_port_number]
-    action: drop
-    regex: 10000
-  - source_labels: [__meta_kubernetes_pod_container_port_number]
-    action: drop
-    regex: 8009
-  - source_labels: [__meta_kubernetes_pod_container_port_number]
-    action: drop
-    regex: 2022
-  - source_labels: [__meta_kubernetes_pod_container_port_number]
-    action: drop
-    regex: ^$
+    regex: 9187
+  # Set label for namespace
   - source_labels: [__meta_kubernetes_namespace]
-    action: replace
     target_label: kubernetes_namespace
+  # Set label for pod name
   - source_labels: [__meta_kubernetes_pod_name]
     target_label: pod
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster,__meta_kubernetes_pod_label_pg_cluster]
-    target_label: cluster
-    separator: ""
-    replacement: '$1'
-  - source_labels: [__meta_kubernetes_namespace,cluster]
+  # Convert namespace and cluster name to pg_cluster=namespace:cluster
+  - source_labels: [__meta_kubernetes_namespace,__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster]
     target_label: pg_cluster
     separator: ":"
     replacement: '$1$2'
+  # Convert kubernetes pod ip to ip
   - source_labels: [__meta_kubernetes_pod_ip]
     target_label: ip
-    replacement: '$1'
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_instance,__meta_kubernetes_pod_label_deployment_name]
+  # Convert postgres-operator.crunchydata.com/instance to deployment
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_instance]
     target_label: deployment
-    replacement: '$1'
-    separator: ""
-  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role,__meta_kubernetes_pod_label_role]
+  # Convert postgres-operator.crunchydata.com/role to role
+  - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role]
     target_label: role
-    replacement: '$1'
-    separator: ""
 
+- job_name: 'crunchy-postgres-exporter-v4'
+  kubernetes_sd_configs:
+  - role: pod
+    selectors:
+    - role: pod
+      label: crunchy-postgres-exporter=true
+
+  relabel_configs:
+  # Keep exporter port and drop all others
+  - source_labels: [__meta_kubernetes_pod_container_port_number]
+    action: keep
+    regex: 9187
+  # Set label for namespace
+  - source_labels: [__meta_kubernetes_namespace]
+    target_label: kubernetes_namespace
+  # Set label for pod name
+  - source_labels: [__meta_kubernetes_pod_name]
+    target_label: pod
+  # Convert namespace and cluster name to pg_cluster=namespace:cluster
+  - source_labels: [__meta_kubernetes_namespace,__meta_kubernetes_pod_label_pg_cluster]
+    target_label: pg_cluster
+    separator: ":"
+    replacement: '$1$2'
+  # Convert kubernetes pod ip to ip
+  - source_labels: [__meta_kubernetes_pod_ip]
+    target_label: ip
+  # Set deployment_name as deployment label
+  - source_labels: [__meta_kubernetes_pod_label_deployment_name]
+    target_label: deployment
+  # Set label for role
+  - source_labels: [__meta_kubernetes_pod_label_role]
+    target_label: role
 rule_files:
   - /etc/prometheus/alert-rules.d/*.yml
-
 alerting:
   alertmanagers:
-  - scheme: http
-    static_configs:
-    - targets:
-      - "crunchy-alertmanager:9093"
+  - kubernetes_sd_configs:
+    - role: pod
+      selectors:
+      - role: pod
+        label: app.kubernetes.io/component=crunchy-alertmanager
