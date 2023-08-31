@@ -3,30 +3,43 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": false,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1618856153917,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -57,6 +70,7 @@
       "hideTimeOverride": true,
       "id": 51,
       "options": {
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -68,9 +82,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
@@ -82,14 +100,18 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -120,6 +142,7 @@
       "hideTimeOverride": true,
       "id": 54,
       "options": {
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -131,9 +154,13 @@
         "showThresholdMarkers": false,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "1 - (ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
           "interval": "",
           "legendFormat": "",
@@ -145,13 +172,15 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -197,9 +226,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
@@ -211,14 +244,18 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -261,9 +298,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "",
@@ -275,14 +316,18 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -325,9 +370,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})  / sum( ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
           "interval": "",
           "legendFormat": "",
@@ -335,17 +384,19 @@
         }
       ],
       "timeFrom": "5m",
-      "title": "Cache Hit Ratio",
+      "title": "Lifetime Cache Hit Ratio",
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -370,6 +421,8 @@
       "id": 55,
       "options": {
         "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -381,9 +434,13 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}",
           "interval": "",
           "legendFormat": "{{replica}}",
@@ -399,10 +456,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -436,7 +495,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -446,6 +505,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
           "interval": "",
@@ -456,6 +519,10 @@
           "step": 60
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_active{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
@@ -465,6 +532,10 @@
           "step": 60
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_idle_in_txn{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
@@ -474,6 +545,10 @@
           "step": 60
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
           "intervalFactor": 2,
@@ -484,9 +559,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Connections",
       "tooltip": {
         "shared": true,
@@ -495,9 +568,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": [
           "current"
@@ -507,25 +578,18 @@
         {
           "$$hashKey": "object:647",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:648",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -533,11 +597,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -573,7 +639,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -589,6 +655,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
           "format": "time_series",
           "instant": false,
@@ -598,6 +668,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_replication_lag_replay_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
           "interval": "",
@@ -606,9 +680,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Replication Lag",
       "tooltip": {
         "shared": true,
@@ -617,9 +689,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -629,7 +699,6 @@
           "format": "bytes",
           "label": "Lag Bytes",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
@@ -638,14 +707,12 @@
           "format": "dtdhms",
           "label": "Lag Time (hh:mm:ss)",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -653,10 +720,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -694,7 +763,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -704,6 +773,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -712,6 +785,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}",
           "format": "time_series",
           "interval": "",
@@ -721,9 +798,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Database Size - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -732,9 +807,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -742,25 +815,18 @@
         {
           "$$hashKey": "object:399",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:400",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -768,10 +834,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -805,7 +873,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -815,6 +883,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -823,6 +895,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]) + irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])",
           "hide": false,
           "interval": "",
@@ -831,9 +907,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Transactions Per Second (TPS) - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -842,9 +916,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -852,25 +924,18 @@
         {
           "$$hashKey": "object:229",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:230",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -878,14 +943,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
+      "description": "",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -913,7 +975,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -923,6 +985,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
@@ -932,9 +998,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "% Toward Wraparound",
       "tooltip": {
         "shared": true,
@@ -943,9 +1007,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -953,25 +1015,18 @@
         {
           "$$hashKey": "object:1131",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:1132",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -979,12 +1034,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1013,7 +1065,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1023,6 +1075,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
@@ -1032,9 +1088,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "% Towards Emergency Vacuum",
       "tooltip": {
         "shared": true,
@@ -1043,9 +1097,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1053,25 +1105,18 @@
         {
           "$$hashKey": "object:1207",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:1208",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1079,14 +1124,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
+      "description": "",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1122,7 +1164,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1132,6 +1174,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_tup_fetched{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1142,6 +1188,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_tup_inserted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1152,6 +1202,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_tup_updated{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1162,6 +1216,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_tup_deleted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1172,6 +1230,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_tup_returned{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1183,9 +1245,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CRUD - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -1194,9 +1254,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1204,25 +1262,18 @@
         {
           "$$hashKey": "object:1053",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:1054",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1230,12 +1281,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1266,7 +1314,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1276,6 +1324,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accessexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1285,6 +1337,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accesssharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1294,6 +1350,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"exclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1303,6 +1363,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1312,6 +1376,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowsharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1321,6 +1389,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1330,6 +1402,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharerowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1339,6 +1415,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
           "interval": "",
@@ -1349,9 +1429,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Locks - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -1360,9 +1438,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1370,25 +1446,18 @@
         {
           "$$hashKey": "object:1795",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:1796",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1396,10 +1465,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1431,7 +1502,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1441,21 +1512,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}  / ( ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m]))*100 /\n(sum(rate(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])) + \nsum(rate(ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])))\n",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{dbname}}",
           "metric": "pg_stat_database_",
+          "range": true,
           "refId": "A",
           "step": 120
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Cache Hit Ratio - [[pgdatabase]]",
+      "title": "Cache Hit Ratio (1 min rate) - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1463,9 +1538,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1473,25 +1546,18 @@
         {
           "$$hashKey": "object:885",
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:886",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1499,11 +1565,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1535,7 +1603,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1545,6 +1613,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1555,6 +1627,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1565,9 +1641,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Commit vs Rollback - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -1576,9 +1650,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1586,25 +1658,18 @@
         {
           "$$hashKey": "object:961",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:962",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1612,12 +1677,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1647,7 +1709,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1669,6 +1731,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "ccp_wal_activity_total_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "hide": false,
@@ -1678,6 +1744,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "idelta(ccp_archive_command_status_archived_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
           "interval": "",
@@ -1685,6 +1755,10 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "idelta(ccp_archive_command_status_failed_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
           "interval": "",
@@ -1693,9 +1767,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "WAL Activity",
       "tooltip": {
         "shared": true,
@@ -1704,9 +1776,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1716,8 +1786,6 @@
           "format": "bytes",
           "label": "Total Size",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
@@ -1725,14 +1793,11 @@
           "format": "short",
           "label": "Rate (5m)",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1740,12 +1805,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1777,7 +1839,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1787,6 +1849,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_bgwriter_buffers_alloc{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
@@ -1797,6 +1863,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_bgwriter_buffers_backend{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
@@ -1807,6 +1877,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
@@ -1817,6 +1891,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
@@ -1827,6 +1905,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "irate(ccp_stat_bgwriter_buffers_clean{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
@@ -1838,9 +1920,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Buffers",
       "tooltip": {
         "shared": true,
@@ -1849,9 +1929,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1859,25 +1937,18 @@
         {
           "$$hashKey": "object:2175",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:2176",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1885,12 +1956,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1921,7 +1989,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1931,6 +1999,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_database_deadlocks{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1941,6 +2013,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_database_conflicts{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -1952,9 +2028,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Conflicts/DeadLocks - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -1963,9 +2037,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1973,25 +2045,18 @@
         {
           "$$hashKey": "object:2099",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:2100",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1999,12 +2064,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -2035,7 +2097,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "9.2.20",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2045,6 +2107,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -2055,6 +2121,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -2064,6 +2134,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
@@ -2073,6 +2147,10 @@
           "step": 120
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
           "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
@@ -2082,9 +2160,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Vacuum/Analyze Activity Rate - [[pgdatabase]]",
       "tooltip": {
         "shared": true,
@@ -2093,9 +2169,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2103,45 +2177,38 @@
         {
           "$$hashKey": "object:2327",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:2328",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 27,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "crunchy",
-          "value": "crunchy"
+          "text": "charlie",
+          "value": "charlie"
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(up{exp_type='pg'}, cluster_name)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "PGCluster",
@@ -2157,22 +2224,21 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "crunchy_pg1_crunchy",
-          "value": "crunchy_pg1_crunchy"
+          "text": "charlie_ip16_pg1",
+          "value": "charlie_ip16_pg1"
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -2188,26 +2254,27 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "alpha",
+            "testdb"
           ],
           "value": [
-            "$__all"
+            "alpha",
+            "testdb"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "PGDatabase",
@@ -2223,7 +2290,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2250,5 +2316,6 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }
