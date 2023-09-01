@@ -7,9 +7,15 @@
 # config file version
 apiVersion: 1
 
+deleteDatasources:
+  - name: PROMETHEUS
+    orgId: 1
+  - name: ALERTMANAGER
+    orgId: 1
+
 datasources:
   - name: PROMETHEUS
-    uid: PDC1078F23EBDF0E5
+    uid: crunchyprometheus
     type: prometheus
     access: proxy
     url: http://localhost:9090
@@ -17,4 +23,16 @@ datasources:
     editable: False
     orgId: 1
     version: 1
+    jsonData:
+      manageAlerts: 'true'
+      alertmanagerUid: 'crunchyalertmanager'
+  - name: ALERTMANAGER
+    name: 'ALERTMANAGER'
+    uid: crunchyalertmanager
+    type: alertmanager
+    url: http://localhost:9093
+    access: proxy
+    jsonData:
+      implementation: 'prometheus'
+      handleGrafanaManagedAlerts: 'false'
 
