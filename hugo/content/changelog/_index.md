@@ -8,7 +8,7 @@ weight: 5
 
 ### Release Summary
 
-Version 4.9.0 of pgMonitor includes updates to add additional metrics and now better supports monitoring multiple pgbouncer hosts. Please see the full CHANGELOG for additional information about this release.
+Version 4.9.0 of pgMonitor includes updates to add additional metrics and now better supports monitoring multiple PgBouncer hosts. Please see the full CHANGELOG for additional information about this release.
 
 ### Major Changes
 
@@ -20,10 +20,10 @@ Version 4.9.0 of pgMonitor includes updates to add additional metrics and now be
   * blackbox_exporter -  added additional probe for TCP with TLS enabled
   * grafana - Add panel to Query Statistics dashboard for top WAL stats by bytes
   * grafana - Minimum version of Grafana is now 9.2.19
-  * grafana - Update dashboard to support multiple pgbouncer targets exported by new pgbouncer_fdw
+  * grafana - Update dashboard to support multiple PgBouncer targets exported by new pgbouncer_fdw
   * postgres_exporter - Add WAL statistics for pg_stat_statements
   * postgres_exporter - Filter out idle-in-transaction sessions from general max query runtime metrics.
-  * postgres_exporter - Update query file to support pgbouncer_fdw 1.0.0+
+  * postgres_exporter - Update query file to support PgBouncer_fdw 1.0.0+
   * prometheus - Add alert for cases where a PostgreSQL cluster does not have an instance that is the leader/primary
   * prometheus - Allow node_exporter's load alert to be based on the CPU count. Allows lowering of default thresholds and more accurate alerting
   * prometheus - Enable the PGDataChecksum alert by default for PG12+
@@ -69,7 +69,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
 ### Bug Fixes
   * Fixed inconsistency in the OS Details Grafana dashboard between the small left panel for the filesystem and the other filesystem panels.
-  * Fixed postgres_exporter queries for pgBouncer to select the proper "user" column.
+  * Fixed postgres_exporter queries for PgBouncer to select the proper "user" column.
 
 
 ## 4.6
