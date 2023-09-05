@@ -27,7 +27,6 @@ datasources:
       manageAlerts: 'true'
       alertmanagerUid: 'crunchyalertmanager'
   - name: ALERTMANAGER
-    name: 'ALERTMANAGER'
     uid: crunchyalertmanager
     type: alertmanager
     url: http://localhost:9093
