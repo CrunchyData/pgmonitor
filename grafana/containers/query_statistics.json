@@ -71,7 +71,7 @@
   ],
   "panels": [
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -125,7 +125,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -180,7 +180,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -237,7 +237,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -298,7 +298,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -393,7 +393,7 @@
       }
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -569,7 +569,7 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -745,7 +745,7 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -917,6 +917,116 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": "PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WAL Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 34
+      },
+      "id": 12,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "WAL Size"
+          }
+        ]
+      },
+      "pluginVersion": "8.5.15",
+      "targets": [
+        {
+          "datasource": "PROMETHEUS",
+          "expr": "ccp_pg_stat_statements_top_wal_bytes{pg_cluster=\"[[cluster]]\", dbname=~\"[[dbname]]\", role=\"[[role]]\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Query Total WAL Genterated (Bytes)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "exp_type": true,
+              "job": true,
+              "role": false
+            },
+            "indexByName": {
+              "Time": 6,
+              "Value": 5,
+              "__name__": 7,
+              "dbname": 0,
+              "exp_type": 8,
+              "instance": 2,
+              "job": 9,
+              "query": 3,
+              "queryid": 4,
+              "role": 1
+            },
+            "renameByName": {
+              "Value": "WAL Size"
+            }
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "15m",
@@ -930,7 +1040,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "label_values(pg_cluster)",
         "description": null,
         "error": null,
@@ -957,7 +1067,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "label_values({pg_cluster=\"[[cluster]]\"},role)",
         "description": null,
         "error": null,
@@ -984,7 +1094,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "label_values(ccp_database_size_bytes{pg_cluster=\"[[cluster]]\"},dbname)",
         "description": null,
         "error": null,
@@ -1011,7 +1121,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "label_values(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\", dbname=~\"[[dbname]]\"},exported_role)",
         "description": null,
         "error": null,

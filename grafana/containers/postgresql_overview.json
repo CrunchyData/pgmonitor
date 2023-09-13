@@ -51,7 +51,7 @@
   "panels": [
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -71,7 +71,7 @@
             },
             {
               "targetBlank": true,
-              "title": "POD Details",
+              "title": "Pod Details",
               "url": "d/4auP6Mk7k/pod-details?$__all_variables"
             },
             {
@@ -187,7 +187,7 @@
         "allFormat": "glob",
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "PROMETHEUS",
         "definition": "label_values(pg_cluster)",
         "description": null,
         "error": null,
