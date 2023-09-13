@@ -22,12 +22,12 @@ cp sql_exporter-0.12.1.linux-amd64/sql_exporter /usr//bin/
 RPM is available, but the service that it sets up does not work. Use the following service files included in this repo
 
 ```
-cp pgmonitor/sql_exporter/linux/sql_exporter.service /usr/lib/systemd/system/sql_exporter.service
+cp pgmonitor/sql_exporter/linux/sql-exporter@.service /usr/lib/systemd/system/sql-exporter@.service
 cp pgmonitor/sql_exporter/linux/sql_exporter.sysconfig /etc/sysconfig/sql_exporter
 
 systemctl daemon-reload
 
-systemctl enable sql_exporter
+systemctl enable sql-exporter@sql_exporter
 ```
 
 Copy all files in the `common` folder to `/etc/sql_exporter/`
@@ -42,7 +42,7 @@ psql -f /etc/sql_exporter/setup_db.sql
 ```
 Start the sql_exporter
 ```
-systemctl start sql_exporter
+systemctl start sql-exporter@sql_exporter
 ```
 Check the output for metrics starting with `ccp_`. If not working, check the postgresql logs or the syslogs for errors
 

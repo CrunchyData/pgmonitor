@@ -12,7 +12,7 @@ After=network-online.target
 
 [Service]
 User=ccp_monitoring
-EnvironmentFile=/etc/sysconfig/sql_exporter
+EnvironmentFile=/etc/sysconfig/%i
 ExecStart=/usr/bin/sql_exporter $OPT
 Restart=on-failure
 # Reload not working as expected - https://github.com/burningalchemist/sql_exporter/issues/297
