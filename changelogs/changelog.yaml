@@ -71,3 +71,22 @@ releases:
     - 355.yml
     - release_summary.yml
     release_date: '2023-07-25'
+  4.10.0:
+    changes:
+      major_changes:
+      - postgres_exporter - Add support for PostgreSQL 16
+      minor_changes:
+      - containers - The datasource for containers is named PROMETHEUS. Update dashboards
+        to use the hardcoded name.
+      - grafana - Adjust the cache hit graph to do a 1m rate vs lifetime ratio
+      - grafana - Relabel the cache hit ratio dial properly mark it as the lifetime
+        cache hit ratio
+      release_summary: Crunchy Data is pleased to announce the availability of pgMonitor
+        4.10.0. This release primarily adds support for PostgreSQL 16. This changelog
+        contains all changes that have been added since the 4.9.0 release.
+    fragments:
+    - 350.yml
+    - 362.yml
+    - 366.yml
+    - release_summary.yml
+    release_date: '2023-09-18'
