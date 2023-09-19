@@ -1,3 +1,0 @@
-minor_change:
-  - grafana - Relabel the cache hit ratio dial properly mark it as the lifetime cache hit ratio
-  - grafana - Adjust the cache hit graph to do a 1m rate vs lifetime ratio
