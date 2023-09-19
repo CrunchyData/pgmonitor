@@ -122,7 +122,7 @@ queries:
   - query_name: ccp_pg_stat_statements_top_mean
     query: |
       SELECT role
-        , datname AS dbname
+        , dbname
         , queryid
         , query
         , max(mean_exec_time) exec_time_ms
@@ -149,7 +149,7 @@ queries:
         , queryid
         , query
         , max_exec_time AS exec_time_ms
-      FROM pgmonitor_ext.pg_stat_statements
+      FROM pgmonitor_ext.pg_stat_statements_func()
       ORDER BY 5 DESC
       LIMIT 20
 
@@ -162,6 +162,6 @@ queries:
         , wal_records AS records
         , wal_fpi AS fpi
         , wal_bytes AS bytes
-      FROM pgmonitor_ext.pg_stat_statements()
+      FROM pgmonitor_ext.pg_stat_statements_func()
       ORDER BY wal_bytes DESC
       LIMIT 20

@@ -131,6 +131,7 @@ _PG_init(void)
 
     // Start BGW when database starts
     sprintf(worker.bgw_name, "pgmonitor master background worker");
+    sprintf(worker.bgw_type, "pgmonitor background worker");
     worker.bgw_flags = BGWORKER_SHMEM_ACCESS |
         BGWORKER_BACKEND_DATABASE_CONNECTION;
     worker.bgw_start_time = BgWorkerStart_RecoveryFinished;
@@ -228,6 +229,7 @@ void pgmonitor_bgw_main(Datum main_arg) {
                     memcpy(worker.bgw_name + sizeof(worker.bgw_name) - sizeof(truncated_mark),
                            truncated_mark, sizeof(truncated_mark));
                 }
+                sprintf(worker.bgw_type, "pgmonitor background worker");
                 worker.bgw_main_arg = Int32GetDatum(dbcounter);
                 worker.bgw_notify_pid = MyProcPid;
 
