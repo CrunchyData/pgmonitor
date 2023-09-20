@@ -1,0 +1,27 @@
+---
+breaking_changes:
+  - area affected (roles, specific role, playbooks, docs) - This category should list all changes to features which absolutely require attention from users when upgrading, because an existing behavior is changed. This section should only appear in a initial major release (`x.0.0`) according to semantic versioning.
+
+major_changes:
+  - area affected (roles, specific role, playbooks, docs) - This category contains major changes to the project. It should only contain a few items per major version, describing high-level changes. This section should not appear in patch releases according to semantic versioning.
+
+minor_changes:
+  - area affected (roles, specific role, playbooks, docs) - This category should mention all new features not contained elsewhere. This section should not appear in patch releases according to semantic versioning.
+
+removed_features:
+  - area affected (roles, specific role, playbooks, docs) - This category should mention all features that have been removed in this release. This section should only appear in a initial major release (`x.0.0`) according to semantic versioning.
+
+deprecated_features:
+  - area affected (roles, specific role, playbooks, docs) - This category should contain all features which have been deprecated and will be removed in a future release. This section should not appear in patch releases according to semantic versioning.
+
+security_fixes:
+  - area affected (roles, specific role, playbooks, docs) - This category should mention all security relevant fixes, including CVEs if available.
+
+bugfixes:
+  - area affected (roles, specific role, playbooks, docs) - This category should be a list of all bug fixes which fix a bug that was present in a previous version.
+
+known_issues:
+  - area affected (roles, specific role, playbooks, docs) - This category should mention known issues that are currently not fixed or will not be fixed.
+
+trivial:
+  - area affected (roles, specific role, playbooks, docs) - This category will **not be shown** in the changelog. It can be used to describe changes that are not touching user-facing code, like changes in tests. This is useful if every PR is required to have a changelog fragment.
