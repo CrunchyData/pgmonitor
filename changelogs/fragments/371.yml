@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - backrest info script - Force the console log level to ``warn`` when running pgbackrest-info.sh to ensure metrics are parsed from the JSON properly.
