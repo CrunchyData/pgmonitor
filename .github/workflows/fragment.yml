@@ -7,4 +7,4 @@ jobs:
         uses: brettcannon/check-for-changed-files@v1
         with:
           file-pattern: "changelogs/fragments/*.yml"
-          failure-message: "Missing a Changelog fragment in ${file-pattern}; please add one or wait for a maintainer to push one or you."
+          failure-message: "Missing a Changelog fragment in ${file-pattern}; please add one or wait for a maintainer to push one for you."
