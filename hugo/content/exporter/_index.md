@@ -340,7 +340,7 @@ Metrics contained in the `queries_global.yml` file. These metrics are common to 
 
  * *ccp_database_size_bytes* - Total size of each database in PostgreSQL instance
 
- * *ccp_is_in_recovery_status* - Current value of the pg_is_in_recovery() function expressed as 2 for true (instance is a replica) and 1 for false (instance is a primary)
+ * *ccp_is_in_recovery_status* - Current value of the pg_is_in_recovery() function expressed as 1 for true (instance is a replica) and 2 for false (instance is a primary)
 
  * *ccp_connection_stats_active* - Count of active connections
 
