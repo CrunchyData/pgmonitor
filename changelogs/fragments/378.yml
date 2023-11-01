@@ -1,0 +1,3 @@
+---
+trivial:
+  - node_exporter - update build dependencies for node-exporter-extras package

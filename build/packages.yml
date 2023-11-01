@@ -47,7 +47,7 @@ packages:
           - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "node-exporter", gte: 1.4.0, lt: 1.5.0 }
+          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.7.0 }
         remove_files:
           - { target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
