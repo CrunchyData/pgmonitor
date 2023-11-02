@@ -1,7 +1,8 @@
 ---
-trivial:
-  - node_exporter - update build dependencies for node-exporter-extras package
-  - postgres_exporter - minimum version 0.13.2, maximum 0.15
-  - prometheus - minimum version 2.38, maximum 2.47
-  - alertmanager - minimum version 0.23, maximum 0.26
-  - grafana - minimum version 9.5, maximum 9.5
+minor_changes:
+  - node_exporter - minimum version 1.5.0, maximum 1.6.x
+minor_changes:
+  - postgres_exporter - minimum version 0.13.2, maximum 0.15.x
+  - prometheus - minimum version 2.38, maximum 2.47.x
+  - alertmanager - minimum version 0.23, maximum 0.26.x
+  - grafana - minimum version 9.5, maximum 9.9.x
