@@ -58,7 +58,7 @@ packages:
           - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "postgres-exporter", gte: 0.13.2, lt: 0.16.0 }
+          - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.16.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pgmonitor-prometheus-extras:
@@ -103,7 +103,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "grafana-containers" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.5.13, lt: 10.0.0 }
+          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pg_bloat_check:
