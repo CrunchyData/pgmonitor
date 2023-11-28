@@ -1,6 +1,6 @@
 ---
 minor_changes:
-  - node_exporter - minimum version 1.5.0, maximum 1.6.x
+  - node_exporter - minimum version 1.5.0, maximum 1.7.x
   - postgres_exporter - minimum version 0.10.1, maximum 0.15.x
   - prometheus - minimum version 2.38, maximum 2.47.x
   - alertmanager - minimum version 0.23, maximum 0.26.x
