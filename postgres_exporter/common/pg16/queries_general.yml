@@ -1,0 +1,31 @@
+###
+#
+# Begin File: PG16 queries_general.yml
+#
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+
+ccp_data_checksum_failure:
+  query: "SELECT datname AS dbname
+            , checksum_failures AS count
+            , coalesce(extract(epoch from (clock_timestamp() - checksum_last_failure)), 0) AS time_since_last_failure_seconds
+          FROM pg_catalog.pg_stat_database;"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - count:
+        usage: "GAUGE"
+        description: "Total number of checksum failures on this database"
+    - time_since_last_failure_seconds:
+        usage: "GAUGE"
+        description: "Time interval in seconds since the last checksum failure was encountered"
+
+
+###
+#
+# End File: PG16 queries_general.yml
+#
+###

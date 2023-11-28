@@ -1,0 +1,12 @@
+on:
+  pull_request:
+
+jobs:
+    changelog-fragment:
+      runs-on: ubuntu-latest
+      steps:
+        - name: "Check for Changelog fragment"
+          uses: brettcannon/check-for-changed-files@v1
+          with:
+            file-pattern: "changelogs/fragments/*.yml"
+            failure-message: "Missing a Changelog fragment in ${file-pattern}; please add one or wait for a maintainer to push one for you."

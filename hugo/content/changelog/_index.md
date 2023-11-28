@@ -4,6 +4,52 @@ draft: false
 weight: 5
 ---
 
+## 4.10.0
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.10.0. This release primarily adds support for PostgreSQL 16. This changelog contains all changes that have been added since the 4.9.0 release.
+
+Minor Changes
+-------------
+
+- postgres_exporter - Add support for PostgreSQL 16
+- containers - The datasource for containers is named PROMETHEUS. Update dashboards to use the hardcoded name.
+- grafana - Adjust the cache hit graph to do a 1m rate vs lifetime ratio
+- grafana - Relabel the cache hit ratio dial properly mark it as the lifetime cache hit replication
+-
+## 4.9.0
+
+### Release Summary
+
+Version 4.9.0 of pgMonitor includes updates to add additional metrics and now better supports monitoring multiple PgBouncer hosts. Please see the full CHANGELOG for additional information about this release.
+
+### Major Changes
+
+  * postgres_exporter - Added options for using materialized views to collect metrics that may cause longer query runtimes (object sizing, statistics, etc)
+  * postgres_exporter - Moved the database size metric out of the 'queries_global.yml' file and into the 'queries_global_dbsize.yml' file to allow an optional materialized view metric. Ensure query file configuration list is updated to account for this change
+
+### Minor Changes
+
+  * blackbox_exporter -  added additional probe for TCP with TLS enabled
+  * grafana - Add panel to Query Statistics dashboard for top WAL stats by bytes
+  * grafana - Minimum version of Grafana is now 9.2.19
+  * grafana - Update dashboard to support multiple PgBouncer targets exported by new pgbouncer_fdw
+  * postgres_exporter - Add WAL statistics for pg_stat_statements
+  * postgres_exporter - Filter out idle-in-transaction sessions from general max query runtime metrics.
+  * postgres_exporter - Update query file to support PgBouncer_fdw 1.0.0+
+  * prometheus - Add alert for cases where a PostgreSQL cluster does not have an instance that is the leader/primary
+  * prometheus - Allow node_exporter's load alert to be based on the CPU count. Allows lowering of default thresholds and more accurate alerting
+  * prometheus - Enable the PGDataChecksum alert by default for PG12+
+  * prometheus - Update the example files to provide better guidance on proper configuration
+  * prometheus - added additional job example to scan TCP probes with TLS
+
+### Bugfixes
+
+  * grafana - fixed dashboard links that broke when Grafana removed support for the `/dashboard/db/:slug` endpoint in v8
+
+
 ## 4.8.0
 
 ### Release Summary
@@ -38,13 +84,13 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
 ### Bug Fixes
   * Fixed inconsistency in the OS Details Grafana dashboard between the small left panel for the filesystem and the other filesystem panels.
-  * Fixed postgres_exporter queries for pgBouncer to select the proper "user" column.
+  * Fixed postgres_exporter queries for PgBouncer to select the proper "user" column.
 
 
 ## 4.6
 
 ### New Features
-  * Support for pgBackRest multiple repositories in metrics and Grafana dashboards. Minumum requirement of pgBackRest is now 2.33.
+  * Support for pgBackRest multiple repositories in metrics and Grafana dashboards. Minimum requirement of pgBackRest is now 2.33.
 
 ### Bug Fixes
   * Allow PostgreSQL Overview Grafana dashboard to work with Grafana 8.x
@@ -63,9 +109,9 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
   * Added a basic Network Activity dashboard to Grafana using default metrics that come with node_exporter.
   * The pgMonitor repository has been reorganized around which platforms files apply to. Some files have also been renamed as part of this reorganization.
   * Extended the default alert threshold for pgBackRest backups to give a buffer time and avoid false positives when backup runtimes vary.
-  * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert when the recovery status of a PostgreSQL database changes (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occured on the systems involved.
+  * Added a default alert for PostgreSQL failover that should work in any scenario to produce an alert when the recovery status of a PostgreSQL database changes (replica -> primary or primary -> replica). Note that this alert will auto-resolve after 5 minutes (by default) since it is just looking for recent state changes. The alert is meant to be acted upon immediately to see what may have occurred on the systems involved.
   * Added metric to monitor and alert on blocked queries
-  
+
 ### Bug Fixes
   * Fixed several incorrect metric names in alert expressions for the example alert files. Please review all alerts to ensure your expressions are checking the correct metrics, making special note of the following:
     * PGSettingsChecksum
@@ -73,7 +119,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
     * PGReplicationByteLag
     * MemoryAvailable
     * SwapUsage
-    * All pgBackRest alerts 
+    * All pgBackRest alerts
   * Fixed pgBackRest metrics not reporting all backups in all stanzas for a given repository in some configuration setups. Each database will now only report back monitoring for the stanzas that are part of its own instance. Previously all database instances reported back all stanzas in the target repository.
   * Fixed incorrect title of panel on Grafana PostgreSQL Details dashboard from "Transactions Per Minute" to "Transactions Per Second".
 
@@ -97,9 +143,9 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
 ### New Features
 
-  * Added support for PostgreSQL 13 
+  * Added support for PostgreSQL 13
   * Added queries and dashboards for pgnodemx/container support
-  * Added metrics and Grafana dashboard for pg_stat_statements 
+  * Added metrics and Grafana dashboard for pg_stat_statements
   * Added metrics for monitoring longest blocked query time
 
 ### Bug Fixes
@@ -119,7 +165,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 ### Bug Fixes
 
  * Fixed syntax error in example prometheus alert rules file for postgresql for the pending restart rule.
-    
+
 ### Non-backward Compatible Changes
 
 ### Manual Intervention Changes
@@ -136,7 +182,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
   * Add support for PostgreSQL 12
   * Added new metrics (all PG versions):
     * ccp_postmaster_uptime - time in seconds since last restart of PG instance. Useful for monitoring for unexpected restarts.
-    * ccp_pg_settings_checksum - monitors for changes in pg_settings 
+    * ccp_pg_settings_checksum - monitors for changes in pg_settings
   * Added new metrics (PG 9.5+ only)
     *  ccp_settings_pending_restart - monitors for any settings in pg_settings in a pending_restart state
   * Added new metrics (PG 10+ only)
@@ -145,13 +191,13 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
     * ccp_data_checksum_failure - monitors for any errors encountered for databases that have data file checksums enabled
 
 ### Bug Fixes
-  * Use proper comparison operators in all Grafana dashboards that are using Multi-value variables. 
+  * Use proper comparison operators in all Grafana dashboards that are using Multi-value variables.
   * Change to using label_values() function on Grafana dashboard template variables. Ensures proper values in all dropdown menus are shown
   * Remove changing background color of the pgBackRest panel in the PG_Details Grafana dashboard
 
 ### Non-backward Compatible Changes
 
-  * New minimum required version of Grafana is now 6.5. All Grafana dashboards have been re-exported to ensure their settings are consistent and compatable with that version.
+  * New minimum required version of Grafana is now 6.5. All Grafana dashboards have been re-exported to ensure their settings are consistent and compatible with that version.
 
 ### Manual Intervention Changes
 
@@ -163,14 +209,14 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
  * Fixed bug in PGBouncer Grafana dashboard for the Server Connection Counts Per Pool showing zero data
  * Fixed Windows prometheus config file to use proper wildcard to pick up .yml files.
- * Renamed Prometheus target example file to include yml extention to better ensure it is not missed. ReplicaOS.example to ReplicaOS.yml.example
+ * Renamed Prometheus target example file to include yml extension to better ensure it is not missed. ReplicaOS.example to ReplicaOS.yml.example
  * Fixed documentation to display pictures properly.
 
 ## 4.0
 
 ### New Features
 
- * Add pgbouncer monitoring support 
+ * Add pgbouncer monitoring support
     * Requires new `pgbouncer_fdw` extension provided by Crunchy Data: https://github.com/CrunchyData/pgbouncer_fdw
     * New query file can be included in QUERY_FILE_LIST: queries_pgbouncer.yml
     * New Grafana dashboard: PGBouncer.json
@@ -183,11 +229,11 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
  * Added backup sizes to pgBackRest metrics that are collected by default
     * Updated pgBackRest grafana dashboard to include size graphs. Also added per-stanza dropdown filter to the top of dashboard for better readability when there are many backups.
 
- * Added new metric to check what version of PostgreSQL the exporter is currently running on (`ccp_postgresql_version_current`). 
+ * Added new metric to check what version of PostgreSQL the exporter is currently running on (`ccp_postgresql_version_current`).
 
 ### Non-backward Compatible Changes
 
- * Version 0.5x of postgres_exporter adds a new "server" label to all custom query output metrics. This breaks several single panel graphs that pgmonitor uses in Grafana (PG Overview, PGBackrest). 
+ * Version 0.5x of postgres_exporter adds a new "server" label to all custom query output metrics. This breaks several single panel graphs that pgmonitor uses in Grafana (PG Overview, PGBackrest).
     * If upgrading, the update for the prometheus extras package must be done before upgrading to the new version of postgres_exporter. Otherwise the "server" label can cause duplication of some metrics.
     * Added a metric_relabel_configs line to the crunchy-prometheus.yml file to filter out this new label. If you are upgrading, you may have to manually add this to your own prometheus config. The package update will only automatically add this if you haven't changed the default file. Otherwise the new settings will be contained in a crunchy-prometheus.yml.rpmnew file in the package install location.
 
@@ -200,7 +246,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
  * Split Prometheus crunchy-alert-rules.yml file into separate node & postgres alert files to allow for more flexible rule management.
     * By default alert rules files are now looked for in `/etc/prometheus/alert-rules.d/`. Any alert files located in this folder upon restart/reload will then be picked up automatically.
     * Renamed alert files in repository to have additional .example file extension.
-    * IMPORTANT UPGRADE NOTE: If upgrading with packages, prometheus may change and point to the new rules location causing your active alerts to change. Your custom alert rules have not been lost, just ensure your desired rules file(s) are moved to the new location for future compatability.
+    * IMPORTANT UPGRADE NOTE: If upgrading with packages, prometheus may change and point to the new rules location causing your active alerts to change. Your custom alert rules have not been lost, just ensure your desired rules file(s) are moved to the new location for future compatibility.
 
     * Changed metric name `ccp_backrest_last_runtime` to `ccp_backrest_last_info` to reflect that it is no longer only collecting runtime stats. Note that due to metric name change, you will appear to have lost runtime history in the new grafana dashboard. The data is still there under the old metric name and can be added back as an additional data point if needed.
 
@@ -210,7 +256,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
  * Disable pg_settings values that are exported by default with postgres_exporter. Fixes issue with multi-dsn support in 0.5.1 of postgres_exporter. If settings are desired as output from exporter, it is recommended to add a custom query.
 
- * Fixed postgres_exporter service file to better parse out the destination query file name (exporter/postgres/crunchy-postgres-exporter@.service or exporter/postgres/crunchy-postgres-exporter-pg##-el6.service). Previously if any additional options were added to the OPT variable in the sysconfig, the service could throw errors on start. If you've customized your service file, please make note of changes for future compatability.
+ * Fixed postgres_exporter service file to better parse out the destination query file name (exporter/postgres/crunchy-postgres-exporter@.service or exporter/postgres/crunchy-postgres-exporter-pg##-el6.service). Previously if any additional options were added to the OPT variable in the sysconfig, the service could throw errors on start. If you've customized your service file, please make note of changes for future compatibility.
 
  * Update Grafana Overview dashboard to be compatible with Grafana 6.4+
 
@@ -228,14 +274,14 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
 
 
 ## 3.0
-  
+
  * New minimum version requirements for software that is part of pgmonitor are as follows, including links to release notes:
     * Prometheus: 2.9.2 - https://github.com/prometheus/prometheus/releases
     * Alertmanager: 0.17.0 - https://github.com/prometheus/alertmanager/releases
     * Grafana: 6.1.6 (major version change from 5.x) - https://community.grafana.com/t/release-notes-v6-1-x/15772
     * node_exporter: 0.18.0 - https://github.com/prometheus/node_exporter (Note breaking changes for some metrics. None of those broken are used by default in pgmonitor).
 
-* The service file for postgres_exporter provided by pgmonitor has been renamed to make it more consistent with typical systemd service names. 
+* The service file for postgres_exporter provided by pgmonitor has been renamed to make it more consistent with typical systemd service names.
     * IMPORTANT: See upgrade notes below about changes to sysconfig file before restarting service!
     * Only applies to systemd file for RHEL/CentOS 7
     * Changed crunchy_postgres_exporter@.service to crunchy-postgres-exporter@.service (underscores to dashes).
@@ -249,13 +295,13 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
     * A new variable, QUERY_FILE_LIST, is now set in the sysconfig file for the service. It is a space delimited list of the full paths to all query files that will be concatenated together. See sysconfig file for several examples and a recommended default to set.
     * This now ensures that any updates to desired query files will be automatically applied when the package is updated and the service is restarted without having to manually rebuild the query.yml file.
     * This new variable is not required and you can continue to manually manage your queries.yml file. Ensure that the QUERY_FILE_LIST variable is not set if this is desired.
-    * UPGRADE NOTES: 
+    * UPGRADE NOTES:
         * Backup your current queries.yml file.
         * If you have not modified the default sysconfig file for your postgres_exporter service (/etc/sysconfig/postgres_exporter_pg##), updating to 3.0 will overwrite your current sysconfig file and put the default QUERY_FILE_LIST value in place, possibly overwriting your current queries.yml file. Again, please ensure you backup your current queries.yml file and then set the QUERY_FILE_LIST variable appropriately to dynamically generate your queries file for you in the future. Or unset the variable and continue managing it manually.
         * If you have modified your sysconfig file from what the package provides, it will not be overwritten and a new sysconfig file with an `.rpmnew` extension will be created. You can reference this .rpmnew file for how to update your sysconfig file to take advantage of the new QUERY_FILE_LIST option.
         * Ensure all postgres_exporters you have running set the QUERY_FILE_LIST properly if using it. Especially if multiple exporters are using the same query file.
 
- * Prometheus targets for pgmonitor provided exporters (postgres_exporter & node_exporter) have had labels added to them for use in pgmonitor provided Grafana Dashboards. 
+ * Prometheus targets for pgmonitor provided exporters (postgres_exporter & node_exporter) have had labels added to them for use in pgmonitor provided Grafana Dashboards.
     * Added new label `exp_type` (export type) in prometheus targets to better distinguish OS and Postgres metrics in Prometheus. Possible current values are `pg` or `node`.
     * UPGRADE NOTES: This new label must be applied to your Prometheus target files if you are using the Grafana dashboards provided by pgmonitor. Note that if you previously defined node and postgres_exporter targets under a single target, you will now need to separate them, keeping the same job name for both. See example target files provided in package/repo for how to apply new label (Ex. ProductionDB.yml.example & ProductionOS.yml.example).
     * If you are not using the pgmonitor provided Grafana dashboards, these new labels are optional.
@@ -271,7 +317,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
         * renamed:  PostgreSQL.json -> PG_Overview.json
         * renamed:  TableSize_Detail.json -> TableSize_Details.json
     * Dashboard names have been updated to match with new naming consistency. If you had direct links to dashboards, these may need to be updated.
-    * Split OS Metrics into their own dashboard separate from PG Metrics. 
+    * Split OS Metrics into their own dashboard separate from PG Metrics.
     * Added link to PGbackrest dashboard to top of Postgres Details Dashboard. Link shows time since last successful backup (any type) for that target system.
     * Added new OS Details dashboard
     * Added new etcd dashboard
@@ -292,7 +338,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
    * Fixed incorrect data being returned by monitor query on PostgreSQL 9.6 and earlier. The same, latest backup time was being returned for all stanzas instead of returning the time per stanza.
    * Fixed backrest query causing the postgres_exporter to hang and cause all metric output to stop.
    * Fixed backrest monitor to work with larger amount of data being returned by the "pgbackrest info" command. Previously, once returned data size reached a certain point, would cause a "missing chunk" error.
-   * Added a parameter to the function that is called to control how often the underlying info command is actually run. On systems with high backup counts, info can be a slightly more expensive call. This helps to control that, no matter what the scrape interval of prometheus is set to. Default is to get new data every 10 minutes, otherwise just queries from an internal table that stores the last info run. 
+   * Added a parameter to the function that is called to control how often the underlying info command is actually run. On systems with high backup counts, info can be a slightly more expensive call. This helps to control that, no matter what the scrape interval of prometheus is set to. Default is to get new data every 10 minutes, otherwise just queries from an internal table that stores the last info run.
    * Backrest monitoring can now be run on replicas as well, but cannot update the current backup status since that requires writing to the database. This is mostly to enable monitoring setups to be consistent between primary/replica in case of failover.
  * Fixed issue with ccp_sequence_exhaustion metric that would cause postgres_exporter output to hang if any table that contained a sequence was dropped during a long running transaction.
  * Added new metric (ccp_replication_slots) and alert (PGReplicationSlotsInactive) for monitoring replication slot status. New metric and alert can be found in queries_pg##.yml and crunchy-alert-rules.yml respectively.
@@ -311,7 +357,7 @@ NOTE: This is the last version of pgMonitor that will contain support for Postgr
    * Another metric can monitor the runtime of the latest backup of each type per stanza.
    * Run the setup_pg##.sql file again in the database that your exporter(s) connect to to install the new, required function: "monitor.pgbackrest_info()". It has security definer so execution privileges can be granted as needed, but it must be owned by a superuser.
    * New metrics are located in the exporter/postgres/queries_backrest.yml file. Add the one(s) you want to the main queries file being used by your currently running exporter(s) and restart.
-   * Example alert rules for different backup scenarios have been added to the prometheus/crunchy-alert-rules.yml file. They are commented out to avoid false alarms until valid backup settings for your environment are in place. 
+   * Example alert rules for different backup scenarios have been added to the prometheus/crunchy-alert-rules.yml file. They are commented out to avoid false alarms until valid backup settings for your environment are in place.
 
  * Added new feature to monitor for failing archive_command calls.
     * New metric "ccp_archive_command_status" is located in exporter/postgres/queries_common.yml. Add this to the main queries file being used by your currently running exporter(s) and restart.

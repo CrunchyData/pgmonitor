@@ -47,7 +47,7 @@ packages:
           - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "node-exporter", gte: 1.4.0, lt: 1.5.0 }
+          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.7.0 }
         remove_files:
           - { target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -58,7 +58,7 @@ packages:
           - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.12.0 }
+          - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.16.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pgmonitor-prometheus-extras:
@@ -77,7 +77,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "pgmonitor-prometheus-containers" }
         pkg_dependency:
-          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.40.0 }
+          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.48.0 }
         remove_files:
           - { target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -89,7 +89,7 @@ packages:
           - { source: "/etc/systemd/system/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/prometheus", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.25.0 }
+          - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.27.0 }
         remove_files:
           - { target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -103,7 +103,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "grafana-containers" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.2.19, lt: 9.3.0 }
+          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pg_bloat_check:

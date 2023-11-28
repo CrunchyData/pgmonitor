@@ -5,6 +5,22 @@ pgMonitor Release Notes
 .. contents:: Topics
 
 
+v4.10.0
+======
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.10.0. This release primarily adds support for PostgreSQL 16. This changelog contains all changes that have been added since the 4.9.0 release.
+
+Minor Changes
+-------------
+
+- postgres_exporter - Add support for PostgreSQL 16
+- containers - The datasource for containers is named PROMETHEUS. Update dashboards to use the hardcoded name.
+- grafana - Adjust the cache hit graph to do a 1m rate vs lifetime ratio
+- grafana - Relabel the cache hit ratio dial properly mark it as the lifetime cache hit ratio
+
 v4.9.0
 ======
 

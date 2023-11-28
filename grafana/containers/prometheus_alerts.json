@@ -65,7 +65,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -80,7 +80,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -150,7 +150,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -222,7 +222,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -294,7 +294,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -309,7 +309,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -406,7 +406,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -475,7 +475,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -545,7 +545,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -559,7 +559,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -753,7 +753,7 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "PROMETHEUS",
       "fieldConfig": {
         "defaults": {
           "color": {
