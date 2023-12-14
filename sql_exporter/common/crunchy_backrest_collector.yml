@@ -1,0 +1,149 @@
+collector_name: crunchy_pgbackrest
+
+metrics:
+  - metric_name: ccp_backrest_last_info_backrest_repo_version
+    type: gauge
+    help: "pgBackRest version number when this backup was performed"
+    values: [backrest_repo_version]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+      - backup_type
+    query_ref: ccp_backrest_last_info
+  - metric_name: ccp_backrest_last_info_repo_backup_size_bytes
+    type: gauge
+    help: "Actual size of only this individual backup in the pgbackrest repository"
+    values: [repo_backup_size_bytes]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+      - backup_type
+    query_ref: ccp_backrest_last_info
+  - metric_name: ccp_backrest_last_info_repo_total_size_bytes
+    type: gauge
+    help: "Total size of this backup in the pgbackrest repository, including all required previous backups and WAL"
+    values: [repo_total_size_bytes]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+      - backup_type
+    query_ref: ccp_backrest_last_info
+  - metric_name: ccp_backrest_last_info_backup_runtime_seconds
+    type: gauge
+    help: "Total runtime in seconds of this backup"
+    values: [backup_runtime_seconds]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+      - backup_type
+    query_ref: ccp_backrest_last_info
+  - metric_name: ccp_backrest_last_info_backup_error
+    type: gauge
+    help: "An error has been encountered in the backup. Check logs for more information."
+    values: [backup_error]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+      - backup_type
+    query_ref: ccp_backrest_last_info
+
+
+  - metric_name: ccp_backrest_oldest_full_backup_time_seconds
+    type: gauge
+    help: "Seconds since the oldest completed full backup"
+    values: [time_seconds]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+    query_ref: ccp_backrest_oldest_full_backup
+
+
+  - metric_name: ccp_backrest_last_full_backup_time_since_completion_seconds
+    type: gauge
+    help: "Seconds since the last completed full backup"
+    values: [time_since_completion_seconds]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+    query_ref: ccp_backrest_last_full_backup
+
+
+  - metric_name: ccp_backrest_last_diff_backup_time_since_completion_seconds
+    type: gauge
+    help: "Seconds since the last completed full or differential backup. Differential is always based off last full."
+    values: [time_since_completion_seconds]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+    query_ref: ccp_backrest_last_diff_backup
+
+
+  - metric_name: ccp_backrest_last_incr_backup_time_since_completion_seconds
+    type: gauge
+    help: "Seconds since the last completed full, differential or incremental backup. Incremental is always based off last full or differential."
+    values: [time_since_completion_seconds]
+    key_labels:
+      - config_file
+      - stanza
+      - repo
+    query_ref: ccp_backrest_last_incr_backup
+
+
+########## QUERIES ##########
+queries:
+  - query_name: ccp_backrest_last_info
+    query: |
+      SELECT backrest_repo_version
+        , config_file
+        , stanza
+        , repo
+        , backup_type
+        , repo_backup_size_bytes
+        , repo_total_size_bytes
+        , backup_runtime_seconds
+        , backup_error
+      FROM pgmonitor_ext.ccp_backrest_last_info
+
+
+  - query_name: ccp_backrest_oldest_full_backup
+    query: |
+      SELECT config_file
+        , stanza
+        , repo
+        , time_seconds
+      FROM pgmonitor_ext.ccp_backrest_oldest_full_backup
+
+
+  - query_name: ccp_backrest_last_full_backup
+    query: |
+      SELECT config_file
+        , stanza
+        , repo
+        , time_since_completion_seconds
+      FROM pgmonitor_ext.ccp_backrest_last_full_backup
+
+
+  - query_name: ccp_backrest_last_diff_backup
+    query: |
+      SELECT config_file
+        , stanza
+        , repo
+        , time_since_completion_seconds
+      FROM pgmonitor_ext.ccp_backrest_last_diff_backup
+
+
+  - query_name: ccp_backrest_last_incr_backup
+    query: |
+      SELECT config_file
+        , stanza
+        , repo
+        , time_since_completion_seconds
+      FROM pgmonitor_ext.ccp_backrest_last_incr_backup

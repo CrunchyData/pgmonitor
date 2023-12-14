@@ -1,4 +1,3 @@
-
 collector_name: crunchy_global
 
 metrics:
@@ -230,12 +229,6 @@ metrics:
     help: "Number of buffers allocated"
     values: [buffers_alloc]
     query_ref: ccp_stat_bgwriter 
-  - metric_name: ccp_stat_bgwriter_stats_reset
-    type: gauge
-    help: "Epoch time at which these statistics were last reset"
-    values: [stats_reset]
-    query_ref: ccp_stat_bgwriter 
-
 
   - metric_name: ccp_stat_database_xact_commit
     type: gauge
@@ -497,7 +490,6 @@ queries:
         , buffers_backend
         , buffers_backend_fsync
         , buffers_alloc
-        , stats_reset 
       FROM pgmonitor_ext.ccp_stat_bgwriter
 
 

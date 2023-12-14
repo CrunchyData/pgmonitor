@@ -1,7 +1,4 @@
 -- TODO Create sub-extension to add support for nodemx queries (require pgmonitor extension)
--- TODO Create sub-extension to add support for pgbouncer queries disabled by default (dependent on pgbouncer_fdw 1.0.0 and pgmonitor extension)
--- TODO make pg_stat_statements metrics function calls to allow for column differences in versions. Have parameter to function be the return limit
-    -- Will let users make their own metrics with custom limits if they need them to be different
 CREATE MATERIALIZED VIEW @extschema@.ccp_stat_user_tables AS 
     SELECT current_database() as dbname
     , schemaname
@@ -111,10 +108,9 @@ CREATE MATERIALIZED VIEW @extschema@.ccp_stat_bgwriter AS
     , buffers_backend
     , buffers_backend_fsync
     , buffers_alloc
-    , stats_reset 
     FROM pg_catalog.pg_stat_bgwriter;
 /* According to docs, this table should only ever have 1 row */
-CREATE UNIQUE INDEX ccp_stat_bgwriter_idx ON @extschema@.ccp_stat_bgwriter (stats_reset);
+CREATE UNIQUE INDEX ccp_stat_bgwriter_idx ON @extschema@.ccp_stat_bgwriter (checkpoints_timed);
 INSERT INTO @extschema@.metric_views (
     view_name 
     , run_interval
@@ -194,7 +190,6 @@ VALUES (
     , '5 minutes'::interval
     , 'global');
 
--- TODO add ccp_data_checksum_failure that calls function that returns NULL even on PG11.
 
 CREATE MATERIALIZED VIEW @extschema@.ccp_wal_activity AS
     SELECT last_5_min_size_bytes,
@@ -209,3 +204,4 @@ VALUES (
    'ccp_wal_activity'
     , '2 minutes'::interval
     , 'global');
+

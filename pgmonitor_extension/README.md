@@ -8,7 +8,7 @@ This extension provides a means to collect metrics within a PostgreSQL database 
 
 Requirement: 
 
- * PostgreSQL >= 11
+ * PostgreSQL >= 12
 
 ### From Source
 In the directory where you downloaded pgmonitor, run

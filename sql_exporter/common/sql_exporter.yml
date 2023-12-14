@@ -27,10 +27,18 @@ jobs:
         - targets:
             pg1: 'pg://ccp_monitoring@127.0.0.1:5432/postgres?sslmode=disable'
 #            pg2: 'pg://ccp_monitoring@127.0.0.1:5432/testdb?sslmode=disable'
+#  - job_name: pgbouncer_targets
+#    collectors: [crunchy_pgbouncer]
+#    enable_ping: false
+#    static_configs:
+#        - targets:
+#            pgbouncer: 'pg://ccp_monitoring@127.0.0.1:6432/pgbouncer?sslmode=disable'
+
 
 # Collector definition files.
 # Glob patterns are supported (see <https://pkg.go.dev/path/filepath#Match> for syntax).
 collector_files:
   - "/etc/sql_exporter/crunchy_global_collector.yml"
   - "/etc/sql_exporter/crunchy_per_db_collector.yml"
+#  - "/etc/sql_exporter/crunchy_pgbouncer_collector.yml"
 
