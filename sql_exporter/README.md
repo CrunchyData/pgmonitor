@@ -4,9 +4,9 @@ Note this is just an example setup for a PoC. The actual setup will have many of
 
 Make the pgmonitor_extension available to be installed. See the README in the `pgmonitor_extension` folder. Do not install the extension in the database yet, just do the `make install` (or install package if available). We'll be using a setup file below to do that.
 
-Install the pgmonitor extras package for the relevant version of PG from the Crunchy Repos for right now to set up the ccp_monitoring system user.
+Install the node_exporter extras package from the Crunchy Repos for right now to set up the ccp_monitoring system user.
 ```
-sudo dnf install pgmonitor-pg##-extras.noarch
+sudo dnf install pgmonitor-node-exporter-extras
 ```
 Set up a pgpass file for the `ccp_monitoring` system user in `/var/lib/ccp_monitoring`
 ```

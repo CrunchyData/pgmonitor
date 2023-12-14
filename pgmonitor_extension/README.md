@@ -46,8 +46,8 @@ The interval defaults to 30 seconds and generally doesn't need to be changed. If
 
 Log into PostgreSQL and run the following commands. Schema is optional (but recommended) and can be whatever you wish, but it cannot be changed after installation. If you're using the BGW, the database cluster can be safely started without having the extension first created in the configured database(s). You can create the extension at any time and the BGW will automatically pick up that it exists without restarting the cluster (as long as shared_preload_libraries was set) and begin running maintenance as configured.
 
-    CREATE SCHEMA monitor;
-    CREATE EXTENSION pgmonitor SCHEMA partman;
+    CREATE SCHEMA pgmonitor_ext;
+    CREATE EXTENSION pgmonitor SCHEMA pgmonitor_ext;
 
 ### Metric configuration
 
@@ -56,7 +56,7 @@ The names of all views and materialized views are stored in the `metric_views` c
                                 Table "metric_views"
        Column       |           Type           | Collation | Nullable |       Default        
 --------------------+--------------------------+-----------+----------+----------------------
- view_schema        | text                     |           | not null | 'monitor'::text
+ view_schema        | text                     |           | not null | 'pgmonitor_ext'::text
  view_name          | text                     |           | not null | 
  materialized_view  | boolean                  |           | not null | true
  concurrent_refresh | boolean                  |           | not null | true
