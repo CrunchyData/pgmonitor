@@ -77,7 +77,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "pgmonitor-prometheus-containers" }
         pkg_dependency:
-          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.48.0 }
+          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.50.0 }
         remove_files:
           - { target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
