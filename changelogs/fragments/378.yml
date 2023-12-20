@@ -5,3 +5,4 @@ minor_changes:
   - prometheus - minimum version 2.38, maximum 2.47.x
   - alertmanager - minimum version 0.23, maximum 0.26.x
   - grafana - minimum version 9.2.19, maximum 9.9.x
+  - blackbox_exporter - minimum version 0.22.x, maximum 0.24.x

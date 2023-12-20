@@ -38,7 +38,7 @@ packages:
           - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
           - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
         pkg_dependency:
-          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.23.0 }
+          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pgmonitor-node-exporter-extras:
