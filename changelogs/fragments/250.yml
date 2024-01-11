@@ -1,4 +1,2 @@
----
-major_changes:
-  - grafana - add Alertmanager datasource to Grafana to allow direct alert management via Grafana
-  - grafana - update 'Prometheus Alerts' dashboard to include new alert panel interface for active alerts  
+trivial:
+  - grafana - Reverted new Alertmanager dashboard in Grafana for now until it can be fully integrated into other Crunchy products that use it
