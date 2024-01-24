@@ -1,2 +1,0 @@
-trivial:
-  - grafana - Reverted new Alertmanager dashboard in Grafana for now until it can be fully integrated into other Crunchy products that use it

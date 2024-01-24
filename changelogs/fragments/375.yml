@@ -1,4 +1,0 @@
----
-trivial:
-  - docs - Fix the documentation of the 'ccp_is_in_recovery_status' metric to properly match the value to the description
-  - github - Fix workflow checks
