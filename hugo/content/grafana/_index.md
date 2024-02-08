@@ -35,7 +35,7 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 |OS Overview            | Overview.json| Provides an overview that shows the up status of each system monitored by pgMonitor. |
 |||
 |ETCD Details           | ETCD_Details.json | Provides details on the status of the ETCD cluster monitored by pgMonitor. |
-|Prometheus Alerts      | Prometheus_Alerts.json| Provides a summary list of current and recent alerts that have fired in Prometheus. Interaction with the Alertmanager to silence alerts is possible from the Alerting menu in Grafana. |
+|Prometheus Alerts      | Prometheus_Alerts.json| Provides a summary list of current and recent alerts that have fired in Prometheus. |
 
 ## Installation {#installation}
 

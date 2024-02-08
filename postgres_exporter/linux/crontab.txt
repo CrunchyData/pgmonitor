@@ -1,6 +1,6 @@
 ###
 #
-# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+# Copyright © 2017-2024 Crunchy Data Solutions, Inc. All Rights Reserved.
 #
 ###
 # The below script must be run as a user with the pg_read_all_data role or a superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file

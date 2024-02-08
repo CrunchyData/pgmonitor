@@ -1,4 +1,0 @@
----
-major_changes:
-  - grafana - add Alertmanager datasource to Grafana to allow direct alert management via Grafana
-  - grafana - update 'Prometheus Alerts' dashboard to include new alert panel interface for active alerts  
