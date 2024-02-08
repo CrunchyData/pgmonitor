@@ -22,7 +22,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "pgmonitor-prometheus-containers" }
         pkg_dependency:
-          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.48.0 }
+          - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.50.0 }
         remove_files:
           - { target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -60,7 +60,7 @@ packages:
           - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.7.0 }
+          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.8.0 }
         remove_files:
           - { target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -110,7 +110,7 @@ packages:
           - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
           - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
         pkg_dependency:
-          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.23.0 }
+          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
 

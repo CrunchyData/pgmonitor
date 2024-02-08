@@ -1,7 +1,0 @@
----
-minor_changes:
-  - node_exporter - minimum version 1.5.0, maximum 1.6.x
-  - postgres_exporter - minimum version 0.10.1, maximum 0.15.x
-  - prometheus - minimum version 2.38, maximum 2.47.x
-  - alertmanager - minimum version 0.23, maximum 0.26.x
-  - grafana - minimum version 9.2.19, maximum 9.9.x
