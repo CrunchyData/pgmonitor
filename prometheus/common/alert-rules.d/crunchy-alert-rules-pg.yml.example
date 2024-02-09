@@ -9,17 +9,78 @@ groups:
   rules:
 
 ########## EXPORTER RULES ##########
-### TODO sql_exporter missing scrape error metric at this time. See https://github.com/burningalchemist/sql_exporter/issues/256
-#  - alert: PGExporterScrapeError
-#    expr: pg_exporter_last_scrape_error > 0
-#    for: 60s
-#    labels:
-#      service: postgresql
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
-#
+  - alert: SQLExporterScrapeError
+    expr: scrape_errors_total > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'sql_exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
+
+
+########## PGMONITOR EXTENSION RULES ##########
+  - alert: PGMonitorMatViewRefreshTime
+    expr: ccp_metric_matview_refresh_longest_runtime_seconds > 65
+    for: 60s
+    labels:
+      service: postgresql
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorMatViewRefreshTime
+    expr: ccp_metric_matview_refresh_longest_runtime_seconds > 300
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshTime
+    expr: ccp_metric_table_refresh_longest_runtime_seconds > 65
+    for: 60s
+    labels:
+      service: postgresql
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshTime
+    expr: ccp_metric_table_refresh_longest_runtime_seconds > 300
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorMatViewRefreshFail
+    expr: ccp_metric_matview_refresh_last_run_fail_count > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshFail
+    expr: ccp_metric_table_refresh_last_run_fail_count > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
+
 
 ########## POSTGRESQL RULES ##########
   - alert: PGIsUp
@@ -45,7 +106,7 @@ groups:
 ## Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
 #
 #  - alert: PGMinimumVersion
-#    expr:  ccp_postgresql_version_current < 110005
+#    expr:  ccp_postgresql_version_current < 160000
 #    for: 60s
 #    labels:
 #      service: postgresql

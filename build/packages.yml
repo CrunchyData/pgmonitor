@@ -148,16 +148,70 @@ packages:
           - { target: "upstream", owner: "grafana", group: "grafana" }
         upstream_repo: "https://github.com/grafana/grafana"
 
-    - pgmonitor-grafana-extras:
+    - pgmonitor-grafana-extras-common:
         files:
           - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
-          - { source: "grafana/common/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-          - { source: "grafana/linux/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-          - { source: "grafana/linux/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
+          - { source: "grafana/common/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
         pkg_conflict:
           - { pkg_name: "grafana-containers" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
+          - { pkg_name: "grafana", gte: 9.5.15, lt: 10.0.0 }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-etcd:
+        files:
+          - { source: "grafana/etcd/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-linux:
+        files:
+          - { source: "grafana/linux/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg:
+        files:
+          - { source: "grafana/postgres/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg-postgres-exporter:
+        files:
+          - { source: "grafana/postgres/postgres_exporter/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg-sql-exporter:
+        files:
+          - { source: "grafana/postgres/sql_exporter/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pgbouncer-direct:
+        files:
+          - { source: "grafana/pgbouncer/direct/PGBouncer-direct.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pgbouncer-fdw:
+        files:
+          - { source: "grafana/pgbouncer/fdw/PGBouncer-fdw.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-prometheus:
+        files:
+          - { source: "grafana/prometheus/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
 
