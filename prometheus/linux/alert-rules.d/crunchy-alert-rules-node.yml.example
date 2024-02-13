@@ -92,6 +92,16 @@ groups:
     annotations:
       description: 'Memory available for target {{ $labels.job }} is at {{ $value }}%'
 
+  - alert: OOMKiller
+    expr: changes(node_vmstat_oom_kill[5m]) != 0
+    for: 1m
+    labels:
+      service: system
+      severity: warning
+      severity_num: 200
+    annotations:
+      description: 'Out of Memory Killer has triggered on {{ $labels.job }}'
+
   - alert: SwapUsage
     expr: (100 - (100 * (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))) > 60
     for: 1m
