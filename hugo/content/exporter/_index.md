@@ -21,7 +21,9 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
 
 ### RPM installs {#rpm-installs}
 
-The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). *After installing via these packages, continue reading at the [Setup](#setup) section.*
+The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
+
+After installing via these packages, continue reading at the [Setup](#setup) section.
 
 ##### Available Packages
 

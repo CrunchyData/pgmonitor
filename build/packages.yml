@@ -121,9 +121,8 @@ packages:
           - { target: "/etc/sql_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
         upstream_repo: "https://github.com/burningalchemist/sql_exporter"
 
-    # Double-hash (##) stands for PostgreSQL major version. Version matches between pkg_name and dependency package
     # If postgres_exporter is dropped, move pgbackrest-info and pgmonitor.conf to sql_exporter folder
-    - sql-exporter-pg##-extras:
+    - sql-exporter-extras:
         files:
           - { source: "sql_exporter/common/crunchy_backrest_collector.yml", target: "/etc/sql_exporter/crunchy_backrest_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_bloat_check_collector.yml", target: "/etc/sql_exporter/crunchy_bloat_check_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }

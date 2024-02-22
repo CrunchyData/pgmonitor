@@ -4,8 +4,6 @@ draft: false
 weight: 3
 ---
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). Otherwise the Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download. There is no difference between the Crunchy provided package and the one directly from Grafana.
-
 - [Included Dashboards](#dashboards)
 - [Installation](#installation)
     - [Linux](#linux)
@@ -43,7 +41,7 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 
 #### With RPM Packages
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/).
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
 If you install the below available packages with RPM, you can continue reading at the [Setup](#setup) section.
 
