@@ -72,6 +72,16 @@ Review the {{< shell >}}crunchy_grafana_dashboards.yml{{< /shell >}} file to ens
 
 Save all of the desired .json dashboard files to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
 
+Please note that due to the change to using sql_exporter from postgres_exporter and also being now able to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly:
+
+| Dashboard file                                                            | Use when              |
+|---------------------------------------------------------------------------|-----------------------|
+| grafana/postgres/sql_exporter/PG_Overview_sql_exporter.json               | sql_exporter is collecting metrics |
+| grafana/postgres/postgres_exporter/PG_Overview_postgres_exporter.json     | postgres_exporter is collecting metrics |
+| grafana/pgbouncer/direct/PGBouncer_direct.json                            | sql_exporter is connecting directly to pgBouncer for its metrics |
+| grafana/pgbouncer/fdw/PGBouncer_fdw.json                                  | postgres_exporter is using pgbouncer_fdw to collect pgBouncer metrics |
+
+
 ## Upgrading {#upgrading}
 
 Please review the ChangeLog for pgMonitor and take note of any changes to metric names and/or dashboards. Note that if you are using the included dashboards that are managed via the provisioning system, they will automatically be updated. If you've made any changes to configuration files and kept their default names, the package will not overwrite them and will instead make a new file with an {{< shell >}}*.rpmnew{{< /shell >}} extension. You can compare your file and the new one and incorporate any changes as needed or desired.
