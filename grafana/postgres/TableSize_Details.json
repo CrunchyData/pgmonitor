@@ -68,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
+          "expr": "ccp_table_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\", schemaname=\"[[schemaname]]\", relname=\"[[tablename]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -228,7 +228,7 @@
           "value": "public"
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+        "definition": "label_values(ccp_table_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -238,7 +238,7 @@
         "name": "schemaname",
         "options": [],
         "query": {
-          "query": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+          "query": "label_values(ccp_table_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -259,7 +259,7 @@
           "value": "bloat_indexes"
         },
         "datasource": "PROMETHEUS",
-        "definition": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
+        "definition": "label_values(ccp_table_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -269,7 +269,7 @@
         "name": "tablename",
         "options": [],
         "query": {
-          "query": "label_values(ccp_table_size_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
+          "query": "label_values(ccp_table_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"},relname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,

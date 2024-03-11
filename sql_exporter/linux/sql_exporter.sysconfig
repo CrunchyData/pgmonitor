@@ -1,0 +1,8 @@
+###
+#
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+OPT=-config.file=/etc/sql_exporter/sql_exporter.yml -web.listen-address=0.0.0.0:9399 -log.level=info -web.enable-reload=true
+

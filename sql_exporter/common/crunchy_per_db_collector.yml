@@ -1,0 +1,244 @@
+collector_name: crunchy_per_db
+
+
+metrics:
+ - metric_name: ccp_table_size_bytes
+   type: gauge
+   help: "Table size in bytes including indexes"
+   values: [size_bytes]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_table_size
+
+ - metric_name: ccp_stat_user_tables_seq_scan
+   type: gauge
+   help: "Number of sequential scans initiated on this table"
+   values: [seq_scan]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_seq_tup_read
+   type: gauge
+   help: "Number of live rows fetched by sequential scans"
+   values: [seq_tup_read]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_idx_scan
+   type: gauge
+   help: "Number of index scans initiated on this table"
+   values: [idx_scan]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_idx_tup_fetch
+   type: gauge
+   help: "Number of live rows fetched by index scans"
+   values: [idx_tup_fetch]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_tup_ins
+   type: gauge
+   help: "Number of rows inserted"
+   values: [n_tup_ins]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_tup_upd
+   type: gauge
+   help: "Number of rows updated"
+   values: [n_tup_upd]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_tup_del
+   type: gauge
+   help: "Number of rows deleted"
+   values: [n_tup_del]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_tup_hot_upd
+   type: gauge
+   help: "Number of rows HOT updated (i.e., with no separate index update required)"
+   values: [n_tup_hot_upd]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_live_tup
+   type: gauge
+   help: "Estimated number of live rows"
+   values: [n_live_tup]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_n_dead_tup
+   type: gauge
+   help: "Estimated number of dead rows"
+   values: [n_dead_tup]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_vacuum_count
+   type: gauge
+   help: "Number of times this table has been manually vacuumed (not counting VACUUM FULL)"
+   values: [vacuum_count]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_autovacuum_count
+   type: gauge
+   help: "Number of times this table has been vacuumed by the autovacuum daemon"
+   values: [autovacuum_count]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_analyze_count
+   type: gauge
+   help: "Number of times this table has been manually analyzed"
+   values: [analyze_count]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_stat_user_tables_autoanalyze_count
+   type: gauge
+   help: "Number of times this table has been analyzed by the autovacuum daemon"
+   values: [autoanalyze_count]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
+ - metric_name: ccp_metric_matview_refresh_last_run_fail_count
+   type: gauge
+   help: "Number of pgMonitor materialized view refreshes that have not completed a run within the expected time interval"
+   values: [count]
+   key_labels:
+     - dbname
+   query_ref: ccp_metric_matview_refresh_last_run_fail
+
+ - metric_name: ccp_metric_table_refresh_last_run_fail_count
+   type: gauge
+   help: "Number of pgMonitor table refreshes that have not completed a run within the expected time interval"
+   values: [count]
+   key_labels:
+     - dbname
+   query_ref: ccp_metric_table_refresh_last_run_fail
+
+ - metric_name: ccp_metric_matview_refresh_longest_runtime_seconds
+   type: gauge
+   help: "Longest runtime in seconds for pgMonitor materialized view refreshes"
+   values: [seconds]
+   key_labels:
+     - dbname
+   query_ref: ccp_metric_matview_refresh_longest_runtime
+
+ - metric_name: ccp_metric_table_refresh_longest_runtime_seconds
+   type: gauge
+   help: "Longest runtime in seconds for pgMonitor table refreshes"
+   values: [seconds]
+   key_labels:
+     - dbname
+   query_ref: ccp_metric_table_refresh_longest_runtime
+
+queries:
+  - query_name: ccp_table_size
+    query: |
+      SELECT dbname
+        , schemaname
+        , relname
+        , size_bytes
+      FROM pgmonitor_ext.ccp_table_size
+
+  - query_name: ccp_stat_user_tables
+    query: |
+      SELECT current_database() as dbname
+        , schemaname
+        , relname
+        , seq_scan
+        , seq_tup_read
+        , idx_scan
+        , idx_tup_fetch
+        , n_tup_ins
+        , n_tup_upd
+        , n_tup_del
+        , n_tup_hot_upd
+        , n_live_tup
+        , n_dead_tup
+        , vacuum_count
+        , autovacuum_count
+        , analyze_count
+        , autoanalyze_count
+      FROM pgmonitor_ext.ccp_stat_user_tables
+
+  - query_name: ccp_metric_matview_refresh_last_run_fail
+    query: |
+      SELECT current_database() AS dbname
+        , count(*) AS count
+      FROM pgmonitor_ext.metric_views
+      WHERE active
+      AND materialized_view
+      AND ((last_run < (current_timestamp - run_interval)) OR last_run is NULL)
+
+  - query_name: ccp_metric_table_refresh_last_run_fail
+    query: |
+      SELECT current_database() AS dbname
+        , count(*) AS count
+      FROM pgmonitor_ext.metric_tables
+      WHERE active
+      AND ((last_run < (current_timestamp - run_interval)) OR last_run is NULL)
+
+  - query_name: ccp_metric_matview_refresh_longest_runtime
+    query: |
+      SELECT current_database() AS dbname
+        , extract('epoch' from max(last_run_time)) AS seconds
+      FROM pgmonitor_ext.metric_views
+
+  - query_name: ccp_metric_table_refresh_longest_runtime
+    query: |
+      SELECT current_database() AS dbname
+        , extract('epoch' from max(last_run_time)) AS seconds
+      FROM pgmonitor_ext.metric_tables
