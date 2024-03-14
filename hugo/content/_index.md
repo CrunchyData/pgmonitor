@@ -51,9 +51,9 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 ### Operating Systems
 
-- RHEL 7/8 (Build/Run Testing, Setup Instructions)
+- RHEL 7/8/9 (Build/Run Testing, Setup Instructions)
 - CentOS 7 (Build/Run Testing, Setup Instructions)
-- Ubuntu 20 (Build/Run Testing)
+- Ubuntu 20/22 (Build/Run Testing)
 
 ### PostgreSQL
 
@@ -65,8 +65,8 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 ### PgBouncer
 
-- PgBouncer 1.17
-- pgbouncer_fdw 1.0.0
+- PgBouncer 1.21
+- pgbouncer_fdw 1.1.0
 
 ## Installation
 
