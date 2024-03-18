@@ -65,7 +65,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 ### PgBouncer
 
-- PgBouncer 1.21
+- PgBouncer 1.22
 - pgbouncer_fdw 1.1.0
 
 ## Installation
