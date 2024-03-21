@@ -35,8 +35,8 @@ packages:
 
     - pgmonitor-blackbox-exporter-extras:
         files:
-          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
-          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
+          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
         pkg_dependency:
           - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -87,7 +87,7 @@ packages:
           - { source: "alertmanager/common/crunchy-alertmanager.yml", target: "/etc/prometheus/crunchy-alertmanager.yml ", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "/etc/systemd/system/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { target: "/var/lib/ccp_monitoring/prometheus", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring/alertmanager", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.27.0 }
         remove_files:

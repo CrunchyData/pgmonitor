@@ -1,0 +1,4 @@
+trivial:
+  - packaging - Update the build file to use the alertmanager storage folder that the packages have been setting up (/var/lib/ccp_monitoring/alertmanager)
+  - packaging - Update the build file to set blackbox-exporter-extras group to ccp_monitoring for consistency with other extras packages
+
