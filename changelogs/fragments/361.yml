@@ -1,0 +1,6 @@
+major_changes:
+  - sql_exporter - Add support for new PostgreSQL metrics collecting exporter: sql_exporter
+  - sql_exporter - Add support for directly connecting to PgBouncer to collect metrics
+  - pgmonitor-extension - Add support for using the PostgreSQL pgmonitor-extension to aid in metrics collection with sql_exporter
+  - postgres_exporter - Note that postgres_exporter is still supported but will be deprecated in a future version
+  - grafana - Add new dashboards for sql_exporter support. New PostgreSQL Overview and PgBouncer direct metrics dashboards
