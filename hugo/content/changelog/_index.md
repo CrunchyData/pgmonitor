@@ -3,16 +3,28 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 4.11.0
+
+### Release Summary
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.11.0. This release primarily updates support for the underlying applications to more recent versions. This changelog contains all changes that have been added since the 4.10.0 release.
+
+### Minor Changes
+
+- alertmanager - minimum version 0.23, maximum 0.26.x
+- blackbox_exporter - minimum version 0.22.x, maximum 0.24.x
+- grafana - minimum version 9.2.19, maximum 9.9.x
+- node_exporter - minimum version 1.5.0, maximum 1.7.x
+- postgres_exporter - minimum version 0.10.1, maximum 0.15.x
+- prometheus - minimum version 2.38, maximum 2.49.x
 
 ## 4.10.0
 
-Release Summary
----------------
+### Release Summary
 
 Crunchy Data is pleased to announce the availability of pgMonitor 4.10.0. This release primarily adds support for PostgreSQL 16. This changelog contains all changes that have been added since the 4.9.0 release.
 
-Minor Changes
--------------
+### Minor Changes
 
 - postgres_exporter - Add support for PostgreSQL 16
 - containers - The datasource for containers is named PROMETHEUS. Update dashboards to use the hardcoded name.

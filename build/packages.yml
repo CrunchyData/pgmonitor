@@ -19,12 +19,8 @@ packages:
           - { source: "prometheus/linux/crunchy-prometheus-service-rhel.conf", target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/linux/sysconfig.prometheus", target: "/etc/sysconfig/prometheus", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/linux/crunchy-prometheus.yml", target: "/etc/prometheus/crunchy-prometheus.yml", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-        pkg_conflict:
-          - { pkg_name: "pgmonitor-prometheus-containers" }
         pkg_dependency:
           - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.50.0 }
-        remove_files:
-          - { target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
 
@@ -38,11 +34,9 @@ packages:
           - { source: "alertmanager/common/crunchy-alertmanager.yml", target: "/etc/prometheus/crunchy-alertmanager.yml ", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "alertmanager/linux/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { target: "/var/lib/ccp_monitoring/prometheus", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring/alertmanager", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.27.0 }
-        remove_files:
-          - { target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
 
@@ -61,8 +55,6 @@ packages:
           - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.8.0 }
-        remove_files:
-          - { target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-el7.conf" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
 
@@ -107,8 +99,8 @@ packages:
 
     - pgmonitor-blackbox-exporter-extras:
         files:
-          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
-          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "root"}
+          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
         pkg_dependency:
           - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -153,8 +145,6 @@ packages:
         files:
           - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
           - { source: "grafana/common/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
-        pkg_conflict:
-          - { pkg_name: "grafana-containers" }
         pkg_dependency:
           - { pkg_name: "grafana", gte: 9.5.15, lt: 10.0.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -240,4 +230,3 @@ packages:
         pkg_dependency:
           - { pkg_name: "postgresql##-contrib" }
         upstream_repo: "https://github.com/CrunchyData/pgbouncer_fdw"
-
