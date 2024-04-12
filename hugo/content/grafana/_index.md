@@ -72,7 +72,7 @@ Review the {{< shell >}}crunchy_grafana_dashboards.yml{{< /shell >}} file to ens
 
 Save all of the desired .json dashboard files to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
 
-Please note that due to the change to using sql_exporter from postgres_exporter and also being now able to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly:
+Please note that due to the change from postgres_exporter to sql_exporter, and its ability to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly:
 
 | Dashboard file                                                            | Use when              |
 |---------------------------------------------------------------------------|-----------------------|
