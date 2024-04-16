@@ -6,3 +6,4 @@ major_changes:
   - postgres_exporter - Note that postgres_exporter is still supported but will be deprecated in a future version
   - grafana - Add new dashboards for sql_exporter support. New PostgreSQL Overview and PgBouncer direct metrics dashboards
   - grafana - Organize packages to allow better choice of available Grafana dashboards 
+  - grafana - Remove top level general Overview dashboard
