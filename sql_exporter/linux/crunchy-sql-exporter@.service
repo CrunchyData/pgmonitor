@@ -19,37 +19,6 @@ Restart=on-failure
 #ExecReload=curl http://127.0.0.1:9399/reload
 
 
-#Group=sql_exporter
-#Type=simple
-#WorkingDirectory=/usr/share/sql_exporter
-#RuntimeDirectory=sql_exporter
-#RuntimeDirectoryMode=0750
-#ExecStart=/usr/bin/sql_exporter -config.file=${CONF_FILE} -web.listen-address=${LISTEN_ADDRESS} -log.json=${LOG_JSON} -log.level=${LOG_LEVEL} -web.enable-reload=${ENABLE_RELOAD} -web.metrics-path=${METRICS_PATH} -web.config.file=${WEB_CONFIG_FILE}
-#LimitNOFILE=10000
-#TimeoutStopSec=20
-#CapabilityBoundingSet=
-#DeviceAllow=
-#LockPersonality=true
-#MemoryDenyWriteExecute=false
-#NoNewPrivileges=true
-#PrivateDevices=true
-#PrivateTmp=true
-#ProtectClock=true
-#ProtectControlGroups=true
-#ProtectHome=true
-#ProtectHostname=true
-#ProtectKernelLogs=true
-#ProtectKernelModules=true
-#ProtectKernelTunables=true
-#ProtectProc=invisible
-#ProtectSystem=full
-#RemoveIPC=true
-#RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
-#RestrictNamespaces=true
-#RestrictRealtime=true
-#RestrictSUIDSGID=true
-#SystemCallArchitectures=native
-#UMask=0027
 
 [Install]
 WantedBy=multi-user.target
