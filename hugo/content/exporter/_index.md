@@ -483,7 +483,7 @@ Note that the statistics for individual queries can only be reset on PG12+. Prio
 
 ## Legacy postgres_exporter Setup {#postgres-exporter}
 
-If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. It is HIGHLY recommended to switch to using sql_exporter as soon as possible. Custom query support will be dropped from postgres_exporter and no new features of pgMonitor are being developed around it.
+If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. It is HIGHLY recommended to switch to using sql_exporter as soon as possible. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
 
 Most of the installation steps are the same as above with the below differences for the relevant sections.
 
@@ -592,13 +592,13 @@ You are also free to use this materialized view system for your own custom metri
 
 ##### PGBouncer
 
-In order to monitor pgbouncer with postgres_exporter, the pgbouncer_fdw maintained by CrunchyData is required. Please see its repository for full installation instructions. A package for this is available for Crunchy customers.
+In order to monitor pgbouncer with postgres_exporter, the pgbouncer_fdw maintained by CrunchyData is required. Please see its repository for full installation instructions. A package for this is available for Crunchy Data customers.
 
 https://github.com/CrunchyData/pgbouncer_fdw
 
 Once that is working, you should be able to add the {{< shell >}}queries_pgbouncer.yml{{< /shell >}} file to the {{< yaml >}}QUERY_FILE_LIST{{< /shell >}} for the exporter that is monitoring the database where the FDW was installed.
 
-#### Monitoring multiple databases and/or running multiple postgres exporters (RHEL / CentOS)
+#### Monitoring multiple databases and/or running multiple postgres exporters (RHEL)
 
 Certain metrics are not cluster-wide, so multiple exporters must be run to avoid duplication when monitoring multiple databases in a single PostgreSQL instance. To collect these per-database metrics, an additional exporter service is required and pgMonitor provides this using the following query file: ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus, you can then define the global and per-db exporter targets for a single job. This will place all the metrics that are collected for a single database instance together.
 
