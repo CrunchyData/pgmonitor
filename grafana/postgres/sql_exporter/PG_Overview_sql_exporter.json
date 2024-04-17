@@ -18,7 +18,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 17,
+  "id": 30,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -92,7 +92,6 @@
         "y": 0
       },
       "id": 1,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
@@ -106,12 +105,14 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {
           "valueSize": 47
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.15",
+      "pluginVersion": "10.4.2",
       "repeat": "pgnodes",
       "repeatDirection": "h",
       "targets": [
@@ -137,8 +138,7 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -198,6 +198,6 @@
   "timezone": "browser",
   "title": "PostgreSQL Overview (sql_exporter)",
   "uid": "d991a161-466f-44fc-9fa4-dbf395c20279",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
