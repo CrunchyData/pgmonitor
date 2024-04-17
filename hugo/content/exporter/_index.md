@@ -87,7 +87,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ##### sql_exporter
 
-The sql_exportor takes advantage of the Crunchy pgmonitor-extension (https://github.com/CrunchyData/pgmonitor-extension) to provide a much easier configuration and setup. The extension takes care of creating all the necessary objects inside the database. 
+sql_exporter takes advantage of the Crunchy Data pgmonitor-extension (https://github.com/CrunchyData/pgmonitor-extension) to provide a much easier configuration and setup. The extension takes care of creating all the necessary objects inside the database. 
 
 The mimimum required version of pgmonitor-extension is currently 1.0.0.
 
@@ -144,7 +144,7 @@ sudo yum install postgresql##-contrib
 
 Where `##` corresponds to your current PostgreSQL version.  
 
-You will need to modify your {{< shell >}}postgresql.conf{{< /shell >}} configuration file to tell PostgreSQL to load shared libraries.
+You will need to modify your {{< shell >}}postgresql.conf{{< /shell >}} configuration file to tell PostgreSQL to load the following shared libraries:
 ```
 shared_preload_libraries = 'pg_stat_statements,auto_explain,pgmonitor_bgw'
 ```
@@ -176,9 +176,9 @@ CREATE EXTENSION pg_stat_statements;
 
 Run the setup_db.sql file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the setup.sql file is a convenience file and the steps contained within it can be done manually and customized as needed.
 
-The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains setting for sql_exporter, the list of collection files to use and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the upstream project for all of the configuration options available. At the example shows how to run both the global and per-db collections on the default postgres database. It also shows how you can connect to pgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top.
+The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains settings for sql_exporter, the list of collection files to use, and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the upstream project for all of the configuration options available. The example shows how to run both the global and per-db collections on the default 'postgres' database. It also shows how you can connect to pgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top.
 
-Note that your pg_hba.conf will have to be configured to allow the {{< shell >}}ccp_monitoring{{< /shell >}} system user to connect as the {{< shell >}}ccp_monitoring{{< /shell >}} role to any database in the instance. The sql_exporter is set to connect via the local tcp loopback by default. If passwordless login is desired, a .pgpass file can be created for the ccp_monitoring user or the connection configuration can be changed to use a local socket and peer-based authentication can be done instead.
+Note that your pg_hba.conf will have to be configured to allow the {{< shell >}}ccp_monitoring{{< /shell >}} system user to connect as the {{< shell >}}ccp_monitoring{{< /shell >}} role to any database in the instance. sql_exporter is set to connect via the local TCP loopback by default. If passwordless login is desired, a .pgpass file can be created for the ccp_monitoring user or the connection configuration can be changed to use a local socket and peer-based authentication can be done instead.
 
 For replica servers, the setup is the same except that the setup_db.sql file does not need to be run since writes cannot be done there and it was already run on the primary.
 
@@ -222,7 +222,7 @@ The configuration file for the blackbox_exporter provided by pgMonitor ({{< shel
 
 ##### PGBouncer
 
-It is possible for the sql_exporter to connect directly to pgBouncer to collect metrics. Specific settings must be used and the example sql_exporter configuration and relevant collection file(s) have these settings enabled. Please refer to those files.
+It is possible for sql_exporter to connect directly to pgBouncer to collect metrics. Specific settings must be used and the example sql_exporter configuration and relevant collection file(s) have these settings enabled. Please refer to those files.
 
 #### Enable Services
 
@@ -284,7 +284,7 @@ The metrics collected by our exporters are outlined below.
 
 ### PostgreSQL {#postgresql}
 
-PostgreSQL metrics are collected by the [sql_exporter](https://github.com/burningalchemist/sql_exporter). pgMonitor uses custom queries for its PG metrics. 
+PostgreSQL metrics are collected by [sql_exporter](https://github.com/burningalchemist/sql_exporter). pgMonitor uses custom queries for its PG metrics. 
 
 
 #### Common Metrics
@@ -458,9 +458,9 @@ sql_exporter can connect directly to pgBouncer with some specific configuration 
 
 #### pg_stat_statements Metrics
 
-Collecting all per-query metrics into Prometheus could greatly increase storage requirements and heavily impact performance without sufficient resources. Therefore the metrics below give simplified numeric metrics on overall statistics and Top N queries. N is set as the LIMIT value in the `crunchy_pg_stat_statements_collector.yml` collections file. If you would like to adjust this number, it is recommended to make a copy of this collection file and use that modified file in your sql_exporter collector file config instead.
+Collecting all per-query metrics into Prometheus could greatly increase storage requirements and heavily impact performance. Therefore, the metrics below give simplified numeric metrics on overall statistics and Top N queries. N is set as the LIMIT value in the `crunchy_pg_stat_statements_collector.yml` collections file. If you would like to adjust this number, it is recommended to make a copy of this collection file and use that modified file in your sql_exporter collector file config instead.
 
-. Note that the statistics for individual queries can only be reset on PG12+. Prior to that, pg_stat_statements must have all statistics reset to redo the top N queries.
+Note that the statistics for individual queries can only be reset on PG12+. Prior to that, pg_stat_statements must have all statistics reset to redo the top N queries.
 
  * *ccp_pg_stat_statements_top_max_time_ms* -  Maximum time spent in the statement in milliseconds per database/user/query for the top N queries
 
@@ -604,7 +604,7 @@ Certain metrics are not cluster-wide, so multiple exporters must be run to avoid
 
 {{< note >}}The "setup.sql" file does not need to be run on these additional databases if using the queries that pgMonitor comes with.{{< /note >}}
 
-pgMonitor provides and recommends an example sysconfig file for this per-db exporter: {{< shell >}}sysconfig.postgres_exporter_pg##_per_db{{< /shell >}}. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly the port, database name, and query file. The below example shows connecting to 3 databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
+pgMonitor provides and recommends an example sysconfig file for this per-db exporter: {{< shell >}}sysconfig.postgres_exporter_pg##_per_db{{< /shell >}}. If you'd like to create additional exporter services for different query files, just copy the existing ones and modify the relevant lines, mainly the port, database name, and query file. The below example shows connecting to three databases in the same instance to collect their per-db metrics: `postgres`, `mydb1`, and `mydb2`.
 ```
 OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/14/queries_per_db.yml"
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb1?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable,postgresql:///mydb2?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
