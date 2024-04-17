@@ -1,0 +1,2 @@
+bugfixes:
+  - exporter - fix the pgbackrest-info.sh to force the necessary console output level that it expects
