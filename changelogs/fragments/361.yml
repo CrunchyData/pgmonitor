@@ -4,7 +4,7 @@ major_changes:
   - pgmonitor-extension - Add support for using the PostgreSQL pgmonitor-extension to aid in metrics collection with sql_exporter
   - pgmonitor-extension - Add more extensive support for materialized views and refreshed tables for expensive or custom metric queries
   - postgres_exporter - Note that postgres_exporter is still supported but will be deprecated in a future version
-  - grafana - New Grafana minimum version is now 10.4. All dashboards have been updated to fix AngluarJS deprecation warnings and re-exported from 10.4.
+  - grafana - New Grafana minimum version is now 10.4. All dashboards have been updated to fix AngularJS deprecation warnings and re-exported from 10.4.
   - grafana - Add new dashboards for sql_exporter support. New PostgreSQL Overview and PgBouncer direct metrics dashboards
   - grafana - Organize packages to allow better choice of available Grafana dashboards 
   - grafana - Remove top level general Overview dashboard
