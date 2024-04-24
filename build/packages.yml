@@ -146,7 +146,7 @@ packages:
           - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
           - { source: "grafana/common/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.5.15, lt: 10.0.0 }
+          - { pkg_name: "grafana", gte: 10.0.0, lt: 11.0.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pgmonitor-grafana-extras-etcd:
