@@ -93,7 +93,7 @@ packages:
           - { source: "grafana/linux/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
           - { source: "grafana/linux/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 10.0.0, lt: 11.0.0 }
+          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pg_bloat_check:
