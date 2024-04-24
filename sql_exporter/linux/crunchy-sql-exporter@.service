@@ -1,0 +1,24 @@
+###
+#
+# Copyright © 2017-2023 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+[Unit]
+Description=SQL Exporter for Prometheus
+Documentation=https://github.com/burningalchemist/sql_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=ccp_monitoring
+EnvironmentFile=/etc/sysconfig/%i
+ExecStart=/usr/bin/sql_exporter $OPT
+Restart=on-failure
+# Reload not working as expected - https://github.com/burningalchemist/sql_exporter/issues/297
+#ExecReload=curl http://127.0.0.1:9399/reload
+
+
+
+[Install]
+WantedBy=multi-user.target

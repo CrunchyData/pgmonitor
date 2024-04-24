@@ -4,8 +4,6 @@ draft: false
 weight: 3
 ---
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). Otherwise the Grafana RPM Package can be downloaded and installed from https://grafana.com/grafana/download. There is no difference between the Crunchy provided package and the one directly from Grafana.
-
 - [Included Dashboards](#dashboards)
 - [Installation](#installation)
     - [Linux](#linux)
@@ -43,7 +41,7 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 
 #### With RPM Packages
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/).
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
 If you install the below available packages with RPM, you can continue reading at the [Setup](#setup) section.
 
@@ -73,6 +71,16 @@ Review the {{< shell >}}crunchy_grafana_datasource.yml{{< /shell >}}} file to en
 Review the {{< shell >}}crunchy_grafana_dashboards.yml{{< /shell >}} file to ensure it's looking at where you stored the provided dashboards. By default it is looking in {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}}. Save this file and rename it to {{< shell >}}/etc/grafana/provisioning/dashboards/dashboards.yml{{< /shell >}}. Restart grafana so it picks up the new config.
 
 Save all of the desired .json dashboard files to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
+
+Please note that due to the change from postgres_exporter to sql_exporter, and its ability to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly:
+
+| Dashboard file                                                            | Use when              |
+|---------------------------------------------------------------------------|-----------------------|
+| grafana/postgres/sql_exporter/PG_Overview_sql_exporter.json               | sql_exporter is collecting metrics |
+| grafana/postgres/postgres_exporter/PG_Overview_postgres_exporter.json     | postgres_exporter is collecting metrics |
+| grafana/pgbouncer/direct/PGBouncer_direct.json                            | sql_exporter is connecting directly to pgBouncer for its metrics |
+| grafana/pgbouncer/fdw/PGBouncer_fdw.json                                  | postgres_exporter is using pgbouncer_fdw to collect pgBouncer metrics |
+
 
 ## Upgrading {#upgrading}
 

@@ -1,0 +1,508 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 43,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})/sum(ccp_bloat_check_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})*100",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Bloat %",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min",
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "expr": "ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\", schemaname=\"[[schemaname]]\",objectname=\"[[objectname]]\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{schemaname}}.{{objectname}}",
+          "refId": "A",
+          "step": 60
+        }
+      ],
+      "title": "Bloat Per Table",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min",
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "expr": "ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\"} > 10240",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{dbname}}.{{schemaname}}.{{objectname}}",
+          "refId": "A",
+          "step": 60
+        }
+      ],
+      "title": "Top N Bloated Tables > 10kB",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "15m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "hotel",
+          "value": "hotel"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(up{exp_type='pg'}, cluster_name)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "PGCluster",
+        "multi": false,
+        "name": "pgcluster",
+        "options": [],
+        "query": {
+          "query": "label_values(up{exp_type='pg'}, cluster_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "hotel_ip16_pg1",
+          "value": "hotel_ip16_pg1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Node",
+        "multi": false,
+        "name": "pgnodes",
+        "options": [],
+        "query": {
+          "query": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "charlie",
+          "value": "charlie"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"},dbname)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "PGDatabase",
+        "multi": false,
+        "name": "pgdatabase",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"},dbname)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "information_schema",
+          "value": "information_schema"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "schemaname",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\"},schemaname)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "sql_features",
+          "value": "sql_features"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"}, objectname)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "objectname",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\",dbname=\"[[pgdatabase]]\",schemaname=\"[[schemaname]]\"}, objectname)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Bloat Details",
+  "uid": "Sa8VDnNmz",
+  "version": 1,
+  "weekStart": ""
+}

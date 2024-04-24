@@ -11,6 +11,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -18,7 +24,9 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 27,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -28,8 +36,41 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -37,50 +78,106 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
+        "h": 10,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 12,
+      "id": 2,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": false,
-        "sizing": "auto",
-        "text": {}
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "9.5.15",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "node_load5{job=~\"[[osnodes]]\"}",
-          "interval": "",
-          "legendFormat": "",
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_pools_client_active{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "client_active",
+          "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_pools_client_waiting{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "client_waiting",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_pools_server_active{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_active",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_pools_server_idle{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_idle",
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_pools_server_used{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "server_used",
+          "range": true,
+          "refId": "E"
         }
       ],
-      "title": "System Load (5m)",
-      "type": "gauge"
+      "title": "PGBouncer Total State Counts",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -144,131 +241,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 4,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_load1{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "1m",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_load5{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "5m",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_load15{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "15m",
-          "refId": "C"
-        }
-      ],
-      "title": "System Load",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 60,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 14,
+        "h": 10,
+        "w": 12,
+        "x": 12,
         "y": 0
       },
       "id": 4,
@@ -284,128 +259,24 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "9.5.15",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"idle\", job=~\"[[osnodes]]\"}[5m]))",
+          "editorMode": "code",
+          "expr": "ccp_pgbouncer_lists_item_count{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{mode}}",
+          "legendFormat": "{{list}}",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"user\", job=~\"[[osnodes]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"iowait\", job=~\"[[osnodes]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode=\"system\", job=~\"[[osnodes]]\"}[5m]))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mode}}",
-          "refId": "E"
         }
       ],
-      "title": "CPU Usage",
+      "title": "PGBouncer Total Item Counts",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 10
-              },
-              {
-                "color": "green",
-                "value": 25
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 7
-      },
-      "id": 14,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "text": {}
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_memory_MemAvailable_bytes{job=~\"[[osnodes]]\"} / node_memory_MemTotal_bytes{job=~\"[[osnodes]]\"}",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Available Memory",
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -451,6 +322,8 @@
           },
           "links": [],
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -464,15 +337,15 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "percentunit"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 20,
-        "x": 4,
-        "y": 7
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 10
       },
       "id": 6,
       "options": {
@@ -487,43 +360,23 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "9.5.15",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "node_memory_MemTotal_bytes{job=~\"[[osnodes]]\"}",
+          "editorMode": "code",
+          "expr": "ccp_pgbouncer_databases_current_connections{cluster_name=~\"[[cluster_name]]\", job=~\"[[pgbnode]]\", name=~\"[[pool]]\"} / ccp_pgbouncer_databases_pool_size{cluster_name=~\"[[cluster_name]]\", job=~\"[[pgbnode]]\", name=~\"[[pool]]\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Total",
+          "legendFormat": "{{name}}",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_memory_MemTotal_bytes{job=~\"[[osnodes]]\"} - node_memory_MemAvailable_bytes{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Used",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_memory_Cached_bytes{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Cached",
-          "refId": "C"
         }
       ],
-      "title": "Memory",
+      "title": "Connection % Used Per Pool ([[pool]])",
       "type": "timeseries"
     },
     {
@@ -531,79 +384,7 @@
         "type": "prometheus",
         "uid": "PDC1078F23EBDF0E5"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 14
-      },
-      "id": 16,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "text": {}
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "1 - (node_memory_SwapFree_bytes{job=~\"[[osnodes]]\"} / node_memory_SwapTotal_bytes{job=~\"[[osnodes]]\"})",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Swap Usage",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -656,15 +437,15 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 20,
-        "x": 4,
-        "y": 14
+        "h": 10,
+        "w": 8,
+        "x": 8,
+        "y": 10
       },
       "id": 8,
       "options": {
@@ -679,120 +460,24 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "9.5.15",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "node_memory_SwapTotal_bytes{job=~\"[[osnodes]]\"}  ",
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_clients_wait_seconds{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\", database=~\"[[pool]]\"}) by (pool,state)",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Total",
+          "intervalFactor": 1,
+          "legendFormat": "{{pool}}",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_memory_SwapTotal_bytes{job=~\"[[osnodes]]\"} - node_memory_SwapFree_bytes{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Used",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_memory_SwapCached_bytes{job=~\"[[osnodes]]\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "Cached",
-          "refId": "C"
         }
       ],
-      "title": "Swap",
+      "title": "Client Connection State Counts Per Pool  ([[pool]])",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 21
-      },
-      "id": 17,
-      "options": {
-        "displayMode": "gradient",
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "text": {},
-        "valueMode": "color"
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "100 - 100 * sum(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}) BY (job,device,mountpoint)",
-          "interval": "",
-          "legendFormat": "{{mountpoint}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Filesystem Usage",
-      "type": "bargauge"
     },
     {
       "datasource": {
@@ -838,8 +523,6 @@
           },
           "links": [],
           "mappings": [],
-          "max": 100,
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -853,23 +536,17 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 20,
-        "x": 4,
-        "y": 21
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 10
       },
       "id": 10,
-      "links": [
-        {
-          "title": "Filesystem Details",
-          "url": "/d/g8iVvnHmz/filesystem-details?$__all_variables"
-        }
-      ],
       "options": {
         "legend": {
           "calcs": [],
@@ -882,33 +559,23 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "9.5.15",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "100-(100*(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "editorMode": "code",
+          "expr": "sum(ccp_pgbouncer_servers_close_needed{cluster_name=~\"[[cluster_name]]\",job=~\"[[pgbnode]]\", database=~\"[[pool]]\"}) by (state)",
           "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
+          "intervalFactor": 1,
+          "legendFormat": "__auto",
+          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "100-(100*(node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "B"
         }
       ],
-      "title": "FileSystem Usage",
+      "title": "Server Connection State Counts Per Pool  ([[pool]])",
       "type": "timeseries"
     }
   ],
@@ -920,37 +587,89 @@
       {
         "current": {
           "selected": false,
-          "text": "ip16_pg1",
-          "value": "ip16_pg1"
+          "text": "hotel",
+          "value": "hotel"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "PDC1078F23EBDF0E5"
         },
-        "definition": "",
+        "definition": "label_values(up{exp_type='pgbouncer'},cluster_name)",
         "hide": 0,
         "includeAll": false,
-        "label": "Node",
         "multi": false,
-        "name": "osnodes",
+        "name": "cluster_name",
         "options": [],
         "query": {
-          "query": "label_values(up{exp_type='node'}, job)",
-          "refId": "PROMETHEUS-osnodes-Variable-Query"
+          "query": "label_values(up{exp_type='pgbouncer'},cluster_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "ip13_pgbouncer1_bouncer",
+          "value": "ip13_pgbouncer1_bouncer"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(up{exp_type='pgbouncer'},job)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "pgbnode",
+        "options": [],
+        "query": {
+          "query": "label_values(up{exp_type='pgbouncer'},job)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(ccp_pgbouncer_databases_pool_size{cluster_name=\"[[cluster_name]]\", job=\"[[pgbnode]]\"},name)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "pool",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_pgbouncer_databases_pool_size{cluster_name=\"[[cluster_name]]\", job=\"[[pgbnode]]\"},name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -966,9 +685,9 @@
       "30d"
     ]
   },
-  "timezone": "browser",
-  "title": "OS Details",
-  "uid": "4t6SO2Fik",
+  "timezone": "",
+  "title": "PGBouncer (direct)",
+  "uid": "a7ff3775-37c9-4072-b0bc-1292f5c5841b",
   "version": 1,
   "weekStart": ""
 }

@@ -1,0 +1,158 @@
+collector_name: crunchy_pgbouncer_fdw
+
+metrics:
+  - metric_name: ccp_pgbouncer_pools_client_active
+    type: gauge
+    help: "Client connections that are linked to server connection and can process queries."
+    values: [client_active]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_client_waiting
+    type: gauge
+    help: "Client connections that have sent queries but have not yet gotten a server connection."
+    values: [client_waiting]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_active
+    type: gauge
+    help: "Server connections that are linked to a client."
+    values: [server_active]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_idle
+    type: gauge
+    help: "Server connections that unused and immediately usable for client queries."
+    values: [server_idle]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_used
+    type: gauge
+    help: "Server connections that have been idle more than server_check_delay, so they need server_check_query to run on it before it can be used."
+    values: [server_used]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+    query_ref: ccp_pgbouncer_pools
+
+
+  - metric_name: ccp_pgbouncer_database_db_conn_perc_used
+    type: gauge
+    help: "Percentage of available pooler connections for this database that are in use"
+    values: [db_conn_perc_used]
+    key_labels:
+      - pgbouncer_target_host
+      - pool_db
+    query_ref: ccp_pgbouncer_database
+  - metric_name: ccp_pgbouncer_database_paused
+    type: gauge
+    help: "Pooler connections to this database are currently paused"
+    values: [paused]
+    key_labels:
+      - pgbouncer_target_host
+      - pool_db
+    query_ref: ccp_pgbouncer_database
+  - metric_name: ccp_pgbouncer_database_disabled
+    type: gauge
+    help: "Pooler connections to this database are currently disabled"
+    values: [disabled]
+    key_labels:
+      - pgbouncer_target_host
+      - pool_db
+    query_ref: ccp_pgbouncer_database
+
+
+  - metric_name: ccp_pgbouncer_clients_client_state_count
+    type: gauge
+    help: "Count of the client connections with this status"
+    values: [client_state_count]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+      - client_state
+    query_ref: ccp_pgbouncer_clients
+
+
+  - metric_name: ccp_pgbouncer_servers_server_state_count
+    type: gauge
+    help: "Count of the server connections with this status"
+    values: [server_state_count]
+    key_labels:
+      - pgbouncer_target_host
+      - conn_pool
+      - server_state
+    query_ref: ccp_pgbouncer_servers
+
+
+  - metric_name: ccp_pgbouncer_list_item_count
+    type: gauge
+    help: "Count of items registered with pgBouncer"
+    values: [item_count]
+    key_labels:
+      - pgbouncer_target_host
+      - item
+    query_ref: ccp_pgbouncer_list
+
+
+########## QUERIES ##########
+queries:
+  - query_name: ccp_pgbouncer_database
+    query: |
+      SELECT pgbouncer_target_host
+        ,  name AS pool_db
+        , CASE WHEN max_connections != 0
+          THEN ((current_connections::float / max_connections::float) * 100)::int
+          ELSE ((current_connections::float / pool_size::float) * 100)::int
+          END AS db_conn_perc_used
+        , paused
+        , disabled
+      FROM pgbouncer_databases
+
+
+  - query_name: ccp_pgbouncer_pools
+    query: |
+      SELECT pgbouncer_target_host
+        , database || '.' || p.user as conn_pool
+        , sum(cl_active) AS client_active
+        , sum(cl_waiting) AS client_waiting
+        , sum(sv_active) AS server_active
+        , sum(sv_idle) AS server_idle
+        , sum(sv_used) AS server_used
+      FROM pgbouncer_pools as p
+      GROUP BY 1,2
+
+
+  - query_name: ccp_pgbouncer_clients
+    query: |
+      SELECT pgbouncer_target_host
+        ,  database || '.' || p.user as conn_pool
+        , state AS client_state
+        , count(*) AS client_state_count
+      FROM pgbouncer_clients as p
+      GROUP BY 1,2,3
+
+
+  - query_name: ccp_pgbouncer_servers
+    query: |
+      SELECT pgbouncer_target_host
+        ,  database || '.' || p.user as conn_pool
+        , state as server_state
+        , count(*) AS server_state_count
+      FROM pgbouncer_servers as p
+      GROUP BY 1,2,3
+
+
+  - query_name: ccp_pgbouncer_list
+    query: |
+      SELECT pgbouncer_target_host
+        ,  list AS item
+        , items AS item_count
+      FROM pgbouncer_lists
+      WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')"

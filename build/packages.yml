@@ -6,59 +6,6 @@ packages:
           - { target: "upstream", owner: "prometheus", group: "prometheus" }
         upstream_repo: "https://github.com/prometheus/prometheus"
 
-    - alertmanager:
-        files:
-          - { target: "upstream", owner: "prometheus", group: "prometheus" }
-        upstream_repo: "https://github.com/prometheus/alertmanager"
-
-    - node-exporter:
-        files:
-          - { target: "upstream", owner: "root", group: "root" }
-        pkg_dependency:
-          - { pkg_name: "shadow-utils" }
-          - { pkg_name: "sysstat" }
-        upstream_repo: "https://github.com/prometheus/node_exporter"
-
-    - postgres-exporter:
-        files:
-          - { target: "/usr/bin/postgres_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
-          - { target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
-          - { target: "/etc/postgres_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
-        upstream_repo: "https://github.com/CrunchyData/postgres_exporter"
-
-    - blackbox-exporter:
-        files:
-          - { target: "/etc/default/blackbox_exporter", mode: "0644", type: "file", owner: "root", group: "root" }
-          - { target: "/usr/bin/blackbox_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
-          - { target: "/usr/lib/systemd/system/blackbox_exporter.service", mode: "0755", type: "file", owner: "root", group: "root" }
-        upstream_repo: "https://github.com/prometheus/blackbox_exporter"
-
-    - pgmonitor-blackbox-exporter-extras:
-        files:
-          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
-          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
-        pkg_dependency:
-          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
-        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
-
-    - pgmonitor-node-exporter-extras:
-        files:
-          - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-        pkg_dependency:
-          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.8.0 }
-        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
-
-    - pgmonitor-pg-common:
-        files:
-          - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-        pkg_dependency:
-          - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.16.0 }
-        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
-
     - pgmonitor-prometheus-extras:
         files:
           - { target: "/etc/prometheus/auto.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -76,40 +23,56 @@ packages:
           - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.50.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
+
+    - alertmanager:
+        files:
+          - { target: "upstream", owner: "prometheus", group: "prometheus" }
+        upstream_repo: "https://github.com/prometheus/alertmanager"
+
     - pgmonitor-alertmanager-extras:
         files:
           - { source: "alertmanager/common/crunchy-alertmanager.yml", target: "/etc/prometheus/crunchy-alertmanager.yml ", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "/etc/systemd/system/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "alertmanager/linux/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/alertmanager", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.27.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
-    - pgmonitor-grafana-extras:
+
+    - node-exporter:
         files:
-          - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
-          - { source: "grafana/common/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-          - { source: "grafana/linux/*.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-          - { source: "grafana/linux/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
+          - { target: "upstream", owner: "root", group: "root" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
+          - { pkg_name: "shadow-utils" }
+          - { pkg_name: "sysstat" }
+        upstream_repo: "https://github.com/prometheus/node_exporter"
+
+    - pgmonitor-node-exporter-extras:
+        files:
+          - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+        pkg_dependency:
+          - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.8.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
-    - pg_bloat_check:
-        files:
-          - { source: "pg_bloat_check.py", target: "/usr/bin/pg_bloat_check.py", mode: "0755", type: "file", rpm_new: false, owner: "root", group: "root" }
-        pkg_dependency:
-          - { pkg_name: "psycopg2" }
-        upstream_repo: "https://github.com/keithf4/pg_bloat_check"
 
-    # Double-hash (##) stands for PostgreSQL major version. Version matches between pkg_name and dependency package
-    - pgbouncer_fdw##:
+    - postgres-exporter:
         files:
-          - { source: "makefile" , owner: "postgres", group: "postgres" }
+          - { target: "/usr/bin/postgres_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
+          - { target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
+          - { target: "/etc/postgres_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
+        upstream_repo: "https://github.com/CrunchyData/postgres_exporter"
+
+    - pgmonitor-pg-common:
+        files:
+          - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
-          - { pkg_name: "postgresql##-contrib" }
-        upstream_repo: "https://github.com/CrunchyData/pgbouncer_fdw"
+          - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.16.0 }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     # Double-hash (##) stands for PostgreSQL major version. Version matches between pkg_name and dependency package
     - pgmonitor-pg##-extras:
@@ -125,3 +88,144 @@ packages:
           - { pkg_name: "pgmonitor-pg-common" }
           - { pkg_name: "postgresql##-contrib" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+
+    - blackbox-exporter:
+        files:
+          - { target: "/etc/default/blackbox_exporter", mode: "0644", type: "file", owner: "root", group: "root" }
+          - { target: "/usr/bin/blackbox_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
+          - { target: "/usr/lib/systemd/system/blackbox_exporter.service", mode: "0755", type: "file", owner: "root", group: "root" }
+        upstream_repo: "https://github.com/prometheus/blackbox_exporter"
+
+    - pgmonitor-blackbox-exporter-extras:
+        files:
+          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+          - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+        pkg_dependency:
+          - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+
+    - sql-exporter:
+        files:
+          - { source: "https://github.com/CrunchyData/pgmonitor/sql_exporter/linux/crunchy-sql-exporter@.service" target: "/usr/lib/systemd/system/crunchy-sql-exporter@.service", mode: "0645", type: "file", owner: "root", group: "root" }
+          - { target: "/usr/bin/sql_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
+          - { target: "/etc/sql_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
+        upstream_repo: "https://github.com/burningalchemist/sql_exporter"
+
+    # If postgres_exporter is dropped, move pgbackrest-info and pgmonitor.conf to sql_exporter folder
+    - sql-exporter-extras:
+        files:
+          - { source: "sql_exporter/common/crunchy_backrest_collector.yml", target: "/etc/sql_exporter/crunchy_backrest_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_bloat_check_collector.yml", target: "/etc/sql_exporter/crunchy_bloat_check_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_global_collector.yml", target: "/etc/sql_exporter/crunchy_global_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_per_db_collector.yml", target: "/etc/sql_exporter/crunchy_per_db_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_pgbouncer_121_collector.yml", target: "/etc/sql_exporter/crunchy_pgbouncer_collector_121.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_pgbouncer_fdw_collector.yml", target: "/etc/sql_exporter/crunchy_pgbouncer_fdw_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_pg_stat_statements_collector.yml", target: "/etc/sql_exporter/crunchy_pg_stat_statements_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/crunchy_pg_stat_statements_reset_collector.yml", target: "/etc/sql_exporter/crunchy_pg_stat_statements_reset_collector.yml", mode: "640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/setup_db.sql", target: "/etc/sql_exporter/setup_db.sql", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/sql_exporter.yml.example", target: "/etc/sql_exporter/sql_exporter.yml.example", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/linux/sql_exporter.sysconfig", target: "/etc/sysconfig/sql_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/linux/crontab.txt", target: "/etc/sql_exporter/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+        pkg_conflict:
+          - { pkg_name: "pgmonitor-pg-common" }
+        pkg_dependency:
+          - { pkg_name: "sql-exporter", gte: 0.13.0, lt: 0.15.0 }
+
+
+    - grafana:
+        files:
+          - { target: "upstream", owner: "grafana", group: "grafana" }
+        upstream_repo: "https://github.com/grafana/grafana"
+
+    - pgmonitor-grafana-extras-common:
+        files:
+          - { source: "grafana/common/crunchy_grafana_datasource.yml", target: "/etc/grafana/provisioning/datasources/datasource.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
+          - { source: "grafana/common/crunchy_grafana_dashboards.yml", target: "/etc/grafana/provisioning/dashboards/dashboards.yml", mode: "0640", type: "file", rpm_new: true, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "grafana", gte: 10.0.0, lt: 11.0.0 }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-etcd:
+        files:
+          - { source: "grafana/etcd/ETCD_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-linux:
+        files:
+          - { source: "grafana/linux/Filesystem_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/linux/Network_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+           - { source: "grafana/linux/OS_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+           - { source: "grafana/linux/OS_Overview.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+         pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg:
+        files:
+          - { source: "grafana/postgres/Bloat_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/postgres/CRUD_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/postgres/PGBackrest.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/postgres/PG_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/postgres/QueryStatistics.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/postgres/TableSize_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg-postgres-exporter:
+        files:
+          - { source: "grafana/postgres/postgres_exporter/PG_Overview_postgres_exporter.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pg-sql-exporter:
+        files:
+          - { source: "grafana/postgres/sql_exporter/PG_Overview_sql_exporter.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pgbouncer-direct:
+        files:
+          - { source: "grafana/pgbouncer/direct/PGBouncer_direct.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-pgbouncer-fdw:
+        files:
+          - { source: "grafana/pgbouncer/fdw/PGBouncer_fdw.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+    - pgmonitor-grafana-extras-prometheus:
+        files:
+          - { source: "grafana/prometheus/Prometheus_Alerts.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
+          - { pkg_name: "pgmonitor-grafana-extras-common" }
+        upstream_repo: "https://github.com/CrunchyData/pgmonitor"
+
+
+    - pg-bloat-check:
+        files:
+          - { source: "pg_bloat_check.py", target: "/usr/bin/pg_bloat_check.py", mode: "0755", type: "file", rpm_new: false, owner: "root", group: "root" }
+        pkg_dependency:
+          - { pkg_name: "psycopg2" }
+        upstream_repo: "https://github.com/keithf4/pg_bloat_check"
+
+
+    # Double-hash (##) stands for PostgreSQL major version. Version matches between pkg_name and dependency package
+    - pgbouncer_fdw##:
+        files:
+          - { source: "makefile" , owner: "postgres", group: "postgres" }
+        pkg_dependency:
+          - { pkg_name: "postgresql##-contrib" }
+        upstream_repo: "https://github.com/CrunchyData/pgbouncer_fdw"

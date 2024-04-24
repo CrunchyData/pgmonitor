@@ -9,27 +9,89 @@ groups:
   rules:
 
 ########## EXPORTER RULES ##########
-  - alert: PGExporterScrapeError
-    expr: pg_exporter_last_scrape_error > 0
+  - alert: SQLExporterScrapeError
+    expr: scrape_errors_total > 0
     for: 60s
     labels:
       service: postgresql
       severity: critical
       severity_num: 300
     annotations:
-      summary: 'Postgres Exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
+      summary: 'sql_exporter running on {{ $labels.job }} (instance: {{ $labels.instance }}) is encountering scrape errors processing queries. Error count: ( {{ $value }} )'
+
+
+########## PGMONITOR EXTENSION RULES ##########
+  - alert: PGMonitorMatViewRefreshTime
+    expr: ccp_metric_matview_refresh_longest_runtime_seconds > 65
+    for: 60s
+    labels:
+      service: postgresql
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorMatViewRefreshTime
+    expr: ccp_metric_matview_refresh_longest_runtime_seconds > 300
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshTime
+    expr: ccp_metric_table_refresh_longest_runtime_seconds > 65
+    for: 60s
+    labels:
+      service: postgresql
+      severity: warning 
+      severity_num: 200
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshTime
+    expr: ccp_metric_table_refresh_longest_runtime_seconds > 300
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
+
+  - alert: PGMonitorMatViewRefreshFail
+    expr: ccp_metric_matview_refresh_last_run_fail_count > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
+
+  - alert: PGMonitorTableRefreshFail
+    expr: ccp_metric_table_refresh_last_run_fail_count > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical 
+      severity_num: 300
+    annotations:
+      summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
 
 
 ########## POSTGRESQL RULES ##########
   - alert: PGIsUp
-    expr: pg_up < 1
+    expr: up{exp_type="pg"} < 1
     for: 60s
     labels:
       service: postgresql
       severity: critical
       severity_num: 300
     annotations:
-      summary: 'postgres_exporter running on {{ $labels.job }} is unable to communicate with the configured database'
+      summary: 'sql_exporter running on {{ $labels.job }} is down or unable to communicate with the configured database'
 
   - alert: PGNoPrimary
     expr: max by (cluster_name) (ccp_is_in_recovery_status) < 2
@@ -44,7 +106,7 @@ groups:
 ## Example to check for current version of PostgreSQL. Metric returns the version that the exporter is running on, so you can set a rule to check for the minimum version you'd like all systems to be on. Number returned is the 6 digit integer representation contained in the setting "server_version_num".
 #
 #  - alert: PGMinimumVersion
-#    expr:  ccp_postgresql_version_current < 110005
+#    expr:  ccp_postgresql_version_current < 160000
 #    for: 60s
 #    labels:
 #      service: postgresql
@@ -96,7 +158,7 @@ groups:
 
 
 ## Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
-## A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum().
+## A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum.
 ## If metric returns 0, then NO settings have changed for either pg_settings since last known valid state
 ## If metric returns 1, then pg_settings have changed since last known valid state
 ## To see what may have changed, check the monitor.pg_settings_checksum table for a history of config state.

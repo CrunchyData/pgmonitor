@@ -1,0 +1,200 @@
+collector_name: crunchy_pgbouncer_121
+# Collector for PgBouncer minimum version of 1.21
+
+metrics:
+  - metric_name: ccp_pgbouncer_clients_wait_seconds
+    type: gauge
+    help: "Current waiting time in seconds"
+    values: [wait]
+    key_labels:
+      - database
+      - user
+      - state
+      - application_name
+      - link
+    query_ref: ccp_pgbouncer_clients
+
+
+  - metric_name: ccp_pgbouncer_databases_pool_size
+    type: gauge
+    help: "Maximum number of server connections"
+    values: [pool_size]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_min_pool_size
+    type: gauge
+    help: "Minimum number of server connections"
+    values: [min_pool_size]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_reserve_pool
+    type: gauge
+    help: "Maximum number of additional connections for this database"
+    values: [reserve_pool]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_max_connections
+    type: gauge
+    help: "Maximum number of allowed connections for this database, as set by max_db_connections, either globally or per database"
+    values: [max_connections]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_current_connections
+    type: gauge
+    help: "Current number of connections for this database"
+    values: [current_connections]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_paused
+    type: gauge
+    help: "1 if this database is currently paused, else 0"
+    values: [paused]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_disabled
+    type: gauge
+    help: "1 if this database is currently disabled, else 0"
+    values: [disabled]
+    key_labels:
+      - name
+      - host
+      - port
+      - database
+      - force_user
+      - pool_mode
+    query_ref: ccp_pgbouncer_databases
+
+
+  - metric_name: ccp_pgbouncer_lists_item_count
+    type: gauge
+    help: "Count of items registered with pgBouncer"
+    values: [items]
+    key_labels:
+      - list
+    query_ref: ccp_pgbouncer_lists
+
+
+  - metric_name: ccp_pgbouncer_pools_client_active
+    type: gauge
+    help: "Client connections that are either linked to server connections or are idle with no queries waiting to be processed"
+    values: [cl_active]
+    key_labels:
+      - database
+      - user
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_client_waiting
+    type: gauge
+    help: "Client connections that have sent queries but have not yet got a server connection"
+    values: [cl_waiting]
+    key_labels:
+      - database
+      - user
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_active
+    type: gauge
+    help: "Server connections that are linked to a client"
+    values: [sv_active]
+    key_labels:
+      - database
+      - user
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_idle
+    type: gauge
+    help: "Server connections that are unused and immediately usable for client queries"
+    values: [sv_idle]
+    key_labels:
+      - database
+      - user
+    query_ref: ccp_pgbouncer_pools
+  - metric_name: ccp_pgbouncer_pools_server_used
+    type: gauge
+    help: "Server connections that have been idle for more than server_check_delay, so they need server_check_query to run on them before they can be used again"
+    values: [sv_used]
+    key_labels:
+      - database
+      - user
+    query_ref: ccp_pgbouncer_pools
+
+
+  - metric_name: ccp_pgbouncer_servers_close_needed
+    type: gauge
+    help: "1 if the connection will be closed as soon as possible, because a configuration file reload or DNS update changed the connection information or RECONNECT was issued"
+    values: [close_needed]
+    key_labels:
+      - database
+      - user
+      - state
+      - application_name
+      - link
+    query_ref: ccp_pgbouncer_servers
+
+
+########## QUERIES ##########
+queries:
+  - query_name: ccp_pgbouncer_clients
+    no_prepared_statement: true
+    query: |
+      SHOW CLIENTS;
+
+  - query_name: ccp_pgbouncer_databases
+    no_prepared_statement: true
+    query: |
+      SHOW DATABASES;
+
+  - query_name: ccp_pgbouncer_lists
+    no_prepared_statement: true
+    query: |
+      SHOW LISTS;
+
+  - query_name: ccp_pgbouncer_pools
+    no_prepared_statement: true
+    query: |
+      SHOW POOLS;
+
+  - query_name: ccp_pgbouncer_servers
+    no_prepared_statement: true
+    query: |
+      SHOW SERVERS;
+
+# Add later if needed
+#  - query_name: ccp_pgbouncer_stats
+#    no_prepared_statement: true
+#    query: |
+#      SHOW STATS;
+

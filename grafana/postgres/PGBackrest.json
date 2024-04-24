@@ -28,6 +28,78 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dtdhms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 45
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "exemplar": true,
+          "expr": "time()- ccp_backrest_oldest_full_backup_time_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Recovery Window",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -77,22 +149,22 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 3
       },
       "id": 2,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -107,10 +179,12 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "100-(100*(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "exemplar": true,
+          "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "incr",
           "refId": "A"
         },
         {
@@ -118,239 +192,13 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "100-(100*(node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
+          "exemplar": true,
+          "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "B"
-        }
-      ],
-      "title": "Filesystem Usage %",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{mountpoint}}",
-          "refId": "B"
-        }
-      ],
-      "title": "Filesystem Space Used",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "IO/second read (-) / write (+)",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/.*_read$/"
-            },
-            "properties": [
-              {
-                "id": "custom.transform",
-                "value": "negative-Y"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 7
-      },
-      "id": 1,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_reads_completed_total{job=~\"[[osnodes]]\"}[5m])",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_read",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_writes_completed_total{job=~\"[[osnodes]]\"}[5m])",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_write",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "diff",
           "refId": "B"
         },
         {
@@ -358,168 +206,17 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "irate(node_disk_reads_completed{job=~\"[[osnodes]]\"}[5m])",
+          "exemplar": true,
+          "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_read",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "full",
           "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_writes_completed{job=~\"[[osnodes]]\"}[5m])",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_write",
-          "refId": "D"
         }
       ],
-      "title": "Disk IO Per Device [5m]",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Bytes/second read (-) / write (+)",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/.*_read/"
-            },
-            "properties": [
-              {
-                "id": "custom.transform",
-                "value": "negative-Y"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_read_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_read",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_written_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{device}}_write",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_sectors_read{job=~\"[[osnodes]]\"}[5m]) * 512",
-          "format": "time_series",
-          "intervalFactor": 4,
-          "legendFormat": "{{device}}_read",
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
-          },
-          "expr": "irate(node_disk_sectors_written{job=~\"[[osnodes]]\"}[5m]) * 512",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{device}}_write",
-          "refId": "D"
-        }
-      ],
-      "title": "Disk Throughput Per Device [5m]",
+      "title": "Time Since Last Completed Backup",
       "type": "timeseries"
     },
     {
@@ -585,16 +282,16 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 21
+        "w": 12,
+        "x": 12,
+        "y": 3
       },
-      "id": 6,
+      "id": 4,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -609,14 +306,214 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "irate(node_disk_io_time_seconds_total{job=~\"[[osnodes]]\"}[5m])",
+          "exemplar": true,
+          "expr": "ccp_backrest_last_info_backup_runtime_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{device}}",
+          "legendFormat": "{{backup_type}}",
           "refId": "A"
         }
       ],
-      "title": "IO Time Per Device in Seconds  [5m]",
+      "title": "Last Backup Runtime",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 11
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "exemplar": true,
+          "expr": "ccp_backrest_last_info_repo_total_size_bytes{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{backup_type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Last Backup Size (Total)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
+          },
+          "exemplar": true,
+          "expr": "ccp_backrest_last_info_repo_backup_size_bytes{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{backup_type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Last Backup Size (Actual)",
       "type": "timeseries"
     }
   ],
@@ -628,21 +525,54 @@
       {
         "current": {
           "selected": false,
-          "text": "ip11_etcd1",
-          "value": "ip11_etcd1"
+          "text": "hotel",
+          "value": "hotel"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "PDC1078F23EBDF0E5"
         },
-        "definition": "",
+        "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{}, stanza)",
         "hide": 0,
         "includeAll": false,
-        "label": "Node",
+        "label": "Stanza",
         "multi": false,
-        "name": "osnodes",
+        "name": "backrest_stanza",
         "options": [],
-        "query": "label_values(up{exp_type='node'}, job)",
+        "query": {
+          "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{}, stanza)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1",
+          "value": "1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
+        "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{stanza=\"[[backrest_stanza]]\"}, repo)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Repo",
+        "multi": false,
+        "name": "backrest_repo",
+        "options": [],
+        "query": {
+          "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{stanza=\"[[backrest_stanza]]\"}, repo)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -672,8 +602,8 @@
     ]
   },
   "timezone": "",
-  "title": "Filesystem Details",
-  "uid": "g8iVvnHmz",
+  "title": "pgBackRest",
+  "uid": "QtHwNCrik",
   "version": 1,
   "weekStart": ""
 }

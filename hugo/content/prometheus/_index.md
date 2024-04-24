@@ -18,7 +18,7 @@ Prometheus can be set up on any Linux-based system, but pgMonitor currently only
 
 #### With RPM Packages
 
-There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/).
+There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
 After installing via these RPMs, you can continue reading at the [Setup](#setup) section.
 

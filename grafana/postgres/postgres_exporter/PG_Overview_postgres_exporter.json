@@ -18,7 +18,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 18,
+  "id": 30,
   "links": [],
   "panels": [
     {
@@ -34,8 +34,8 @@
           "links": [
             {
               "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
+              "title": "PG Details",
+              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
             }
           ],
           "mappings": [
@@ -45,7 +45,10 @@
                   "text": "DOWN"
                 },
                 "1": {
-                  "text": "UP"
+                  "text": "REPLICA"
+                },
+                "0.5": {
+                  "text": "PRIMARY"
                 }
               },
               "type": "value"
@@ -68,12 +71,12 @@
                 "value": null
               },
               {
-                "color": "rgba(68, 126, 188, 0.9)",
+                "color": "rgba(50, 172, 45, 0.9)",
                 "value": 0.5
               },
               {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
+                "color": "rgba(68, 126, 188, 0.9)",
+                "value": 1
               }
             ]
           },
@@ -83,7 +86,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 8,
         "x": 0,
         "y": 0
       },
@@ -103,13 +106,13 @@
         },
         "showPercentChange": false,
         "text": {
-          "valueSize": 50
+          "valueSize": 47
         },
         "textMode": "auto",
         "wideLayout": true
       },
       "pluginVersion": "10.4.2",
-      "repeat": "osnodes",
+      "repeat": "pgnodes",
       "repeatDirection": "h",
       "targets": [
         {
@@ -117,7 +120,7 @@
             "type": "prometheus",
             "uid": "PDC1078F23EBDF0E5"
           },
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
+          "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -127,7 +130,7 @@
           "step": 2
         }
       ],
-      "title": "[[osnodes]]",
+      "title": "[[pgnodes]]",
       "type": "stat"
     }
   ],
@@ -153,13 +156,13 @@
         "definition": "",
         "hide": 2,
         "includeAll": true,
-        "label": "Node",
+        "label": "PGCluster",
         "multi": true,
-        "name": "osnodes",
+        "name": "pgnodes",
         "options": [],
         "query": {
-          "query": "label_values(up{exp_type='node'}, job)",
-          "refId": "PROMETHEUS-osnodes-Variable-Query"
+          "query": "label_values(up{exp_type='pg'}, job)",
+          "refId": "PROMETHEUS-pgnodes-Variable-Query"
         },
         "refresh": 1,
         "regex": "",
@@ -190,8 +193,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "OS Overview",
-  "uid": "pxinDnKik",
+  "title": "PostgreSQL Overview",
+  "uid": "pxinDnNik",
   "version": 1,
   "weekStart": ""
 }
