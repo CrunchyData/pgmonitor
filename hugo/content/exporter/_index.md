@@ -117,6 +117,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ## Upgrading {#upgrading}
 
+* If you are upgrading to version 5.0 and transitioning to using the new sql_exporter, please see the documentation in [Upgrading to pgMonitor v5.0.0](/changelog/v5_upgrade/)
 * See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
 
 ## Setup {#setup}
@@ -598,6 +599,19 @@ https://github.com/CrunchyData/pgbouncer_fdw
 
 Once that is working, you should be able to add the {{< shell >}}queries_pgbouncer.yml{{< /shell >}} file to the {{< yaml >}}QUERY_FILE_LIST{{< /shell >}} for the exporter that is monitoring the database where the FDW was installed.
 
+#### Enable Services
+
+To most easily allow the use of multiple postgres exporters, running multiple major versions of PostgreSQL, and to avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's sysconfig file is named "postgres_exporter_pg##" and tied to the major version of postgres that it was installed for. A similar EnvironmentFile exists for the per-db service. Be sure to replace the ## in the below commands first!
+
+```bash
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##
+sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##
+
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+```
 #### Monitoring multiple databases and/or running multiple postgres exporters (RHEL)
 
 Certain metrics are not cluster-wide, so multiple exporters must be run to avoid duplication when monitoring multiple databases in a single PostgreSQL instance. To collect these per-database metrics, an additional exporter service is required and pgMonitor provides this using the following query file: ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus, you can then define the global and per-db exporter targets for a single job. This will place all the metrics that are collected for a single database instance together.
