@@ -4,7 +4,7 @@ draft: false
 weight: 5
 ---
 
-Version 5 of pgMonitor introduces a new exporter that will be used for collecting PostgreSQL metrics. Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets, and installing new Grafana dashboards.
+Version 5 of pgMonitor introduces a new exporter that will be used for collecting PostgreSQL metrics: [https://github.com/burningalchemist/sql_exporter](sql_exporter). Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets, and installing new Grafana dashboards.
 
 ## Cleanup
 
@@ -78,4 +78,4 @@ If you didn't use the Crunchy-provided packages, ensure the files in the followi
 
 ## Set up sql_exporter
 
-At this point, you should just be able to follow the standard setup instructions for pgMonitor for sql_exporter, Prometheus & Grafana. This will setup the new exporter, Prometheus targets, and new Grafana dashboards.
+At this point, you should just be able to follow the [https://access.crunchydata.com/documentation/pgmonitor/latest/](standard setup instructions) for the latest version of pgMonitor. This will setup the new exporter, Prometheus targets, and new Grafana dashboards.
