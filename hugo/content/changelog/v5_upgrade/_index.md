@@ -4,7 +4,7 @@ draft: false
 weight: 5
 ---
 
-Version 5 of pgMonitor introduces a new exporter that will be used for PostgreSQL. Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets and installing new Grafana dashboards.
+Version 5 of pgMonitor introduces a new exporter that will be used for collecting PostgreSQL metrics. Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets, and installing new Grafana dashboards.
 
 ## Cleanup
 
@@ -38,7 +38,7 @@ Note that the pgbouncer_fdw is no longer required to monitor PgBouncer but it st
 DROP EXTENSION pgbouncer_fdw;
 ```
 
-If postgres_exporter was not set up with packages, you can now manually remove all the related files. Note the ## is replaced with the major version of PG that was being monitored. It is possible that multiple versions of PG had been monitored and copies of these files could exist for all versions. Also the sysconfig files listed below are the defaults used in examples so there may be additional sysconfig files that were related to postgres_exporter.
+If postgres_exporter was not set up with packages, you can now manually remove all the related files. Note the ## is replaced with the major version of PG that was being monitored. It is possible that multiple versions of PG had been monitored and copies of these files could exist for all versions. Also, the sysconfig files listed below are the defaults used in examples; there may be additional postgres_exporter sysconfig files on your system(s).
 
 | System Location |
 |-----------------|
@@ -56,19 +56,19 @@ All postgres_exporter Prometheus targets can now be removed. If alerting had bee
 ```bash
 sudo systemctl reload prometheus
 ```
-Any alerts related to postgres_exporter can also be removed from the files contained in the default alert files location `/etc/prometheus/alert-rules.d/`. Note the default original example alert file had been named `crunchy-alert-rules-pg.yml`
+Any alerts related to postgres_exporter can also be removed from the files contained in the default alert files location `/etc/prometheus/alert-rules.d/`. Note the default example alert file had been named `crunchy-alert-rules-pg.yml`
 
 ### Grafana
 
-Version 5.x of pgMonitor ups the minimum required version of Grafana to 10.4. It also removed dashboards related to postgres_exporter and added new ones for sql_exporter. If you are simply using the dashboards provided by pgMonitor, the easiest method to update is to simply remove the old ones and install the new ones.
+Version 5.x of pgMonitor raises the minimum required version of Grafana to 10.4. It also removes dashboards related to postgres_exporter and adds new ones for sql_exporter. If you are simply using the dashboards provided by pgMonitor, the easiest method to update is to simply remove the old ones and install the new ones.
 
-If you are using Crunchy packages, simply uninstall the old packages. It's recommended to follow the non-package removal process below as well to ensure things are cleaned up properly.
+If you are using Crunchy-provided packages, simply uninstall the old packages. It's recommended to follow the non-package removal process below as well to ensure things are cleaned up properly.
 
 | Package Name              | Description                                                       |
 |---------------------------|-------------------------------------------------------------------|
 | pgmonitor-grafana-extras  | Crunchy configurations for datasource & dashboard provisioning    |
 
-If you didn't use the Crunchy packages, ensure the files in the following folder are removed
+If you didn't use the Crunchy-provided packages, ensure the files in the following folder are removed:
 
 ```
 | System Location |
@@ -76,6 +76,6 @@ If you didn't use the Crunchy packages, ensure the files in the following folder
 | /etc/grafana/crunchy_dashboards |
 ```
 
-## Setup new sql_exporter
+## Set up sql_exporter
 
 At this point, you should just be able to follow the standard setup instructions for pgMonitor for sql_exporter, Prometheus & Grafana. This will setup the new exporter, Prometheus targets, and new Grafana dashboards.
