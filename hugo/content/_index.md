@@ -44,7 +44,7 @@ pgMonitor combines multiple open-source software services to create a robust Pos
 - [Prometheus](https://prometheus.io/) - an open-source metrics collector that is highly customizable.
 - [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
 - [SQL Exporter](https://github.com/burningalchemist/sql_exporter) - an open-source exporter for Prometheus that supports collecting metrics from multiple database systems including PostgreSQL.
-- [pgMonitor exporter](https://github.com/CrunchyData/pgmonitor-extension) - a PostgreSQL extension that provides a means to collect metrics that can be used by an external collection source.
+- [pgMonitor extension](https://github.com/CrunchyData/pgmonitor-extension) - a PostgreSQL extension that provides a means to collect metrics that can be used by an external collection source.
 
 ![pgMonitor](/images/crunchy-monitoring-arch.png)
 
