@@ -10,7 +10,7 @@ Version 5 of pgMonitor introduces a new exporter that will be used for collectin
 
 ### postgres_exporter
 
-This new exporter for PostgreSQL allows for just a single exporter to connect to all databases within a PostgreSQL instance as well as connecting directly to PgBouncer to collect is metrics.
+This new exporter for PostgreSQL allows for just a single exporter to connect to all databases within a PostgreSQL instance as well as connecting directly to PgBouncer to collect its metrics.
 There is no longer any need for the postgres_exporter to be running, so its services can be shutdown. Some examples of those service names based on the old documentation are as follows:
 
 ```
@@ -33,7 +33,7 @@ If you've installed pgMonitor with the packages provided by Crunchy Data, those 
 | pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg13-extras, pgmonitor-pg14-extras, etc) |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 
-Note that the pgbouncer_fdw is no longer required to monitor PgBouncer but it still can be used with sql_exporter if desired. If it is not needed, that package can be removed as well. Note that it is also an extension within the database and can be removed as follows. Per previous instructions, it was usually only installed on the global database.
+Note that the pgbouncer_fdw is no longer required to monitor PgBouncer but it can still be used with sql_exporter if desired. Per previous instructions, it was usually only installed on the global database. The extension can be removed as follows if it's not needed.
 ```
 DROP EXTENSION pgbouncer_fdw;
 ```
@@ -51,7 +51,7 @@ If postgres_exporter was not set up with packages, you can now manually remove a
 
 
 ### Prometheus
-All postgres_exporter Prometheus targets can now be removed. If alerting had been set up, they are all likely setting off alarms now that they had been shut down and removed during the previous step. This can make it easier to identify which targets can be removed. Otherwise, the default location for Prometheus targets used by previous instructions is `/etc/prometheus/auto.d/`. Please check your Prometheus installation for possible additional target locations. In that location, remove any targets for the postgres_exporter. The default ports for postgres_exporter were 9187 and 9188, so any targets with these ports should be examined for removal. Once this is done, you can simply reload Prometheus to clear these targets and any related alerts should clear.
+All postgres_exporter Prometheus targets can now be removed. The default location for Prometheus targets is `/etc/prometheus/auto.d/`, but please check your Prometheus installation for possible additional target locations. In the identified location(s), remove any targets for the postgres_exporter. The default ports for postgres_exporter were 9187 and 9188, so any targets with these ports should be examined for removal. Note that if alerting had previously been enabled, the previous step likely caused multiple alters to fire; once this step is done, you can simply reload Prometheus to clear these targets and any related alerts should resolve themselves. 
 
 ```bash
 sudo systemctl reload prometheus

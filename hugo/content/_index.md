@@ -74,7 +74,7 @@ Installation instructions for each package are provided in that packages subfold
 
 ### 3. [Grafana](/grafana)
 
-Notes on upgrading can be found in each relevant sections.
+Notes on upgrading can be found in each relevant section.
 
 ## Version History
 
