@@ -64,7 +64,7 @@ sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 
 All executables installed via the above releases are expected to be in the {{< shell >}}/usr/bin{{< /shell >}} directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
 
-https://github.com/lest/prometheus-rpm/tree/master/node_exporter
+https://github.com/prometheus/node_exporter/tree/master/examples/systemd
 
 A base blackbox_exporter systemd file is also expected to be in place. No examples are currently available.
 
@@ -97,12 +97,12 @@ The following pgMonitor configuration files should be placed according to the fo
 |------------------------------|-----------------|
 | sql_exporter/common/*.yml | /etc/sql_exporter/*.yml |
 | sql_exporter/common/*.sql | /etc/sql_exporter/*.sql |
-| linux/crunchy-sql-exporter@.service | /usr/lib/systemd/system/crunchy-sql-exporter@.service |
+| sql_exporter/linux/crunchy-sql-exporter@.service | /usr/lib/systemd/system/crunchy-sql-exporter@.service |
 | sql_exporter/linux/sql_exporter.sysconfig | /etc/sysconfig/sql_exporter |
 | sql_exporter/linux/crontab.txt | /etc/sysconfig/crontab.txt |
 | postgres_exporter/linux/pgbackrest-info.sh | /usr/bin/pgbackrest-info.sh |
 | postgres_exporter/linux/pgmonitor.conf | /etc/pgmonitor.conf (multi-backrest-repository/container environment only) |
-| sql_exporter/common/sql_exporter.yml.example | /etc/sql_exporter/sql_exporter.yml.example |
+| sql_exporter/common/sql_exporter.yml.example | /etc/sql_exporter/sql_exporter.yml |
 
 
 ##### blackbox_exporter
@@ -129,7 +129,7 @@ The following pgMonitor configuration files should be placed according to the fo
 The following files contain defaults that should enable the exporters to run effectively on your system for the purposes of using pgMonitor.  Please take some time to review them.
 
 If you need to modify them, see the notes in the files for more details and recommendations:
-- {{< shell >}}/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel{{< /shell >}}
+- {{< shell >}}/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf{{< /shell >}}
 - {{< shell >}}/etc/sysconfig/node_exporter{{< /shell >}}
 - {{< shell >}}/etc/sysconfig/sql_exporter{{< /shell >}}
 
