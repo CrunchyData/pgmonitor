@@ -50,7 +50,7 @@ If postgres_exporter was not set up with packages, you can now manually remove a
 
 
 ### Prometheus
-All postgres_exporter Prometheus targets can now be removed. The default location for Prometheus targets is `/etc/prometheus/auto.d/`, but please check your Prometheus installation for possible additional target locations. In the identified location(s), remove any targets for the postgres_exporter. The default ports for postgres_exporter were 9187 and 9188, so any targets with these ports should be examined for removal. Note that if alerting had previously been enabled, the previous step likely caused multiple alters to fire; once this step is done, you can simply reload Prometheus to clear these targets and any related alerts should resolve themselves. 
+All postgres_exporter Prometheus targets can now be removed. The default location for Prometheus targets is `/etc/prometheus/auto.d/`, but please check your Prometheus installation for possible additional target locations. In the identified location(s), remove any targets for the postgres_exporter. The default ports for postgres_exporter were 9187 and 9188, so any targets with these ports should be examined for removal. Note that if alerting had previously been enabled, the previous step likely caused multiple alerts to fire; once this step is done, you can simply reload Prometheus to clear these targets and any related alerts should resolve themselves. 
 
 ```bash
 sudo systemctl reload prometheus
