@@ -27,7 +27,6 @@ If you've installed pgMonitor with the packages provided by Crunchy Data, those 
 
 | Package Name                   | Description                                                               |
 |--------------------------------|---------------------------------------------------------------------------|
-| pg_bloat_check                 | Package for pg_bloat_check script                                         |
 | pgbouncer_fdw                  | Package for the pgbouncer_fdw extension                                   |
 | pgmonitor-pg-common            | Package containing postgres_exporter items common for all versions of PostgreSQL |
 | pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg13-extras, pgmonitor-pg14-extras, etc) |
