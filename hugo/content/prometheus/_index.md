@@ -92,9 +92,9 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ### Upgrading {#upgrading}
 
-Please review the ChangeLog for any changes that may be relevant to your environment.
-
-Of note, items like the alert rules and configuration files often require user edits. The packages will install newer versions of these files, but if the user has changed their contents but kept the same file name, the package will not overwrite them. Instead it will make a file with an {{< shell >}}*.rpmnew{{< /shell >}} extension that contains the newer version of the file. These new files can be reviewed/compared to he user's file to incorporate any desired changes.
+* If you are upgrading to version 5.0 and transitioning to using the new sql_exporter, please see the documentation in [Upgrading to pgMonitor v5.0.0](/changelog/v5_upgrade/)
+* See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
+* Note, items like the alert rules and configuration files often require user edits. The packages will install newer versions of these files, but if the user has changed their contents but kept the same file name, the package will not overwrite them. Instead it will make a file with an {{< shell >}}*.rpmnew{{< /shell >}} extension that contains the newer version of the file. These new files can be reviewed/compared to he user's file to incorporate any desired changes.
 
 ## Setup {#setup}
 

@@ -64,7 +64,7 @@ sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 
 All executables installed via the above releases are expected to be in the {{< shell >}}/usr/bin{{< /shell >}} directory. A base node_exporter systemd file is expected to be in place already. An example one can be found here:
 
-https://github.com/lest/prometheus-rpm/tree/master/node_exporter
+https://github.com/prometheus/node_exporter/tree/master/examples/systemd
 
 A base blackbox_exporter systemd file is also expected to be in place. No examples are currently available.
 
@@ -97,12 +97,12 @@ The following pgMonitor configuration files should be placed according to the fo
 |------------------------------|-----------------|
 | sql_exporter/common/*.yml | /etc/sql_exporter/*.yml |
 | sql_exporter/common/*.sql | /etc/sql_exporter/*.sql |
-| linux/crunchy-sql-exporter@.service | /usr/lib/systemd/system/crunchy-sql-exporter@.service |
+| sql_exporter/linux/crunchy-sql-exporter@.service | /usr/lib/systemd/system/crunchy-sql-exporter@.service |
 | sql_exporter/linux/sql_exporter.sysconfig | /etc/sysconfig/sql_exporter |
 | sql_exporter/linux/crontab.txt | /etc/sysconfig/crontab.txt |
 | postgres_exporter/linux/pgbackrest-info.sh | /usr/bin/pgbackrest-info.sh |
 | postgres_exporter/linux/pgmonitor.conf | /etc/pgmonitor.conf (multi-backrest-repository/container environment only) |
-| sql_exporter/common/sql_exporter.yml.example | /etc/sql_exporter/sql_exporter.yml.example |
+| sql_exporter/common/sql_exporter.yml.example | /etc/sql_exporter/sql_exporter.yml |
 
 
 ##### blackbox_exporter
@@ -117,6 +117,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ## Upgrading {#upgrading}
 
+* If you are upgrading to version 5.0 and transitioning to using the new sql_exporter, please see the documentation in [Upgrading to pgMonitor v5.0.0](/changelog/v5_upgrade/)
 * See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
 
 ## Setup {#setup}
@@ -128,7 +129,7 @@ The following pgMonitor configuration files should be placed according to the fo
 The following files contain defaults that should enable the exporters to run effectively on your system for the purposes of using pgMonitor.  Please take some time to review them.
 
 If you need to modify them, see the notes in the files for more details and recommendations:
-- {{< shell >}}/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel{{< /shell >}}
+- {{< shell >}}/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf{{< /shell >}}
 - {{< shell >}}/etc/sysconfig/node_exporter{{< /shell >}}
 - {{< shell >}}/etc/sysconfig/sql_exporter{{< /shell >}}
 
@@ -598,6 +599,19 @@ https://github.com/CrunchyData/pgbouncer_fdw
 
 Once that is working, you should be able to add the {{< shell >}}queries_pgbouncer.yml{{< /shell >}} file to the {{< yaml >}}QUERY_FILE_LIST{{< /shell >}} for the exporter that is monitoring the database where the FDW was installed.
 
+#### Enable Services
+
+To most easily allow the use of multiple postgres exporters, running multiple major versions of PostgreSQL, and to avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's sysconfig file is named "postgres_exporter_pg##" and tied to the major version of postgres that it was installed for. A similar EnvironmentFile exists for the per-db service. Be sure to replace the ## in the below commands first!
+
+```bash
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##
+sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##
+
+sudo systemctl enable crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+sudo systemctl start crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+sudo systemctl status crunchy-postgres-exporter@postgres_exporter_pg##_per_db
+```
 #### Monitoring multiple databases and/or running multiple postgres exporters (RHEL)
 
 Certain metrics are not cluster-wide, so multiple exporters must be run to avoid duplication when monitoring multiple databases in a single PostgreSQL instance. To collect these per-database metrics, an additional exporter service is required and pgMonitor provides this using the following query file: ({{< shell >}}queries_per_db.yml{{< /shell >}}). In Prometheus, you can then define the global and per-db exporter targets for a single job. This will place all the metrics that are collected for a single database instance together.
