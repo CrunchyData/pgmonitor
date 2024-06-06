@@ -39,7 +39,10 @@ Or you can also download [Prometheus](https://prometheus.io/) and [Alertmanager]
 
 ##### Minimum Versions
 
-pgMonitor assumes to be using at least Prometheus 2.9.x. We recommend to always use the latest minor version of Prometheus.
+pgMonitor has been tested with the following versions at a minimum. Later versions should generally work. If they do not, please open an issue on our Github.
+
+ * Prometheus 2.49.1
+ * Alertmanager 0.26.0
 
 ##### User and Configuration Directory Installation
 
@@ -118,10 +121,10 @@ The below files dictate how Prometheus and Alertmanager will behave at runtime f
 
 | File                                     | Instructions |
 |------------------------------------------|--------------|
-| /etc/prometheus/crunchy-prometheus.yml | Modify to set scrape interval if different from the default of 30s. Activate alert rules and Alertmanager by uncommenting lines when set as needed. Activate blackbox_exporter monitoring if desired. Service file provided by pgMonitor expects config file to be named "crunchy-prometheus.yml" |
-| /etc/prometheus/crunchy-alertmanager.yml | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgMonitor expects config file to be named "crunchy-alertmanager.yml" |
-| /etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example | Update rules as needed and remove ".example" suffix. Prometheus config provided by pgmonitor expects ".yml" files to be located in "/etc/prometheus/alert-rules.d/" |
-| /etc/prometheus/auto.d/*.yml | You will need at least one file with a final ".yml" extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in ".yml.example" but only with ".yml". Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to all targets and be set appropriately (pg or node). Also, PostgreSQL targets make use of the "cluster_name" variable and should be given a relevant value so all systems (primary & replicas) can be related to each other when needed (Grafana dashboards, etc). See the example target files provided for how to set the labels for postgres or node exporter targets. |
+| /etc/prometheus/crunchy-prometheus.yml | Main configuration file for prometheus to set things like scrape intervals and alerting. blackbox_exporter monitoring can also be enabled if desired. Service file provided by pgMonitor expects config file to be named "crunchy-prometheus.yml". For full configration options please see the [Prometheus upstream documentation](https://prometheus.io/docs/prometheus/latest/configuration/configuration/) |
+| /etc/prometheus/crunchy-alertmanager.yml | Setup alert target (e.g., SMTP, SMS, etc.), receiver and route information. Service file provided by pgMonitor expects config file to be named "crunchy-alertmanager.yml". For full configuration options please see the [Alertmanager upstream documentation](https://prometheus.io/docs/alerting/latest/configuration/) |
+| /etc/prometheus/alert-ruled.d/crunchy-alert-rules-\*.yml.example | Update rules as needed and remove ".example" suffix. Prometheus config provided by pgmonitor expects ".yml" files to be located in "/etc/prometheus/alert-rules.d/". Additional information on configuring alert rules can be found in the [alert rules upstream documentation](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/). |
+| /etc/prometheus/auto.d/*.yml | You will need at least one file with a final ".yml" extension. Copy the example files to create as many additional targets as needed.  Ensure the configuration files you want to use do not end in ".yml.example" but only with ".yml". Note that in order to use the provided Grafana dashboards, the extra "exp_type" label must be applied to all targets and be set appropriately (pg, node, etcd, pgbouncer, etc). Also, PostgreSQL targets make use of the "cluster_name" variable and should be given a relevant value so all systems (primary & replicas) can be related to each other when needed (Grafana dashboards, etc). See the example target files provided for how to set the labels for postgres or node exporter targets. |
 
 #### Blackbox Exporter
 
