@@ -90,14 +90,14 @@ ccp_backrest_oldest_full_backup:
               , stanza
               , backup_data->'database'->>'repo-key' AS repo
               , min((backup_data->'timestamp'->>'stop')::bigint) time_seconds
-            FROM per_stanza 
+            FROM per_stanza
             WHERE backup_data->>'type' IN ('full')
             GROUP BY config_file, stanza, backup_data->'database'->>'repo-key'"
     metrics:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
-        - stanza: 
+        - stanza:
             usage: "LABEL"
             description: "pgBackRest stanza name"
         - repo:
@@ -114,7 +114,7 @@ ccp_backrest_last_full_backup:
                  , jsonb_array_elements(data) AS stanza_data
                 FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
-            , per_stanza AS ( 
+            , per_stanza AS (
                 SELECT config_file
                  , stanza_data->>'name' AS stanza
                  , jsonb_array_elements(stanza_data->'backup') AS backup_data
@@ -131,7 +131,7 @@ ccp_backrest_last_full_backup:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
-        - stanza: 
+        - stanza:
             usage: "LABEL"
             description: "pgBackRest stanza name"
         - repo:
@@ -148,7 +148,7 @@ ccp_backrest_last_diff_backup:
                  , jsonb_array_elements(data) AS stanza_data
              FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
-            , per_stanza AS ( 
+            , per_stanza AS (
                 SELECT config_file
                  , stanza_data->>'name' AS stanza
                  , jsonb_array_elements(stanza_data->'backup') AS backup_data
@@ -165,7 +165,7 @@ ccp_backrest_last_diff_backup:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
-        - stanza: 
+        - stanza:
             usage: "LABEL"
             description: "pgBackRest stanza name"
         - repo:
@@ -182,7 +182,7 @@ ccp_backrest_last_incr_backup:
                  , jsonb_array_elements(data) AS stanza_data
                 FROM monitor.pgbackrest_info(#PGBACKREST_INFO_THROTTLE_MINUTES#)
             )
-            , per_stanza AS ( 
+            , per_stanza AS (
                 SELECT config_file
                  , stanza_data->>'name' AS stanza
                  , jsonb_array_elements(stanza_data->'backup') AS backup_data
@@ -199,7 +199,7 @@ ccp_backrest_last_incr_backup:
         - config_file:
             usage: "LABEL"
             description: "Configuration file for this backup"
-        - stanza: 
+        - stanza:
             usage: "LABEL"
             description: "pgBackRest stanza name"
         - repo:

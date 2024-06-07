@@ -108,7 +108,7 @@ packages:
 
     - sql-exporter:
         files:
-          - { source: "https://github.com/CrunchyData/pgmonitor/sql_exporter/linux/crunchy-sql-exporter@.service" target: "/usr/lib/systemd/system/crunchy-sql-exporter@.service", mode: "0645", type: "file", owner: "root", group: "root" }
+          - { source: "https://github.com/CrunchyData/pgmonitor/sql_exporter/linux/crunchy-sql-exporter@.service", target: "/usr/lib/systemd/system/crunchy-sql-exporter@.service", mode: "0645", type: "file", owner: "root", group: "root" }
           - { target: "/usr/bin/sql_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
           - { target: "/etc/sql_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
         upstream_repo: "https://github.com/burningalchemist/sql_exporter"
@@ -160,9 +160,9 @@ packages:
         files:
           - { source: "grafana/linux/Filesystem_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
           - { source: "grafana/linux/Network_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-           - { source: "grafana/linux/OS_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-           - { source: "grafana/linux/OS_Overview.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
-         pkg_dependency:
+          - { source: "grafana/linux/OS_Details.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+          - { source: "grafana/linux/OS_Overview.json", target: "/etc/grafana/crunchy_dashboards/", mode: "0640", type: "file", rpm_new: false, owner: "grafana", group: "grafana" }
+        pkg_dependency:
           - { pkg_name: "pgmonitor-grafana-extras-common" }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 

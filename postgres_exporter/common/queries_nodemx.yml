@@ -53,7 +53,7 @@ SELECT
   CASE
     WHEN monitor.cgroup_mode() = 'legacy'
     THEN (SELECT val FROM d WHERE key='mapped_file')
-    ELSE 0 
+    ELSE 0
   END as mapped_file,
   CASE
     WHEN monitor.cgroup_mode() = 'legacy'
@@ -71,7 +71,7 @@ SELECT
   END as usage_in_bytes,
   CASE
     WHEN monitor.cgroup_mode() = 'legacy'
-    THEN monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes') 
+    THEN monitor.cgroup_scalar_bigint('memory.kmem.usage_in_bytes')
     ELSE 0
   END as kmem_usage_in_byte"
   metrics:
@@ -133,7 +133,7 @@ ccp_nodemx_cpucfs:
     monitor.cgroup_scalar_bigint('cpu.cfs_period_us')
   ELSE
     (monitor.cgroup_array_bigint('cpu.max'))[2]
-  END AS period_us, 
+  END AS period_us,
   CASE
   WHEN monitor.cgroup_mode() = 'legacy' THEN
     GREATEST(monitor.cgroup_scalar_bigint('cpu.cfs_quota_us'), 0)
@@ -224,7 +224,7 @@ ccp_nodemx_disk_activity:
         description: "Total sectors read"
     - sectors_written:
         usage: "GAUGE"
-        description: "Total sectors writen"
+        description: "Total sectors written"
 
 ###
 #
