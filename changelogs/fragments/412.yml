@@ -1,0 +1,3 @@
+bugfixes:
+  - sql_exporter - use the new views from pgmonitor-extension instead of full queries
+  - docs - add reference links to upstream configuration docs
