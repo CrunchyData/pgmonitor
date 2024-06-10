@@ -1,0 +1,2 @@
+bugfixes:
+  - grafana - fix some queries that were searching on the wrong label (datname vs. dbname)

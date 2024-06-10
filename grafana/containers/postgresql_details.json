@@ -701,7 +701,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -712,7 +712,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_pg_stat_statements_total_calls_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1172,7 +1172,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(ccp_stat_database_tup_fetched{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_fetched{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1183,7 +1183,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_inserted{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_inserted{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1193,7 +1193,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_updated{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_updated{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1203,7 +1203,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_deleted{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_deleted{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Deleted",
@@ -1212,7 +1212,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_tup_returned{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_tup_returned{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1435,7 +1435,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(ccp_stat_database_deadlocks{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_deadlocks{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1445,7 +1445,7 @@
           "step": 2
         },
         {
-          "expr": "sum(rate(ccp_stat_database_conflicts{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(rate(ccp_stat_database_conflicts{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "DeadLocks",
@@ -1454,7 +1454,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_commit{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1465,7 +1465,7 @@
           "step": 2
         },
         {
-          "expr": "sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\"}[5m]))",
+          "expr": "sum(irate(ccp_stat_database_xact_rollback{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1831,7 +1831,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accessexclusivelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"accessexclusivelock\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1841,7 +1841,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"exclusivelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"exclusivelock\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1850,7 +1850,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"rowexclusivelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"rowexclusivelock\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1859,7 +1859,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"sharerowexclusivelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"sharerowexclusivelock\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1868,7 +1868,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"shareupdateexclusivelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"shareupdateexclusivelock\"})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -1877,7 +1877,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",mode=\"accesssharelock\"})",
+          "expr": "sum by (mode) (ccp_locks_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",dbname=~\"[[datname]]\",mode=\"accesssharelock\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{mode}}",
