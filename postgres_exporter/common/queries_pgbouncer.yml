@@ -22,7 +22,7 @@ ccp_pgbouncer_pools:
           description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
-          description: "Conection Pool"
+          description: "Connection Pool"
     - client_active:
           usage: "GAUGE"
           description: "Client connections that are linked to server connection and can process queries."
@@ -79,7 +79,7 @@ ccp_pgbouncer_clients:
           description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
-          description: "Conection Pool"
+          description: "Connection Pool"
     - client_state:
           usage: "LABEL"
           description: "Client connection statuses per database"
@@ -100,7 +100,7 @@ ccp_pgbouncer_servers:
           description: "FDW server name for the target PgBouncer host"
     - conn_pool:
           usage: "LABEL"
-          description: "Conection Pool"
+          description: "Connection Pool"
     - server_state:
           usage: "LABEL"
           description: "Server connection statuses per database"

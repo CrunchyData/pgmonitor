@@ -141,7 +141,7 @@ queries:
         , sum(rows) AS row_count
       FROM pgmonitor_ext.pg_stat_statements_func()
       GROUP BY 1,2
- 
+
   - query_name: ccp_pg_stat_statements_top_max
     query: |
       SELECT role

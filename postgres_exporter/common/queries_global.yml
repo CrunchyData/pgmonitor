@@ -9,7 +9,7 @@
 ccp_postgresql_version:
   query: "SELECT current_setting('server_version_num')::int AS current"
   metrics:
-    - current: 
+    - current:
         usage: "GAUGE"
         description: "The current version of PostgreSQL that this exporter is running on as a 6 digit integer (######)."
 
@@ -119,10 +119,10 @@ ccp_stat_database:
         - dbname:
             usage: "LABEL"
             description: "Name of database"
-        - xact_commit: 
+        - xact_commit:
             usage: "GAUGE"
             description: "Number of transactions in this database that have been committed"
-        - xact_rollback: 
+        - xact_rollback:
             usage: "GAUGE"
             description: "Number of transactions in this database that have been rolled back"
         - blks_read:
@@ -175,10 +175,10 @@ ccp_transaction_wraparound:
 
 
 ccp_archive_command_status:
-    query: "SELECT CASE 
+    query: "SELECT CASE
                 WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) IS NULL THEN 0
                 WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) < 0 THEN 0
-                ELSE EXTRACT(epoch from (last_failed_time - last_archived_time)) 
+                ELSE EXTRACT(epoch from (last_failed_time - last_archived_time))
                 END AS seconds_since_last_fail
             , EXTRACT(epoch from (CURRENT_TIMESTAMP - last_archived_time)) AS seconds_since_last_archive
             , archived_count
@@ -216,7 +216,7 @@ ccp_postmaster_uptime:
 
 
 ccp_pg_settings_checksum:
-    query: "SELECT monitor.pg_settings_checksum() AS status" 
+    query: "SELECT monitor.pg_settings_checksum() AS status"
     metrics:
         - status:
             usage: "GAUGE"
@@ -246,7 +246,7 @@ ccp_replication_lag:
   metrics:
     - replay_time:
         usage: "GAUGE"
-        description: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL recieved equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
+        description: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL received equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
     - received_time:
         usage: "GAUGE"
         description: "Length of time since the last WAL file was received and replayed on replica. Always increases, possibly causing false positives if the primary stops writing. Monitors for replicas that stop receiving WAL all together."
@@ -297,7 +297,7 @@ ccp_replication_lag_size:
   query: "SELECT client_addr as replica
         , client_hostname as replica_hostname
         , client_port as replica_port
-        , pg_wal_lsn_diff(sent_lsn, replay_lsn) as bytes 
+        , pg_wal_lsn_diff(sent_lsn, replay_lsn) as bytes
         FROM pg_catalog.pg_stat_replication"
   metrics:
     - replica:
@@ -320,8 +320,8 @@ ccp_replication_slots:
     - slot_name:
         usage: "LABEL"
         description: "Name of replication slot"
-    - active: 
-        usage: "GAUGE" 
+    - active:
+        usage: "GAUGE"
         description: "Active state of slot. 1 = true. 0 = false."
     - retained_bytes:
         usage: "GAUGE"
@@ -342,7 +342,7 @@ ccp_wal_activity:
 
 
 ccp_pg_hba_checksum:
-    query: "SELECT monitor.pg_hba_checksum() AS status" 
+    query: "SELECT monitor.pg_hba_checksum() AS status"
     metrics:
         - status:
             usage: "GAUGE"

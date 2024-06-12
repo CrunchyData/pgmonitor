@@ -133,7 +133,7 @@ metrics:
     query_ref: ccp_replication_lag
   - metric_name: ccp_replication_lag_replay_time
     type: gauge
-    help: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL recieved equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
+    help: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL received equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
     values: [replay_time]
     query_ref: ccp_replication_lag
 
@@ -183,52 +183,52 @@ metrics:
     type: gauge
     help: "Number of scheduled checkpoints that have been performed"
     values: [checkpoints_timed]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoints_req
     type: gauge
     help: "Number of requested checkpoints that have been performed"
     values: [checkpoints_req]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoint_write_time
     type: gauge
     help: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
     values: [checkpoint_write_time]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoint_sync_time
     type: gauge
     help: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in milliseconds"
     values: [checkpoint_sync_time]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_checkpoint
     type: gauge
     help: "Number of buffers written during checkpoints"
     values: [buffers_checkpoint]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_clean
     type: gauge
     help: "Number of buffers written by the background writer"
     values: [buffers_clean]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_maxwritten_clean
     type: gauge
     help: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
     values: [maxwritten_clean]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_backend
     type: gauge
     help: "Number of buffers written directly by a backend"
     values: [buffers_backend]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_backend_fsync
     type: gauge
     help: "Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)"
     values: [buffers_backend_fsync]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_alloc
     type: gauge
     help: "Number of buffers allocated"
     values: [buffers_alloc]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
 
   - metric_name: ccp_stat_database_xact_commit
     type: gauge
@@ -351,11 +351,11 @@ metrics:
     values: [total_size_bytes]
     query_ref: ccp_wal_activity
 
-#  - metric_name: 
+#  - metric_name:
 #    type: gauge
-#    help: 
+#    help:
 #    values: []
-#    query_ref: 
+#    query_ref:
 
 ########## QUERIES ##########
 queries:
@@ -443,7 +443,7 @@ queries:
       SELECT replica
         , replica_hostname
         , replica_port
-        , bytes 
+        , bytes
       FROM pgmonitor_ext.ccp_replication_lag_size
 
 

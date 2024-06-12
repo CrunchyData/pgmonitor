@@ -13,7 +13,7 @@ weight: 3
 
 ### Included Dashboards {#dashboards}
 
-pgMonitor comes with several dashboards ready to be used with automatic provisioning. They provide examples of using the metrics from the postgres_exporter and node_exporter. Since provisioned dashboards cannot be edited directly in the web interface, if any custom changes are desired, it is recommmended to make a copy of them and make your changes there.
+pgMonitor comes with several dashboards ready to be used with automatic provisioning. They provide examples of using the metrics from the postgres_exporter and node_exporter. Since provisioned dashboards cannot be edited directly in the web interface, if any custom changes are desired, it is recommended to make a copy of them and make your changes there.
 
 | Dashboard Name        | Filename              | Description                                       |
 |-----------------------|-----------------------|---------------------------------------------------|
@@ -27,7 +27,7 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 | TableSize Details     | TableSize_Details.json | Provides size details on a per-table basis for the given database. |
 |||
 |Filesystem Details     | Filesystem_Details.json | Provides details on the filesystem metrics (disk usage, IO, etc). |
-|Network Details        | Network_Details.json | Provides details on network usage (utilization, traffic in/out, netstat, etc). | 
+|Network Details        | Network_Details.json | Provides details on network usage (utilization, traffic in/out, netstat, etc). |
 |Overview               | Overview.json | The top level overview dashboard that provides links to the OS Overview, PostgreSQL Overview, ETCD, and Prometheus Alerts dashboards. |
 |OS Details             | OS_Details.json | Provides details on operating system metrics (cpu, memory, swap, disk usage). Links to Filesystem Details dashboard. |
 |OS Overview            | Overview.json| Provides an overview that shows the up status of each system monitored by pgMonitor. |
@@ -133,11 +133,9 @@ Navigate to the web interface: https://&lt;ip-address&gt;:3000. Log in with admi
 
 Grafana provides the ability to automatically provision datasources and dashboards via configuration files instead of having to manually import them either through the web interface or the API. Note that provisioned dashboards can no longer be directly edited and saved via the web interface. See the Grafana documentation for how to edit/save provisioned dashboards: http://docs.grafana.org/administration/provisioning/#making-changes-to-a-provisioned-dashboard. If you'd like to customize these dashboards, we recommend first adding them via provisioning then saving them with a new name. You can then either manage them via the web interface or add them to the provisioning system.
 
-The extras package takes care of putting all these files in place. If you did not use the Crunchy package to install Grafana, see the additional instructions above. Once that is done, the only additional setup that needs to be done is to set the "provisioning" option in the `grafana.ini` to point to the top level directory if it hasn't been done already. 
+The extras package takes care of putting all these files in place. If you did not use the Crunchy package to install Grafana, see the additional instructions above. Once that is done, the only additional setup that needs to be done is to set the "provisioning" option in the `grafana.ini` to point to the top level directory if it hasn't been done already.
 
 ```ini
 [paths]
 provisioning = /etc/grafana/provisioning
 ```
-
-

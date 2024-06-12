@@ -18,7 +18,7 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
    - [System](#system)
 - [Legacy postgres_exporter Setup](#postgres-exporter)
 
-  
+
 IMPORTANT NOTE: As of pgMonitor version 5.0.0, postgres_exporter has been deprecated in favor of sql_exporter. Support for postgres_exporter is still possible with 5.0, but only for bug fixes while custom queries are still supported. No new features will be added using postgres_exporter and it will be fully obsoleted in a future version of pgMonitor. We recommend migrating to sql_exporter as soon as possible.
 
 ## Installation {#installation}
@@ -87,9 +87,9 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ##### sql_exporter
 
-sql_exporter takes advantage of the Crunchy Data pgmonitor-extension (https://github.com/CrunchyData/pgmonitor-extension) to provide a much easier configuration and setup. The extension takes care of creating all the necessary objects inside the database. 
+sql_exporter takes advantage of the Crunchy Data pgmonitor-extension (https://github.com/CrunchyData/pgmonitor-extension) to provide a much easier configuration and setup. The extension takes care of creating all the necessary objects inside the database.
 
-The mimimum required version of pgmonitor-extension is currently 1.0.0.
+The minimum required version of pgmonitor-extension is currently 1.0.0.
 
 The following pgMonitor configuration files should be placed according to the following mapping:
 
@@ -154,7 +154,7 @@ You will need to restart your PostgreSQL instance for the change to take effect.
 
 The pgmonitor-extension uses its own background worker to refresh metric data.
 
-The following statement only needs to be run on the "global" database, typically the "postgres" database. If you want the pg_stat_statements view to be visible in other databases, this statement must be run there as well. 
+The following statement only needs to be run on the "global" database, typically the "postgres" database. If you want the pg_stat_statements view to be visible in other databases, this statement must be run there as well.
 
 ```sql
 CREATE EXTENSION pg_stat_statements;
@@ -197,7 +197,7 @@ This should generate one or more statements similar to the following:
 ```sql
 GRANT CONNECT ON DATABASE "postgres" TO ccp_monitoring;
 ```
-Run these grant statements to then allow monitoring to connect. 
+Run these grant statements to then allow monitoring to connect.
 
 
 ##### Bloat setup
@@ -255,7 +255,7 @@ sudo systemctl status crunchy-sql-exporter@sql_exporter_cluster2
 
 ```
 
-### Monitoring multiple databases 
+### Monitoring multiple databases
 
 sql_exporter can connect to as many databases as you need. Simply add another connection configuration to the `job_name` in the sql_exporter configuration file for the other databases you wish to monitor. If making use of pgMonitor's metrics, ensure that the pgmonitor-extension is also installed on those target databases.
 
@@ -281,11 +281,11 @@ jobs:
 
 ## Metrics Collected {#metrics-collected}
 
-The metrics collected by our exporters are outlined below. 
+The metrics collected by our exporters are outlined below.
 
 ### PostgreSQL {#postgresql}
 
-PostgreSQL metrics are collected by [sql_exporter](https://github.com/burningalchemist/sql_exporter). pgMonitor uses custom queries for its PG metrics. 
+PostgreSQL metrics are collected by [sql_exporter](https://github.com/burningalchemist/sql_exporter). pgMonitor uses custom queries for its PG metrics.
 
 
 #### Common Metrics
@@ -308,10 +308,10 @@ Metrics contained in the `queries_global.yml` file. These metrics are common to 
 
  * *ccp_connection_stats_max_connections* - Current value of max_connections for reference
 
- * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session. 
+ * *ccp_connection_stats_max_idle_in_txn_time* - Runtime of longest idle in transaction (IIT) session.
 
- * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT). 
- 
+ * *ccp_connection_stats_max_query_time* - Runtime of longest general query (inclusive of IIT).
+
  * *ccp_connection_stats_max_blocked_query_time* - Runtime of the longest running query that has been blocked by a heavyweight lock
 
  * *ccp_locks_count* - Count of active lock types per database
@@ -342,7 +342,7 @@ Metrics contained in the `queries_global.yml` file. These metrics are common to 
 
  * *ccp_wal_activity_last_5_min_size_bytes* - Current size in bytes of the last 5 minutes of WAL generation. Includes recycled WALs.
 
-The meaning of the following `ccp_transaction_wraparound` metrics, and how to manage when they are triggered, is covered more extensively in this blog post: https://info.crunchydata.com/blog/managing-transaction-id-wraparound-in-postgresql 
+The meaning of the following `ccp_transaction_wraparound` metrics, and how to manage when they are triggered, is covered more extensively in this blog post: https://info.crunchydata.com/blog/managing-transaction-id-wraparound-in-postgresql
 
  * *ccp_transaction_wraparound_percent_towards_emergency_autovac* - Recommended thresholds set to 75%/95% when first evaluating vacuum settings on new systems. Once those have been reviewed and at least one instance-wide vacuum has been run, recommend thresholds of 110%/125%. Reaching 100% is not a cause for immediate concern, but alerting above 100% for extended periods of time means that autovacuum is not able to keep up with current transaction rate and needs further tuning.
 
@@ -443,7 +443,7 @@ Bloat metrics are only available if the `pg_bloat_check` script has been setup t
 
 #### pgBouncer Metrics
 
-The following metric prefixes correspond to the SHOW command views found in the [pgBouncer documentation](https://www.pgbouncer.org/usage.html). Each column found in the SHOW view is a separate metric under the respective prefix. Ex: `ccp_pgbouncer_pools_client_active` corresponds to the `SHOW POOLS` view's `client_active` column. 
+The following metric prefixes correspond to the SHOW command views found in the [pgBouncer documentation](https://www.pgbouncer.org/usage.html). Each column found in the SHOW view is a separate metric under the respective prefix. Ex: `ccp_pgbouncer_pools_client_active` corresponds to the `SHOW POOLS` view's `client_active` column.
 
 sql_exporter can connect directly to pgBouncer with some specific configuration options set. See the example `sql_exporter.yml` and the `crunchy_pgbouncer_collector_###.yml` file.
 
@@ -536,7 +536,7 @@ Note that {{< shell >}}/etc/sysconfig/postgres_exporter_pg##{{< /shell >}} & {{<
 | queries_global.yml    | postgres_exporter query file with minimal recommended queries that are common across all PG versions and only need to be run once per database instance.    |
 | queries_global_dbsize.yml | postgres_exporter query file that contains metrics for monitoring database size. This is a separate file to allow the option to use a materialized view for very large databases |
 | queries_global_matview.yml | postgres_exporter query file that contains alternative metrics that use materialized views of common metrics across all PG versions |
-| queries_per_db.yml    | postgres_exporter query file with queries that gather per databse stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
+| queries_per_db.yml    | postgres_exporter query file with queries that gather per database stats. WARNING: If your database has many tables this can greatly increase the storage requirements for your prometheus database. If necessary, edit the query to only gather tables you are interested in statistics for. The "PostgreSQL Details" and the "CRUD Details" Dashboards use these statistics.                                                   |
 | queries_per_db_matview.yml | postgres_exporter query files that contains alternative metrics that use materialized views of per database stats |
 | queries_general.yml      | postgres_exporter query file for queries that are specific to the version of PostgreSQL that is being monitored.   |
 | queries_backrest.yml | postgres_exporter query file for monitoring pgBackRest backup status. By default, new backrest data is only collected every 10 minutes to avoid excessive load when there are large backup lists. See sysconfig file for exporter service to adjust this throttling. |
@@ -544,7 +544,7 @@ Note that {{< shell >}}/etc/sysconfig/postgres_exporter_pg##{{< /shell >}} & {{<
 | queries_pg_stat_statements.yml | postgres_exporter query file for specific pg_stat_statements metrics that are most useful for monitoring and trending. |
 
 
-By default, there are two postgres_exporter services expected to be running. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most PostgreSQL instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor. 
+By default, there are two postgres_exporter services expected to be running. One connects to the default {{< shell >}}postgres{{< /shell >}} database that most PostgreSQL instances come with and is meant for collecting global metrics that are the same on all databases in the instance (connection/replication statistics, etc). This service uses the sysconfig file {{< shell >}}postgres_exporter_pg##{{< /shell >}}. Connect to this database and run the setup.sql script to install the required database objects for pgMonitor.
 
 The second postgres_exporter service is used to collect per-database metrics and uses the sysconfig file {{< shell >}}postgres_exporter_pg##_per_db{{< /shell >}}. By default it is set to also connect to the {{< shell >}}postgres{{< /shell >}} database, but you can add as many additional connection strings to this service for each individual database that you want metrics for. Per-db metrics include things like table/index statistics and bloat. See the section below for monitorig multiple databases for how to do this.
 
@@ -570,7 +570,7 @@ For replica servers, the setup is the same except that the setup.sql file does n
 
 With large databases/tables and some other conditions, certain metrics can cause excessive load. For those cases, materialized views and alternative metric queries have been made available. The materialized views are refreshed on their own schedule independent of the Prometheus data scrape, so any load that may be associated with gathering the underlying data is mitigated. A configuration table, seen below, contains options for how often these materialized views should be refreshed. And a single procedure can be called to refresh all materialized views relevant to monitoring.
 
-For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_metric_views.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first. 
+For every database that will be collecting materialized view metrics, you will have to run the {{< shell >}}setup_metric_views.sql{{< /shell >}} file against that database. This will likely need to be run as a superuser and must be run after running the base setup file mentioned above to create the necessary monitoring user first.
 ```
 psql -U postgres -d alphadb -f setup_metric_views.sql
 psql -U postgres -d betadb -f setup_metric_views.sql
@@ -640,4 +640,3 @@ Lastly, update the Prometheus auto.d target file to include the new exporter in 
 #### General Metrics
 
 *pg_up* -  Database is up and connectable by metric collector. This metric is only available with postgres_exporter
-

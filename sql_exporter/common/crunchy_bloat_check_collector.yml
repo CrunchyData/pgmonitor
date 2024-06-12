@@ -1,12 +1,12 @@
 collector_name: crunchy_bloat_check
 
-metrics: 
+metrics:
   - metric_name: ccp_bloat_check_size_bytes
     type: gauge
     help: "Size of object in bytes"
     values: [size_bytes]
     key_labels:
-      - dbname 
+      - dbname
       - schemaname
       - objectname
     query_ref: ccp_bloat_check
@@ -16,7 +16,7 @@ metrics:
     help: "Total wasted space in bytes of given object"
     values: [total_wasted_space_bytes]
     key_labels:
-      - dbname 
+      - dbname
       - schemaname
       - objectname
     query_ref: ccp_bloat_check
@@ -32,5 +32,3 @@ queries:
         , size_bytes
         , (dead_tuple_size_bytes + (free_space_bytes - (relpages - (fillfactor/100) * relpages ) * current_setting('block_size')::bigint ))::bigint AS total_wasted_space_bytes
           FROM bloat_stats
- 
-
