@@ -77,4 +77,4 @@ If you didn't use the Crunchy-provided packages, ensure the files in the followi
 
 ## Set up sql_exporter
 
-At this point, you should just be able to follow the [https://access.crunchydata.com/documentation/pgmonitor/latest/](standard setup instructions) for the latest version of pgMonitor. This will setup the new exporter, Prometheus targets, and new Grafana dashboards.
+At this point, you should just be able to follow the [standard setup instructions](https://access.crunchydata.com/documentation/pgmonitor/latest/) for the latest version of pgMonitor. This will setup the new exporter, Prometheus targets, and new Grafana dashboards.
