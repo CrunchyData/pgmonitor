@@ -1,4 +1,0 @@
-bugfixes:
-  - sql_exporter - use the new views from pgmonitor-extension instead of full queries
-  - sql_exporter - add new metric for n_tup_newpage_upd
-  - docs - add reference links to upstream configuration docs
