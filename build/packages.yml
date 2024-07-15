@@ -133,7 +133,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "pgmonitor-pg-common" }
         pkg_dependency:
-          - { pkg_name: "sql-exporter", gte: 0.13.0, lt: 0.15.0 }
+          - { pkg_name: "sql-exporter", gte: 0.13.0, lt: 0.16.0 }
 
 
     - grafana:
