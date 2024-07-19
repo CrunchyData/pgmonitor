@@ -1,6 +1,0 @@
-trivial:
-  - packaging - Update the build file to use the alertmanager storage folder that the packages have been setting up (/var/lib/ccp_monitoring/alertmanager)
-  - packaging - Update the build file to set blackbox-exporter-extras group to ccp_monitoring for consistency with other extras packages
-  - packaging - Take out remove_files lines since the files referenced have been gone for a long time now and packages aren't doing that anymore
-  - packaging - Take out package conflicts with containers packages. There are no containers packages being done at this time
-

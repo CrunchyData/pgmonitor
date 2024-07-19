@@ -26,7 +26,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: warning 
+      severity: warning
       severity_num: 200
     annotations:
       summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
@@ -36,7 +36,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: critical 
+      severity: critical
       severity_num: 300
     annotations:
       summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
@@ -46,7 +46,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: warning 
+      severity: warning
       severity_num: 200
     annotations:
       summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
@@ -56,7 +56,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: critical 
+      severity: critical
       severity_num: 300
     annotations:
       summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) is taking longer than expected to run. Longest time recorded: ( {{ $value }} )'
@@ -66,7 +66,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: critical 
+      severity: critical
       severity_num: 300
     annotations:
       summary: 'Materialized view refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
@@ -76,7 +76,7 @@ groups:
     for: 60s
     labels:
       service: postgresql
-      severity: critical 
+      severity: critical
       severity_num: 300
     annotations:
       summary: 'Table refresh on {{ $labels.job }} (instance: {{ $labels.instance }}) has not run within the expected interval of time. Number of objects not refreshed: ( {{ $value }} )'
@@ -118,7 +118,7 @@ groups:
 ## Monitor for a failover event by checking if the recovery status value has changed within the specified time period
 ## IMPORTANT NOTE: This alert will *automatically resolve* after the given offset time period has passed! If you desire to have an alert that must be manually resolved, see the commented out alert beneath this one
   - alert: PGRecoveryStatusSwitch
-    expr: ccp_is_in_recovery_status != ccp_is_in_recovery_status offset 5m 
+    expr: ccp_is_in_recovery_status != ccp_is_in_recovery_status offset 5m
     for: 60s
     labels:
       service: postgresql
