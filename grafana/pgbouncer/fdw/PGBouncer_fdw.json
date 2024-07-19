@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -112,7 +112,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_pgbouncer_databases_db_conn_perc_used{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"}",
@@ -129,7 +129,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -211,7 +211,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(ccp_pgbouncer_pools_client_active{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"})",
@@ -224,7 +224,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(ccp_pgbouncer_pools_client_waiting{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"})",
@@ -237,7 +237,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(ccp_pgbouncer_pools_server_active{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"})",
@@ -250,7 +250,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(ccp_pgbouncer_pools_server_idle{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"})",
@@ -263,7 +263,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(ccp_pgbouncer_pools_server_used{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"})",
@@ -280,7 +280,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -362,7 +362,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_pgbouncer_lists_item_count{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\"}",
@@ -379,7 +379,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -461,7 +461,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_pgbouncer_clients_client_state_count{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\", conn_pool=\"[[conn_pool]]\"}",
@@ -478,7 +478,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -560,7 +560,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_pgbouncer_servers_server_state_count{cluster_name=~\"[[cluster_name]]\",pgbouncer_target_host=~\"[[pgbouncer_target_host]]\", conn_pool=\"[[conn_pool]]\"}",
@@ -583,8 +583,26 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel",
-          "value": "hotel"
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "iota",
+          "value": "iota"
         },
         "datasource": {
           "type": "prometheus",
@@ -634,7 +652,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "pgbouncer.pgbouncer",
           "value": "pgbouncer.pgbouncer"
         },

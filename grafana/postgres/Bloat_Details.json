@@ -23,7 +23,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -105,7 +105,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})/sum(ccp_bloat_check_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})*100",
           "format": "time_series",
@@ -122,7 +122,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -209,7 +209,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_bloat_check_total_wasted_space_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=\"[[pgdatabase]]\", schemaname=\"[[schemaname]]\",objectname=\"[[objectname]]\"}",
           "format": "time_series",
@@ -335,9 +335,28 @@
     "list": [
       {
         "current": {
+          "selected": true,
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
           "selected": false,
-          "text": "hotel",
-          "value": "hotel"
+          "text": "iota",
+          "value": "iota"
         },
         "datasource": {
           "type": "prometheus",
@@ -366,8 +385,8 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel_ip16_pg1",
-          "value": "hotel_ip16_pg1"
+          "text": "iota_ip16_pg1",
+          "value": "iota_ip16_pg1"
         },
         "datasource": {
           "type": "prometheus",
