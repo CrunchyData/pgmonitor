@@ -43,4 +43,3 @@ elif [ -z "$BACKREST_CONFIGS" ] && [ ! -z "$BACKREST_STANZAS" ]; then
       fi
     done
 fi
-

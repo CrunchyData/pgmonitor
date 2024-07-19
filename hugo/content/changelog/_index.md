@@ -3,6 +3,39 @@ title: "Changelog"
 draft: false
 weight: 5
 ---
+## 5.0.0
+
+### Release Summary
+
+Crunchy Data is pleased to announce the availability of pgMonitor 5.0.0. This release brings support for a new Prometheus exporter for PostgreSQL - sql_exporter. It also supports a new monitoring extension to make metric collection easier and more performant. This changelog contains all changes that have been added since the 4.11.0 release.
+
+Please see the [5.0.0 upgrade documentation](v5_upgrade) for more information on converting to the new sql_exporter.
+
+### Major Changes
+
+- grafana - Add new dashboards for sql_exporter support. New PostgreSQL Overview and PgBouncer direct metrics dashboards
+- grafana - New Grafana minimum version is now 10.4. All dashboards have been updated to fix AngularJS deprecation warnings and re-exported from 10.4.
+- grafana - Organize packages to allow better choice of available Grafana dashboards
+- grafana - Remove top level general Overview dashboard
+- pgmonitor-extension - Add more extensive support for materialized views and refreshed tables for expensive or custom metric queries
+- pgmonitor-extension - Add support for using the PostgreSQL pgmonitor-extension to aid in metrics collection with sql_exporter
+- postgres_exporter - Note that postgres_exporter is still supported but will be deprecated in a future version
+- sql_exporter - Add support for directly connecting to PgBouncer to collect metrics
+- sql_exporter - Add support for new PostgreSQL metrics collecting exporter (sql_exporter)
+
+### Minor Changes
+
+- prometheus - Added OOMKiller Alert using node_exporter metrics
+
+### Bugfixes
+
+- docs - add reference links to upstream configuration docs
+- exporter - fix the pgbackrest-info.sh to force the necessary console output level that it expects
+- grafana - fix some queries that were searching on the wrong label (datname vs. dbname)
+- sql_exporter - add new metric for n_tup_newpage_upd
+- sql_exporter - use the new views from pgmonitor-extension instead of full queries
+
+
 ## 4.11.0
 
 ### Release Summary

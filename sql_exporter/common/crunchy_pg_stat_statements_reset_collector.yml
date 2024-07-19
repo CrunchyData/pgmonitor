@@ -1,11 +1,10 @@
 
-collector_name: crunchy_pg_stat_statements_reset 
+collector_name: crunchy_pg_stat_statements_reset
 
 metrics:
   - metric_name: crunchy_pg_stat_statements_reset_time
     type: gauge
-    help: "Epoch time since pg_stat_statements was last reset" 
+    help: "Epoch time since pg_stat_statements was last reset"
     values: [time]
     query: |
       SELECT time FROM pgmonitor_ext.ccp_pg_stat_statements_reset;
-

@@ -6,7 +6,7 @@
 #
 ###
 
-# There are currently no PG11 only queries that are not already in queries_global.yml 
+# There are currently no PG11 only queries that are not already in queries_global.yml
 # This file is kept to allow consistent setting of QUERY_FILE_LIST in sysconfig with future PG versions
 
 ###

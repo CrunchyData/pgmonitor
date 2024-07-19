@@ -39,11 +39,12 @@ Running pgMonitor will give you confidence in understanding how well your Postgr
 
 pgMonitor is an open-source monitoring solution for PostgreSQL and the systems that it runs on. pgMonitor came from the need to provide a way to easily create a visual environment to monitor all the metrics a database administrator needs to proactively ensure the health of the system.
 
-pgMonitor combines multiple open-source software packages and necessary configuration to create a robust PostgreSQL monitoring environment.  These include:
+pgMonitor combines multiple open-source software services to create a robust PostgreSQL monitoring environment.  These include:
 
 - [Prometheus](https://prometheus.io/) - an open-source metrics collector that is highly customizable.
 - [Grafana](https://grafana.com/) - an open-source data visualizer that allows you to generate many different kinds of charts and graphs.
-- [PostgreSQL Exporter](https://github.com/wrouesnel/postgres_exporter) - an open-source data export to Prometheus that supports collecting metrics from any PostgreSQL server version 9.1 and above.
+- [SQL Exporter](https://github.com/burningalchemist/sql_exporter) - an open-source exporter for Prometheus that supports collecting metrics from multiple database systems including PostgreSQL.
+- [pgMonitor extension](https://github.com/CrunchyData/pgmonitor-extension) - a PostgreSQL extension that provides a means to collect metrics that can be used by an external collection source.
 
 ![pgMonitor](/images/crunchy-monitoring-arch.png)
 
@@ -51,8 +52,7 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 ### Operating Systems
 
-- RHEL 7/8/9 (Build/Run Testing, Setup Instructions)
-- CentOS 7 (Build/Run Testing, Setup Instructions)
+- RHEL 8/9 (Build/Run Testing, Setup Instructions)
 - Ubuntu 20/22 (Build/Run Testing)
 
 ### PostgreSQL
@@ -63,14 +63,10 @@ pgMonitor combines multiple open-source software packages and necessary configur
 
 - Version 3.5 and greater is supported for the Grafana dashboard
 
-#### Known issues
-
-- PostgreSQL 10+ SCRAM-SHA-256 encrypted passwords are supported on the Linux version of pgMonitor 4.0 or later only.
-
 ### PgBouncer
 
-- PgBouncer 1.22
-- pgbouncer_fdw 1.1.0
+- PgBouncer 1.21+
+- pgbouncer_fdw 1.1.0 (optional with sql_exporter)
 
 ## Installation
 
@@ -81,6 +77,8 @@ Installation instructions for each package are provided in that packages subfold
 ### 2. [Prometheus](/prometheus)
 
 ### 3. [Grafana](/grafana)
+
+Notes on upgrading can be found in each relevant section.
 
 ## Version History
 
@@ -99,4 +97,3 @@ Copyright © 2017-2024 Crunchy Data Solutions, Inc. All Rights Reserved.
 CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
 Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc. All Rights Reserved.
-

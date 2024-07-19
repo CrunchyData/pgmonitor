@@ -9,7 +9,7 @@
 # --web.listen-address: change '0.0.0.0' to the network IP assigned to this system if necessary, otherwise it will listen on any IP. Change port as necessary if running multiple instances.
 # --extend.query-path: location of file containing custom queries to run. Location below is one recommended by crunchy setup steps.
 # DATA_SOURCE_NAME: psql connection string. set the database that the exporter will connect to. Default is `postgres`.
-# QUERY_FILE_LIST: space delimitted yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
+# QUERY_FILE_LIST: space delimited yml files that will be concatenated to a single queries.yml file. This should only be set once. If set multiple times, last one wins.
 
 # Ensure that listening port is different than global postgres_exporter (9188 below). Also ensure that query-path file is different from global one (queries_all_db_stats.yml below).
 OPT="--web.listen-address=0.0.0.0:9188 --extend.query-path=/etc/postgres_exporter/11/queries_all_db_stats.yml --disable-default-metrics --disable-settings-metrics"
