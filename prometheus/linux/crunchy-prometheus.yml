@@ -30,20 +30,20 @@ scrape_configs:
     #  regex: '(pg_locks_count.*|pg_settings.*|pg_stat_activity.*|pg_stat_bgwriter.*|pg_stat_database.*)'
     #  action: drop
     ## Version 0.5+ of postgres_exporter automatically adds a "server" label to all custom query metrics. This breaks upgrades from older versions
-    ## of pgmonitor and also breaks our PG Overview dashboard and several other single metric panels. 
-    ## pgmonitor only runs two exporters max by default and our per-db exporter distinguishes each metric by a dbname label, 
+    ## of pgmonitor and also breaks our PG Overview dashboard and several other single metric panels.
+    ## pgmonitor only runs two exporters max by default and our per-db exporter distinguishes each metric by a dbname label,
     ## so we do not need the "server" label. This relabel will only target metrics that start with "ccp_", so shouldn't break users' custom metrics.
-    #- source_labels: [__name__, server] 
-    #  regex: "ccp_.*;.+" 
-    #  action: replace 
-    #  target_label: server 
+    #- source_labels: [__name__, server]
+    #  regex: "ccp_.*;.+"
+    #  action: replace
+    #  target_label: server
     #  replacement: ""
     ### END postgres_exporter section
 
-  ## Monitoring for tcp services that don't have an associated exporter can be accomplished using the tcp probe 
+  ## Monitoring for tcp services that don't have an associated exporter can be accomplished using the tcp probe
   ##   of the blackbox_exporter provided by the Prometheus developers.
   ## Note this only provides a simple up/down that the service is listening on the given IP/port.
-  ## Below is an example to monitor the services indicated by the comment. 
+  ## Below is an example to monitor the services indicated by the comment.
   ## The "targets" list is all that should need to be edited to customize to your setup assuming blackbox_exporter runs
   ##   on same system as Prometheus.
   # - job_name: 'blackbox_tcp_services'
@@ -84,7 +84,7 @@ scrape_configs:
   #        - 192.168.122.31:8009 # etcd
 
 
-#### Uncomment below if using alertmanager ####        
+#### Uncomment below if using alertmanager ####
 #
 rule_files:
   - /etc/prometheus/alert-rules.d/*.yml
@@ -95,4 +95,3 @@ rule_files:
 #    static_configs:
 #    - targets:
 #      - "127.0.0.1:9093"
-

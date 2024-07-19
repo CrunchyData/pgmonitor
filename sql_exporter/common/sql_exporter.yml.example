@@ -41,4 +41,3 @@ collector_files:
   - "/etc/sql_exporter/crunchy_global_collector.yml"
   - "/etc/sql_exporter/crunchy_per_db_collector.yml"
 #  - "/etc/sql_exporter/crunchy_pgbouncer_collector.yml"
-

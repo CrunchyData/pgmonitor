@@ -133,7 +133,7 @@ metrics:
     query_ref: ccp_replication_lag
   - metric_name: ccp_replication_lag_replay_time
     type: gauge
-    help: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL recieved equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
+    help: "Length of time since the last transaction was replayed on replica. Returns zero if last WAL received equals last WAL replayed. Avoids false positives when primary stops writing. Monitors for replicas that cannot keep up with primary WAL generation."
     values: [replay_time]
     query_ref: ccp_replication_lag
 
@@ -183,52 +183,52 @@ metrics:
     type: gauge
     help: "Number of scheduled checkpoints that have been performed"
     values: [checkpoints_timed]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoints_req
     type: gauge
     help: "Number of requested checkpoints that have been performed"
     values: [checkpoints_req]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoint_write_time
     type: gauge
     help: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
     values: [checkpoint_write_time]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_checkpoint_sync_time
     type: gauge
     help: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in milliseconds"
     values: [checkpoint_sync_time]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_checkpoint
     type: gauge
     help: "Number of buffers written during checkpoints"
     values: [buffers_checkpoint]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_clean
     type: gauge
     help: "Number of buffers written by the background writer"
     values: [buffers_clean]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_maxwritten_clean
     type: gauge
     help: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
     values: [maxwritten_clean]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_backend
     type: gauge
     help: "Number of buffers written directly by a backend"
     values: [buffers_backend]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_backend_fsync
     type: gauge
     help: "Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)"
     values: [buffers_backend_fsync]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_alloc
     type: gauge
     help: "Number of buffers allocated"
     values: [buffers_alloc]
-    query_ref: ccp_stat_bgwriter 
+    query_ref: ccp_stat_bgwriter
 
   - metric_name: ccp_stat_database_xact_commit
     type: gauge
@@ -363,43 +363,35 @@ metrics:
     values: [max]
     query_ref: ccp_autovacuum_workers
 
-#  - metric_name: 
+#  - metric_name:
 #    type: gauge
-#    help: 
+#    help:
 #    values: []
-#    query_ref: 
+#    query_ref:
 
 ########## QUERIES ##########
 queries:
 
   - query_name: ccp_archive_command_status
     query: |
-      SELECT CASE 
-          WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) IS NULL THEN 0
-          WHEN EXTRACT(epoch from (last_failed_time - last_archived_time)) < 0 THEN 0
-          ELSE EXTRACT(epoch from (last_failed_time - last_archived_time)) 
-          END AS seconds_since_last_fail
-      , EXTRACT(epoch from (CURRENT_TIMESTAMP - last_archived_time)) AS seconds_since_last_archive
+      SELECT  seconds_since_last_fail
+      , seconds_since_last_archive
       , archived_count
       , failed_count
-      FROM pg_catalog.pg_stat_archiver
+      FROM pgmonitor_ext.ccp_archive_command_status
 
 
   - query_name: ccp_connection_stats
     query: |
-      SELECT ((total - idle) - idle_in_txn) AS active
+      SELECT active
         , total
         , idle
         , idle_in_txn
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - state_change))),0) from pg_catalog.pg_stat_activity where state = 'idle in transaction') AS max_idle_in_txn_time
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' AND state NOT LIKE 'idle%' ) AS max_query_time
-        , (select coalesce(extract(epoch from (max(clock_timestamp() - query_start))),0) from pg_catalog.pg_stat_activity where backend_type = 'client backend' and wait_event_type = 'Lock' ) AS max_blocked_query_time
+        , max_idle_in_txn_time
+        , max_query_time
+        , max_blocked_query_time
         , max_connections
-        FROM (
-                SELECT count(*) AS total
-                        , COALESCE(SUM(CASE WHEN state = 'idle' THEN 1 ELSE 0 END),0) AS idle
-                        , COALESCE(SUM(CASE WHEN state = 'idle in transaction' THEN 1 ELSE 0 END),0) AS idle_in_txn FROM pg_catalog.pg_stat_activity) x
-        JOIN (SELECT setting::float AS max_connections FROM pg_settings WHERE name = 'max_connections') xx ON (true)
+        FROM pgmonitor_ext.ccp_connection_stats
 
 
   - query_name: ccp_database_size
@@ -411,8 +403,8 @@ queries:
 
   - query_name: ccp_is_in_recovery
     query: |
-      SELECT CASE WHEN pg_is_in_recovery = true THEN 1 ELSE 2 END AS status
-      FROM pg_is_in_recovery()
+      SELECT status
+      FROM pgmonitor_ext.ccp_pg_is_in_recovery
 
 
   - query_name: ccp_locks
@@ -431,53 +423,48 @@ queries:
   - query_name: ccp_pg_settings_checksum
     query: |
       SELECT pgmonitor_ext.pg_settings_checksum() AS status
-   
+
 
   - query_name: ccp_postgresql_version
     query: |
-      SELECT current_setting('server_version_num')::int AS current
+      SELECT current
+      FROM pgmonitor_ext.ccp_postgresql_version
 
 
   - query_name: ccp_postmaster_runtime
     query: |
-      SELECT extract('epoch' from pg_postmaster_start_time) as start_time_seconds from pg_catalog.pg_postmaster_start_time()
+      SELECT start_time_seconds
+      FROM pgmonitor_ext.ccp_postmaster_runtime
 
 
   - query_name: ccp_postmaster_uptime
     query: |
-      SELECT extract(epoch from (clock_timestamp() - pg_postmaster_start_time() )) AS seconds
+      SELECT seconds
+      FROM pgmonitor_ext.ccp_postmaster_uptime
 
 
   - query_name: ccp_replication_lag
     query: |
-      SELECT
-           CASE
-           WHEN (pg_last_wal_receive_lsn() = pg_last_wal_replay_lsn()) OR (pg_is_in_recovery() = false) THEN 0
-           ELSE EXTRACT (EPOCH FROM clock_timestamp() - pg_last_xact_replay_timestamp())::INTEGER
-           END
-        AS replay_time
-      ,  CASE
-           WHEN pg_is_in_recovery() = false THEN 0
-           ELSE EXTRACT (EPOCH FROM clock_timestamp() - pg_last_xact_replay_timestamp())::INTEGER
-           END
-        AS received_time
+      SELECT replay_time
+      , received_time
+      FROM pgmonitor_ext.ccp_replication_lag
 
 
   - query_name: ccp_replication_lag_size
     query: |
-      SELECT client_addr AS replica
-        , client_hostname AS replica_hostname
-        , client_port AS replica_port
-        , pg_wal_lsn_diff(sent_lsn, replay_lsn) AS bytes 
-      FROM pg_catalog.pg_stat_replication
+      SELECT replica
+        , replica_hostname
+        , replica_port
+        , bytes
+      FROM pgmonitor_ext.ccp_replication_lag_size
 
 
   - query_name: ccp_replication_slots
     query: |
       SELECT slot_name
-        , active::int
-        , pg_wal_lsn_diff(CASE WHEN pg_is_in_recovery() THEN pg_last_wal_replay_lsn() ELSE pg_current_wal_insert_lsn() END, restart_lsn) AS retained_bytes
-      FROM pg_catalog.pg_replication_slots
+        , active
+        , retained_bytes
+      FROM pgmonitor_ext.ccp_replication_slots
 
 
   - query_name: ccp_sequence_exhaustion
@@ -487,7 +474,8 @@ queries:
 
   - query_name: ccp_settings_pending_restart
     query: |
-      SELECT count(*) AS count FROM pg_catalog.pg_settings WHERE pending_restart = true
+      SELECT count
+      FROM pgmonitor_ext.ccp_settings_pending_restart
 
 
   - query_name: ccp_stat_bgwriter
@@ -507,51 +495,37 @@ queries:
 
   - query_name: ccp_stat_database
     query: |
-      SELECT d.datname AS dbname
-        , s.xact_commit
-        , s.xact_rollback
-        , s.blks_read
-        , s.blks_hit
-        , s.tup_returned
-        , s.tup_fetched
-        , s.tup_inserted
-        , s.tup_updated
-        , s.tup_deleted
-        , s.conflicts
-        , s.temp_files
-        , s.temp_bytes
-        , s.deadlocks
-      FROM pg_catalog.pg_stat_database s
-      JOIN pg_catalog.pg_database d ON d.datname = s.datname
-      WHERE d.datistemplate = false
+      SELECT dbname
+        , xact_commit
+        , xact_rollback
+        , blks_read
+        , blks_hit
+        , tup_returned
+        , tup_fetched
+        , tup_inserted
+        , tup_updated
+        , tup_deleted
+        , conflicts
+        , temp_files
+        , temp_bytes
+        , deadlocks
+      FROM pgmonitor_ext.ccp_stat_database
 
 
   - query_name: ccp_transaction_wraparound
     query: |
-      WITH max_age AS (
-        SELECT 2000000000 as max_old_xid, setting AS autovacuum_freeze_max_age FROM pg_catalog.pg_settings WHERE name = 'autovacuum_freeze_max_age'
-      )
-        , per_database_stats AS (
-            SELECT datname
-              , m.max_old_xid::int
-              , m.autovacuum_freeze_max_age::int
-              , age(d.datfrozenxid) AS oldest_current_xid
-            FROM pg_catalog.pg_database d
-            JOIN max_age m ON (true) WHERE d.datallowconn
-          )
-      SELECT max(oldest_current_xid) AS oldest_current_xid
-        , max(ROUND(100*(oldest_current_xid/max_old_xid::float))) AS percent_towards_wraparound
-        , max(ROUND(100*(oldest_current_xid/autovacuum_freeze_max_age::float))) AS percent_towards_emergency_autovac
-      FROM per_database_stats
-  
+      SELECT oldest_current_xid
+        , percent_towards_wraparound
+        , percent_towards_emergency_autovac
+      FROM pgmonitor_ext.ccp_transaction_wraparound
+
 
   - query_name: ccp_wal_activity
     query: |
       SELECT last_5_min_size_bytes
-        , (SELECT COALESCE(sum(size),0) FROM pg_catalog.pg_ls_waldir()) AS total_size_bytes
-      FROM (SELECT COALESCE(sum(size),0) AS last_5_min_size_bytes
-              FROM pg_catalog.pg_ls_waldir()
-              WHERE modification > CURRENT_TIMESTAMP - '5 minutes'::interval) x
+        , total_size_bytes
+      FROM pgmonitor_ext.ccp_wal_activity
+
 
   - query_name: ccp_autovacuum_workers
     query: |
