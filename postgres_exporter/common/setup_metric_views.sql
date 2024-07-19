@@ -106,7 +106,7 @@ AS SELECT current_database() as dbname
     , vacuum_count
     , autovacuum_count
     , analyze_count
-    , autoanalyze_count 
+    , autoanalyze_count
     FROM pg_catalog.pg_stat_user_tables;
 CREATE UNIQUE INDEX ccp_user_tables_db_schema_relname_idx ON monitor.ccp_stat_user_tables (dbname, schemaname, relname);
 ALTER MATERIALIZED VIEW monitor.ccp_stat_user_tables OWNER TO ccp_monitoring;
@@ -117,10 +117,10 @@ CREATE MATERIALIZED VIEW monitor.ccp_table_size
 AS SELECT current_database() as dbname
     , n.nspname as schemaname
     , c.relname
-    , pg_total_relation_size(c.oid) as size_bytes 
-    FROM pg_catalog.pg_class c 
-    JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid 
-    WHERE NOT pg_is_other_temp_schema(n.oid) 
+    , pg_total_relation_size(c.oid) as size_bytes
+    FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON c.relnamespace = n.oid
+    WHERE NOT pg_is_other_temp_schema(n.oid)
     AND relkind IN ('r', 'm', 'f');
 CREATE UNIQUE INDEX ccp_table_size_idx ON monitor.ccp_table_size (dbname, schemaname, relname);
 ALTER MATERIALIZED VIEW monitor.ccp_table_size OWNER TO ccp_monitoring;
@@ -129,8 +129,8 @@ ALTER MATERIALIZED VIEW monitor.ccp_table_size OWNER TO ccp_monitoring;
 DROP MATERIALIZED VIEW IF EXISTS monitor.ccp_database_size;
 CREATE MATERIALIZED VIEW monitor.ccp_database_size
 AS SELECT datname as dbname
-    , pg_database_size(datname) as bytes 
-    FROM pg_catalog.pg_database 
+    , pg_database_size(datname) as bytes
+    FROM pg_catalog.pg_database
     WHERE datistemplate = false;
 CREATE UNIQUE INDEX ccp_database_size_idx ON monitor.ccp_database_size (dbname);
 ALTER MATERIALIZED VIEW monitor.ccp_database_size OWNER TO ccp_monitoring;
@@ -141,7 +141,7 @@ GRANT ALL ON ALL TABLES IN SCHEMA monitor TO ccp_monitoring;
 
 -- Don't alter any existing data that is already there for any given view
 INSERT INTO monitor.metric_views (
-    view_name 
+    view_name
     , run_interval
     , scope )
 VALUES (
@@ -151,7 +151,7 @@ VALUES (
 ON CONFLICT DO NOTHING;
 
 INSERT INTO monitor.metric_views (
-    view_name 
+    view_name
     , run_interval
     , scope )
 VALUES (
@@ -161,7 +161,7 @@ VALUES (
 ON CONFLICT DO NOTHING;
 
 INSERT INTO monitor.metric_views (
-    view_name 
+    view_name
     , run_interval
     , scope )
 VALUES (

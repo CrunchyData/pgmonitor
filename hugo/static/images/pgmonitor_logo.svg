@@ -137,7 +137,7 @@
 		<clipPath id="SVGID_4_">
 			<use xlink:href="#SVGID_64_"  style="overflow:visible;"/>
 		</clipPath>
-		<polygon style="opacity:3.000000e-02;clip-path:url(#SVGID_4_);fill:#FFFFFF;" points="57.1,-184.3 -725.7,293.2 -410.4,-353.4 		
+		<polygon style="opacity:3.000000e-02;clip-path:url(#SVGID_4_);fill:#FFFFFF;" points="57.1,-184.3 -725.7,293.2 -410.4,-353.4
 			"/>
 	</g>
 </g>
@@ -172,11 +172,11 @@
 						<stop  offset="1" style="stop-color:#0274BA"/>
 					</linearGradient>
 					<rect x="272.1" y="-606.4" style="clip-path:url(#SVGID_9_);fill:url(#SVGID_11_);" width="1580.3" height="941.2"/>
-					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="648,-506 -200.5,364.5 99.8,-718.1 
+					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="648,-506 -200.5,364.5 99.8,-718.1
 											"/>
-					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="1215.1,979.1 143.4,-524 1774.8,406 
+					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="1215.1,979.1 143.4,-524 1774.8,406
 											"/>
-					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="303.1,826.9 -628.9,-280.6 618.8,202.2 
+					<polygon style="opacity:6.000000e-02;clip-path:url(#SVGID_9_);fill:#FFFFFF;" points="303.1,826.9 -628.9,-280.6 618.8,202.2
 											"/>
 				</g>
 			</g>

@@ -197,4 +197,3 @@ queries:
 #    no_prepared_statement: true
 #    query: |
 #      SHOW STATS;
-

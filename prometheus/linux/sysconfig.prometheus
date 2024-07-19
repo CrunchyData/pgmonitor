@@ -10,6 +10,6 @@
 # --storage.tsdb.path: location that prometheus will store its time series database files
 # --storage.tsdb.retention: how long prometheus will keep data before expiring it. This is how much data will be available to trend in grafana.
 # --log.level: how verbose to make system logging. Setting to "debug" can help with diagnosing issues, but should not be left that way.
-# --web.enable-admin-api: set this to make the admin api available which allows database snaphot backups. Left off by default for security.
+# --web.enable-admin-api: set this to make the admin api available which allows database snapshot backups. Left off by default for security.
 
 OPT="--config.file=/etc/prometheus/crunchy-prometheus.yml --storage.tsdb.path=/var/lib/ccp_monitoring/prometheus --storage.tsdb.retention.time=7d --log.level=info"

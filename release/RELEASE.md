@@ -15,7 +15,7 @@ Starting from the previous release being tagged and released to the access porta
    - Create new "Next" milestone
    - Review existing "Future" issues and assign to "This Release" as approved
    - During development, if issues NNN is bigger than we thought, or there isn't enough time then can move from "[This Release]" to "Next" (basically backlog which should take priority for the next release cycle)
-3. Determine the next release version number, i.e. whether this will be a major or minor release based on semantic versioning policies. Note this can change if a suddenly larger issue becomes prority or gets put off until later. But that should be discouraged and the focus for the next release should be determind up front.
+3. Determine the next release version number, i.e. whether this will be a major or minor release based on semantic versioning policies. Note this can change if a suddenly larger issue becomes priority or gets put off until later. But that should be discouraged and the focus for the next release should be determined up front.
 4. Any holdover PRs with major changes from the previous release (for instance major refactors or pieces which cover the majority of the role which need maximal testing coverage during development) should be merged in.  These should be marked with a "READY TO MERGE" tag so we can track.
 5. Feature development process:
    - discussion about the feature if required
@@ -78,7 +78,7 @@ gitGraph
   checkout development
   commit
 ```
-16. Build team builds final code and lock package versions 
+16. Build team builds final code and lock package versions
 17. Preprod testing/validation
 18. Prod rollout to access portal
 19. Documentation release to access portal via the doc tag for this release.  If needed, additional documentation tweaks can be done against the `v4_9-STABLE` branch and the doc tag can be moved (though see "Making changes to back branches", step 6 for guidance).
@@ -100,5 +100,5 @@ If a bug fix in the code or documentation for a given release is required, you s
 6. If the changes involve any documentation updates, you will need to:
    a. tag a new specific doc release revision; i.e., `d4.9.0-N`. This corresponds to an immutable "docs have been released" version and allows us to track.
    b. ensure that the docs changes are what are expected; `git diff d4.9.0-2 d4.9.0-3 -- hugo` (using the appropriate current release and previous release).  If you notice something wrong at this point and you have not pushed this tag you can correct locally and re-tag with the same release version.  If this tag has already been pushed, correct and increment the docs release number, repeating step 5.
-   c. push the new tag to upstream via `git push upstream d4.9.0-N` (substitute appropriate upstream remote name and tag here). 
+   c. push the new tag to upstream via `git push upstream d4.9.0-N` (substitute appropriate upstream remote name and tag here).
 7. Inform the build team of the availability of the new code and/or doc tags.

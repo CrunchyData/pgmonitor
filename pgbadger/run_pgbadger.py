@@ -4,11 +4,11 @@ import argparse, os, os.path, psycopg2, shutil, subprocess, sys, time
 from datetime import date, timedelta
 
 parser = argparse.ArgumentParser(description="This script runs the pg_badger log analysis tool for all databases in a given database. Runs on yesterdays logs.")
-parser.add_argument('-l', '--logdir', required=True, help="Full path to directory where postgresql log files are stored. Required.") 
+parser.add_argument('-l', '--logdir', required=True, help="Full path to directory where postgresql log files are stored. Required.")
 parser.add_argument('-c', '--connection', default="host=", help="""Connection string for psycopg. Defaults to "host=" (local socket).""")
 parser.add_argument('-d', '--dbname', help="Only run for given database. Otherwise defaults to all databases in the cluster")
 parser.add_argument('-o', '--output', default=os.getcwd(), help="Base directory to create folders for pgbadger output. Each database gets its own subfolder. Default is current location where script is run from.")
-parser.add_argument('-e', '--exclude', action="append", help="Exclude a database. Set multiple times to exclude more than one. By default it already excludes postgres, template0 and template1") 
+parser.add_argument('-e', '--exclude', action="append", help="Exclude a database. Set multiple times to exclude more than one. By default it already excludes postgres, template0 and template1")
 parser.add_argument('-j', '--jobs', type=int, default=1, help="Use the -j option in pgbadger to set number of jobs to run on parallel on each log file.")
 parser.add_argument('-J', '--Jobs', type=int, default=1, help="Use the -J option in pgbadger to set number of log file to parse in parallel.")
 parser.add_argument('--pgbadger', default="pgbadger", help="Location of pgbadger script file. Otherwise assumed in PATH.")
@@ -33,7 +33,7 @@ def get_databases():
     cur = conn.cursor()
     sql = "SELECT datname FROM pg_catalog.pg_database WHERE datallowconn = true AND datname NOT IN ('postgres', 'template0', 'template1')"
     if args.dbname != None:
-        sql += " AND datname = %s" 
+        sql += " AND datname = %s"
     sql += " ORDER BY datname"
     if args.dbname != None:
         cur.execute(sql, [args.dbname])
@@ -71,7 +71,7 @@ def archive():
     max_diff = timedelta(days=args.archive_time)
 
     dbdir_list = os.listdir(args.output)
-    for dbname in dbdir_list: 
+    for dbname in dbdir_list:
         if dbname == args.archive_folder:
             continue
         if not os.path.exists(os.path.join(args.output, args.archive_folder, dbname)):
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             continue
         # check that folder for given database exists and if it doesn't create it
         if not os.path.exists(os.path.join(args.output, d[0])):
-            os.makedirs(os.path.join(args.output, d[0])) 
+            os.makedirs(os.path.join(args.output, d[0]))
         call_pgbadger = args.perl + " " + args.pgbadger + " " + os.path.join(args.logdir, "postgresql-" + report_date + "*")
         if args.verbose != True:
             call_pgbadger += " -q"
@@ -127,10 +127,10 @@ if __name__ == "__main__":
         if args.exclude_query is not None:
             call_pgbadger += " --exclude-query=\"" + args.exclude_query + "\""
         if args.verbose == True:
-            print call_pgbadger 
+            print call_pgbadger
         os.system(call_pgbadger)
     if args.archive:
-       archive() 
+       archive()
 
 
 """
