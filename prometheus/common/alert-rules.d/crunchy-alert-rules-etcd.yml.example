@@ -89,4 +89,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
-

@@ -92,6 +92,16 @@ metrics:
      - relname
    query_ref: ccp_stat_user_tables
 
+ - metric_name: ccp_stat_user_tables_n_tup_newpage_upd
+   type: gauge
+   help: "Number of rows updated where the successor version goes onto a new heap page, leaving behind an original version with a t_ctid field that points to a different heap page. These are always non-HOT updates."
+   values: [n_tup_newpage_upd]
+   key_labels:
+     - dbname
+     - schemaname
+     - relname
+   query_ref: ccp_stat_user_tables
+
  - metric_name: ccp_stat_user_tables_n_live_tup
    type: gauge
    help: "Estimated number of live rows"
@@ -206,6 +216,7 @@ queries:
         , n_tup_upd
         , n_tup_del
         , n_tup_hot_upd
+        , n_tup_newpage_upd
         , n_live_tup
         , n_dead_tup
         , vacuum_count

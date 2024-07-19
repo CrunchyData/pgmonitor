@@ -6,4 +6,3 @@
 # The below script must be run as a user with the pg_read_all_data role or a superuser. You may have to adjust your pg_hba.conf to allow this and/or use a .pgpass file
 # By default only scans and stores statistics for objects that are at least 1GB in size (--min_size). Setting --quiet twice, as shown, suppresses all output.
 # 08 03 * * 0 /usr/bin/pg_bloat_check.py --quiet --quiet -c "dbname=postgres user=ccp_monitoring" --min_size=1073741824
-

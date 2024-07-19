@@ -14,7 +14,7 @@ groups:
     expr: patroni_postgres_running != 1
     for: 60s
     labels:
-      service: patroni 
+      service: patroni
       severity: critical
       severity_num: 300
     annotations:
@@ -24,7 +24,7 @@ groups:
     expr: patroni_pending_restart != 0
     for: 1800s
     labels:
-      service: patroni 
+      service: patroni
       severity: warning
       severity_num: 300
     annotations:
@@ -34,7 +34,7 @@ groups:
     expr: patroni_is_paused != 0
     for: 900s
     labels:
-      service: patroni 
+      service: patroni
       severity: critical
       severity_num: 300
     annotations:
@@ -45,8 +45,8 @@ groups:
     expr: (time() - patroni_dcs_last_seen) > 300
     for: 60s
     labels:
-      service: patroni 
-      severity: warning 
+      service: patroni
+      severity: warning
       severity_num: 200
     annotations:
       summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 5 minutes'
@@ -56,8 +56,8 @@ groups:
     expr: (time() - patroni_dcs_last_seen) > 1800
     for: 60s
     labels:
-      service: patroni 
-      severity: critical 
+      service: patroni
+      severity: critical
       severity_num: 300
     annotations:
       summary: 'Patroni running on {{ $labels.job }} has reported that it has not communicated with its DCS for at least 30 minutes'
@@ -76,10 +76,10 @@ groups:
 
 # Detects one or more timeline switches in a given time
   - alert: PatroniTimelineSwitch
-    expr: patroni_postgres_timeline != patroni_postgres_timeline offset 5m 
+    expr: patroni_postgres_timeline != patroni_postgres_timeline offset 5m
     for: 60s
     labels:
-      service: patroni 
+      service: patroni
       severity: warning
       severity_num: 200
     annotations:
@@ -96,4 +96,3 @@ groups:
       severity_num: 300
     annotations:
       summary: 'A leader node (neither primary nor standby) cannot be found for cluster {{ $labels.cluster }}.'
-

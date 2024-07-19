@@ -10,7 +10,7 @@ BEGIN
     END IF;
 END
 $$;
- 
+
 GRANT pg_monitor to ccp_monitoring;
 GRANT pg_execute_server_program TO ccp_monitoring;
 
