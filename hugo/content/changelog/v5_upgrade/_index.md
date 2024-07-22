@@ -32,7 +32,15 @@ If you've installed pgMonitor with the packages provided by Crunchy Data, those 
 | pgmonitor-pg##-extras          | Crunchy-optimized configurations for postgres_exporter. Note that each major version of PostgreSQL has its own extras package (pgmonitor-pg13-extras, pgmonitor-pg14-extras, etc) |
 | postgres_exporter              | Base package for postgres_exporter                                        |
 
-Note that the pgbouncer_fdw is no longer required to monitor PgBouncer but it can still be used with sql_exporter if desired. Per previous instructions, it was usually only installed on the global database. The extension can be removed as follows if it's not needed.
+WARNING:
+
+Depending on the order that packages were installed, the removal of the `pgmonitor-pg-common` and/or `pgmonitor-pg##-extras` package may attempt to uninstall the core PostgreSQL packages. This has been observed on RHEL systems that are using DNF to manage their packages. Please carefully review which packages are being removed during this cleanup step. It is recommended to use the `--noautoremove` flag to the package removal command
+
+```
+dnf remove --noautoremove pgmonitor-pg-common
+```
+
+Also note that the pgbouncer_fdw is no longer required to monitor PgBouncer if using sql_exporeter but it can still be used if desired. Per previous instructions, it was usually only installed on the global database. The extension can be removed as follows if it's not needed.
 ```
 DROP EXTENSION pgbouncer_fdw;
 ```
