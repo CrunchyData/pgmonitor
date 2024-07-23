@@ -1,0 +1,3 @@
+trivial:
+  - grafana - Update Grafana package/dashboard listing
+  - postgres_exporter - Add warning about uninstalling postgres_exporter packages with DNF
