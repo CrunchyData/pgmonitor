@@ -40,7 +40,7 @@ Depending on the order that packages were installed, the removal of the `pgmonit
 dnf remove --noautoremove pgmonitor-pg-common
 ```
 
-Also note that the pgbouncer_fdw is no longer required to monitor PgBouncer if using sql_exporeter but it can still be used if desired. Per previous instructions, it was usually only installed on the global database. The extension can be removed as follows if it's not needed.
+Also note that the pgbouncer_fdw is no longer required to monitor PgBouncer if using sql_exporter but it can still be used if desired. Per previous instructions, it was usually only installed on the global database. The extension can be removed as follows if it's not needed.
 ```
 DROP EXTENSION pgbouncer_fdw;
 ```
