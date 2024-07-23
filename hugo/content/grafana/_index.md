@@ -33,8 +33,8 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 | postgres/QueryStatistics.json                                | Query Statistics    | Provides an overview of statistics collected by the pg_stat_statements extension. |
 | postgres/TableSize_Details.json                              | TableSize Details   | Provides size details on a per-table basis for the given database. |
 |||
-| pgbouncer/direct/PGBouncer.json                              |  PGBouncer (direct) | Provides details from the PgBouncer statistics views when connecting directly to PGBouncer with the sql_exporter. |
-| pgbouncer/fdw/PGBouncer.json                                 | PGBouncer | Provides details from the PgBouncer statistics views when using the pgbouncer_fdw. |
+| pgbouncer/direct/PGBouncer.json                              |  PgBouncer (direct) | Provides details from the PgBouncer statistics views when connecting directly to PgBouncer with the sql_exporter. |
+| pgbouncer/fdw/PGBouncer.json                                 | PgBouncer | Provides details from the PgBouncer statistics views when using the pgbouncer_fdw. |
 |||
 |prometheus/Prometheus_Alerts.json                             | Prometheus Alertsi  | Provides a summary list of current and recent alerts that have fired in Prometheus. |
 
