@@ -15,25 +15,28 @@ weight: 3
 
 pgMonitor comes with several dashboards ready to be used with automatic provisioning. They provide examples of using the metrics from the postgres_exporter and node_exporter. Since provisioned dashboards cannot be edited directly in the web interface, if any custom changes are desired, it is recommended to make a copy of them and make your changes there.
 
-| Dashboard Name        | Filename              | Description                                       |
-|-----------------------|-----------------------|---------------------------------------------------|
-| Bloat Details         | Bloat_Details.json    | Provides details on database bloat (wasted space). Provides overview and top-n statistics.|
-| CRUD Details          | CRUD_Details.json | Provides details on Create, Read, Update, Delete (CRUD) statistics on a per-table basis.  |
-| pgBackRest            | PGBackrest.json | Provides details on backups performed with pgBackRest. Also provides recovery window to show timeframe available for PITR. |
-| PGBouncer             | PGBouncer.json | Provides details from the PgBouncer statistics views. |
-| PostgreSQL Details    | PG_Details.json | Provides detailed information for each PostgreSQL instance (connections, replication, wraparound, etc). |
-| PostgreSQL Overview   | PG_Overview.json| Provides an overview of all PostgreSQL systems being monitored. Indicates whether a system is a Primary or Replica. Can click on each panel to open up the PostgreSQL Details for that system. |
-| Query Statistics      | QueryStatistics.json| Provides an overview of statistics collected by the pg_stat_statements extension. |
-| TableSize Details     | TableSize_Details.json | Provides size details on a per-table basis for the given database. |
+| Filename                                                      | Dashboard Name             | Description                                       |
+|---------------------------------------------------------------|-----------------------|---------------------------------------------------|
+|etcd/ETCD_Details.json                                        | ETCD Details        | Provides details on the status of the ETCD cluster monitored by pgMonitor. |
 |||
-|Filesystem Details     | Filesystem_Details.json | Provides details on the filesystem metrics (disk usage, IO, etc). |
-|Network Details        | Network_Details.json | Provides details on network usage (utilization, traffic in/out, netstat, etc). |
-|Overview               | Overview.json | The top level overview dashboard that provides links to the OS Overview, PostgreSQL Overview, ETCD, and Prometheus Alerts dashboards. |
-|OS Details             | OS_Details.json | Provides details on operating system metrics (cpu, memory, swap, disk usage). Links to Filesystem Details dashboard. |
-|OS Overview            | Overview.json| Provides an overview that shows the up status of each system monitored by pgMonitor. |
+|linux/Filesystem_Details.json                                 | Filesystem Details  | Provides details on the filesystem metrics (disk usage, IO, etc). |
+|linux/Network_Details.json                                    | Network Details     | Provides details on network usage (utilization, traffic in/out, netstat, etc). |
+|linux/OS_Details.json                                         | OS Details          | Provides details on operating system metrics (cpu, memory, swap, disk usage). Links to Filesystem Details dashboard. |
+|linux/OS_Overview.json                                        | OS Overview         | Provides an overview that shows the up status of each system monitored by pgMonitor. |
 |||
-|ETCD Details           | ETCD_Details.json | Provides details on the status of the ETCD cluster monitored by pgMonitor. |
-|Prometheus Alerts      | Prometheus_Alerts.json| Provides a summary list of current and recent alerts that have fired in Prometheus. |
+| postgres/Bloat_Details.json                                  | Bloat Details       | Provides details on database bloat (wasted space). Provides overview and top-n statistics.|
+| postgres/CRUD_Details.json                                   | CRUD Details        | Provides details on Create, Read, Update, Delete (CRUD) statistics on a per-table basis.  |
+| postgres/PGBackrest.json                                     | pgBackRest          | Provides details on backups performed with pgBackRest. Also provides recovery window to show timeframe available for PITR. |
+| postgres/PG_Details.json                                     |  PostgreSQL Details | Provides detailed information for each PostgreSQL instance (connections, replication, wraparound, etc). |
+|postgres/postgres_exporter/PG_Overview_postgres_exporter.json | PostgreSQL Overview | Provides an overview of all PostgreSQL systems being monitored when the postgres_exporter is being used. Indicates whether a system is a Primary or Replica. Can click on each panel to open up the PostgreSQL Details for that system. |
+| postgres/sql_exporter/PG_Overview_sql_exporter.json          | PostgreSQL Overview (sql_exporter) | Provides an overview of all PostgreSQL systems being monitored when the sql_exporter is being used. Indicates whether a system is a Primary or Replica. Can click on each panel to open up the PostgreSQL Details for that system. |
+| postgres/QueryStatistics.json                                | Query Statistics    | Provides an overview of statistics collected by the pg_stat_statements extension. |
+| postgres/TableSize_Details.json                              | TableSize Details   | Provides size details on a per-table basis for the given database. |
+|||
+| pgbouncer/direct/PGBouncer.json                              |  PgBouncer (direct) | Provides details from the PgBouncer statistics views when connecting directly to PgBouncer with the sql_exporter. |
+| pgbouncer/fdw/PGBouncer.json                                 | PgBouncer | Provides details from the PgBouncer statistics views when using the pgbouncer_fdw. |
+|||
+|prometheus/Prometheus_Alerts.json                             | Prometheus Alertsi  | Provides a summary list of current and recent alerts that have fired in Prometheus. |
 
 ## Installation {#installation}
 
@@ -43,14 +46,22 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
-If you install the below available packages with RPM, you can continue reading at the [Setup](#setup) section.
+If you install the below available packages, you can continue reading at the [Setup](#setup) section. Dashboards have been split up into different packages to allow users to only have dashboards that are relevant to their environment appear in the provisioned dashboards location.
 
 ##### Available Packages
 
-| Package Name              | Description                                                       |
-|---------------------------|-------------------------------------------------------------------|
-| grafana                   | Base package for grafana                                          |
-| pgmonitor-grafana-extras  | Crunchy configurations for datasource & dashboard provisioning    |
+| Package Name                                  | Description                                                                                       |
+|---------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| grafana                                       | Base package for grafana                                                                          |
+| pgmonitor-grafana-extras-common               | Crunchy files common for all Grafana installations (Ex. datasource & dashboard provisioning)      |
+| pgmonitor-grafana-extras-etcd                 | Crunchy dashboards for etcd (etcd built-in exporter)                                              |
+| pgmonitor-grafana-extras-linux                | Crunchy dashboards for Linux OS metrics (node_exporter)                                           |
+| pgmonitor-grafana-extras-pg                   | Crunchy dashboards for PostgreSQL metrics common to all PG exporters                              |
+| pgmonitor-grafana-extras-pg-postgres-exporter | Crunchy dashboards for metrics provided by postgres_exporter (see version 5 upgrade for deprecation notice) |
+| pgmonitor-grafana-extras-pg-sql-exporter      | Crunchy dashboards for metrics provided by the sql_exporter                                       |
+| pgmonitor-grafana-extras-pgbouncer-direct     | Crunchy dashboards for PgBouncer metrics collected directly from bouncer via the sql_exporter     |
+| pgmonitor-grafana-extras-pgbouncer-fdw        | Crunchy dashboards for PgBouncer metrics collected via the pgbouncer_fdw                          |
+| pgmonitor-grafana-extras-prometheus           | Crunchy dashboards for proividing direct Prometheus visualization (alerting)                      |
 
 #### Without Packages
 
@@ -70,16 +81,9 @@ Review the {{< shell >}}crunchy_grafana_datasource.yml{{< /shell >}}} file to en
 
 Review the {{< shell >}}crunchy_grafana_dashboards.yml{{< /shell >}} file to ensure it's looking at where you stored the provided dashboards. By default it is looking in {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}}. Save this file and rename it to {{< shell >}}/etc/grafana/provisioning/dashboards/dashboards.yml{{< /shell >}}. Restart grafana so it picks up the new config.
 
-Save all of the desired .json dashboard files to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
+Save all of the desired .json dashboard files (see [table above](#dashboards)) to the {{< shell >}}/etc/grafana/crunchy_dashboards{{< /shell >}} folder. All of them are not required, so if there is a dashboard you do not need, it can be left out.
 
-Please note that due to the change from postgres_exporter to sql_exporter, and its ability to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly:
-
-| Dashboard file                                                            | Use when              |
-|---------------------------------------------------------------------------|-----------------------|
-| grafana/postgres/sql_exporter/PG_Overview_sql_exporter.json               | sql_exporter is collecting metrics |
-| grafana/postgres/postgres_exporter/PG_Overview_postgres_exporter.json     | postgres_exporter is collecting metrics |
-| grafana/pgbouncer/direct/PGBouncer_direct.json                            | sql_exporter is connecting directly to pgBouncer for its metrics |
-| grafana/pgbouncer/fdw/PGBouncer_fdw.json                                  | postgres_exporter is using pgbouncer_fdw to collect pgBouncer metrics |
+Please note that due to the change from postgres_exporter to sql_exporter, and its ability to connect directly to pgBouncer to collect its metrics, some dashboards are specific to one exporter or the other. Please use the relevant dashboards accordingly based on their descriptions above.
 
 
 ## Upgrading {#upgrading}
@@ -131,7 +135,7 @@ Navigate to the web interface: https://&lt;ip-address&gt;:3000. Log in with admi
 
 ### Datasource & Dashboard Provisioning
 
-Grafana provides the ability to automatically provision datasources and dashboards via configuration files instead of having to manually import them either through the web interface or the API. Note that provisioned dashboards can no longer be directly edited and saved via the web interface. See the Grafana documentation for how to edit/save provisioned dashboards: http://docs.grafana.org/administration/provisioning/#making-changes-to-a-provisioned-dashboard. If you'd like to customize these dashboards, we recommend first adding them via provisioning then saving them with a new name. You can then either manage them via the web interface or add them to the provisioning system.
+Grafana provides the ability to automatically provision datasources and dashboards via configuration files instead of having to manually import them either through the web interface or the API. Note that provisioned dashboards cannot be directly edited and saved via the web interface. See the Grafana documentation for how to edit/save provisioned dashboards: http://docs.grafana.org/administration/provisioning/#making-changes-to-a-provisioned-dashboard. If you'd like to customize these dashboards, we recommend first adding them via provisioning then saving them with a new name. You can then either manage them via the web interface or add them to the provisioning system.
 
 The extras package takes care of putting all these files in place. If you did not use the Crunchy package to install Grafana, see the additional instructions above. Once that is done, the only additional setup that needs to be done is to set the "provisioning" option in the `grafana.ini` to point to the top level directory if it hasn't been done already.
 
