@@ -21,7 +21,6 @@ ccp_backrest_last_info:
             SELECT a.config_file
              , a.stanza
              , split_part(a.backup_data->'backrest'->>'version', '.', 1) || lpad(split_part(a.backup_data->'backrest'->>'version', '.', 2), 2, '0') || lpad(coalesce(nullif(split_part(a.backup_data->'backrest'->>'version', '.', 3), ''), '00'), 2, '0') AS backrest_repo_version
-             , a.backup_data->'backrest'->>'version' AS backrest_repo_version
              , a.backup_data->'database'->>'repo-key' AS repo
              , a.backup_data->>'type' AS backup_type
              , a.backup_data->'info'->'repository'->>'delta' AS repo_backup_size_bytes
