@@ -34,12 +34,15 @@ After installing via these packages, continue reading at the [Setup](#setup) sec
 
 | Package Name                   | Description                                                               |
 |--------------------------------|---------------------------------------------------------------------------|
-| node-exporter                  | Base package for node_exporter                                            |
-| sql-exporter                   | Base package for sql_exporter                                             |
-| sql-exporter-extras            | Crunchy-optimized configurations for sql_exporter                         |
 | blackbox-exporter              | Package for the blackbox_exporter                                         |
+| node-exporter                  | Base package for node_exporter                                            |
 | pg-bloat-check                 | Package for pg_bloat_check script                                         |
 | pgmonitor-node_exporter-extras | Crunchy-optimized configurations for node_exporter                        |
+| pgmonitor-pg##-extension       | Crunchy monitoring PostgreSQL extension used by sql_exporter              |
+| sql-exporter                   | Base package for sql_exporter                                             |
+| sql-exporter-extras            | Crunchy-optimized configurations for sql_exporter                         |
+
+
 
 ### Non-RPM installs {#non-rpm-installs}
 
@@ -47,10 +50,11 @@ For non-package installations on Linux, applications can be downloaded from thei
 
 | Application                   | Source Repository                                         |
 |-------------------------------|-----------------------------------------------------------|
-| node_exporter                 | https://github.com/prometheus/node_exporter      |
-| sql_exporter                  | https://github.com/burningalchemist/sql_exporter |
 | blackbox_exporter             | https://github.com/prometheus/blackbox_exporter           |
+| node_exporter                 | https://github.com/prometheus/node_exporter               |
 | pg_bloat_check                | https://github.com/keithf4/pg_bloat_check                 |
+| pgmonitor-extension           | https://github.com/CrunchyData/pgmonitor-extension        |
+| sql_exporter                  | https://github.com/burningalchemist/sql_exporter          |
 
 #### User and Configuration Directory Installation
 
@@ -143,7 +147,7 @@ First, make sure you have installed the PostgreSQL contrib modules.  An example 
 sudo yum install postgresql##-contrib
 ```
 
-Where `##` corresponds to your current PostgreSQL version.  
+Where `##` corresponds to your current PostgreSQL version.
 
 You will need to modify your {{< shell >}}postgresql.conf{{< /shell >}} configuration file to tell PostgreSQL to load the following shared libraries:
 ```
@@ -177,7 +181,7 @@ CREATE EXTENSION pg_stat_statements;
 
 Run the setup_db.sql file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the setup.sql file is a convenience file and the steps contained within it can be done manually and customized as needed.
 
-The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains settings for sql_exporter, the list of collection files to use, and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the upstream project for all of the configuration options available. The example shows how to run both the global and per-db collections on the default 'postgres' database. It also shows how you can connect to pgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top.
+The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains settings for sql_exporter, the list of collection files to use, and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the upstream project for all of the configuration options available. The example shows how to run both the global and per-db collections on the default 'postgres' database. It also shows how you can connect to PgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top. For additional information on setting up the sql_exporter, please see the (upstream documentation)[#non-rpm-installs]
 
 Note that your pg_hba.conf will have to be configured to allow the {{< shell >}}ccp_monitoring{{< /shell >}} system user to connect as the {{< shell >}}ccp_monitoring{{< /shell >}} role to any database in the instance. sql_exporter is set to connect via the local TCP loopback by default. If passwordless login is desired, a .pgpass file can be created for the ccp_monitoring user or the connection configuration can be changed to use a local socket and peer-based authentication can be done instead.
 
@@ -202,7 +206,7 @@ Run these grant statements to then allow monitoring to connect.
 
 ##### Bloat setup
 
-Run the script on the specific database(s) you will be monitoring for bloat in the cluster. See the note below, or in crontab.txt, concerning a superuser or special privilege requirements for using this script.
+Run the script on the specific database(s) you will be monitoring for bloat in the cluster. See the note below, or in crontab.txt, concerning special privilege requirements for using this script.
 
 ```bash
 psql -d postgres -c "CREATE EXTENSION pgstattuple;"

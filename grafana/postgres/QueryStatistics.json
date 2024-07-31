@@ -31,7 +31,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -76,6 +76,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "instant": true,
           "interval": "",
@@ -89,7 +93,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -134,6 +138,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
@@ -148,7 +156,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -193,6 +201,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
@@ -207,7 +219,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -252,6 +264,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "sum(ccp_pg_stat_statements_total_row_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
@@ -266,7 +282,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -345,6 +361,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "irate(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}[1m])",
           "interval": "",
           "legendFormat": "db: {{dbname}}, user: {{role}}",
@@ -357,7 +377,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -450,6 +470,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
@@ -493,7 +517,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -586,6 +610,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
@@ -629,7 +657,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -722,6 +750,10 @@
       "pluginVersion": "10.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
           "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
           "instant": true,
@@ -765,7 +797,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -843,7 +875,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_pg_stat_statements_top_wal_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
           "format": "table",
@@ -894,8 +926,26 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel",
-          "value": "hotel"
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "iota",
+          "value": "iota"
         },
         "datasource": {
           "type": "prometheus",
@@ -924,8 +974,8 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel_ip16_pg1",
-          "value": "hotel_ip16_pg1"
+          "text": "iota_ip16_pg1",
+          "value": "iota_ip16_pg1"
         },
         "datasource": {
           "type": "prometheus",

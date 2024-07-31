@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 15308,
   "graphTooltip": 0,
-  "id": 16,
   "links": [
     {
       "asDropdown": true,
@@ -74,7 +73,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -152,7 +151,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "max(etcd_server_has_leader{exp_type=\"etcd\",job=~\"$job\"})",
@@ -169,7 +168,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -568,7 +567,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "(etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"} / etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"})*100",
@@ -582,7 +581,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "process_resident_memory_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -596,7 +595,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "sum(etcd_debugging_mvcc_keys_total{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
@@ -610,7 +609,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
@@ -624,7 +623,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
@@ -638,7 +637,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "sum(etcd_server_is_leader{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
@@ -652,7 +651,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "sum(etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}) by (instance)",
@@ -666,7 +665,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "(etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"} / etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"})*100",
@@ -680,7 +679,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"} - etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -694,7 +693,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": false,
           "expr": "etcd_server_quota_backend_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -979,7 +978,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1060,7 +1059,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_network_client_grpc_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
@@ -1079,7 +1078,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1160,7 +1159,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_network_client_grpc_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
@@ -1179,7 +1178,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1260,7 +1259,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_network_peer_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (job)",
@@ -1279,7 +1278,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1360,7 +1359,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_network_peer_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (job)",
@@ -1406,7 +1405,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1489,7 +1488,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_debugging_mvcc_keys_total{exp_type=\"etcd\",job=~\"$job\"}",
@@ -1506,7 +1505,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1587,7 +1586,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "rate(etcd_debugging_mvcc_put_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
@@ -1598,7 +1597,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "rate(etcd_debugging_mvcc_delete_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
@@ -1613,7 +1612,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1694,7 +1693,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}",
@@ -1737,7 +1736,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1818,7 +1817,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "process_resident_memory_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -1837,7 +1836,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1920,7 +1919,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_mvcc_db_total_size_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -1936,7 +1935,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_mvcc_db_total_size_in_use_in_bytes{exp_type=\"etcd\",job=~\"$job\"}",
@@ -1953,7 +1952,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2035,7 +2034,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_disk_wal_fsync_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
@@ -2049,7 +2048,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_disk_backend_commit_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
@@ -2067,7 +2066,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2150,7 +2149,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "time_series",
@@ -2164,7 +2163,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "histogram_quantile(0.99, sum(rate(etcd_disk_backend_commit_duration_seconds_bucket{exp_type=\"etcd\",job=~\"$job\"}[5m])) by (instance, le))",
           "format": "time_series",
@@ -2181,7 +2180,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2264,7 +2263,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "etcd_server_heartbeat_send_failures_total{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
@@ -2275,7 +2274,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "etcd_server_health_failures{exp_type=\"etcd\",job=~\"$job\"}",
           "format": "time_series",
@@ -2290,7 +2289,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2373,7 +2372,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_server_slow_apply_total{exp_type=\"etcd\",job=~\"$job\"}",
@@ -2386,7 +2385,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "etcd_server_slow_read_indexes_total{exp_type=\"etcd\",job=~\"$job\"}",
@@ -2403,7 +2402,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2484,7 +2483,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_disk_backend_defrag_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m])",
@@ -2501,7 +2500,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "Abnormally high snapshot duration (snapshot_save_total_duration_seconds) indicates disk issues and might cause the cluster to be unstable.",
       "fieldConfig": {
@@ -2583,7 +2582,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_debugging_snap_save_total_duration_seconds_sum{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
@@ -2601,7 +2600,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2682,7 +2681,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(etcd_server_proposals_failed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
@@ -2695,7 +2694,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(etcd_server_proposals_pending{exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
@@ -2708,7 +2707,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(etcd_server_proposals_committed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
@@ -2721,7 +2720,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(etcd_server_proposals_applied_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
@@ -2737,7 +2736,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2818,7 +2817,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Watch\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
@@ -2831,7 +2830,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(grpc_server_started_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"}) - sum(grpc_server_handled_total{grpc_service=\"etcdserverpb.Lease\",grpc_type=\"bidi_stream\",exp_type=\"etcd\",job=~\"$job\"})",
           "format": "time_series",
@@ -2848,7 +2847,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2929,7 +2928,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "rate(etcd_debugging_mvcc_db_compaction_keys_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
@@ -2946,7 +2945,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3027,7 +3026,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "changes(etcd_server_leader_changes_seen_total{exp_type=\"etcd\",job=~\"$job\"}[1d])",
@@ -3046,7 +3045,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "indicates how many proposals are queued to commit. Rising pending proposals suggests there is a high client load or the member cannot commit proposals.",
       "fieldConfig": {
@@ -3128,7 +3127,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(etcd_server_proposals_pending{exp_type=\"etcd\",job=~\"$job\"})",
@@ -3146,7 +3145,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "proposals_committed_total records the total number of consensus proposals committed. This gauge should increase over time if the cluster is healthy. Several healthy members of an etcd cluster may have different total committed proposals at once. This discrepancy may be due to recovering from peers after starting, lagging behind the leader, or being the leader and therefore having the most commits. It is important to monitor this metric across all the members in the cluster; a consistently large lag between a single member and its leader indicates that member is slow or unhealthy.\n\nproposals_applied_total records the total number of consensus proposals applied. The etcd server applies every committed proposal asynchronously. The difference between proposals_committed_total and proposals_applied_total should usually be small (within a few thousands even under high load). If the difference between them continues to rise, it indicates that the etcd server is overloaded. This might happen when applying expensive queries like heavy range queries or large txn operations.",
       "fieldConfig": {
@@ -3232,7 +3231,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_server_proposals_committed_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
@@ -3247,7 +3246,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_server_proposals_applied_total{exp_type=\"etcd\",job=~\"$job\"}[5m]))",
@@ -3266,7 +3265,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3347,7 +3346,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(grpc_server_started_total{grpc_type=\"unary\",exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
@@ -3360,7 +3359,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(grpc_server_handled_total{grpc_type=\"unary\",grpc_code!=\"OK\",exp_type=\"etcd\",job=~\"$job\"}[5m]))",
           "format": "time_series",
@@ -3377,7 +3376,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -3458,7 +3457,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_network_client_grpc_received_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
@@ -3472,7 +3471,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "exemplar": true,
           "expr": "sum(rate(etcd_network_client_grpc_sent_bytes_total{exp_type=\"etcd\",job=~\"$job\"}[1m]))",
@@ -3496,6 +3495,24 @@
   ],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "selected": true,

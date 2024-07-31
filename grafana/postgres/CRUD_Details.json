@@ -23,7 +23,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -105,7 +105,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "rate(ccp_stat_user_tables_n_tup_ins{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname = \"[[pgdatabase]]\", schemaname = \"[[schemaname]]\", relname=\"[[tablename]]\"}[60s])",
           "format": "time_series",
@@ -118,7 +118,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "rate(ccp_stat_user_tables_n_tup_upd{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname = \"[[pgdatabase]]\", schemaname = \"[[schemaname]]\", relname=\"[[tablename]]\"}[60s])",
           "format": "time_series",
@@ -131,7 +131,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "rate(ccp_stat_user_tables_n_tup_del{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname = \"[[pgdatabase]]\", schemaname = \"[[schemaname]]\", relname=\"[[tablename]]\"}[60s])",
           "format": "time_series",
@@ -154,8 +154,27 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel",
-          "value": "hotel"
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "iota",
+          "value": "iota"
         },
         "datasource": {
           "type": "prometheus",
@@ -184,8 +203,8 @@
       {
         "current": {
           "selected": false,
-          "text": "hotel_ip16_pg1",
-          "value": "hotel_ip16_pg1"
+          "text": "iota_ip16_pg1",
+          "value": "iota_ip16_pg1"
         },
         "datasource": {
           "type": "prometheus",
@@ -213,7 +232,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "postgres",
           "value": "postgres"
         },
@@ -243,7 +262,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "pgmonitor_ext",
           "value": "pgmonitor_ext"
         },

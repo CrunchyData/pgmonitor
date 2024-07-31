@@ -23,7 +23,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -105,7 +105,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "100-(100*(node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
@@ -116,7 +116,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "100-(100*(node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} / node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}))",
           "format": "time_series",
@@ -131,7 +131,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -213,7 +213,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "node_filesystem_size_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free_bytes{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
           "format": "time_series",
@@ -224,7 +224,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "node_filesystem_size{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"} - node_filesystem_free{job=~\"[[osnodes]]\", fstype!~\".*tmpfs.*|.*root.*|.*pipe.*\"}",
           "format": "time_series",
@@ -239,7 +239,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -334,7 +334,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_reads_completed_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
@@ -345,7 +345,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_writes_completed_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
@@ -356,7 +356,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_reads_completed{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
@@ -367,7 +367,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_writes_completed{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
@@ -382,7 +382,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -477,7 +477,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_read_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
@@ -488,7 +488,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_written_bytes_total{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
@@ -499,7 +499,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_sectors_read{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
@@ -510,7 +510,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_sectors_written{job=~\"[[osnodes]]\"}[5m]) * 512",
           "format": "time_series",
@@ -525,7 +525,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -607,7 +607,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(node_disk_io_time_seconds_total{job=~\"[[osnodes]]\"}[5m])",
           "format": "time_series",
@@ -625,6 +625,24 @@
   "tags": [],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "selected": false,
