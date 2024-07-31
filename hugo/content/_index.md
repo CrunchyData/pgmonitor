@@ -59,6 +59,10 @@ pgMonitor combines multiple open-source software services to create a robust Pos
 
 - pgMonitor plans to support all PostgreSQL versions that are actively supported by the PostgreSQL community. Once a major version of PostgreSQL reaches its end-of-life (EOL), pgMonitor will cease supporting that major version soon after. Please see the official PostgreSQL website for [community supported releases](https://www.postgresql.org/support/versioning/).
 
+### HAProxy
+
+- Version 2.x for Grafana dashboard
+
 ### PgBouncer
 
 - PgBouncer 1.21+
