@@ -1,0 +1,2 @@
+bugfixes:
+  - postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions

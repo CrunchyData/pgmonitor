@@ -63,6 +63,10 @@ pgMonitor combines multiple open-source software services to create a robust Pos
 
 - Version 3.5 and greater is supported for the Grafana dashboard
 
+### HAProxy
+
+- Version 2.x for Grafana dashboard
+
 ### PgBouncer
 
 - PgBouncer 1.21+

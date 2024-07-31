@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -107,7 +107,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "node_load1{job=~\"[[osnodes]]\"}",
           "format": "time_series",
@@ -119,7 +119,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "node_load5{job=~\"[[osnodes]]\"}",
           "format": "time_series",
@@ -130,7 +130,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "node_load15{job=~\"[[osnodes]]\"}",
           "format": "time_series",
@@ -145,7 +145,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -245,7 +245,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_network_receive_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[3m]))",
           "interval": "",
@@ -259,7 +259,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_network_transmit_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[3m]))",
           "interval": "",
@@ -275,7 +275,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -375,7 +375,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(increase(node_network_receive_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[1m]))",
           "interval": "5m",
@@ -389,7 +389,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(increase(node_network_transmit_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[1m]))",
           "hide": false,
@@ -406,7 +406,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -472,7 +472,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(increase(node_network_receive_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[24h]))",
           "interval": "",
@@ -488,7 +488,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -553,7 +553,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(increase(node_network_transmit_bytes_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[24h]))",
           "interval": "",
@@ -569,7 +569,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -650,7 +650,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_network_receive_drop_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[3m]))",
           "interval": "",
@@ -660,7 +660,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_network_receive_errs_total{device=~\"[[network_device]]\",job=~\"[[osnodes]]\"}[3m]))",
           "interval": "",
@@ -674,7 +674,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -756,7 +756,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_CurrEstab{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -770,7 +770,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_ActiveOpens{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -783,7 +783,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_PassiveOpens{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -796,7 +796,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_EstabResets{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -809,7 +809,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_AttemptFails{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -822,7 +822,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Tcp_RetransSegs{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -839,7 +839,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -934,7 +934,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_InDatagrams{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -948,7 +948,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_InErrors{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -961,7 +961,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_OutDatagrams{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -974,7 +974,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_NoPorts{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -987,7 +987,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_InCsumErrors{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -1000,7 +1000,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_RcvbufErrors{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -1013,7 +1013,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(node_netstat_Udp_SndbufErrors{job=~\"[[osnodes]]\"}[5m]))",
           "interval": "",
@@ -1030,7 +1030,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1112,7 +1112,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(node_nf_conntrack_entries_limit{job=~\"[[osnodes]]\"}) - sum(node_nf_conntrack_entries{job=~\"[[osnodes]]\"})",
           "interval": "",
@@ -1126,7 +1126,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(node_nf_conntrack_entries_limit{job=~\"[[osnodes]]\"})",
           "interval": "",
@@ -1146,6 +1146,25 @@
   "tags": [],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "selected": false,

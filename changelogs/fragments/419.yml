@@ -1,0 +1,2 @@
+trivial:
+  - sql_exporter - Clarify usage of pgmonitor-extension
