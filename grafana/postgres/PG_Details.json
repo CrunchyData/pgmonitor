@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -85,12 +85,12 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -105,7 +105,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -160,12 +160,12 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "1 - (ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"} / ccp_connection_stats_total{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"})",
           "interval": "",
@@ -180,7 +180,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -234,12 +234,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_max_idle_in_txn_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -254,7 +254,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -309,12 +309,12 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -329,7 +329,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -384,12 +384,12 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})  / sum( ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"} + ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}) * 100",
           "interval": "",
@@ -404,7 +404,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -452,12 +452,12 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}",
           "interval": "",
@@ -472,7 +472,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -554,7 +554,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_max_connections{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
@@ -568,7 +568,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_active{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -581,7 +581,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_idle_in_txn{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -594,7 +594,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_connection_stats_idle{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "interval": "",
@@ -611,7 +611,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -732,7 +732,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"})",
           "format": "time_series",
@@ -745,7 +745,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_replication_lag_replay_time{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "hide": false,
@@ -760,7 +760,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -848,7 +848,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -860,7 +860,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}",
           "format": "time_series",
@@ -876,7 +876,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -958,7 +958,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -970,7 +970,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]) + irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m])",
           "hide": false,
@@ -985,7 +985,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -1067,7 +1067,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_transaction_wraparound_percent_towards_wraparound{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
@@ -1083,7 +1083,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1164,7 +1164,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
@@ -1180,7 +1180,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -1273,7 +1273,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_tup_fetched{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1287,7 +1287,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_tup_inserted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1301,7 +1301,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_tup_updated{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1315,7 +1315,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_tup_deleted{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1329,7 +1329,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_tup_returned{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1347,7 +1347,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1430,7 +1430,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accessexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1443,7 +1443,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"accesssharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1456,7 +1456,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"exclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1469,7 +1469,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1482,7 +1482,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"rowsharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1495,7 +1495,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1508,7 +1508,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"sharerowexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1521,7 +1521,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(ccp_locks_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\",mode=\"shareupdateexclusivelock\", dbname=~\"[[pgdatabase]]\"})",
           "format": "time_series",
@@ -1538,7 +1538,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1620,7 +1620,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "sum(rate(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m]))*100 /\n(sum(rate(ccp_stat_database_blks_hit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])) + \nsum(rate(ccp_stat_database_blks_read{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[1m])))\n",
@@ -1640,7 +1640,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -1723,7 +1723,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_xact_commit{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1737,7 +1737,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(irate(ccp_stat_database_xact_rollback{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -1754,7 +1754,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1875,7 +1875,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "ccp_wal_activity_total_size_bytes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
           "format": "time_series",
@@ -1888,7 +1888,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "idelta(ccp_archive_command_status_archived_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
@@ -1899,7 +1899,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "idelta(ccp_archive_command_status_failed_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "hide": false,
@@ -1914,7 +1914,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1999,7 +1999,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_bgwriter_buffers_alloc{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
@@ -2013,7 +2013,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_bgwriter_buffers_backend{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
@@ -2027,7 +2027,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
@@ -2041,7 +2041,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
@@ -2055,7 +2055,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "irate(ccp_stat_bgwriter_buffers_clean{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
@@ -2073,7 +2073,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2158,7 +2158,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -2172,7 +2172,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -2185,7 +2185,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
@@ -2198,7 +2198,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_user_tables_analyze_count{job=~\"[[pgnodes]]\"}[5m]))",
           "format": "time_series",
@@ -2214,7 +2214,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "description": "",
       "fieldConfig": {
@@ -2294,7 +2294,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_autovacuum_workers_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
@@ -2306,7 +2306,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "editorMode": "code",
           "expr": "ccp_autovacuum_workers_max{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
@@ -2323,7 +2323,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PDC1078F23EBDF0E5"
+        "uid": "${ccp_datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2404,7 +2404,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_database_deadlocks{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -2418,7 +2418,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PDC1078F23EBDF0E5"
+            "uid": "${ccp_datasource}"
           },
           "expr": "sum(rate(ccp_stat_database_conflicts{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
           "format": "time_series",
@@ -2439,6 +2439,24 @@
   "tags": [],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "PROMETHEUS",
+          "value": "PDC1078F23EBDF0E5"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "ccp_datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "selected": false,
@@ -2471,7 +2489,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "iota_ip16_pg1",
           "value": "iota_ip16_pg1"
         },
@@ -2536,7 +2554,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -2555,6 +2573,6 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
