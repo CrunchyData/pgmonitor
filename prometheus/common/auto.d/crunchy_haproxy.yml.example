@@ -1,0 +1,11 @@
+###
+#
+# Copyright © 2017-2024 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+# Example below is for a single haproxy target. See the following blog post for configuring HAProxy to provide metrics - https://www.haproxy.com/blog/haproxy-exposes-a-prometheus-metrics-endpoint
+- targets: [ "10.123.202.12:7000" ]
+  labels:
+    job: "prod_haproxy1"
+    exp_type: "haproxy"

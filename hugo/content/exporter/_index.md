@@ -485,6 +485,13 @@ Note that the statistics for individual queries can only be reset on PG12+. Prio
 
 \*NIX Operating System metrics (Linux, BSD, etc) are collected using the [node_exporter](https://github.com/prometheus/node_exporter) provided by the Prometheus team. pgMonitor only collects the default metrics provided by node_exporter, but many additional metrics are available if needed.
 
+### Suggested Optional Metrics
+
+There are many other suggestions, projects, and exporters out there that can provide additional metrics not included by default with pgMonitor. Some recommendations are below
+
+[https://docs.percona.com/pg-stat-monitor/](pg_stat_monitor) - Similar to pg_stat_statements, but provides deeper analysis on individual query statistics and performance. Note that this can greatly increase the metric storage requirements, but it can be extremely useful when trying to narrow down more complex query performance issues.
+
+[https://www.ansible.com/blog/red-hat-ansible-tower-monitoring-using-prometheus-node-exporter-grafana/](Ansible Tower metrics) - Ansible Tower has a builtin exporter that can provide related metrics
 
 ## Legacy postgres_exporter Setup {#postgres-exporter}
 

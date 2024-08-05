@@ -1588,7 +1588,7 @@
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
-          "expr": "rate(etcd_debugging_mvcc_put_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_mvcc_put_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ job }} puts/s",
@@ -1599,7 +1599,7 @@
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
-          "expr": "rate(etcd_debugging_mvcc_delete_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
+          "expr": "rate(etcd_mvcc_delete_total{exp_type=\"etcd\",job=~\"$job\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ job }} deletes/s",
