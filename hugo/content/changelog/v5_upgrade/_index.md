@@ -4,7 +4,7 @@ draft: false
 weight: 5
 ---
 
-Version 5 of pgMonitor introduces a new exporter that will be used for collecting PostgreSQL metrics: [https://github.com/burningalchemist/sql_exporter](sql_exporter). Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets, and installing new Grafana dashboards.
+Version 5 of pgMonitor introduces a new exporter that will be used for collecting PostgreSQL metrics: [sql_exporter](https://github.com/burningalchemist/sql_exporter). Converting to this new exporter will involve cleaning up the old postgres_exporter, updating Prometheus targets, and installing new Grafana dashboards.
 
 ## Cleanup
 
