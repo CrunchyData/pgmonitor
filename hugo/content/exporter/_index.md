@@ -111,7 +111,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ##### blackbox_exporter
 
-The following pgMonitor configuration files should be placed according to the following mapping:
+Note that blackbox_exporter is typically installed on the Prometheus node and does not need to be installed on any other nodes in the default pgMonitor configuration. The following pgMonitor configuration files should be placed according to the following mapping:
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
@@ -156,9 +156,12 @@ shared_preload_libraries = 'pg_stat_statements,auto_explain,pgmonitor_bgw'
 
 You will need to restart your PostgreSQL instance for the change to take effect. pgMonitor has optional metrics that can be collected via pg_stat_statements. auto_explain does not do anything to your database without further configuration. But even if neither of these extensions are initially used, they are very good to have enabled here by default for when they may be needed in the future.
 
-The pgmonitor-extension uses its own background worker to refresh metric data.
+The pgmonitor-extension uses its own background worker to refresh metric data. It also requires that you set which databases will have metrics monitoring enabled. You do this with the `pgmonitor_bgw.dbname` GUC in your postgresql.conf. At a minimum the "global" database needs to be mentioned, typically `postgres`, but if per-database metrics for other databases are also desired (tables statistics, bloat, etc), they must be listed here in CSV format. This value can be changed at any time with just a reload of PostgreSQL.
+```
+pgmonitor_bgw.dbname = 'postgres,alphadb,betadb,etc'
+```
 
-The following statement only needs to be run on the "global" database, typically the "postgres" database. If you want the pg_stat_statements view to be visible in other databases, this statement must be run there as well.
+The following statement only needs to be run on the "global" database. If you want the pg_stat_statements view to be visible in other databases, this statement must be run there as well.
 
 ```sql
 CREATE EXTENSION pg_stat_statements;
@@ -179,17 +182,17 @@ CREATE EXTENSION pg_stat_statements;
 | crunchy_pg_stat_statements_reset_collector.yml | Collection file with options to allow resetting of pg_stat_statements metrics |
 
 
-Run the setup_db.sql file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the setup.sql file is a convenience file and the steps contained within it can be done manually and customized as needed.
+Run the `setup_db.sql` file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the `setup_db.sql` file is a convenience file and the steps contained within it can be done manually and customized as needed.
 
-The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains settings for sql_exporter, the list of collection files to use, and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the upstream project for all of the configuration options available. The example shows how to run both the global and per-db collections on the default 'postgres' database. It also shows how you can connect to PgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top. For additional information on setting up the sql_exporter, please see the (upstream documentation)[#non-rpm-installs]
+The `sql_exporter.yml.example` file should be copied and renamed to `sql_exporter.yml` since this is what the sysconfig file is expecting to find. This file contains settings for sql_exporter, the list of collection files to use, and the configuration for which databases to connect to and which collections to run on each database. Please see the examples inside the file and refer to the [upstream project](#non-rpm-installs) for all of the configuration options available. The example shows how to run both the global and per-db collections on the default 'postgres' database. It also shows how you can connect to PgBouncer to collect metrics directly from it as well. The collector names that can be used can be found inside the collection files at the top. For additional information on setting up the sql_exporter, please see the [upstream documentation](#non-rpm-installs).
 
-Note that your pg_hba.conf will have to be configured to allow the {{< shell >}}ccp_monitoring{{< /shell >}} system user to connect as the {{< shell >}}ccp_monitoring{{< /shell >}} role to any database in the instance. sql_exporter is set to connect via the local TCP loopback by default. If passwordless login is desired, a .pgpass file can be created for the ccp_monitoring user or the connection configuration can be changed to use a local socket and peer-based authentication can be done instead.
+Note that your `pg_hba.conf` will have to be configured to allow the {{< shell >}}ccp_monitoring{{< /shell >}} system user to connect as the {{< shell >}}ccp_monitoring{{< /shell >}} role to any database in the instance. sql_exporter is set to connect via the local TCP loopback by default. If passwordless login is desired, a .pgpass file can be created for the ccp_monitoring user or the connection configuration can be changed to use a local socket and peer-based authentication can be done instead.
 
 For replica servers, the setup is the same except that the setup_db.sql file does not need to be run since writes cannot be done there and it was already run on the primary.
 
 ##### Access Control: GRANT statements
 
-The {{< shell >}}ccp_monitoring{{< /shell >}} database role (created by running the "setup_db.sql" file above) must be allowed to connect to all databases in the cluster. Note that by default, all users are granted CONNECT on all new databases, so this step can likely be skipped. Otherwise, run the following command to generate the necessary GRANT statements:
+The {{< shell >}}ccp_monitoring{{< /shell >}} database role (created by running the `setup_db.sql` file above) must be allowed to connect to all databases in the cluster. Note that by default, all users are granted CONNECT on all new databases, so this step can likely be skipped. Otherwise, run the following command to generate the necessary GRANT statements:
 
 ```sql
 SELECT 'GRANT CONNECT ON DATABASE "' || datname || '" TO ccp_monitoring;'
@@ -237,12 +240,6 @@ sudo systemctl start node_exporter
 sudo systemctl status node_exporter
 ```
 
-If you've installed the blackbox exporter:
-```bash
-sudo systemctl enable blackbox_exporter
-sudo systemctl start blackbox_exporter
-sudo systemctl status blackbox_exporter
-```
 
 ```bash
 sudo systemctl enable crunchy-sql-exporter@sql_exporter
@@ -256,8 +253,15 @@ To allow the possible use of multiple sql_exporters running on a single system, 
 sudo systemctl enable crunchy-sql-exporter@sql_exporter_cluster2
 sudo systemctl start crunchy-sql-exporter@sql_exporter_cluster2
 sudo systemctl status crunchy-sql-exporter@sql_exporter_cluster2
-
 ```
+
+If you've installed the blackbox exporter on the Prometheus node:
+```bash
+sudo systemctl enable blackbox_exporter
+sudo systemctl start blackbox_exporter
+sudo systemctl status blackbox_exporter
+```
+
 
 ### Monitoring multiple databases
 
