@@ -996,7 +996,7 @@
           "refId": "A"
         }
       ],
-      "title": "Query Total WAL Genterated (Bytes)",
+      "title": "Query Total WAL Generated (Bytes)",
       "transformations": [
         {
           "id": "organize",

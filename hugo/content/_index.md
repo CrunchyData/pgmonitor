@@ -68,6 +68,10 @@ pgMonitor combines multiple open-source software packages and necessary configur
 - PgBouncer 1.17
 - pgbouncer_fdw 1.0.0
 
+### Grafana
+
+-  Grafana 10.4
+
 ## Installation
 
 Installation instructions for each package are provided in that packages subfolder. Each step in the installation process is listed here, with a link to additional to further installation instructions for each package.
@@ -95,4 +99,3 @@ Copyright © 2017-2024 Crunchy Data Solutions, Inc. All Rights Reserved.
 CRUNCHY DATA SOLUTIONS, INC. PROVIDES THIS GUIDE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
 Crunchy, Crunchy Data Solutions, Inc. and the Crunchy Hippo Logo are trademarks of Crunchy Data Solutions, Inc. All Rights Reserved.
-

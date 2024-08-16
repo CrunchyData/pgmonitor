@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,20 +16,21 @@
     ]
   },
   "editable": false,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1617294779945,
+  "id": 18,
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "links": [
             {
               "targetBlank": true,
@@ -36,25 +40,24 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "0": {
+                  "text": "DOWN"
+                },
+                "1": {
+                  "text": "UP"
+                }
+              },
+              "type": "value"
             },
             {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "DOWN"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -85,8 +88,6 @@
         "y": 0
       },
       "id": 1,
-      "interval": null,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
@@ -100,1040 +101,22 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {
           "valueSize": 50
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "10.4.2",
       "repeat": "osnodes",
       "repeatDirection": "h",
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip11_etcd1",
-          "value": "ip11_etcd1"
-        }
-      },
       "targets": [
         {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
           },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 0
-      },
-      "id": 2,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip12_haproxy1",
-          "value": "ip12_haproxy1"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
-        "y": 0
-      },
-      "id": 3,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip13_pgbouncer1",
-          "value": "ip13_pgbouncer1"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 0
-      },
-      "id": 4,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip14_pgmonitor1",
-          "value": "ip14_pgmonitor1"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 4
-      },
-      "id": 5,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip15_backrest1",
-          "value": "ip15_backrest1"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 4
-      },
-      "id": 6,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip16_pg1",
-          "value": "ip16_pg1"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
-        "y": 4
-      },
-      "id": 7,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip21_etcd2",
-          "value": "ip21_etcd2"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 4
-      },
-      "id": 8,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip26_pg2",
-          "value": "ip26_pg2"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 8
-      },
-      "id": 9,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip31_etcd3",
-          "value": "ip31_etcd3"
-        }
-      },
-      "targets": [
-        {
-          "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[osnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "UP",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 8
-      },
-      "id": 10,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294779945,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "osnodes": {
-          "selected": false,
-          "text": "ip36_pg3",
-          "value": "ip36_pg3"
-        }
-      },
-      "targets": [
-        {
           "expr": "up{job=~\"[[osnodes]]\", exp_type=\"node\"}",
           "format": "time_series",
           "interval": "",
@@ -1149,13 +132,11 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 27,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
@@ -1165,10 +146,11 @@
             "$__all"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "Node",
@@ -1184,7 +166,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1211,5 +192,6 @@
   "timezone": "browser",
   "title": "OS Overview",
   "uid": "pxinDnKik",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }
