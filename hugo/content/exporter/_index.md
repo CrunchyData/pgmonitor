@@ -190,6 +190,39 @@ Note that your `pg_hba.conf` will have to be configured to allow the {{< shell >
 
 For replica servers, the setup is the same except that the setup_db.sql file does not need to be run since writes cannot be done there and it was already run on the primary.
 
+##### Enabling/Disabling Extension Metrics
+
+As mentioned above, metrics that sql_exporter actively tries to collect are maintained by the collection files that are added to the configuration. However the pgmonitor-extension also has some settings to enable/disable the refresh of the materialized views that it maintains. Most are enabled by default, but it's good to review the `active` column in both the `metric_views` and `metric_tables` configuration tables. For example, in `metric_tables`, the pgBackRest data is not enabled by default since not everyone will have that backup solution in place.
+```
+postgres=# SELECT * FROM pgmonitor_ext.metric_tables ;
+-[ RECORD 1 ]-----+---------------------------------------
+table_schema      | pgmonitor_ext
+table_name        | pgbackrest_info
+refresh_statement | SELECT pgmonitor_ext.pgbackrest_info()
+run_interval      | 00:10:00
+last_run          |
+last_run_time     |
+active            | f
+scope             | global
+```
+In order to enable that one, simply set the `active` column to true and during the next refresh cycle, it will attempt to refresh the table that stores those metrics. You'll know it's successfully running if you see the `last_run` columns being set. If not, please check logs for any errors.
+```
+postgres=# UPDATE pgmonitor_ext.metric_tables SET active = 'true';
+UPDATE 1
+
+postgres=# SELECT * FROM pgmonitor_ext.metric_tables ;
+-[ RECORD 1 ]-----+---------------------------------------
+table_schema      | pgmonitor_ext
+table_name        | pgbackrest_info
+refresh_statement | SELECT pgmonitor_ext.pgbackrest_info()
+run_interval      | 00:10:00
+last_run          | 2024-08-16 09:48:27.328069-04
+last_run_time     | 00:00:00.016229
+active            | t
+scope             | global
+```
+Further details on maintaining the pgmonitor-extension can be found in its documentation ([linked above](#non-rpm-installs))
+
 ##### Access Control: GRANT statements
 
 The {{< shell >}}ccp_monitoring{{< /shell >}} database role (created by running the `setup_db.sql` file above) must be allowed to connect to all databases in the cluster. Note that by default, all users are granted CONNECT on all new databases, so this step can likely be skipped. Otherwise, run the following command to generate the necessary GRANT statements:
