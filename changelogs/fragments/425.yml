@@ -1,0 +1,4 @@
+breaking_changes:
+  - grafana - Update the dashboards to support Grafana 10.4 so that we're on an officially supported version of Grafana. This does potentially break backward compatibility with Grafana 9.x, so an update to Grafana 10.4 will be required with this version of pgMonitor.
+bugfixes:
+  - postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions
