@@ -1,2 +1,3 @@
 *.swp
 exporter/postgres/queries.yml
+hugo/.hugo_build.lock
