@@ -351,6 +351,18 @@ metrics:
     values: [total_size_bytes]
     query_ref: ccp_wal_activity
 
+  - metric_name: ccp_autovacuum_workers_count
+    type: gauge
+    help: "Count of autovacuum workers currently running"
+    values: [count]
+    query_ref: ccp_autovacuum_workers
+
+  - metric_name: ccp_autovacuum_workers_max
+    type: gauge
+    help: "Count of autovacuum workers currently running"
+    values: [max]
+    query_ref: ccp_autovacuum_workers
+
 #  - metric_name:
 #    type: gauge
 #    help:
@@ -513,3 +525,10 @@ queries:
       SELECT last_5_min_size_bytes
         , total_size_bytes
       FROM pgmonitor_ext.ccp_wal_activity
+
+
+  - query_name: ccp_autovacuum_workers
+    query: |
+      SELECT count(*) AS count, current_setting('autovacuum_max_workers') AS max
+      FROM pg_catalog.pg_stat_activity
+      WHERE backend_type = 'autovacuum worker';

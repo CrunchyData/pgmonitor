@@ -85,7 +85,7 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -160,7 +160,7 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -234,7 +234,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -309,7 +309,7 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -384,7 +384,7 @@
         "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -452,7 +452,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -2127,118 +2127,6 @@
         "x": 0,
         "y": 49
       },
-      "id": 15,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${ccp_datasource}"
-          },
-          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "Conflicts",
-          "metric": "pg_stat_database_conflicts",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${ccp_datasource}"
-          },
-          "expr": "sum(rate(ccp_stat_database_conflicts{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "DeadLocks",
-          "metric": "pg_stat_database_deadlocks",
-          "refId": "B",
-          "step": 240
-        }
-      ],
-      "title": "Conflicts/DeadLocks - [[pgdatabase]]",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ccp_datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 49
-      },
       "id": 16,
       "options": {
         "legend": {
@@ -2313,6 +2201,226 @@
       ],
       "title": "Vacuum/Analyze Activity Rate - [[pgdatabase]]",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 49
+      },
+      "id": 58,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "editorMode": "code",
+          "expr": "ccp_autovacuum_workers_count{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "instant": false,
+          "legendFormat": "Running",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "editorMode": "code",
+          "expr": "ccp_autovacuum_workers_max{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Max",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Autovacuum Workers",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "expr": "sum(rate(ccp_stat_database_deadlocks{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Conflicts",
+          "metric": "pg_stat_database_conflicts",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "expr": "sum(rate(ccp_stat_database_conflicts{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\"}[5m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "DeadLocks",
+          "metric": "pg_stat_database_deadlocks",
+          "refId": "B",
+          "step": 240
+        }
+      ],
+      "title": "Conflicts/DeadLocks - [[pgdatabase]]",
+      "type": "timeseries"
     }
   ],
   "refresh": "15m",
@@ -2346,7 +2454,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "${ccp_datasource}"
+          "uid": "PDC1078F23EBDF0E5"
         },
         "definition": "label_values(up{exp_type='pg'}, cluster_name)",
         "hide": 0,
@@ -2376,7 +2484,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "${ccp_datasource}"
+          "uid": "PDC1078F23EBDF0E5"
         },
         "definition": "label_values(up{exp_type='pg', cluster_name=\"[[pgcluster]]\"}, job)",
         "hide": 0,
@@ -2400,7 +2508,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -2410,7 +2518,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "${ccp_datasource}"
+          "uid": "PDC1078F23EBDF0E5"
         },
         "definition": "label_values(ccp_database_size_bytes{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\"}, dbname)",
         "hide": 0,
@@ -2454,6 +2562,6 @@
   "timezone": "browser",
   "title": "PostgreSQL Details",
   "uid": "6jtN_vfiz",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
