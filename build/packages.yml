@@ -124,7 +124,7 @@ packages:
           - { source: "sql_exporter/common/crunchy_pgbouncer_fdw_collector.yml", target: "/etc/sql_exporter/crunchy_pgbouncer_fdw_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_pg_stat_statements_collector.yml", target: "/etc/sql_exporter/crunchy_pg_stat_statements_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_pg_stat_statements_reset_collector.yml", target: "/etc/sql_exporter/crunchy_pg_stat_statements_reset_collector.yml", mode: "640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "sql_exporter/common/setup_db.sql", target: "/etc/sql_exporter/setup_db.sql", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/common/setup_db.sql", target: "/etc/sql_exporter/setup_db.sql", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/sql_exporter.yml.example", target: "/etc/sql_exporter/sql_exporter.yml.example", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/linux/sql_exporter.sysconfig", target: "/etc/sysconfig/sql_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/linux/crontab.txt", target: "/etc/sql_exporter/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
