@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - sql_exporter - A password for the ccp_monitoring database role is no longer set when using the setup_db.sql file.
+  - sql_exporter - Make the default privileges for the setup_db.yml file world readable (when installing via package).

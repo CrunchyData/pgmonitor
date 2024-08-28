@@ -6,7 +6,7 @@
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'ccp_monitoring') THEN
-        CREATE ROLE ccp_monitoring WITH LOGIN PASSWORD 'stuff';
+        CREATE ROLE ccp_monitoring WITH LOGIN;
     END IF;
 END
 $$;
