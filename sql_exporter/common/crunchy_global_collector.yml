@@ -179,31 +179,6 @@ metrics:
     query_ref: ccp_settings_pending_restart
 
 
-  - metric_name: ccp_stat_bgwriter_checkpoints_timed
-    type: gauge
-    help: "Number of scheduled checkpoints that have been performed"
-    values: [checkpoints_timed]
-    query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_checkpoints_req
-    type: gauge
-    help: "Number of requested checkpoints that have been performed"
-    values: [checkpoints_req]
-    query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_checkpoint_write_time
-    type: gauge
-    help: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
-    values: [checkpoint_write_time]
-    query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_checkpoint_sync_time
-    type: gauge
-    help: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in milliseconds"
-    values: [checkpoint_sync_time]
-    query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_buffers_checkpoint
-    type: gauge
-    help: "Number of buffers written during checkpoints"
-    values: [buffers_checkpoint]
-    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_clean
     type: gauge
     help: "Number of buffers written by the background writer"
@@ -214,21 +189,51 @@ metrics:
     help: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
     values: [maxwritten_clean]
     query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_buffers_backend
-    type: gauge
-    help: "Number of buffers written directly by a backend"
-    values: [buffers_backend]
-    query_ref: ccp_stat_bgwriter
-  - metric_name: ccp_stat_bgwriter_buffers_backend_fsync
-    type: gauge
-    help: "Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)"
-    values: [buffers_backend_fsync]
-    query_ref: ccp_stat_bgwriter
   - metric_name: ccp_stat_bgwriter_buffers_alloc
     type: gauge
     help: "Number of buffers allocated"
     values: [buffers_alloc]
     query_ref: ccp_stat_bgwriter
+
+
+  - metric_name: ccp_stat_checkpointer_num_timed
+    type: gauge
+    help: "Number of scheduled checkpoints that have been performed"
+    values: [num_timed]
+    query_ref: ccp_stat_checkpointer
+  - metric_name: ccp_stat_checkpointer_num_requested
+    type: gauge
+    help: "Number of requested checkpoints that have been performed"
+    values: [num_requested]
+    query_ref: ccp_stat_checkpointer
+  - metric_name: ccp_stat_checkpointer_write_time
+    type: gauge
+    help: "Total amount of time that has been spent in the portion of processing checkpoints and restartpoints where files are written to disk, in milliseconds"
+    values: [write_time]
+    query_ref: ccp_stat_checkpointer
+  - metric_name: ccp_stat_checkpointer_sync_time
+    type: gauge
+    help: "Total amount of time that has been spent in the portion of processing checkpoints and restartpoints where files are synchronized to disk, in milliseconds"
+    values: [sync_time]
+    query_ref: ccp_stat_checkpointer
+  - metric_name: ccp_stat_checkpointer_buffers_written
+    type: gauge
+    help: "Number of buffers written during checkpoints and restartpoints"
+    values: [buffers_written]
+    query_ref: ccp_stat_checkpointer
+
+
+  - metric_name: ccp_stat_io_bgwriter_writes
+    type: gauge
+    help: "Number of write operations by background writers"
+    values: [writes]
+    query_ref: ccp_stat_io_bgwriter
+  - metric_name: ccp_stat_io_bgwriter_fsyncs
+    type: gauge
+    help: "Number of fsync calls by background writers"
+    values: [fsyncs]
+    query_ref: ccp_stat_io_bgwriter
+
 
   - metric_name: ccp_stat_database_xact_commit
     type: gauge
@@ -480,18 +485,25 @@ queries:
 
   - query_name: ccp_stat_bgwriter
     query: |
-      SELECT checkpoints_timed
-        , checkpoints_req
-        , checkpoint_write_time
-        , checkpoint_sync_time
-        , buffers_checkpoint
-        , buffers_clean
+      SELECT buffers_clean
         , maxwritten_clean
-        , buffers_backend
-        , buffers_backend_fsync
         , buffers_alloc
       FROM pgmonitor_ext.ccp_stat_bgwriter
 
+  - query_name: ccp_stat_checkpointer
+    query: |
+      SELECT num_timed
+        , num_requested
+        , write_time
+        , sync_time
+        , buffers_written
+      FROM pgmonitor_ext.ccp_stat_checkpointer
+
+  - query_name: ccp_stat_io_bgwriter
+    query: |
+      SELECT writes
+        , fsyncs
+      FROM pgmonitor_ext.ccp_stat_io_bgwriter
 
   - query_name: ccp_stat_database
     query: |

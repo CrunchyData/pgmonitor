@@ -2007,12 +2007,12 @@
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_io_bgwriter_writes{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Backend",
-          "metric": "pg_stat_bgwriter_buffers_backend",
+          "legendFormat": "Writes",
+          "metric": "ccp_stat_io_bgwriter_writes",
           "refId": "B",
           "step": 120
         },
@@ -2021,12 +2021,12 @@
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
-          "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_io_bgwriter_fsyncs{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "FSync",
-          "metric": "pg_stat_bgwriter_buffers_backend_fsync",
+          "metric": "ccp_stat_io_bgwriter_fsyncs",
           "refId": "C",
           "step": 120
         },
@@ -2035,12 +2035,12 @@
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
-          "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
+          "expr": "irate(ccp_stat_checkpointer_buffers_written{cluster_name=\"[[pgcluster]]\", job=~\"[[pgnodes]]\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "CheckPoint",
-          "metric": "pg_stat_bgwriter_buffers_checkpoint",
+          "metric": "ccp_stat_checkpointer_buffers_written",
           "refId": "D",
           "step": 120
         },
