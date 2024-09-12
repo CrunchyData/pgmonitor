@@ -123,6 +123,7 @@ Note that blackbox_exporter is typically installed on the Prometheus node and do
 
 * If you are upgrading to version 5.0 and transitioning to using the new sql_exporter, please see the documentation in [Upgrading to pgMonitor v5.0.0](/changelog/v5_upgrade/)
 * See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
+* It is recommended to re-run the `setup_db.sql` script after running any updates to the `pgmonitor-extension` to ensure any new needed privileges are granted and that new objects have their permissions set properly. If you have any other roles besides the default interacting with the `pgmonitor-extension` objects, you may have to adjust their permissions as well.
 
 ## Setup {#setup}
 
