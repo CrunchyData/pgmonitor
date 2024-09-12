@@ -11,13 +11,14 @@ packages:
           - { target: "/etc/prometheus/auto.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/etc/prometheus/alert-rules.d", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/etc/prometheus/auto.tls.d/", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/prometheus", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/common/auto.d/*.example", target: "/etc/prometheus/auto.d/", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/linux/auto.d/*.example", target: "/etc/prometheus/auto.d/", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/common/alert-rules.d/*.example", target: "/etc/prometheus/alert-rules.d/*", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "prometheus/linux/alert-rules.d/*.example", target: "/etc/prometheus/alert-rules.d/*", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "prometheus/linux/crunchy-prometheus-service-rhel.conf", target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "prometheus/linux/sysconfig.prometheus", target: "/etc/sysconfig/prometheus", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "prometheus/linux/crunchy-prometheus-service-rhel.conf", target: "/etc/systemd/system/prometheus.service.d/crunchy-prometheus-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "root", group: "root" }
+          - { source: "prometheus/linux/sysconfig.prometheus", target: "/etc/sysconfig/prometheus", mode: "0644", type: "file", rpm_new: false, owner: "root", group: "root" }
           - { source: "prometheus/linux/crunchy-prometheus.yml", target: "/etc/prometheus/crunchy-prometheus.yml", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "prometheus2", gte: 2.38.0 , lt: 2.50.0 }
@@ -32,8 +33,9 @@ packages:
     - pgmonitor-alertmanager-extras:
         files:
           - { source: "alertmanager/common/crunchy-alertmanager.yml", target: "/etc/prometheus/crunchy-alertmanager.yml ", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "alertmanager/linux/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "alertmanager/linux/crunchy-alertmanager-service-rhel.conf", target: "/etc/systemd/system/alertmanager.service.d/crunchy-alertmanager-service-rhel.conf", mode: "0644", type: "file", rpm_new: false, owner: "root", group: "root" }
+          - { source: "alertmanager/linux/sysconfig.alertmanager", target: "/etc/sysconfig/alertmanager", mode: "0644", type: "file", rpm_new: false, owner: "root", group: "root" }
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { target: "/var/lib/ccp_monitoring/alertmanager", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "alertmanager", gte: 0.23.0, lt: 0.27.0 }
@@ -50,9 +52,10 @@ packages:
 
     - pgmonitor-node-exporter-extras:
         files:
-          - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0700", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "node_exporter/linux/crunchy-node-exporter-service-rhel.conf", target: "/etc/systemd/system/node_exporter.service.d/crunchy-node-exporter-service-rhel.conf", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root" }
+          - { source: "node_exporter/linux/sysconfig.node_exporter", target: "/etc/sysconfig/node_exporter", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root" }
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring/node_exporter/", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "node-exporter", gte: 1.5.0, lt: 1.8.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -61,15 +64,15 @@ packages:
     - postgres-exporter:
         files:
           - { target: "/usr/bin/postgres_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
-          - { target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
+          - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "root", group: "root" }
           - { target: "/etc/postgres_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
         upstream_repo: "https://github.com/CrunchyData/postgres_exporter"
 
     - pgmonitor-pg-common:
         files:
-          - { source: "postgres_exporter/linux/crunchy-postgres-exporter@.service", target: "/usr/lib/systemd/system/crunchy-postgres-exporter@.service", mode: "0644", type: "files", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "postgres-exporter", gte: 0.10.1, lt: 0.16.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -81,8 +84,8 @@ packages:
           - { source: "postgres_exporter/common/*.sql", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/common/pg##/*", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/queries_*.yml", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##", target: "/etc/sysconfig/postgres_exporter_pg##", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##_per_db", target: "/etc/sysconfig/postgres_exporter_pg##_per_db", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##", target: "/etc/sysconfig/postgres_exporter_pg##", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root" }
+          - { source: "postgres_exporter/linux/pg##/sysconfig.postgres_exporter_pg##_per_db", target: "/etc/sysconfig/postgres_exporter_pg##_per_db", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root" }
           - { source: "postgres_exporter/linux/crontab.txt", target: "/etc/postgres_exporter/##/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "pgmonitor-pg-common" }
@@ -94,13 +97,14 @@ packages:
         files:
           - { target: "/etc/default/blackbox_exporter", mode: "0644", type: "file", owner: "root", group: "root" }
           - { target: "/usr/bin/blackbox_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
-          - { target: "/usr/lib/systemd/system/blackbox_exporter.service", mode: "0755", type: "file", owner: "root", group: "root" }
+          - { target: "/usr/lib/systemd/system/blackbox_exporter.service", mode: "0644", type: "file", owner: "root", group: "root" }
         upstream_repo: "https://github.com/prometheus/blackbox_exporter"
 
     - pgmonitor-blackbox-exporter-extras:
         files:
-          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0600", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+          - { source: "blackbox_exporter/common/blackbox_exporter.sysconfig", target: "/etc/sysconfig/blackbox_exporter", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root"}
           - { source: "blackbox_exporter/common/crunchy-blackbox.yml", target: "/etc/blackbox_exporter/crunchy-blackbox.yml", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring"}
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
         pkg_dependency:
           - { pkg_name: "blackbox-exporter", gte: 0.22.0, lt: 0.25.0 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
@@ -108,7 +112,7 @@ packages:
 
     - sql-exporter:
         files:
-          - { source: "https://github.com/CrunchyData/pgmonitor/sql_exporter/linux/crunchy-sql-exporter@.service", target: "/usr/lib/systemd/system/crunchy-sql-exporter@.service", mode: "0645", type: "file", owner: "root", group: "root" }
+          - { source: "https://github.com/CrunchyData/pgmonitor/sql_exporter/linux/crunchy-sql-exporter@.service", target: "/usr/lib/systemd/system/crunchy-sql-exporter@.service", mode: "0644", type: "file", owner: "root", group: "root" }
           - { target: "/usr/bin/sql_exporter", mode: "0755", type: "file", owner: "root", group: "root" }
           - { target: "/etc/sql_exporter", type: "folder", mode: "0755", owner: "root", group: "root" }
         upstream_repo: "https://github.com/burningalchemist/sql_exporter"
@@ -116,6 +120,7 @@ packages:
     # If postgres_exporter is dropped, move pgbackrest-info and pgmonitor.conf to sql_exporter folder
     - sql-exporter-extras:
         files:
+          - { target: "/var/lib/ccp_monitoring", mode: "0750", type: "folder", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_backrest_collector.yml", target: "/etc/sql_exporter/crunchy_backrest_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_bloat_check_collector.yml", target: "/etc/sql_exporter/crunchy_bloat_check_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/crunchy_global_collector.yml", target: "/etc/sql_exporter/crunchy_global_collector.yml", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
@@ -126,7 +131,7 @@ packages:
           - { source: "sql_exporter/common/crunchy_pg_stat_statements_reset_collector.yml", target: "/etc/sql_exporter/crunchy_pg_stat_statements_reset_collector.yml", mode: "640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/setup_db.sql", target: "/etc/sql_exporter/setup_db.sql", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "sql_exporter/common/sql_exporter.yml.example", target: "/etc/sql_exporter/sql_exporter.yml.example", mode: "0640", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
-          - { source: "sql_exporter/linux/sql_exporter.sysconfig", target: "/etc/sysconfig/sql_exporter", mode: "0640", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
+          - { source: "sql_exporter/linux/sql_exporter.sysconfig", target: "/etc/sysconfig/sql_exporter", mode: "0644", type: "file", rpm_new: true, owner: "root", group: "root" }
           - { source: "sql_exporter/linux/crontab.txt", target: "/etc/sql_exporter/", mode: "0644", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgbackrest-info.sh", target: "/usr/bin/pgbackrest-info.sh", mode: "0755", type: "file", rpm_new: false, owner: "ccp_monitoring", group: "ccp_monitoring" }
           - { source: "postgres_exporter/linux/pgmonitor.conf", target: "/etc/pgmonitor.conf", mode: "0644", type: "file", rpm_new: true, owner: "ccp_monitoring", group: "ccp_monitoring" }
