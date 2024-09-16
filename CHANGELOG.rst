@@ -5,6 +5,37 @@ pgMonitor Release Notes
 .. contents:: Topics
 
 
+v5.1.0
+======
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 5.1.0. This release brings support for PostgreSQL 17. It also brings more flexible Grafana dashboards, an HAProxy dashboard and better support for etcd and pgBackRest.
+
+
+Major Changes
+-------------
+
+- grafana - add support for new metrics in PG17
+- sql_exporter - add support for PG17
+
+Minor Changes
+-------------
+
+- grafana - Add a new variable dropdown to all dashboards for the Datasource. Allows more flexiblity when importing the dashboard to different environments.
+- grafana - Add panel to PG Details dashboard to track autovac workers running vs max
+- grafana - add a dashboard for HAProxy
+- sql_exporter -  Add metrics to track current autovacuum workers running and max autovacuum workers
+- sql_exporter - A password for the ccp_monitoring database role is no longer set when using the setup_db.sql file.
+- sql_exporter - Make the default privileges for the setup_db.yml file world readable (when installing via package).
+
+Bugfixes
+--------
+
+- grafana - Fix etcd dashboard to use new metric names in etcd 3.5
+- postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions
+
 v5.0.0
 ======
 

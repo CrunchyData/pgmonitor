@@ -1,3 +1,0 @@
-minor_changes:
-  - sql_exporter -  Add metrics to track current autovacuum workers running and max autovacuum workers
-  - grafana - Add panel to PG Details dashboard to track autovac workers running vs max
