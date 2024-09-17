@@ -1,3 +1,0 @@
-minor_changes:
-  - grafana - Add a new variable dropdown to all dashboards for the Datasource. Allows more flexiblity when importing the dashboard to different environments.
-

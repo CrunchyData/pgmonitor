@@ -1,3 +1,0 @@
-major_changes:
-  - sql_exporter - add support for PG17
-  - grafana - add support for new metrics in PG17

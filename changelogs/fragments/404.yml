@@ -1,4 +1,0 @@
-bugfixes:
-  - grafana - Fix etcd dashboard to use new metric names in etcd 3.5
-
-
