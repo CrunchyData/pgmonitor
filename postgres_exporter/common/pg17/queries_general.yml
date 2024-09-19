@@ -1,0 +1,44 @@
+###
+#
+# Begin File: PG17 queries_general.yml
+#
+# Copyright © 2017-2024 Crunchy Data Solutions, Inc. All Rights Reserved.
+#
+###
+
+ccp_stat_bgwriter:
+    query: "SELECT buffers_clean, maxwritten_clean, buffers_alloc FROM pg_catalog.pg_stat_bgwriter"
+    metrics:
+      - buffers_clean:
+            usage: "GAUGE"
+            description: "Number of buffers written by the background writer"
+      - maxwritten_clean:
+            usage: "GAUGE"
+            description: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
+      - buffers_alloc:
+            usage: "GAUGE"
+            description: "Number of buffers allocated"
+
+
+ccp_data_checksum_failure:
+  query: "SELECT datname AS dbname
+            , checksum_failures AS count
+            , coalesce(extract(epoch from (clock_timestamp() - checksum_last_failure)), 0) AS time_since_last_failure_seconds
+          FROM pg_catalog.pg_stat_database;"
+  metrics:
+    - dbname:
+        usage: "LABEL"
+        description: "Database name"
+    - count:
+        usage: "GAUGE"
+        description: "Total number of checksum failures on this database"
+    - time_since_last_failure_seconds:
+        usage: "GAUGE"
+        description: "Time interval in seconds since the last checksum failure was encountered"
+
+
+###
+#
+# End File: PG17 queries_general.yml
+#
+###
