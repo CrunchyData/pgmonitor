@@ -5,6 +5,19 @@ pgMonitor Release Notes
 .. contents:: Topics
 
 
+v5.1.1
+======
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 5.1.1. This release brings additional support for PostgreSQL 17 to postgres_exporter to allow easier migration to sql_exporter.
+
+Minor Changes
+-------------
+
+- postgres_exporter - Files to help transition off of postgres_exporter.
+
 v5.1.0
 ======
 

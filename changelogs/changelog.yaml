@@ -196,3 +196,14 @@ releases:
     - 432.yml
     - 5.1.0.yml
     release_date: '2024-09-16'
+  5.1.1:
+    changes:
+      minor_changes:
+      - postgres_exporter - Files to help transition off of postgres_exporter.
+      release_summary: Crunchy Data is pleased to announce the availability of pgMonitor
+        5.1.1. This release brings additional support for PostgreSQL 17 to postgres_exporter
+        to allow easier migration to sql_exporter.
+    fragments:
+    - 435.yml
+    - release_summary.yml
+    release_date: '2024-10-04'
