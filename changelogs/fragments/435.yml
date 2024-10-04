@@ -1,3 +1,0 @@
----
-minor_changes:
-  - postgres_exporter - Files to help transition off of postgres_exporter.
