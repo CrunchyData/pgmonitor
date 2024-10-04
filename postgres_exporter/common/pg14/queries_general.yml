@@ -6,6 +6,42 @@
 #
 ###
 
+ccp_stat_bgwriter:
+    query: "SELECT checkpoints_timed, checkpoints_req, checkpoint_write_time, checkpoint_sync_time, buffers_checkpoint, buffers_clean, maxwritten_clean, buffers_backend, buffers_backend_fsync, buffers_alloc, stats_reset FROM pg_catalog.pg_stat_bgwriter"
+    metrics:
+      - checkpoints_timed:
+            usage: "GAUGE"
+            description: "Number of scheduled checkpoints that have been performed"
+      - checkpoints_req:
+            usage: "GAUGE"
+            description: "Number of requested checkpoints that have been performed"
+      - checkpoint_write_time:
+            usage: "GAUGE"
+            description: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
+      - checkpoint_sync_time:
+            usage: "GAUGE"
+            description: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in milliseconds"
+      - buffers_checkpoint:
+            usage: "GAUGE"
+            description: "Number of buffers written during checkpoints"
+      - buffers_clean:
+            usage: "GAUGE"
+            description: "Number of buffers written by the background writer"
+      - maxwritten_clean:
+            usage: "GAUGE"
+            description: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
+      - buffers_backend:
+            usage: "GAUGE"
+            description: "Number of buffers written directly by a backend"
+      - buffers_backend_fsync:
+            usage: "GAUGE"
+            description: "Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)"
+      - buffers_alloc:
+            usage: "GAUGE"
+            description: "Number of buffers allocated"
+      - stats_reset:
+            usage: "GAUGE"
+            description: "Time at which these statistics were last reset"
 
 ccp_data_checksum_failure:
   query: "SELECT datname AS dbname
