@@ -22,10 +22,9 @@
     ]
   },
   "description": "",
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1673302404559,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -69,10 +68,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -125,10 +126,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -182,10 +185,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -239,10 +244,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "sum(ccp_pg_stat_statements_total_row_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
@@ -257,48 +264,85 @@
       "type": "stat"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "PDC1078F23EBDF0E5"
       },
-      "fill": 1,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 23,
         "x": 0,
         "y": 3
       },
-      "hiddenSeries": false,
       "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.5.15",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "irate(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}[1m])",
@@ -307,37 +351,8 @@
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Query Executions (Calls) Per Minute",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:100",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:101",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -347,7 +362,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "displayMode": "auto",
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -378,8 +396,11 @@
                 "value": "ms"
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "thresholds",
@@ -409,7 +430,9 @@
       },
       "id": 4,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -424,7 +447,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -475,7 +498,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "displayMode": "auto",
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -506,8 +532,11 @@
                 "value": "ms"
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "thresholds",
@@ -537,7 +566,9 @@
       },
       "id": 6,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -552,7 +583,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_max_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -603,7 +634,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "displayMode": "auto",
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -634,8 +668,11 @@
                 "value": "ms"
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-background"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "thresholds",
@@ -665,7 +702,9 @@
       },
       "id": 5,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -680,7 +719,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "expr": "ccp_pg_stat_statements_top_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"}",
@@ -731,7 +770,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "displayMode": "auto",
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": false,
             "inspect": false
           },
@@ -762,8 +804,10 @@
                 "value": "bytes"
               },
               {
-                "id": "custom.displayMode",
-                "value": "auto"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
               }
             ]
           }
@@ -777,7 +821,9 @@
       },
       "id": 12,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -792,7 +838,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.15",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -841,16 +887,15 @@
     }
   ],
   "refresh": "15m",
-  "schemaVersion": 36,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
           "selected": false,
-          "text": "golf",
-          "value": "golf"
+          "text": "hotel",
+          "value": "hotel"
         },
         "datasource": {
           "type": "prometheus",
@@ -879,8 +924,8 @@
       {
         "current": {
           "selected": false,
-          "text": "golf_ip16_pg1",
-          "value": "golf_ip16_pg1"
+          "text": "hotel_ip16_pg1",
+          "value": "hotel_ip16_pg1"
         },
         "datasource": {
           "type": "prometheus",

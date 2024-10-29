@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,20 +16,21 @@
     ]
   },
   "editable": false,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1617294517997,
+  "id": 30,
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PDC1078F23EBDF0E5"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "links": [
             {
               "targetBlank": true,
@@ -36,32 +40,27 @@
           ],
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "0": {
+                  "text": "DOWN"
+                },
+                "1": {
+                  "text": "REPLICA"
+                },
+                "0.5": {
+                  "text": "PRIMARY"
+                }
+              },
+              "type": "value"
             },
             {
-              "id": 1,
-              "op": "=",
-              "text": "PRIMARY",
-              "type": 1,
-              "value": "0.5"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "REPLICA",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 3,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "DOWN"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -92,8 +91,6 @@
         "y": 0
       },
       "id": 1,
-      "interval": null,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
@@ -107,263 +104,22 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {
           "valueSize": 47
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "10.4.2",
       "repeat": "pgnodes",
       "repeatDirection": "h",
-      "scopedVars": {
-        "pgnodes": {
-          "selected": false,
-          "text": "alpha_ip16_pg1",
-          "value": "alpha_ip16_pg1"
-        }
-      },
       "targets": [
         {
-          "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[pgnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDC1078F23EBDF0E5"
           },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "PG Details",
-              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "PRIMARY",
-              "type": 1,
-              "value": "0.5"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "REPLICA",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 3,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 8,
-        "y": 0
-      },
-      "id": 2,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 47
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294517997,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "pgnodes": {
-          "selected": false,
-          "text": "alpha_ip26_pg2",
-          "value": "alpha_ip26_pg2"
-        }
-      },
-      "targets": [
-        {
-          "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "metric": "up",
-          "refId": "A",
-          "step": 2
-        }
-      ],
-      "title": "[[pgnodes]]",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "PG Details",
-              "url": "/d/6jtN_vfiz/postgresql-details?$__all_variables&var-pgcluster=${__field.labels.cluster_name}"
-            }
-          ],
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "null"
-            },
-            {
-              "id": 1,
-              "op": "=",
-              "text": "PRIMARY",
-              "type": 1,
-              "value": "0.5"
-            },
-            {
-              "id": 2,
-              "op": "=",
-              "text": "REPLICA",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "id": 3,
-              "op": "=",
-              "text": "DOWN",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": null
-              },
-              {
-                "color": "rgba(50, 172, 45, 0.9)",
-                "value": 0.5
-              },
-              {
-                "color": "rgba(68, 126, 188, 0.9)",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 16,
-        "y": 0
-      },
-      "id": 3,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 47
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.5",
-      "repeatDirection": "h",
-      "repeatIteration": 1617294517997,
-      "repeatPanelId": 1,
-      "scopedVars": {
-        "pgnodes": {
-          "selected": false,
-          "text": "alpha_ip36_pg3",
-          "value": "alpha_ip36_pg3"
-        }
-      },
-      "targets": [
-        {
           "expr": "pg_up{job=~\"[[pgnodes]]\"} / ccp_is_in_recovery_status{job=~\"[[pgnodes]]\"}",
           "format": "time_series",
           "interval": "",
@@ -379,13 +135,11 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 27,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
@@ -395,10 +149,11 @@
             "$__all"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PDC1078F23EBDF0E5"
+        },
         "definition": "",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "PGCluster",
@@ -414,7 +169,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -441,5 +195,6 @@
   "timezone": "browser",
   "title": "PostgreSQL Overview",
   "uid": "pxinDnNik",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }

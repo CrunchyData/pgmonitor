@@ -103,7 +103,7 @@ packages:
         pkg_conflict:
           - { pkg_name: "grafana-containers" }
         pkg_dependency:
-          - { pkg_name: "grafana", gte: 9.2.19, lt: 10.0.0 }
+          - { pkg_name: "grafana", gte: 10.4, lt: 11 }
         upstream_repo: "https://github.com/CrunchyData/pgmonitor"
 
     - pg_bloat_check:
