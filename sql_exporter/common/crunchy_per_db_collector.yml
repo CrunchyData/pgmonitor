@@ -5,7 +5,7 @@ metrics:
  - metric_name: ccp_table_size_bytes
    type: gauge
    help: "Table size in bytes including indexes"
-   values: [size_bytes]
+   values: [bytes]
    key_labels:
      - dbname
      - schemaname
@@ -200,7 +200,7 @@ queries:
       SELECT dbname
         , schemaname
         , relname
-        , size_bytes
+        , bytes
       FROM pgmonitor_ext.ccp_table_size
 
   - query_name: ccp_stat_user_tables
