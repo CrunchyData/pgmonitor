@@ -4,6 +4,43 @@ draft: false
 weight: 5
 ---
 
+## v4.12.0
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.12.0. This release primarily brings support for Grafana 10.4. See Changelog for additional information.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- grafana - Update the dashboards to support Grafana 10.4 so that we're on an officially supported version of Grafana. This does potentially break backward compatibility with Grafana 9.x, so an update to Grafana 10.4 will be required with this version of pgMonitor.
+
+Bugfixes
+--------
+
+- grafana - Fix etcd dashboard to use new metric names in etcd 3.5
+- postgres_exporter - Fix query for database table size to remove duplicate word
+- postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions
+
+## v4.11.0
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.11.0. This release primarily updates support for the underlying applications to more recent versions. This changelog contains all changes that have been added since the 4.10.0 release.
+
+Minor Changes
+-------------
+
+- alertmanager - minimum version 0.23, maximum 0.26.x
+- blackbox_exporter - minimum version 0.22.x, maximum 0.24.x
+- grafana - minimum version 9.2.19, maximum 9.9.x
+- node_exporter - minimum version 1.5.0, maximum 1.7.x
+- postgres_exporter - minimum version 0.10.1, maximum 0.15.x
+- prometheus - minimum version 2.38, maximum 2.49.x
+
+
 ## 4.10.0
 
 Release Summary
