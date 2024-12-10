@@ -7,16 +7,15 @@ weight: 2
 Prometheus can be set up on any Linux-based system, but pgMonitor currently only supports running it on RHEL/CentOS 7 or later.
 
 - [Installation](#installation)
-    - [RHEL / CentOS](#rhel-centos)
+    - [Package Install](#package-install)
+    - [Non-Package Install](#non-package-install)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
-    - [RHEL / CentOS](#setup-on-rhel-centos)
+    - [RHEL](#setup-on-rhel)
 
 ## Installation {#installation}
 
-### RHEL / CentOS {#rhel-centos}
-
-#### With RPM Packages
+### Package Install {#package-install}
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
@@ -31,20 +30,20 @@ After installing via these RPMs, you can continue reading at the [Setup](#setup)
 | pgmonitor-alertmanager-extras | Custom Crunchy configurations for Alertmanager    |
 | pgmonitor-prometheus-extras   | Custom Crunchy configurations for Prometheus      |
 
-#### Without Crunchy Data Packages
+### Non-Package Install {#non-package-install}
 
 For installations without using packages provided by Crunchy Data, we recommend using the repository maintained at https://github.com/lest/prometheus-rpm. Instructions for setup and installation are contained there. Note this only sets up the base service. The additional files and steps for pgMonitor still need to be set up as instructed below.
 
 Or you can also download [Prometheus](https://prometheus.io/) and [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/) from the original site at [https://prometheus.io/download](https://prometheus.io/download). Note that no base service setup is provided here, just the binaries.
 
-##### Minimum Versions
+#### Minimum Versions
 
 pgMonitor has been tested with the following versions at a minimum. Later versions should generally work. If they do not, please open an issue on our Github.
 
  * Prometheus 2.49.1
  * Alertmanager 0.26.0
 
-##### User and Configuration Directory Installation
+#### User and Configuration Directory Installation
 
 You will need to create a system user named {{< shell >}}ccp_monitoring{{< /shell >}} which you can do with the following command:
 
@@ -52,11 +51,11 @@ You will need to create a system user named {{< shell >}}ccp_monitoring{{< /shel
 sudo useradd -m -d /var/lib/ccp_monitoring ccp_monitoring
 ```
 
-##### Configuration File Installation
+#### Configuration File Installation
 
 The files contained in this repository are assumed to be installed in the following locations with the following names:
 
-###### Prometheus
+##### Prometheus
 
 The Prometheus data directory should be {{< shell >}}/var/lib/ccp_monitoring/prometheus{{< /shell >}} and owned by the {{< shell >}}ccp_monitoring{{< /shell >}} user.  You can set it up with:
 
@@ -76,7 +75,7 @@ The following pgmonitor configuration files should be placed according to the fo
 | prometheus/common/auto.d/\*.yml.example | /etc/prometheus/auto.d/*.yml.example |
 | prometheus/common/alert-rules.d/crunchy-alert-rules\*.yml.example | /etc/prometheus/alert-rules.d/crunchy-alert-rules-\*.yml.example |
 
-###### Alertmanager
+##### Alertmanager
 
 The Alertmanager data directory should be `/var/lib/ccp_monitoring/alertmanager` and owned by the `ccp_monitoring` user.  You can set it up with:
 
@@ -93,7 +92,7 @@ The following pgMonitor configuration files should be placed according to the fo
 | alertmanager/common/crunchy-alertmanager.yml | /etc/prometheus/crunchy-alertmanager.yml |
 
 
-### Upgrading {#upgrading}
+## Upgrading {#upgrading}
 
 * If you are upgrading to version 5.0 and transitioning to using the new sql_exporter, please see the documentation in [Upgrading to pgMonitor v5.0.0](/changelog/v5_upgrade/)
 * See the [CHANGELOG ](/changelog) for full details on both major & minor version upgrades.
@@ -101,7 +100,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 ## Setup {#setup}
 
-### Setup on RHEL/CentOS {#setup-on-rhel-centos}
+### Setup on RHEL {#setup-on-rhel}
 
 #### Service Configuration
 

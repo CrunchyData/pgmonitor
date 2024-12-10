@@ -6,10 +6,11 @@ weight: 3
 
 - [Included Dashboards](#dashboards)
 - [Installation](#installation)
-    - [Linux](#linux)
+    - [Package Install](#package-install)
+    - [Non-Package Install](#non-package-install)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
-    - [Linux](#setup-on-linux)
+    - [RHEL](#setup-on-linux)
 
 ### Included Dashboards {#dashboards}
 
@@ -40,9 +41,7 @@ pgMonitor comes with several dashboards ready to be used with automatic provisio
 
 ## Installation {#installation}
 
-### Linux {#linux}
-
-#### With RPM Packages
+### Package Install {#package-install}
 
 There are RPM packages available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
@@ -56,6 +55,7 @@ If you install the below available packages, you can continue reading at the [Se
 | pgmonitor-grafana-extras-common               | Crunchy files common for all Grafana installations (Ex. datasource & dashboard provisioning)      |
 | pgmonitor-grafana-extras-etcd                 | Crunchy dashboards for etcd (etcd built-in exporter)                                              |
 | pgmonitor-grafana-extras-linux                | Crunchy dashboards for Linux OS metrics (node_exporter)                                           |
+| pgmonitor-grafana-extras-haproxy              | Crunchy dashboards for HAProxy (built-in exporter)                                           |
 | pgmonitor-grafana-extras-pg                   | Crunchy dashboards for PostgreSQL metrics common to all PG exporters                              |
 | pgmonitor-grafana-extras-pg-postgres-exporter | Crunchy dashboards for metrics provided by postgres_exporter (see version 5 upgrade for deprecation notice) |
 | pgmonitor-grafana-extras-pg-sql-exporter      | Crunchy dashboards for metrics provided by the sql_exporter                                       |
@@ -63,7 +63,7 @@ If you install the below available packages, you can continue reading at the [Se
 | pgmonitor-grafana-extras-pgbouncer-fdw        | Crunchy dashboards for PgBouncer metrics collected via the pgbouncer_fdw                          |
 | pgmonitor-grafana-extras-prometheus           | Crunchy dashboards for proividing direct Prometheus visualization (alerting)                      |
 
-#### Without Packages
+### Non-Package Install {#non-package-install}
 
 Create the following directories on your grafana server if they don't exist:
 
@@ -94,7 +94,7 @@ Please note that due to the change from postgres_exporter to sql_exporter, and i
 
 ## Setup {#setup}
 
-### Setup on Linux {#setup-on-linux}
+### Setup on RHEL {#setup-on-linux}
 
 #### Configuration Database
 

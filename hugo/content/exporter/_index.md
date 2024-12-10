@@ -8,43 +8,44 @@ The Linux instructions below use RHEL, but any Linux-based system should work. [
 
 
 - [Installation](#installation)
-   - [RPM installs](#rpm-installs)
-   - [Non-RPMs installs](#non-rpm-installs)
+   - [Package Install](#package-install)
+   - [Non-Package Install](#non-package-install)
 - [Upgrading](#upgrading)
 - [Setup](#setup)
-   - [RHEL or CentOS](#setup-on-rhel-or-centos)
+   - [RHEL](#setup-on-rhel)
 - [Metrics Collected](#metrics-collected)
    - [PostgreSQL](#postgresql)
    - [System](#system)
 - [Legacy postgres_exporter Setup](#postgres-exporter)
 
 
-IMPORTANT NOTE: As of pgMonitor version 5.0.0, postgres_exporter has been deprecated in favor of sql_exporter. Support for postgres_exporter is still possible with 5.0, but only for bug fixes while custom queries are still supported. No new features will be added using postgres_exporter and it will be fully obsoleted in a future version of pgMonitor. We recommend migrating to sql_exporter as soon as possible.
+IMPORTANT NOTE: As of pgMonitor version 5.0.0, postgres_exporter has been deprecated in favor of sql_exporter. Support for postgres_exporter is still possible with 5.0, but only for bug fixes while custom queries are still supported upstream. No new features will be added using postgres_exporter and it will be fully obsoleted in a future version of pgMonitor. We recommend migrating to sql_exporter as soon as possible.
 
 ## Installation {#installation}
 
 
-### RPM installs {#rpm-installs}
+### Package Install {#package-install}
 
 The following RPM packages are available to [Crunchy Data](https://www.crunchydata.com) customers through the [Crunchy Customer Portal](https://access.crunchydata.com/). To access the pgMonitor packages, please follow the same instructions for setting up access to the Crunchy Postgres packages.
 
 After installing via these packages, continue reading at the [Setup](#setup) section.
 
-##### Available Packages
+#### Available Packages
 
-| Package Name                   | Description                                                               |
-|--------------------------------|---------------------------------------------------------------------------|
-| blackbox-exporter              | Package for the blackbox_exporter                                         |
-| node-exporter                  | Base package for node_exporter                                            |
-| pg-bloat-check                 | Package for pg_bloat_check script                                         |
-| pgmonitor-node_exporter-extras | Crunchy-optimized configurations for node_exporter                        |
-| pgmonitor-pg##-extension       | Crunchy monitoring PostgreSQL extension used by sql_exporter              |
-| sql-exporter                   | Base package for sql_exporter                                             |
-| sql-exporter-extras            | Crunchy-optimized configurations for sql_exporter                         |
+| Package Name                          | Description                                                               |
+|---------------------------------------|---------------------------------------------------------------------------|
+| blackbox-exporter                     | Package for the blackbox_exporter                                         |
+| pgmonitor-blackbox-exporter-extras    | Crunchy-optimized configurations for blackbox_exporter                    |
+| node-exporter                         | Base package for node_exporter                                            |
+| pg-bloat-check                        | Package for pg_bloat_check script                                         |
+| pgmonitor-node_exporter-extras        | Crunchy-optimized configurations for node_exporter                        |
+| pgmonitor-pg##-extension              | Crunchy monitoring PostgreSQL extension used by sql_exporter              |
+| sql-exporter                          | Base package for sql_exporter                                             |
+| pgmonitor-sql-exporter-extras         | Crunchy-optimized configurations for sql_exporter                         |
 
 
 
-### Non-RPM installs {#non-rpm-installs}
+### Non-Package Install {#non-package-install}
 
 For non-package installations on Linux, applications can be downloaded from their respective repositories:
 
@@ -127,7 +128,7 @@ Note that blackbox_exporter is typically installed on the Prometheus node and do
 
 ## Setup {#setup}
 
-### Setup on RHEL or CentOS {#setup-on-rhel-or-centos}
+### Setup on RHEL {#setup-on-rhel}
 
 #### Service Configuration
 
@@ -332,7 +333,7 @@ PostgreSQL metrics are collected by [sql_exporter](https://github.com/burningalc
 
 #### Common Metrics
 
-Metrics contained in the `queries_global.yml` file. These metrics are common to all versions of PostgreSQL and are recommended as a minimum default for the global exporter.
+These metrics are common to all versions of PostgreSQL and are recommended as a minimum default for the global exporter exporter connection.
 
  * *ccp_archive_command_status_seconds_since_last_fail* - Seconds since the last `archive_command` run failed. If zero, the `archive_command` is succeeding without error.
 
@@ -429,7 +430,7 @@ The following `ccp_stat_database_*` metrics are statistics collected from the [p
 
 #### PostgreSQL Version Specific Metrics
 
-The following metrics either require special considerations when monitoring specific versions of PostgreSQL, or are only available for specific versions. These metrics are found in the `queries_pg##.yml` files, where ## is the major version of PG. Unless otherwise noted, the below metrics are available for all versions of PG. These metrics are recommend as a minimum default for the global exporter.
+The following metrics either require special considerations when monitoring specific versions of PostgreSQL, or are only available for specific versions.  Unless otherwise noted, the below metrics are available for all versions of PG. These metrics are recommend as a minimum default for the global exporter.
 
  * *ccp_data_checksum_failure_count* - PostgreSQL 12 and later only. Total number of checksum failures on this database.
 
@@ -437,7 +438,7 @@ The following metrics either require special considerations when monitoring spec
 
 #### Backup Metrics
 
-Backup monitoring only covers pgBackRest at this time. These metrics are found in the `queries_backrest.yml` file. These metrics only need to be collected once per database instance so should be collected by the global postgres_exporter.
+Backup monitoring only covers pgBackRest at this time. These metrics only need to be collected once per PostgreSQL instance so should be collected by the global exporter connection.
 
  * *ccp_backrest_last_full_backup_time_since_completion_seconds* - Time since completion of last pgBackRest FULL backup
 
@@ -455,7 +456,7 @@ Backup monitoring only covers pgBackRest at this time. These metrics are found i
 
 #### Per-Database Metrics
 
-These are metrics that are only available on a per-database level. These metrics are found in the `queries_per_db.yml` file. These metrics are optional and recommended for the non-global, per-db postgres_exporter. They can be included in the global exporter as well if the global database needs per-database metrics monitored. Please note that depending on the number of objects in your database, collecting these metrics can greatly increase the storage requirements for Prometheus since all of these metrics are being collected for each individual object.
+These are metrics that are only available on a per-database level. These metrics are optional and recommended for the non-global, per-db exporter connection. They can be included in the global exporter as well if the global database needs per-database metrics monitored. Please note that depending on the number of objects in your database, collecting these metrics can greatly increase the storage requirements for Prometheus since all of these metrics are being collected for each individual object.
 
  * *ccp_table_size_size_bytes* - Table size inclusive of all indexes in that table
 
@@ -477,7 +478,7 @@ The following `ccp_stat_user_tables_*` metrics are statistics collected from the
 
 #### Bloat Metrics
 
-Bloat metrics are only available if the `pg_bloat_check` script has been setup to run. See instructions above. These metrics are found in the `queries_bloat.yml` file. These metrics are per-database so, should be used by the per-db postgres_exporter.
+Bloat metrics are only available if the `pg_bloat_check` script has been setup to run. See instructions above. These metrics are per-database so, should be used by the per-db exporter connection.
 
  * *ccp_bloat_check_size_bytes* - Size of object in bytes
 
@@ -533,7 +534,7 @@ There are many other suggestions, projects, and exporters out there that can pro
 
 ## Legacy postgres_exporter Setup {#postgres-exporter}
 
-If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. It is HIGHLY recommended to switch to using sql_exporter as soon as possible. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
+If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required and it will be deprecated in the near future. It is HIGHLY recommended to switch to using sql_exporter as soon as possible. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
 
 Most of the installation steps are the same as above with the below differences for the relevant sections.
 
