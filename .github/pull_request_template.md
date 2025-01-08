@@ -41,10 +41,9 @@ If you have an **external** dependency (packages, portal updates, etc), add the 
 Have you tested your changes against:
 - [ ] RedHat/CentOS
 - [ ] Ubuntu
-- [ ] SLES
 - [ ] Not applicable
 
-If your code touches postgres_exporter, have you:
+If your code touches sql_exporter, have you:
 - [ ] Tested against all versions of PostgreSQL affected
 - [ ] Ensure that exporter runs with no scrape errors
 - [ ] Not applicable
