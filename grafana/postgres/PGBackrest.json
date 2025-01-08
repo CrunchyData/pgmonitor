@@ -83,7 +83,7 @@
             "uid": "${ccp_datasource}"
           },
           "exemplar": true,
-          "expr": "time()- ccp_backrest_oldest_full_backup_time_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+          "expr": "max(time()- ccp_backrest_oldest_full_backup_time_seconds{stanza=\"[[backrest_stanza]]\", repo=\"[[backrest_repo]]\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"

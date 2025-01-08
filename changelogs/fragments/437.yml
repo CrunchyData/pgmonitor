@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - grafana - Fix pgBackRest recovery window panel showing multiple values after a PostgreSQL switchover
