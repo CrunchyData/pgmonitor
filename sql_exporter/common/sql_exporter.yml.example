@@ -12,6 +12,8 @@ global:
   max_idle_connections: 3
   # Maximum amount of time a connection may be reused to any one target. Infinite by default.
   max_connection_lifetime: 10m
+  # If scrape errors are corrected, how long until the scrape error metric is dropped from the metric output
+  scrape_error_drop_interval: 5m
 
 # The target(s) to monitor and the list of collectors to execute
 #
