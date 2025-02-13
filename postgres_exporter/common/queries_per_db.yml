@@ -74,7 +74,7 @@ ccp_table_size:
     - relname:
         usage: "LABEL"
         description: "Table name"
-    - size_bytes:
+    - bytes:
         usage: "GAUGE"
         description: "Table size including indexes"
 
