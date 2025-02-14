@@ -43,30 +43,30 @@ metrics:
     query_ref: ccp_pgbouncer_pools
 
 
-  - metric_name: ccp_pgbouncer_database_db_conn_perc_used
+  - metric_name: ccp_pgbouncer_databases_db_conn_perc_used
     type: gauge
     help: "Percentage of available pooler connections for this database that are in use"
     values: [db_conn_perc_used]
     key_labels:
       - pgbouncer_target_host
       - pool_db
-    query_ref: ccp_pgbouncer_database
-  - metric_name: ccp_pgbouncer_database_paused
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_paused
     type: gauge
     help: "Pooler connections to this database are currently paused"
     values: [paused]
     key_labels:
       - pgbouncer_target_host
       - pool_db
-    query_ref: ccp_pgbouncer_database
-  - metric_name: ccp_pgbouncer_database_disabled
+    query_ref: ccp_pgbouncer_databases
+  - metric_name: ccp_pgbouncer_databases_disabled
     type: gauge
     help: "Pooler connections to this database are currently disabled"
     values: [disabled]
     key_labels:
       - pgbouncer_target_host
       - pool_db
-    query_ref: ccp_pgbouncer_database
+    query_ref: ccp_pgbouncer_databases
 
 
   - metric_name: ccp_pgbouncer_clients_client_state_count
@@ -91,19 +91,19 @@ metrics:
     query_ref: ccp_pgbouncer_servers
 
 
-  - metric_name: ccp_pgbouncer_list_item_count
+  - metric_name: ccp_pgbouncer_lists_item_count
     type: gauge
     help: "Count of items registered with pgBouncer"
     values: [item_count]
     key_labels:
       - pgbouncer_target_host
       - item
-    query_ref: ccp_pgbouncer_list
+    query_ref: ccp_pgbouncer_lists
 
 
 ########## QUERIES ##########
 queries:
-  - query_name: ccp_pgbouncer_database
+  - query_name: ccp_pgbouncer_databases
     query: |
       SELECT pgbouncer_target_host
         ,  name AS pool_db
@@ -149,10 +149,10 @@ queries:
       GROUP BY 1,2,3
 
 
-  - query_name: ccp_pgbouncer_list
+  - query_name: ccp_pgbouncer_lists
     query: |
       SELECT pgbouncer_target_host
         ,  list AS item
         , items AS item_count
       FROM pgbouncer_lists
-      WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')"
+      WHERE list IN ('databases', 'pools', 'free_clients', 'free_servers', 'used_servers')

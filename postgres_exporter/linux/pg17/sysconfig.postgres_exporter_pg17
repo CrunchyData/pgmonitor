@@ -14,7 +14,7 @@
 PGBACKREST_INFO_THROTTLE_MINUTES=10
 PG_STAT_STATEMENTS_LIMIT=20
 PG_STAT_STATEMENTS_THROTTLE_MINUTES=-1
-OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/17/queries.yml --disable-default-metrics --disable-settings-metrics"
+OPT="--web.listen-address=0.0.0.0:9187 --extend.query-path=/etc/postgres_exporter/17/queries.yml --disable-default-metrics --disable-settings-metrics --no-collector.database --no-collector.database_wraparound --no-collector.locks --no-collector.long_running_transactions --no-collector.postmaster --no-collector.process_idle --no-collector.replication --no-collector.replication_slot --no-collector.stat_activity_autovacuum --no-collector.stat_bgwriter --no-collector.stat_database --no-collector.stat_statements --no-collector.stat_user_tables --no-collector.stat_wal_receiver --no-collector.statio_user_indexes --no-collector.statio_user_tables --no-collector.wal --no-collector.xlog_location"
 DATA_SOURCE_NAME="postgresql:///postgres?host=/var/run/postgresql/&user=ccp_monitoring&sslmode=disable"
 
 # For global / cluster metric

@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - postgres_exporter - Disable all collectors included with postgres_exporter by default in example configuration. The other options to disable default metrics are not applied to the new collections.
+  - sql_exporter - Removed extraneous double quote at the end of the pgbouncer fdw collector file
+  - sql_exporter - Fix the names of ccp_pgbouncer_database_db_conn_perc_used, ccp_pgbouncer_database_paused, ccp_pgbouncer_database_disabled, and ccp_pgbouncer_list_item_count to be consistent with the old metric names from postgres exporter respectively: ccp_pgbouncer_databases_db_conn_perc_used, . These new names are the ones expected in the Grafana dashboard so this changes fixes that to work properly again.
