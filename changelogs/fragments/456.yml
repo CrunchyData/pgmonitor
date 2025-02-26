@@ -1,4 +1,13 @@
 ---
+major_changes:
+  - sql_exporter - Updated metric queries for pgmonitor-extension 2.1.0
+minor_changes:
+  - sql_exporter - Added new metrics to monitor pgmonitor-extension version.
+      - `ccp_pgmonitor_extension_global_version` - shows the currently installed version of the extension on the global database as an integer
+      - `ccp_pgmonitor_extension_per_db_version` - shows the currently installed version of the extension on each monitored user database as an integer
+      - `ccp_pgmonitor_extension_global_min_version_installed` - shows whether the currently installed version of the extension is the minimum required for this version of pgMonitor on the global database (0 true, 1 false)
+      - `ccp_pgmonitor_extension_per_db_min_version_installed` - shows whether the currently installed version of the extension is the minimum required for this version of pgMonitor on each monitored user database (0 true, 1 false)
+  - prometheus - Added new alerts to monitor the new metrics for the minimum required version of the pgmonitor extension
 bugfixes:
   - postgres_exporter - Disable all collectors included with postgres_exporter by default in example configuration. The other options to disable default metrics are not applied to the new collections.
   - sql_exporter - Removed extraneous double quote at the end of the pgbouncer fdw collector file

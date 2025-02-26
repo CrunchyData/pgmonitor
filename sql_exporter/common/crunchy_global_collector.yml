@@ -368,6 +368,18 @@ metrics:
     values: [max]
     query_ref: ccp_autovacuum_workers
 
+  - metric_name: ccp_pgmonitor_extension_global_version
+    type: gauge
+    help: "The current version of the pgmonitor extension installed as a 6 digit integer (######)."
+    values: [version]
+    query_ref: ccp_pgmonitor_extension_global
+
+  - metric_name: ccp_pgmonitor_extension_global_min_version_installed
+    type: gauge
+    help: "Built in check to ensure the minimum required version of pgmonitor-extension is installed. 0 for true, 1 for false"
+    values: [min_version_installed]
+    query_ref: ccp_pgmonitor_extension_global
+
 #  - metric_name:
 #    type: gauge
 #    help:
@@ -384,6 +396,13 @@ queries:
       , archived_count
       , failed_count
       FROM pgmonitor_ext.ccp_archive_command_status
+
+
+  - query_name: ccp_autovacuum_workers
+    query: |
+      SELECT count(*) AS count, current_setting('autovacuum_max_workers') AS max
+      FROM pg_catalog.pg_stat_activity
+      WHERE backend_type = 'autovacuum worker';
 
 
   - query_name: ccp_connection_stats
@@ -428,6 +447,17 @@ queries:
   - query_name: ccp_pg_settings_checksum
     query: |
       SELECT pgmonitor_ext.pg_settings_checksum() AS status
+
+# The version case here is to check for the minimum version of the pgmonitor-extension required by this version of pgMonitor
+# As of Feb 2025, this is 2.1.0 or 20100. 0 for true, 1 for false
+  - query_name: ccp_pgmonitor_extension_global
+    query: |
+      SELECT split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0') AS version
+        , CASE WHEN (split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0'))::int >= 20100 THEN
+            0 ELSE 1
+          END AS min_version_installed
+      FROM pg_catalog.pg_extension
+      WHERE extname = 'pgmonitor';
 
 
   - query_name: ccp_postgresql_version
@@ -537,10 +567,3 @@ queries:
       SELECT last_5_min_size_bytes
         , total_size_bytes
       FROM pgmonitor_ext.ccp_wal_activity
-
-
-  - query_name: ccp_autovacuum_workers
-    query: |
-      SELECT count(*) AS count, current_setting('autovacuum_max_workers') AS max
-      FROM pg_catalog.pg_stat_activity
-      WHERE backend_type = 'autovacuum worker';
