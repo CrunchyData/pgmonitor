@@ -154,14 +154,45 @@ metrics:
     help: "Active state of slot. 1 = true. 0 = false."
     values: [active]
     key_labels:
+      - database
       - slot_name
+      - slot_type
     query_ref: ccp_replication_slots
   - metric_name: ccp_replication_slots_retained_bytes
     type: gauge
     help: "The amount of WAL (in bytes) being retained for this slot"
     values: [retained_bytes]
     key_labels:
+      - database
       - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_conflicting
+    type: gauge
+    help: "True if this logical slot conflicted with recovery (and so is now invalidated). When this column is true, check invalidation_reason column for the conflict reason. Always NULL for physical slots."
+    values: [conflicting]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_failover
+    type: gauge
+    help: "True if this is a logical slot enabled to be synced to the standbys so that logical replication can be resumed from the new primary after failover. Always false for physical slots."
+    values: [failover]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_synced
+    type: gauge
+    help: "True if this is a logical slot that was synced from a primary server. On a hot standby, the slots with the synced column marked as true can neither be used for logical decoding nor dropped manually. The value of this column has no meaning on the primary server; the column value on the primary is default false for all slots but may (if leftover from a promoted standby) also be true."
+    values: [synced]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
     query_ref: ccp_replication_slots
 
 
@@ -499,6 +530,11 @@ queries:
       SELECT slot_name
         , active
         , retained_bytes
+        , database
+        , slot_type
+        , conflicting
+        , failover
+        , synced
       FROM pgmonitor_ext.ccp_replication_slots
 
 
