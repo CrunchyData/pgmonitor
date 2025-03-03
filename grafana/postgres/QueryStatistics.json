@@ -63,7 +63,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "max"
           ],
           "fields": "",
           "values": false
@@ -73,21 +73,24 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
+          "editorMode": "code",
+          "exemplar": false,
           "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
+          "range": false,
           "refId": "A"
         }
       ],
-      "title": "Total Queries Executed",
+      "title": "Total Queries Executed (Lifetime)",
       "type": "stat"
     },
     {
@@ -125,7 +128,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "max"
           ],
           "fields": "",
           "values": false
@@ -135,13 +138,14 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${ccp_datasource}"
           },
+          "editorMode": "code",
           "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
           "format": "time_series",
           "instant": true,
@@ -150,70 +154,7 @@
           "refId": "A"
         }
       ],
-      "title": "Total Query Runtime ",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${ccp_datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 11,
-        "y": 0
-      },
-      "id": 10,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {},
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${ccp_datasource}"
-          },
-          "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Query Mean Runtime",
+      "title": "Total Query Runtime (Lifetime)",
       "type": "stat"
     },
     {
@@ -240,7 +181,7 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 17,
+        "x": 11,
         "y": 0
       },
       "id": 11,
@@ -251,7 +192,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "max"
           ],
           "fields": "",
           "values": false
@@ -261,7 +202,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
@@ -276,7 +217,265 @@
           "refId": "A"
         }
       ],
-      "title": "Total Rows Retrieved or Affected",
+      "title": "Total Rows Retrieved or Affected (Lifetime)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 17,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.14",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "expr": "avg(ccp_pg_stat_statements_total_mean_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Query Mean Runtime (Lifetime)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 0,
+        "y": 3
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "diff"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.14",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(ccp_pg_stat_statements_total_calls_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Queries Executed (Time Range Est.)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 5,
+        "y": 3
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "diff"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.14",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pg_stat_statements_total_exec_time_ms{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Query Runtime (Time Range Est.)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ccp_datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 11,
+        "y": 3
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "diff"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.14",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${ccp_datasource}"
+          },
+          "editorMode": "code",
+          "expr": "sum(ccp_pg_stat_statements_total_row_count{cluster_name=\"[[pgcluster]]\", job=\"[[pgnodes]]\", dbname=~\"[[pgdatabase]]\", role=~\"[[role]]\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Rows Retrieved or Affected (Time Range Est.)",
       "type": "stat"
     },
     {
@@ -343,7 +542,7 @@
         "h": 7,
         "w": 23,
         "x": 0,
-        "y": 3
+        "y": 6
       },
       "id": 2,
       "options": {
@@ -446,7 +645,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 10
+        "y": 13
       },
       "id": 4,
       "options": {
@@ -467,7 +666,7 @@
           }
         ]
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
@@ -482,7 +681,7 @@
           "refId": "A"
         }
       ],
-      "title": "Query Mean Runtime (Top N)",
+      "title": "Query Mean Runtime (Top N Lifetime)",
       "transformations": [
         {
           "id": "organize",
@@ -586,7 +785,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 18
+        "y": 21
       },
       "id": 6,
       "options": {
@@ -607,7 +806,7 @@
           }
         ]
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
@@ -622,7 +821,7 @@
           "refId": "A"
         }
       ],
-      "title": "Query Max Runtime (Top N)",
+      "title": "Query Max Runtime (Top N Lifetime)",
       "transformations": [
         {
           "id": "organize",
@@ -726,7 +925,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 26
+        "y": 29
       },
       "id": 5,
       "options": {
@@ -747,7 +946,7 @@
           }
         ]
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
@@ -762,7 +961,7 @@
           "refId": "A"
         }
       ],
-      "title": "Query Total Runtime (Top N)",
+      "title": "Query Total Runtime (Top N Lifetime)",
       "transformations": [
         {
           "id": "organize",
@@ -849,7 +1048,7 @@
         "h": 8,
         "w": 23,
         "x": 0,
-        "y": 34
+        "y": 37
       },
       "id": 12,
       "options": {
@@ -870,7 +1069,7 @@
           }
         ]
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.14",
       "targets": [
         {
           "datasource": {
@@ -885,7 +1084,7 @@
           "refId": "A"
         }
       ],
-      "title": "Query Total WAL Genterated (Bytes)",
+      "title": "Query Total WAL Genterated (Bytes Lifetime)",
       "transformations": [
         {
           "id": "organize",
@@ -944,8 +1143,8 @@
       {
         "current": {
           "selected": false,
-          "text": "iota",
-          "value": "iota"
+          "text": "juliet",
+          "value": "juliet"
         },
         "datasource": {
           "type": "prometheus",
@@ -974,8 +1173,8 @@
       {
         "current": {
           "selected": false,
-          "text": "iota_ip16_pg1",
-          "value": "iota_ip16_pg1"
+          "text": "juliet_ip16_pg1",
+          "value": "juliet_ip16_pg1"
         },
         "datasource": {
           "type": "prometheus",
@@ -1091,6 +1290,6 @@
   "timezone": "",
   "title": "Query Statistics (pg_stat_statements)",
   "uid": "ZKoTOHDGk",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
