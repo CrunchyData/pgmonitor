@@ -21,6 +21,26 @@ groups:
 
 
 ########## PGMONITOR EXTENSION RULES ##########
+  - alert: PGMonitorExtensionGlobalMinimumVersion
+    expr:  ccp_pgmonitor_extension_global_min_version_installed > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'The version of the pgmonitor-extension on {{ $labels.job }} (instance: {{ $labels.instance }}) for the global database is not the minimum required for the version of pgMonitor currently running. Please check the requirements for pgMonitor.'
+
+  - alert: PGMonitorExtensionPerDBMinimumVersion
+    expr: ccp_pgmonitor_extension_per_db_min_version_installed > 0
+    for: 60s
+    labels:
+      service: postgresql
+      severity: critical
+      severity_num: 300
+    annotations:
+      summary: 'The version of the pgmonitor-extension on {{ $labels.job }} (instance: {{ $labels.instance }}) for the database "{{ $labels.target }}" is not the minimum required for the version of pgMonitor currently running. Please check the requirements for pgMonitor. Note this alert may be duplicated with alert PGMonitorExtensionGlobalMinimumVersion if you also monitor per database metrics on the global database.'
+
   - alert: PGMonitorMatViewRefreshTime
     expr: ccp_metric_matview_refresh_longest_runtime_seconds > 65
     for: 60s

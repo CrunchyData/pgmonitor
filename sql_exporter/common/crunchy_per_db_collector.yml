@@ -194,6 +194,20 @@ metrics:
      - dbname
    query_ref: ccp_metric_table_refresh_longest_runtime
 
+
+ - metric_name: ccp_pgmonitor_extension_per_db_version
+   type: gauge
+   help: "The current version of the pgmonitor extension installed as a 6 digit integer (######)."
+   values: [version]
+   query_ref: ccp_pgmonitor_extension_per_db
+
+ - metric_name: ccp_pgmonitor_extension_per_db_min_version_installed
+   type: gauge
+   help: "Built in check to ensure the minimum required version of pgmonitor-extension is installed. 0 for true, 1 for false"
+   values: [min_version_installed]
+   query_ref: ccp_pgmonitor_extension_per_db
+
+
 queries:
   - query_name: ccp_table_size
     query: |
@@ -229,9 +243,8 @@ queries:
     query: |
       SELECT current_database() AS dbname
         , count(*) AS count
-      FROM pgmonitor_ext.metric_views
+      FROM pgmonitor_ext.metric_matviews
       WHERE active
-      AND materialized_view
       AND ((last_run < (current_timestamp - run_interval)) OR last_run is NULL)
 
   - query_name: ccp_metric_table_refresh_last_run_fail
@@ -246,10 +259,21 @@ queries:
     query: |
       SELECT current_database() AS dbname
         , extract('epoch' from max(last_run_time)) AS seconds
-      FROM pgmonitor_ext.metric_views
+      FROM pgmonitor_ext.metric_matviews
 
   - query_name: ccp_metric_table_refresh_longest_runtime
     query: |
       SELECT current_database() AS dbname
         , extract('epoch' from max(last_run_time)) AS seconds
       FROM pgmonitor_ext.metric_tables
+
+# The version case here is to check for the minimum version of the pgmonitor-extension required by this version of pgMonitor
+# As of Feb 2025, this is 2.1.0 or 20100. 0 for true, 1 for false
+  - query_name: ccp_pgmonitor_extension_per_db
+    query: |
+      SELECT split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0') AS version
+        , CASE WHEN (split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0'))::int >= 20100 THEN
+            0 ELSE 1
+          END AS min_version_installed
+      FROM pg_catalog.pg_extension
+      WHERE extname = 'pgmonitor';

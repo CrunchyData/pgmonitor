@@ -154,14 +154,45 @@ metrics:
     help: "Active state of slot. 1 = true. 0 = false."
     values: [active]
     key_labels:
+      - database
       - slot_name
+      - slot_type
     query_ref: ccp_replication_slots
   - metric_name: ccp_replication_slots_retained_bytes
     type: gauge
     help: "The amount of WAL (in bytes) being retained for this slot"
     values: [retained_bytes]
     key_labels:
+      - database
       - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_conflicting
+    type: gauge
+    help: "True if this logical slot conflicted with recovery (and so is now invalidated). When this column is true, check invalidation_reason column for the conflict reason. Always NULL for physical slots."
+    values: [conflicting]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_failover
+    type: gauge
+    help: "True if this is a logical slot enabled to be synced to the standbys so that logical replication can be resumed from the new primary after failover. Always false for physical slots."
+    values: [failover]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
+    query_ref: ccp_replication_slots
+  - metric_name: ccp_replication_slots_synced
+    type: gauge
+    help: "True if this is a logical slot that was synced from a primary server. On a hot standby, the slots with the synced column marked as true can neither be used for logical decoding nor dropped manually. The value of this column has no meaning on the primary server; the column value on the primary is default false for all slots but may (if leftover from a promoted standby) also be true."
+    values: [synced]
+    key_labels:
+      - database
+      - slot_name
+      - slot_type
     query_ref: ccp_replication_slots
 
 
@@ -368,6 +399,18 @@ metrics:
     values: [max]
     query_ref: ccp_autovacuum_workers
 
+  - metric_name: ccp_pgmonitor_extension_global_version
+    type: gauge
+    help: "The current version of the pgmonitor extension installed as a 6 digit integer (######)."
+    values: [version]
+    query_ref: ccp_pgmonitor_extension_global
+
+  - metric_name: ccp_pgmonitor_extension_global_min_version_installed
+    type: gauge
+    help: "Built in check to ensure the minimum required version of pgmonitor-extension is installed. 0 for true, 1 for false"
+    values: [min_version_installed]
+    query_ref: ccp_pgmonitor_extension_global
+
 #  - metric_name:
 #    type: gauge
 #    help:
@@ -384,6 +427,13 @@ queries:
       , archived_count
       , failed_count
       FROM pgmonitor_ext.ccp_archive_command_status
+
+
+  - query_name: ccp_autovacuum_workers
+    query: |
+      SELECT count(*) AS count, current_setting('autovacuum_max_workers') AS max
+      FROM pg_catalog.pg_stat_activity
+      WHERE backend_type = 'autovacuum worker';
 
 
   - query_name: ccp_connection_stats
@@ -429,6 +479,17 @@ queries:
     query: |
       SELECT pgmonitor_ext.pg_settings_checksum() AS status
 
+# The version case here is to check for the minimum version of the pgmonitor-extension required by this version of pgMonitor
+# As of Feb 2025, this is 2.1.0 or 20100. 0 for true, 1 for false
+  - query_name: ccp_pgmonitor_extension_global
+    query: |
+      SELECT split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0') AS version
+        , CASE WHEN (split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0'))::int >= 20100 THEN
+            0 ELSE 1
+          END AS min_version_installed
+      FROM pg_catalog.pg_extension
+      WHERE extname = 'pgmonitor';
+
 
   - query_name: ccp_postgresql_version
     query: |
@@ -469,6 +530,11 @@ queries:
       SELECT slot_name
         , active
         , retained_bytes
+        , database
+        , slot_type
+        , conflicting
+        , failover
+        , synced
       FROM pgmonitor_ext.ccp_replication_slots
 
 
@@ -537,10 +603,3 @@ queries:
       SELECT last_5_min_size_bytes
         , total_size_bytes
       FROM pgmonitor_ext.ccp_wal_activity
-
-
-  - query_name: ccp_autovacuum_workers
-    query: |
-      SELECT count(*) AS count, current_setting('autovacuum_max_workers') AS max
-      FROM pg_catalog.pg_stat_activity
-      WHERE backend_type = 'autovacuum worker';
