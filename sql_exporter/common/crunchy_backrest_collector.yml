@@ -21,16 +21,6 @@ metrics:
       - repo
       - backup_type
     query_ref: ccp_backrest_last_info
-  - metric_name: ccp_backrest_last_info_repo_total_size_bytes
-    type: gauge
-    help: "Total size of this backup in the pgbackrest repository, including all required previous backups and WAL"
-    values: [repo_total_size_bytes]
-    key_labels:
-      - config_file
-      - stanza
-      - repo
-      - backup_type
-    query_ref: ccp_backrest_last_info
   - metric_name: ccp_backrest_last_info_backup_runtime_seconds
     type: gauge
     help: "Total runtime in seconds of this backup"
@@ -107,7 +97,6 @@ queries:
         , repo
         , backup_type
         , repo_backup_size_bytes
-        , repo_total_size_bytes
         , backup_runtime_seconds
         , backup_error
       FROM pgmonitor_ext.ccp_backrest_last_info
