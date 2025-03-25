@@ -1,3 +1,0 @@
----
-minor_changes:
-  - sql_exporter - Add scrape_error_drop_interval setting to the configuration example

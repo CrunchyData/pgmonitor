@@ -35,13 +35,13 @@ After installing via these packages, continue reading at the [Setup](#setup) sec
 | Package Name                          | Description                                                               |
 |---------------------------------------|---------------------------------------------------------------------------|
 | blackbox-exporter                     | Package for the blackbox_exporter                                         |
-| pgmonitor-blackbox-exporter-extras    | Crunchy-optimized configurations for blackbox_exporter                    |
 | node-exporter                         | Base package for node_exporter                                            |
 | pg-bloat-check                        | Package for pg_bloat_check script                                         |
+| pgmonitor-blackbox-exporter-extras    | Crunchy-optimized configurations for blackbox_exporter                    |
 | pgmonitor-node_exporter-extras        | Crunchy-optimized configurations for node_exporter                        |
 | pgmonitor-pg##-extension              | Crunchy monitoring PostgreSQL extension used by sql_exporter              |
-| sql-exporter                          | Base package for sql_exporter                                             |
 | pgmonitor-sql-exporter-extras         | Crunchy-optimized configurations for sql_exporter                         |
+| sql-exporter                          | Base package for sql_exporter                                             |
 
 
 
@@ -94,7 +94,7 @@ The following pgMonitor configuration files should be placed according to the fo
 
 sql_exporter takes advantage of the Crunchy Data pgmonitor-extension (https://github.com/CrunchyData/pgmonitor-extension) to provide a much easier configuration and setup. The extension takes care of creating all the necessary objects inside the database.
 
-The minimum required version of pgmonitor-extension is currently 1.0.0.
+The minimum required version of pgmonitor-extension is currently 2.1.0.
 
 The following pgMonitor configuration files should be placed according to the following mapping:
 
@@ -158,7 +158,7 @@ shared_preload_libraries = 'pg_stat_statements,auto_explain,pgmonitor_bgw'
 
 You will need to restart your PostgreSQL instance for the change to take effect. pgMonitor has optional metrics that can be collected via pg_stat_statements. auto_explain does not do anything to your database without further configuration. But even if neither of these extensions are initially used, they are very good to have enabled here by default for when they may be needed in the future.
 
-The pgmonitor-extension uses its own background worker to refresh metric data. It also requires that you set which databases will have metrics monitoring enabled. You do this with the `pgmonitor_bgw.dbname` GUC in your postgresql.conf. At a minimum the "global" database needs to be mentioned, typically `postgres`, but if per-database metrics for other databases are also desired (tables statistics, bloat, etc), they must be listed here in CSV format. This value can be changed at any time with just a reload of PostgreSQL.
+The pgmonitor-extension uses its own background worker to refresh certain metric data. It also requires that you set which databases will have metrics monitoring enabled. You do this with the `pgmonitor_bgw.dbname` GUC in your postgresql.conf. At a minimum the "global" database needs to be mentioned, typically `postgres`, but if per-database metrics for other databases are also desired (tables statistics, bloat, etc), they must be listed here in CSV format. This value can be changed at any time with just a reload of PostgreSQL.
 ```
 pgmonitor_bgw.dbname = 'postgres,alphadb,betadb,etc'
 ```
@@ -179,9 +179,9 @@ CREATE EXTENSION pg_stat_statements;
 | crunchy_bloat_check_collector.yml              | Collection file with pg_bloat_check queries and metrics |
 | crunchy_global_collector.yml                   | Collection file with global level queries and metrics |
 | crunchy_per_db_collector.yml                   | Collection file with general per-database level queries and metrics |
-| crunchy_pgbouncer_collector_121.yml            | Collection file with pgBouncer queries and metrics for a minimum version of 1.21 |
 | crunchy_pg_stat_statements_collector.yml       | Collection file with pg_stat_statements queries and metrics
 | crunchy_pg_stat_statements_reset_collector.yml | Collection file with options to allow resetting of pg_stat_statements metrics |
+| crunchy_pgbouncer_collector_121.yml            | Collection file with pgBouncer queries and metrics for a minimum version of 1.21 |
 
 
 Run the `setup_db.sql` file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the `setup_db.sql` file is a convenience file and the steps contained within it can be done manually and customized as needed. Note that a default password is not set for the `ccp_monitoring` database role.
@@ -194,7 +194,7 @@ For replica servers, the setup is the same except that the setup_db.sql file doe
 
 ##### Enabling/Disabling Extension Metrics
 
-As mentioned above, metrics that sql_exporter actively tries to collect are maintained by the collection files that are added to the configuration. However the pgmonitor-extension also has some settings to enable/disable the refresh of the materialized views that it maintains. Most are enabled by default, but it's good to review the `active` column in both the `metric_views` and `metric_tables` configuration tables. For example, in `metric_tables`, the pgBackRest data is not enabled by default since not everyone will have that backup solution in place.
+As mentioned above, metrics that sql_exporter actively tries to collect are maintained by the collection files that are added to the configuration. However the pgmonitor-extension also has some settings to enable/disable the refresh of the materialized views that it maintains. Not all are enabled by default, so it is good to review the `active` column in both the `metric_matviews` and `metric_tables` configuration tables. For example, in `metric_tables`, the pgBackRest data is not enabled by default since not everyone will have that backup solution in place.
 ```
 postgres=# SELECT * FROM pgmonitor_ext.metric_tables ;
 -[ RECORD 1 ]-----+---------------------------------------
@@ -282,7 +282,9 @@ sudo systemctl start crunchy-sql-exporter@sql_exporter
 sudo systemctl status crunchy-sql-exporter@sql_exporter
 ```
 
-To allow the possible use of multiple sql_exporters running on a single system, and to avoid maintaining many similar service files, a systemd template service file is used. The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's sysconfig file is named "sql_exporter".  If you need to run multiple sql_exporters on a single system, simply make a new copy of the sysconfig file and pass that to the service name.
+To allow the possible use of multiple sql_exporters running on a single system, and to avoid maintaining many similar service files, a systemd template service file is used. Note that is is NOT necessary to run multiple sql_exporters to monitoring multiple databases in a single instance of PostgreSQL. Nor is it even necessary for multiple exporters when monitoring multiple PostgreSQL instances. A single sql_exporter can connect to as many target PostgreSQL instances as you need, so in general multiple will not be needed.
+
+The name of the sysconfig EnvironmentFile to be used by the service is passed as the value after the "@" and before ".service" in the service name. The default exporter's sysconfig file is named "sql_exporter".  If you need to run multiple sql_exporters on a single system, simply make a new copy of the sysconfig file and pass that to the service name.
 
 ```bash
 sudo systemctl enable crunchy-sql-exporter@sql_exporter_cluster2
@@ -532,7 +534,7 @@ There are many other suggestions, projects, and exporters out there that can pro
 
 ## Legacy postgres_exporter Setup {#postgres-exporter}
 
-If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required and it will be deprecated in the near future. It is HIGHLY recommended to switch to using sql_exporter as soon as possible. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
+If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. You MUST migrate to sql_exporter ASAP since postgres_exporter has been deprecated and will be removed in the near future. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
 
 Most of the installation steps are the same as above with the below differences for the relevant sections.
 
