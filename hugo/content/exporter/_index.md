@@ -534,7 +534,7 @@ There are many other suggestions, projects, and exporters out there that can pro
 
 ## Legacy postgres_exporter Setup {#postgres-exporter}
 
-If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. You MUST migrate to sql_exporter ASAP since postgres_exporter has been deprecated and will be removed in the near future. Custom query support will be dropped from postgres_exporter at some point in the future and that will break pgMonitor since it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
+If you had been using pgMonitor prior to version 5.0.0, postgres_exporter was the method used to collect PostgreSQL metrics. This exporter can still be used with 5.0.0, but there are some additional steps required. You MUST migrate to sql_exporter ASAP as postgres_exporter has been deprecated and will be removed in the near future. Custom query support will be dropped upstream from postgres_exporter at some point in the future which will break pgMonitor as it relies solely on custom queries. No new features of pgMonitor are being developed around postgres_exporter.
 
 Most of the installation steps are the same as above with the below differences for the relevant sections.
 
