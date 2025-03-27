@@ -4,26 +4,41 @@ pgMonitor Release Notes
 
 .. contents:: Topics
 
-v4.12.0
-=======
+v5.2.0
+======
 
 Release Summary
 ---------------
 
-Crunchy Data is pleased to announce the availability of pgMonitor 4.12.0. This release primarily brings support for Grafana 10.4. See Changelog for additional information.
+Crunchy Data is pleased to announce the availability of pgMonitor 5.2.0. This release brings support for the latest pgmonitor extension version 2.1.0 and many bug fixes.
 
-Breaking Changes / Porting Guide
---------------------------------
+Major Changes
+-------------
 
-- grafana - Update the dashboards to support Grafana 10.4 so that we're on an officially supported version of Grafana. This does potentially break backward compatibility with Grafana 9.x, so an update to Grafana 10.4 will be required with this version of pgMonitor.
+- sql_exporter - Updated metric queries for pgmonitor-extension 2.1.0
+
+Minor Changes
+-------------
+
+- grafana - Improve Query Statistics dashboard to more accurately report lifetime vs time range statistics
+- grafana - Removed the `Last Backup Size (Total)` panel from the pgBackRest Grafana dashboard since it was backed by the removed metric.
+- postgres_exporter - Removed the metric `ccp_backrest_last_info_repo_total_size_bytes`.
+- prometheus - Added new alerts to monitor the new metrics for the minimum required version of the pgmonitor extension
+- sql_exporter - Add additional metrics for monitoring replication slot status. For PG16+ monitor for conflicts. For PG17+, monitor synced and failover status.
+- sql_exporter - Add scrape_error_drop_interval setting to the configuration example
+- sql_exporter - Added new metrics to monitor pgmonitor-extension version. - `ccp_pgmonitor_extension_global_version` - shows the currently installed version of the extension on the global database as an integer - `ccp_pgmonitor_extension_per_db_version` - shows the currently installed version of the extension on each monitored user database as an integer - `ccp_pgmonitor_extension_global_min_version_installed` - shows whether the currently installed version of the extension is the minimum required for this version of pgMonitor on the global database (0 true, 1 false) - `ccp_pgmonitor_extension_per_db_min_version_installed` - shows whether the currently installed version of the extension is the minimum required for this version of pgMonitor on each monitored user database (0 true, 1 false)
+- sql_exporter - Removed the metric `ccp_backrest_last_info_repo_total_size_bytes`. When block incremental backups are enabled, this metric is no longer available from pgBackRest.
 
 Bugfixes
 --------
 
-- grafana - Fix etcd dashboard to use new metric names in etcd 3.5
-- postgres_exporter - Fix query for database table size to remove duplicate word
-- postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions
-
+- grafana - Fix Cache Hit Ratio panel on PG Details dashboard to always be lines. Depending on data returned was sometimes being shown as points.
+- grafana - Fix pgBackRest recovery window panel showing multiple values after a PostgreSQL switchover
+- postgres_exporter - Disable all collectors included with postgres_exporter by default in example configuration. The other options to disable default metrics are not applied to the new collections.
+- postgres_exporter - Fix the `ccp_table_size_size_bytes` metric to remove the duplicate word and just be `ccp_table_size_bytes`
+- sql_exporter - Fix the `ccp_table_size_size_bytes` metric to remove the duplicate word and just be `ccp_table_size_bytes`
+- sql_exporter - Fix the names of ccp_pgbouncer_database_db_conn_perc_used, ccp_pgbouncer_database_paused, ccp_pgbouncer_database_disabled, and ccp_pgbouncer_list_item_count to be consistent with the old metric names from postgres exporter. These new names are the ones expected in the Grafana dashboard so this change fixes that to work properly again.
+- sql_exporter - Removed extraneous double quote at the end of the pgbouncer fdw collector file
 
 v5.1.1
 ======
@@ -46,7 +61,6 @@ Release Summary
 
 Crunchy Data is pleased to announce the availability of pgMonitor 5.1.0. This release brings support for PostgreSQL 17. It also brings more flexible Grafana dashboards, an HAProxy dashboard and better support for etcd and pgBackRest.
 
-
 Major Changes
 -------------
 
@@ -56,7 +70,7 @@ Major Changes
 Minor Changes
 -------------
 
-- grafana - Add a new variable dropdown to all dashboards for the Datasource. Allows more flexiblity when importing the dashboard to different environments.
+- grafana - Add a new variable dropdown to all dashboards for the Datasource. Allows more flexibility when importing the dashboard to different environments.
 - grafana - Add panel to PG Details dashboard to track autovac workers running vs max
 - grafana - add a dashboard for HAProxy
 - sql_exporter -  Add metrics to track current autovacuum workers running and max autovacuum workers
@@ -103,6 +117,26 @@ Bugfixes
 - grafana - fix some queries that were searching on the wrong label (datname vs. dbname)
 - sql_exporter - add new metric for n_tup_newpage_upd
 - sql_exporter - use the new views from pgmonitor-extension instead of full queries
+
+v4.12.0
+=======
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 4.12.0. This release primarily brings support for Grafana 10.4. See Changelog for additional information.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- grafana - Update the dashboards to support Grafana 10.4 so that we're on an officially supported version of Grafana. This does potentially break backward compatibility with Grafana 9.x, so an update to Grafana 10.4 will be required with this version of pgMonitor.
+
+Bugfixes
+--------
+
+- grafana - Fix etcd dashboard to use new metric names in etcd 3.5
+- postgres_exporter - Fix query for database table size to remove duplicate word
+- postgres_exporter - Fix query for pgBackRest monitoring to handle 3 number versions
 
 v4.11.0
 =======

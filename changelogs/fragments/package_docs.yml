@@ -1,3 +1,0 @@
----
-trivial:
-  - documentation - Make documentation around package vs non-package installs more clear and consistent. Remove postgres_exporter file references from PG Metrics list.

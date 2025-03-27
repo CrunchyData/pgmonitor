@@ -1,3 +1,0 @@
----
-bugfixes:
-  - grafana - Fix Cache Hit Ratio panel on PG Details dashboard to always be lines. Depending on data returned was sometimes being shown as points.

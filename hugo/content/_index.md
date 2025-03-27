@@ -50,6 +50,9 @@ pgMonitor combines multiple open-source software services to create a robust Pos
 
 ## Supported Platforms
 
+### pgMonitor Extension
+ - As of pgMonitor version 5.2, the pgMonitor extension version requirement is a minimum of 2.1.0
+
 ### Operating Systems
 
 - RHEL 8/9 (Build/Run Testing, Setup Instructions)

@@ -1,4 +1,0 @@
-minor_changes:
-  - sql_exporter - Removed the metric `ccp_backrest_last_info_repo_total_size_bytes`. When block incremental backups are enabled, this metric is no longer available from pgBackRest.
-  - postgres_exporter - Removed the metric `ccp_backrest_last_info_repo_total_size_bytes`.
-  - grafana - Removed the `Last Backup Size (Total)` panel from the pgBackRest Grafana dashboard since it was backed by the removed metric.

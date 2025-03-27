@@ -1,4 +1,0 @@
----
-bugfix:
- - sql_exporter - Fix the `ccp_table_size_size_bytes` metric to remove the duplicate word and just be `ccp_table_size_bytes`
- - postgres_exporter - Fix the `ccp_table_size_size_bytes` metric to remove the duplicate word and just be `ccp_table_size_bytes`
