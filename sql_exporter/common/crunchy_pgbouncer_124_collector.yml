@@ -1,5 +1,5 @@
-collector_name: crunchy_pgbouncer_121
-# Collector for PgBouncer minimum version of 1.21
+collector_name: crunchy_pgbouncer_124
+# Collector for PgBouncer minimum version of 1.24
 
 metrics:
   - metric_name: ccp_pgbouncer_clients_wait_seconds
