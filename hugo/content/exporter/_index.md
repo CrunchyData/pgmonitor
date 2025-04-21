@@ -181,7 +181,7 @@ CREATE EXTENSION pg_stat_statements;
 | crunchy_per_db_collector.yml                   | Collection file with general per-database level queries and metrics |
 | crunchy_pg_stat_statements_collector.yml       | Collection file with pg_stat_statements queries and metrics
 | crunchy_pg_stat_statements_reset_collector.yml | Collection file with options to allow resetting of pg_stat_statements metrics |
-| crunchy_pgbouncer_collector_121.yml            | Collection file with pgBouncer queries and metrics for a minimum version of 1.21 |
+| crunchy_pgbouncer_collector_*.yml            | Collection files for pgBouncer queries and metrics. The number suffix on the filename is the minimum version of pgBouncer required for that file. If there is a newer version file available, that one must be used if that version of pgBouncer or greater is running. Example: collector_121.yml requires at least pgBouncer 1.21. But there is also a collector_124.yml file, so if you are running pgBouncer 1.24+, you must use the 124 file. Note that a newer file will only be created if necessary to support changes in the pgBouncer API. |
 
 
 Run the `setup_db.sql` file on all databases that will be monitored by pgMonitor. At minimum this must be at least the global database so the necessary database objects are created. The `pgmonitor-extension` is expected to be available to be installed in the target database(s) when running this file. Note the `setup_db.sql` file is a convenience file and the steps contained within it can be done manually and customized as needed. Note that a default password is not set for the `ccp_monitoring` database role.
