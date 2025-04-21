@@ -1,2 +1,0 @@
-bugfixes:
-  - sql_exporter - Create new collections file for pgBouncer 1.24+

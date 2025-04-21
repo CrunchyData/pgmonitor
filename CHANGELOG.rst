@@ -4,6 +4,19 @@ pgMonitor Release Notes
 
 .. contents:: Topics
 
+v5.2.1
+======
+
+Release Summary
+---------------
+
+Crunchy Data is pleased to announce the availability of pgMonitor 5.2.1. This release brings support for monitoring the latest PgBouncer version 1.24.
+
+Bugfixes
+--------
+
+- sql_exporter - Create new collections file for pgBouncer 1.24+
+
 v5.2.0
 ======
 
