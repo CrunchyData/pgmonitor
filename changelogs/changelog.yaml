@@ -291,3 +291,14 @@ releases:
     - package_docs.yml
     - release.yml
     release_date: '2025-03-25'
+  5.2.1:
+    changes:
+      bugfixes:
+      - sql_exporter - Create new collections file for pgBouncer 1.24+
+      release_summary: Crunchy Data is pleased to announce the availability of pgMonitor
+        5.2.1. This release brings support for monitoring the latest PgBouncer version
+        1.24.
+    fragments:
+    - 464.yml
+    - release.yml
+    release_date: '2025-04-21'
