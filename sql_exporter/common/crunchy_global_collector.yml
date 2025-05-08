@@ -98,13 +98,6 @@ metrics:
     query_ref: ccp_pg_hba_checksum
 
 
-  - metric_name: ccp_pg_settings_checksum_status
-    type: gauge
-    help: "Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. To reset current config to valid after alert, run pgmonitor_ext.pg_settings_checksum_set_valid()."
-    values: [status]
-    query_ref: ccp_pg_settings_checksum
-
-
   - metric_name: ccp_postgresql_version_current
     type: gauge
     help: "The current version of PostgreSQL that this exporter is running on as a 6 digit integer (######)."
@@ -474,10 +467,6 @@ queries:
     query: |
       SELECT pgmonitor_ext.pg_hba_checksum() AS status
 
-
-  - query_name: ccp_pg_settings_checksum
-    query: |
-      SELECT pgmonitor_ext.pg_settings_checksum() AS status
 
 # The version case here is to check for the minimum version of the pgmonitor-extension required by this version of pgMonitor
 # As of Feb 2025, this is 2.1.0 or 20100. 0 for true, 1 for false
