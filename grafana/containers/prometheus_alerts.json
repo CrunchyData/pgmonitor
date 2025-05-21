@@ -136,7 +136,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(count by (kubernetes_namespace) (pg_up))",
+          "expr": "count(count by (kubernetes_namespace) (pg_up)) or count(count by (kubernetes_namespace) (up))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -208,7 +208,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(count by (pg_cluster) (pg_up))",
+          "expr": "count(count by (pg_cluster) (pg_up)) or count(count by (pg_cluster) (up))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -280,7 +280,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(pg_up)",
+          "expr": "count(pg_up) or count(up)",
           "format": "time_series",
           "instant": true,
           "interval": "",

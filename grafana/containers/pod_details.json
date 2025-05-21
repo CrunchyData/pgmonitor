@@ -70,8 +70,8 @@
           "mappings": [
             {
               "options": {
-                "0": {
-                  "index": 0,
+                "2": {
+                  "index": 2,
                   "text": "Primary"
                 },
                 "1": {
@@ -115,7 +115,7 @@
           "datasource": "PROMETHEUS",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "pg_replication_is_replica{pod=\"[[pod]]\", pg_cluster=\"[[cluster]]\"}",
+          "expr": "ccp_is_in_recovery_status{pod=\"[[pod]]\", pg_cluster=\"[[cluster]]\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1196,7 +1196,7 @@
         "allValue": null,
         "current": {},
         "datasource": "PROMETHEUS",
-        "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
+        "definition": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},pod)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -1206,7 +1206,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
+          "query": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},pod)",
           "refId": "PROMETHEUS-pod-Variable-Query"
         },
         "refresh": 1,
