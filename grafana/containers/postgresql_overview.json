@@ -163,7 +163,7 @@
       "targets": [
         {
           "$hashKey": "object:243",
-          "expr": "sum(pg_up{pg_cluster=~\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=~\"$cluster\"})",
+          "expr": "sum(pg_up{pg_cluster=~\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=~\"$cluster\"}) or sum(up{pg_cluster=~\"$cluster\"})*100+sum(ccp_is_in_recovery_status{pg_cluster=~\"$cluster\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
