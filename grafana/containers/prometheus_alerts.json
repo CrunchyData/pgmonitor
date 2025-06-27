@@ -136,7 +136,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(count by (kubernetes_namespace) (pg_up))",
+          "expr": "sum(count by (kubernetes_namespace) (pg_up{pg_cluster!=''})) + sum(count by (kubernetes_namespace) (patroni_postgres_running{pg_cluster!=''}))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -208,7 +208,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(count by (pg_cluster) (pg_up))",
+          "expr": "sum(count by (pg_cluster) (pg_up{pg_cluster!=''})) + sum(count by (pg_cluster) (patroni_postgres_running{pg_cluster!=''}))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -280,7 +280,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "count(pg_up)",
+          "expr": "sum(count(pg_up{pg_cluster!=''})) + sum(count(patroni_postgres_running{pg_cluster!=''}))",
           "format": "time_series",
           "instant": true,
           "interval": "",

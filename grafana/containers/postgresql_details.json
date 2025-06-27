@@ -151,7 +151,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} < ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}) ",
+          "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}, ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}, ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -231,7 +231,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\", state=\"active\"})*100 /sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\", state=\"active\"})*100 /sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\", state=\"active\"})*100 /sum(ccp_connection_stats_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -313,7 +313,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})/sum(ccp_connection_stats_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -472,7 +472,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})*100/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})*100/sum(pg_settings_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})*100/sum(ccp_connection_stats_max_connections{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -816,7 +816,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})",
+          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"}) or sum by (state) (ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -827,7 +827,7 @@
           "step": 2
         },
         {
-          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})",
+          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"}) or sum by (state) (ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"idle in transaction\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -835,7 +835,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"active\"})",
+          "expr": "sum by (state) (pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"active\"}) or sum by (state) (ccp_pg_stat_activity_count{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\",datname=~\"[[datname]]\",state=\"active\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "active",
@@ -1696,34 +1696,34 @@
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Allocated",
-          "metric": "pg_stat_bgwriter_buffers_alloc",
+          "metric": "ccp_stat_bgwriter_buffers_alloc",
           "refId": "A",
           "step": 2
         },
         {
-          "expr": "sum(ccp_stat_bgwriter_buffers_backend{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(ccp_stat_io_bgwriter_writes{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_stat_bgwriter_buffers_backend{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "Backend",
-          "metric": "pg_stat_bgwriter_buffers_backend",
+          "legendFormat": "Writes",
+          "metric": "ccp_stat_io_bgwriter_writes",
           "refId": "B",
           "step": 2
         },
         {
-          "expr": "sum(ccp_stat_bgwriter_buffers_backend_fsync{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(ccp_stat_io_bgwriter_fsyncs{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_stat_bgwriter_buffers_backend_fsync{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "FSync",
-          "metric": "pg_stat_bgwriter_buffers_backend_fsync",
+          "metric": "ccp_stat_io_bgwriter_fsyncs",
           "refId": "C",
           "step": 2
         },
         {
-          "expr": "sum(ccp_stat_bgwriter_buffers_checkpoint{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
+          "expr": "sum(ccp_stat_checkpointer_buffers_written{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"}) or sum(ccp_stat_bgwriter_buffers_checkpoint{pg_cluster=\"[[cluster]]\",pod=~\"[[pod]]\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "CheckPoint",
-          "metric": "pg_stat_bgwriter_buffers_checkpoint",
+          "metric": "ccp_stat_checkpointer_buffers_written",
           "refId": "D",
           "step": 2
         },
@@ -1732,7 +1732,7 @@
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Clean",
-          "metric": "pg_stat_bgwriter_buffers_clean",
+          "metric": "ccp_stat_bgwriter_buffers_clean",
           "refId": "E",
           "step": 2
         }
@@ -2071,7 +2071,7 @@
         "allValue": ".*",
         "current": {},
         "datasource": "PROMETHEUS",
-        "definition": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
+        "definition": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},pod)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -2081,7 +2081,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values({pg_cluster=\"[[cluster]]\"},pod)",
+          "query": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},pod)",
           "refId": "PROMETHEUS-pod-Variable-Query"
         },
         "refresh": 1,

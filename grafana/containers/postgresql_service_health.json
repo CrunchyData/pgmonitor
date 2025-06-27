@@ -600,7 +600,7 @@
         "allValue": null,
         "current": {},
         "datasource": "PROMETHEUS",
-        "definition": "label_values({pg_cluster=\"[[cluster]]\"},role)",
+        "definition": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},role)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -610,7 +610,7 @@
         "name": "role",
         "options": [],
         "query": {
-          "query": "label_values({pg_cluster=\"[[cluster]]\"},role)",
+          "query": "label_values({pg_cluster=\"[[cluster]]\", exp_type!=\"pgbouncer\"},role)",
           "refId": "PROMETHEUS-role-Variable-Query"
         },
         "refresh": 1,
