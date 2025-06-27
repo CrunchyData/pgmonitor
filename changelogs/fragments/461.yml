@@ -1,0 +1,4 @@
+---
+minor_changes:
+ - prometheus - Remove unnecessary absence alerts. The general ExporterDown metric can cover these scenarios
+ - prometheus - Moved the ExporterDown alert to its own common alerts file and have it be enabled by default (no .example extension on the file name)
