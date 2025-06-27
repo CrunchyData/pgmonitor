@@ -1,0 +1,9 @@
+---
+major_changes:
+  - sql_exporter - Dropped support for PostgreSQL 11 and 12
+
+minor_changes:
+  - sql_exporter - Consolidated setup file from different PostgreSQL versions to a single common file
+
+bugfixes:
+  - sql_exporter - Removed the pg_settings_checksum metric since it was not working properly. Requires new version of pgmonitor-extension.
