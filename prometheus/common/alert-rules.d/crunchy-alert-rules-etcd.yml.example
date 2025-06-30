@@ -56,36 +56,3 @@ groups:
 #      severity_num: 300
 #    annotations:
 #      description: 'The expected minimum count of etcd nodes was not found. Current count {{ $value }}'
-
-# Absence alerts must be configured per named job, otherwise there's no way to know which job is down
-# Below is are some examples using the leader metric for a targets called "etcd#" for a 3 node etcd cluster
-
-#  - alert: ETCDAbsent_etcd1
-#    expr: absent(etcd_server_has_leader{job="ip11_etcd1"})
-#    for: 10s
-#    labels:
-#      service: etcd
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
-
-#  - alert: ETCDAbsent_etcd2
-#    expr: absent(etcd_server_has_leader{job="ip21_etcd2"})
-#    for: 10s
-#    labels:
-#      service: etcd
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
-
-#  - alert: ETCDAbsent_etcd3
-#    expr: absent(etcd_server_has_leader{job="ip31_etcd3"})
-#    for: 10s
-#    labels:
-#      service: etcd
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: 'Leader metric is absent from target {{ $labels.job }}. Check that etcd is running on target host.'
