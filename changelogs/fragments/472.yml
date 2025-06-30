@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - grafana - Fix PG Overview dashboard for sql_exporter so that links to the PG Details dashboard have the proper, relevant node already chosen
