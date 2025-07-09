@@ -469,11 +469,11 @@ queries:
 
 
 # The version case here is to check for the minimum version of the pgmonitor-extension required by this version of pgMonitor
-# As of Feb 2025, this is 2.1.0 or 20100. 0 for true, 1 for false
+# As of July 2025, this is 2.2.0 or 20200. 0 for true, 1 for false
   - query_name: ccp_pgmonitor_extension_global
     query: |
       SELECT split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0') AS version
-        , CASE WHEN (split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0'))::int >= 20100 THEN
+        , CASE WHEN (split_part(extversion, '.', 1) || lpad(split_part(extversion, '.', 2), 2, '0') || lpad(split_part(extversion, '.', 3), 2, '0'))::int >= 20200 THEN
             0 ELSE 1
           END AS min_version_installed
       FROM pg_catalog.pg_extension
