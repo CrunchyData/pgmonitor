@@ -164,18 +164,6 @@ groups:
 #      summary: '{{ $labels.job }} has changed from replica to primary'
 
 
-## Absence alerts must be configured per named job, otherwise there's no way to know which job is down
-## Below is an example for a target job called "Prod"
-#  - alert: PGConnectionAbsent_Prod
-#    expr: absent(ccp_connection_stats_max_connections{job="Prod"})
-#    for: 10s
-#    labels:
-#      service: postgresql
-#      severity: critical
-#      severity_num: 300
-#    annotations:
-#      description: 'Connection metric is absent from target (Prod). Check that postgres_exporter can connect to PostgreSQL.'
-
 
 ## Optional monitor for changes to pg_settings (postgresql.conf) system catalog.
 ## A similar metric is available for monitoring pg_hba.conf. See ccp_hba_settings_checksum.
