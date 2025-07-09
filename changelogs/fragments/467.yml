@@ -1,5 +1,5 @@
 ---
-major_changes:
+breaking_changes:
   - sql_exporter - Dropped support for PostgreSQL 11 and 12
 
 minor_changes:
