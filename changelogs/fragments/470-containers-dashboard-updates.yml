@@ -1,3 +1,0 @@
-minor_changes:
-  - Updated containers dashboards to use latest ccp metrics in v5.2.1
-  - Add pgBouncer dashboard to containers folder
