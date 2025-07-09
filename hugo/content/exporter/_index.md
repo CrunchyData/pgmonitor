@@ -554,7 +554,7 @@ The files contained in this repository are assumed to be installed in the follow
 
 | pgMonitor Configuration File | System Location |
 |------------------------------|-----------------|
-| postgres_exporter/common/pg##/setup.sql | /etc/postgres_exporter/##/setup.sql  |
+| postgres_exporter/common/setup.sql | /etc/postgres_exporter/##/setup.sql  |
 | postgres_exporter/common/pg##/queries*.yml | /etc/postgres_exporter/##/queries*.yml  |
 | postgres_exporter/common/queries*.yml | /etc/postgres_exporter/##/queries*.yml  |
 | postgres_exporter/linux/crontab.txt | /etc/postgres_exporter/##/crontab.txt  |
