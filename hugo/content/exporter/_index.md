@@ -363,8 +363,6 @@ These metrics are common to all versions of PostgreSQL and are recommended as a 
 
  * *ccp_pg_hba_checksum_status* - Value of checksum monitioring status for pg_catalog.pg_hba_file_rules (pg_hba.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_hba_checksum`. To reset current config to valid after alert, run monitor.pg_hba_checksum_set_valid(). Note this will clear the history table.
 
- * *ccp_pg_settings_checksum_status* -  Value of checksum monitioring status for pg_catalog.pg_settings (postgresql.conf). 0 = valid config. 1 = settings changed. Settings history is available for review in the table `monitor.pg_settings_checksum`. To reset current config to valid after alert, run monitor.pg_settings_checksum_set_valid(). Note this will clear the history table.
-
  * *ccp_postmaster_uptime_seconds* - Time interval in seconds since PostgreSQL database was last restarted
 
  * *ccp_postgresql_version_current* - Version of PostgreSQL that this exporter is monitoring. Value is the 6 digit integer returned by the `server_version_num` PostgreSQL configuration variable to allow easy monitoring for version changes.
