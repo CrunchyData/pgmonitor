@@ -4,6 +4,33 @@ draft: false
 weight: 5
 ---
 
+## v5.3.0
+
+### Release Summary
+
+Crunchy Data is pleased to announce the availability of pgMonitor 5.3.0. This release brings several important bugfixes and updates dashboards in Grafana.
+
+### Breaking Changes / Porting Guide
+
+- sql_exporter - Dropped support for PostgreSQL 11 and 12
+
+### Minor Changes
+
+- grafana -Add pgBouncer dashboard to containers folder
+- grafana -Updated containers dashboards to use latest ccp metrics in v5.2.1
+- grafana -Updated containers dashboards/alerts to allow OTel or postgres-exporter values
+- grafana - Update HAProxy dashboard to the latest one from upstream (Revision 11)
+- prometheus - Add requested PGNoPrimary and PGNoReplica alerts for containers
+- prometheus - Moved the ExporterDown alert to its own common alerts file and have it be enabled by default (no .example extension on the file name)
+- prometheus - Remove unnecessary absence alerts. The general ExporterDown metric can cover these scenarios
+- sql_exporter - Consolidated setup file from different PostgreSQL versions to a single common file
+
+### Bugfixes
+
+- grafana - Fix PG Overview dashboard for sql_exporter so that links to the PG Details dashboard have the proper, relevant node already chosen
+- sql_exporter - Removed the pg_settings_checksum metric since it was not working properly. Requires new version of pgmonitor-extension.
+
+
 ## v5.2.1
 
 ### Release Summary

@@ -302,3 +302,37 @@ releases:
     - 464.yml
     - release.yml
     release_date: '2025-04-21'
+  5.3.0:
+    changes:
+      breaking_changes:
+      - sql_exporter - Dropped support for PostgreSQL 11 and 12
+      bugfixes:
+      - grafana - Fix PG Overview dashboard for sql_exporter so that links to the
+        PG Details dashboard have the proper, relevant node already chosen
+      - sql_exporter - Removed the pg_settings_checksum metric since it was not working
+        properly. Requires new version of pgmonitor-extension.
+      minor_changes:
+      - Add pgBouncer dashboard to containers folder
+      - Add requested PGNoPrimary and PGNoReplica alerts for containers
+      - Updated containers dashboards to use latest ccp metrics in v5.2.1
+      - Updated containers dashboards/alerts to allow OTel or postgres-exporter values
+      - grafana - Update HAProxy dashboard to the latest one from upstream (Revision
+        11)
+      - prometheus - Moved the ExporterDown alert to its own common alerts file and
+        have it be enabled by default (no .example extension on the file name)
+      - prometheus - Remove unnecessary absence alerts. The general ExporterDown metric
+        can cover these scenarios
+      - sql_exporter - Consolidated setup file from different PostgreSQL versions
+        to a single common file
+      release_summary: Crunchy Data is pleased to announce the availability of pgMonitor
+        5.3.0. This release brings several important bugfixes and updates dashboards
+        in Grafana.
+    fragments:
+    - 461.yml
+    - 467.yml
+    - 470-containers-dashboard-updates.yml
+    - 471-containers-dashboard-updates.yml
+    - 472.yml
+    - 474.yml
+    - release.yml
+    release_date: '2025-07-09'
