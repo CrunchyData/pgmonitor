@@ -1,0 +1,2 @@
+bugfixes:
+ - grafana - Fixed OS Overview dashboard so that the links to the OS Details dashboard have the proper node selected

@@ -18,6 +18,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 7,
   "links": [],
   "panels": [
     {
@@ -34,7 +35,7 @@
             {
               "targetBlank": true,
               "title": "OS Details",
-              "url": "/d/4t6SO2Fik/os-details?$__all_variables"
+              "url": "/d/4t6SO2Fik/os-details?var-osnodes=${__field.labels.job}"
             }
           ],
           "mappings": [
@@ -82,7 +83,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -93,6 +94,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -107,7 +109,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "11.5.4",
       "repeat": "osnodes",
       "repeatDirection": "h",
       "targets": [
@@ -130,35 +132,29 @@
       "type": "stat"
     }
   ],
+  "preload": false,
   "refresh": "5m",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "PROMETHEUS",
           "value": "PDC1078F23EBDF0E5"
         },
-        "hide": 0,
         "includeAll": false,
         "label": "Datasource",
-        "multi": false,
         "name": "ccp_datasource",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
+          "text": "All",
           "value": [
             "$__all"
           ]
@@ -180,12 +176,8 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       }
     ]
   },
@@ -193,22 +185,10 @@
     "from": "now-5m",
     "to": "now"
   },
-  "timepicker": {
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
-  },
+  "timepicker": {},
   "timezone": "browser",
   "title": "OS Overview",
   "uid": "pxinDnKik",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
