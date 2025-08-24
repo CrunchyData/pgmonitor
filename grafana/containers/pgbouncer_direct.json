@@ -61,7 +61,7 @@
   ],
   "panels": [
     {
-    "datasource": "PROMETHEUS",
+    "datasource": "${DS_PROMETHEUS}",
     "fieldConfig": {
       "defaults": {
       "color": {
@@ -209,7 +209,7 @@
     "type": "timeseries"
     },
     {
-    "datasource": "PROMETHEUS",
+    "datasource": "${DS_PROMETHEUS}",
     "fieldConfig": {
       "defaults": {
       "color": {
@@ -305,7 +305,7 @@
     "type": "timeseries"
     },
     {
-    "datasource": "PROMETHEUS",
+    "datasource": "${DS_PROMETHEUS}",
     "fieldConfig": {
       "defaults": {
       "color": {
@@ -403,7 +403,7 @@
     "type": "timeseries"
     },
     {
-    "datasource": "PROMETHEUS",
+    "datasource": "${DS_PROMETHEUS}",
     "description": "",
     "fieldConfig": {
       "defaults": {
@@ -500,7 +500,7 @@
     "type": "timeseries"
     },
     {
-    "datasource": "PROMETHEUS",
+    "datasource": "${DS_PROMETHEUS}",
     "fieldConfig": {
       "defaults": {
       "color": {
@@ -606,7 +606,7 @@
     "list": [
       {
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(up{exp_type='pgbouncer'},cluster_name)",
         "hide": 0,
         "includeAll": false,
@@ -630,7 +630,7 @@
       },
       {
         "current": {},
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(up{exp_type='pgbouncer'},pod)",
         "hide": 0,
         "includeAll": true,
@@ -662,7 +662,7 @@
             "$__all"
           ]
         },
-        "datasource": "PROMETHEUS",
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(ccp_pgbouncer_databases_pool_size{cluster_name=\"[[cluster_name]]\", pod=\"[[pgbnode]]\"},name)",
         "hide": 0,
         "includeAll": true,
