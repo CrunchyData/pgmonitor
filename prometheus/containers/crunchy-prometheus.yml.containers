@@ -41,7 +41,7 @@ scrape_configs:
   # Convert postgres-operator.crunchydata.com/role to role
   - source_labels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role]
     target_label: role
-  #  Concert cluster name to cluster_name
+  #  Convert cluster name to cluster_name
   - sourceLabels: [ __meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster ]
     targetLabel: cluster_name
 
