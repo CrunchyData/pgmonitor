@@ -1,0 +1,2 @@
+bugfixes:
+ - grafana - Fixed container postgresql details dashboard query for last completed backup
