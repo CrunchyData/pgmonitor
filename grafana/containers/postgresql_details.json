@@ -151,7 +151,7 @@
       "pluginVersion": "7.4.5",
       "targets": [
         {
-          "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}, ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}, ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"})",
+          "expr": "min(ccp_backrest_last_incr_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_diff_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"} or ccp_backrest_last_full_backup_time_since_completion_seconds{pg_cluster=\"[[cluster]]\"}) ",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
