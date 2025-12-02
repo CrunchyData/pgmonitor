@@ -1,0 +1,2 @@
+minor_changes:
+ - containers - All configuration files related to containers have been moved to the <<CPK REPO>>. All further developments related to monitoring with CPK will be maintained in that repository.
