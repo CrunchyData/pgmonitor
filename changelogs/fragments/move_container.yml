@@ -1,0 +1,2 @@
+minor_changes:
+ - containers - All configuration files related to containers have been moved to the postgres-operator repository - https://github.com/CrunchyData/postgres-operator-examples/tree/main/kustomize/monitoring. All further developments related solely to operator monitoring will be maintained in that repository.
